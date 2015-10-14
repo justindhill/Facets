@@ -68,8 +68,6 @@
     _userList = singleton.userList;
     _priorityList = singleton.priorityList;
 
-    UIBarButtonItem* cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)];
-    [self.navigationItem setLeftBarButtonItem:cancelBtn];
     UIBarButtonItem* saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)];
     [self.navigationItem setRightBarButtonItem:saveBtn];
 

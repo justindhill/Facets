@@ -34,7 +34,7 @@
 
 @interface OZLSingleton : NSObject
 
-+(OZLSingleton*) sharedInstance;
++ (OZLSingleton *)sharedInstance;
 
 //network
 @property(nonatomic,strong) NSString* redmineHomeURL;
@@ -43,9 +43,9 @@
 @property(nonatomic,strong) NSString* redminePassword;
 
 // issue list option
-@property(nonatomic) int issueListFilterType;
-@property(nonatomic) int issueListSortType;
-@property(nonatomic) int issueListSortAscending;
+@property(nonatomic) NSInteger issueListFilterType;
+@property(nonatomic) NSInteger issueListSortType;
+@property(nonatomic) NSInteger issueListSortAscending;
 
 //app status
 @property(nonatomic) NSInteger lastProjectID;// last viewed project id

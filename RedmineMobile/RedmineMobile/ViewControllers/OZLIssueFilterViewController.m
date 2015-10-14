@@ -32,7 +32,7 @@
 @interface OZLIssueFilterViewController () {
     NSArray* _cellArray;
     NSArray* _headerArray;
-    int _checkedCell[3];
+    NSInteger _checkedCell[3];
 
 }
 @end

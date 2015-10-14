@@ -105,7 +105,7 @@
 - (IBAction)onCancel:(id)sender {
 
     if (_viewMode == OZLProjectInfoViewModeCreate) {
-        [self.navigationController dismissModalViewControllerAnimated:YES];
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     }else {
         [self.navigationController popViewControllerAnimated:YES];
     }

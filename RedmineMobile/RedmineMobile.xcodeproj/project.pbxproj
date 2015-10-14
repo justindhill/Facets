@@ -203,6 +203,7 @@
 		2BEA49BD17A117C3008DBAF9 /* icon_zoom_in.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA491C17A117C3008DBAF9 /* icon_zoom_in.png */; };
 		2BEA49BE17A117C3008DBAF9 /* icon_zoom_out.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA491D17A117C3008DBAF9 /* icon_zoom_out.png */; };
 		C295406F39D612BA1ED056BD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16B071924CA190A9546C03B3 /* libPods.a */; };
+		D04C9FB01BCEB245000366A7 /* OZLMainTabControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */; };
 		D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */; };
 		D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB80591792F2BF0081662A /* UIKit.framework */; };
 		D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805B1792F2BF0081662A /* Foundation.framework */; };
@@ -213,7 +214,6 @@
 		D5DB806C1792F2BF0081662A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DB806B1792F2BF0081662A /* Default.png */; };
 		D5DB806E1792F2BF0081662A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DB806D1792F2BF0081662A /* Default@2x.png */; };
 		D5DB80701792F2BF0081662A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DB806F1792F2BF0081662A /* Default-568h@2x.png */; };
-		D5DB80A21792F3EE0081662A /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80951792F3EE0081662A /* PPRevealSideViewController.m */; };
 		D5DB80A61792F4DE0081662A /* OZLProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80A41792F4DE0081662A /* OZLProjectListViewController.m */; };
 		D5DB80A71792F4DE0081662A /* OZLProjectListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5DB80A51792F4DE0081662A /* OZLProjectListViewController.xib */; };
 		D5DB80AC1792F6980081662A /* OZLProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80AA1792F6980081662A /* OZLProjectViewController.m */; };
@@ -449,7 +449,9 @@
 		2BEA491B17A117C3008DBAF9 /* icon_window_lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_window_lock.png; sourceTree = "<group>"; };
 		2BEA491C17A117C3008DBAF9 /* icon_zoom_in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_zoom_in.png; sourceTree = "<group>"; };
 		2BEA491D17A117C3008DBAF9 /* icon_zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_zoom_out.png; sourceTree = "<group>"; };
-		D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLMainTabControllerViewController.h; path = ViewControllers/OZLMainTabControllerViewController.h; sourceTree = "<group>"; };
+		D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLMainTabControllerViewController.m; path = ViewControllers/OZLMainTabControllerViewController.m; sourceTree = "<group>"; };
+		D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
 		D5DB80561792F2BF0081662A /* RedmineMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedmineMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5DB80591792F2BF0081662A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5DB805B1792F2BF0081662A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -463,8 +465,6 @@
 		D5DB806B1792F2BF0081662A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		D5DB806D1792F2BF0081662A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		D5DB806F1792F2BF0081662A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		D5DB80941792F3EE0081662A /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
-		D5DB80951792F3EE0081662A /* PPRevealSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevealSideViewController.m; sourceTree = "<group>"; };
 		D5DB80A31792F4DE0081662A /* OZLProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLProjectListViewController.h; path = ViewControllers/OZLProjectListViewController.h; sourceTree = "<group>"; };
 		D5DB80A41792F4DE0081662A /* OZLProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLProjectListViewController.m; path = ViewControllers/OZLProjectListViewController.m; sourceTree = "<group>"; };
 		D5DB80A51792F4DE0081662A /* OZLProjectListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OZLProjectListViewController.xib; path = ViewControllers/OZLProjectListViewController.xib; sourceTree = "<group>"; };
@@ -777,7 +777,6 @@
 		D5DB804D1792F2BF0081662A = {
 			isa = PBXGroup;
 			children = (
-				D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */,
 				D5DB80761792F3EE0081662A /* Libs */,
 				D5DB805F1792F2BF0081662A /* RedmineMobile */,
 				2BC4DD8F179928C80090F52C /* RedmineMobileUnitTest */,
@@ -828,6 +827,7 @@
 		D5DB80601792F2BF0081662A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */,
 				2B45384217A65DD100649D12 /* Icon@2x.png */,
 				2B45384017A65D7100649D12 /* Icon.png */,
 				D5DB80611792F2BF0081662A /* RedmineMobile-Info.plist */,
@@ -845,18 +845,8 @@
 			isa = PBXGroup;
 			children = (
 				2B6F38231797A00A00D06F51 /* MLTableAlert */,
-				D5DB80931792F3EE0081662A /* PPRevealSideViewController */,
 			);
 			path = Libs;
-			sourceTree = "<group>";
-		};
-		D5DB80931792F3EE0081662A /* PPRevealSideViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D5DB80941792F3EE0081662A /* PPRevealSideViewController.h */,
-				D5DB80951792F3EE0081662A /* PPRevealSideViewController.m */,
-			);
-			path = PPRevealSideViewController;
 			sourceTree = "<group>";
 		};
 		D5DB80A81792F4E40081662A /* ViewControllers */ = {
@@ -867,6 +857,8 @@
 				D5DB80B21793016B0081662A /* OZLAccountViewController.h */,
 				D5DB80B31793016B0081662A /* OZLAccountViewController.m */,
 				D5DB80B41793016B0081662A /* OZLAccountViewController.xib */,
+				D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */,
+				D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -947,6 +939,11 @@
 				LastTestingUpgradeCheck = 0710;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Lee Zhijie";
+				TargetAttributes = {
+					D5DB80551792F2BF0081662A = {
+						DevelopmentTeam = AJ5Q7E6DM4;
+					};
+				};
 			};
 			buildConfigurationList = D5DB80511792F2BF0081662A /* Build configuration list for PBXProject "RedmineMobile" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1197,8 +1194,8 @@
 			files = (
 				D5DB80661792F2BF0081662A /* main.m in Sources */,
 				D5DB806A1792F2BF0081662A /* OZLAppDelegate.m in Sources */,
-				D5DB80A21792F3EE0081662A /* PPRevealSideViewController.m in Sources */,
 				D5DB80A61792F4DE0081662A /* OZLProjectListViewController.m in Sources */,
+				D04C9FB01BCEB245000366A7 /* OZLMainTabControllerViewController.m in Sources */,
 				D5DB80AC1792F6980081662A /* OZLProjectViewController.m in Sources */,
 				D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */,
 				D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */,
@@ -1311,12 +1308,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 267E239DD59CF16F78B49079 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RedmineMobile/RedmineMobile-Prefix.pch";
 				INFOPLIST_FILE = "RedmineMobile/RedmineMobile-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zhijie.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1326,12 +1327,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0ECA4D90281C24BB02A19D03 /* Pods.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RedmineMobile/RedmineMobile-Prefix.pch";
 				INFOPLIST_FILE = "RedmineMobile/RedmineMobile-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zhijie.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

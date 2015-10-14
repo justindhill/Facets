@@ -58,8 +58,6 @@
     _entry = [[OZLModelTimeEntries alloc] init];
     _timeEntryActivityList = [[OZLSingleton sharedInstance] timeEntryActivityList];
 
-    UIBarButtonItem* cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)];
-    [self.navigationItem setLeftBarButtonItem:cancelBtn];
     UIBarButtonItem* saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)];
     [self.navigationItem setRightBarButtonItem:saveBtn];
 
@@ -96,10 +94,6 @@
     _hours.inputAccessoryView = inputAccessoryView;
     _dateLabel.inputView = datePicker;
     _dateLabel.inputAccessoryView = inputAccessoryView;
-}
--(void) onCancel:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void) onSave:(id)sender

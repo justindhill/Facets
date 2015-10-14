@@ -27,11 +27,9 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "PPRevealSideViewController.h"
 
-@interface OZLAppDelegate : UIResponder <UIApplicationDelegate,PPRevealSideViewControllerDelegate>
+@interface OZLAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-//@property (strong, nonatomic) PPRevealSideViewController *revealSideViewController;
 @property(strong, nonatomic) UINavigationController* navigationController;
 @end

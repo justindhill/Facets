@@ -93,121 +93,116 @@ static OZLSingleton* sharedInstance = nil;
     [userdefaults setObject:redmineUserKey forKey:USER_DEFUALTS_REDMINE_USER_KEY];
     [userdefaults synchronize];    
 }
--(NSInteger)lastProjectID
+- (NSInteger)lastProjectID
 {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     return [userdefaults integerForKey:USER_DEFUALTS_LAST_PROJECT_ID];
 }
--(void)setLastProjectID:(int)projectid
-{
+- (void)setLastProjectID:(NSInteger)projectid {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setInteger:projectid forKey:USER_DEFUALTS_LAST_PROJECT_ID];
     [userdefaults synchronize];
 }
 
--(NSString*)redmineUserName
-{
+- (NSString*)redmineUserName {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     return [userdefaults objectForKey:USER_DEFUALTS_REDMINE_USER_NAME];
 }
 
--(void)setRedmineUserName:(NSString *)redmineUserName
-{
+- (void)setRedmineUserName:(NSString *)redmineUserName {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redmineUserName forKey:USER_DEFUALTS_REDMINE_USER_NAME];
     [userdefaults synchronize];
 }
 
--(NSString*)redminePassword
-{
+- (NSString *)redminePassword {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     return [userdefaults objectForKey:USER_DEFUALTS_REDMINE_PASSWORD];
 }
 
--(void)setRedminePassword:(NSString *)redminePassword
-{
+- (void)setRedminePassword:(NSString *)redminePassword {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redminePassword forKey:USER_DEFUALTS_REDMINE_PASSWORD];
     [userdefaults synchronize];
 }
 
--(int)issueListFilterType
-{
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_FILTER] intValue];
+- (NSInteger)issueListFilterType {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_FILTER] integerValue];
 }
--(void)setIssueListFilterType:(int)issueListFilterType
-{
+- (void)setIssueListFilterType:(NSInteger)issueListFilterType {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:[NSNumber numberWithInt:issueListFilterType] forKey:USER_DEFAULTS_ISSUE_LIST_FILTER];
+    [userdefaults setObject:@(issueListFilterType) forKey:USER_DEFAULTS_ISSUE_LIST_FILTER];
     [userdefaults synchronize];
 }
 
--(int)issueListSortAscending
-{
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_ASCEND] intValue];
+- (NSInteger)issueListSortAscending {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_ASCEND] integerValue];
 }
--(void)setIssueListSortAscending:(int)issueListSortAscending
-{
+
+- (void)setIssueListSortAscending:(NSInteger)issueListSortAscending {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:[NSNumber numberWithInt:issueListSortAscending] forKey:USER_DEFAULTS_ISSUE_LIST_ASCEND];
+    [userdefaults setObject:@(issueListSortAscending) forKey:USER_DEFAULTS_ISSUE_LIST_ASCEND];
     [userdefaults synchronize];
 }
 
--(int)issueListSortType
-{
+- (NSInteger)issueListSortType {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_SORT] intValue];
 }
--(void)setIssueListSortType:(int)issueListSortType
+
+- (void)setIssueListSortType:(NSInteger)issueListSortType
 {
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:[NSNumber numberWithInt:issueListSortType] forKey:USER_DEFAULTS_ISSUE_LIST_SORT];
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    [userdefaults setObject:@(issueListSortType) forKey:USER_DEFAULTS_ISSUE_LIST_SORT];
     [userdefaults synchronize];
 }
 
 
 #pragma mark -
 #pragma mark data retrival
--(OZLModelTracker*)trackerWithId:(int)index
-{
-    for (OZLModelTracker* tracker in _trackerList) {
+- (OZLModelTracker *)trackerWithId:(int)index {
+    
+    for (OZLModelTracker *tracker in _trackerList) {
         if (tracker.index == index) {
             return tracker;
         }
     }
+    
     return nil;
 }
--(OZLModelIssuePriority*)issuePriorityWithId:(int)index
-{
-    for (OZLModelIssuePriority* priority in _priorityList) {
+- (OZLModelIssuePriority *)issuePriorityWithId:(int)index {
+    
+    for (OZLModelIssuePriority *priority in _priorityList) {
         if (priority.index == index) {
             return priority;
         }
     }
+    
     return nil;
-
 }
--(OZLModelIssueStatus*)issueStatusWithId:(int)index
-{
-    for (OZLModelIssueStatus* status in _statusList) {
+
+- (OZLModelIssueStatus *)issueStatusWithId:(int)index {
+    
+    for (OZLModelIssueStatus *status in _statusList) {
         if (status.index == index) {
             return status;
         }
     }
+    
     return nil;
-
 }
--(OZLModelUser*)userWithId:(int)index
-{
-    for (OZLModelUser* user in _userList) {
+
+- (OZLModelUser *)userWithId:(int)index {
+    
+    for (OZLModelUser * user in _userList) {
         if (user.index == index) {
             return user;
         }
     }
+    
     return nil;
-
 }
 
 @end

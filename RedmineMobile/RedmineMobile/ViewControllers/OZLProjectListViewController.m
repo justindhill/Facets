@@ -27,7 +27,6 @@
 // THE SOFTWARE.
 
 #import "OZLProjectListViewController.h"
-#import "PPRevealSideViewController.h"
 #import "OZLProjectViewController.h"
 #import "OZLAccountViewController.h"
 #import "OZLProjectInfoViewController.h"
@@ -48,41 +47,33 @@
 
 @implementation OZLProjectListViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     _projectsTableview.delegate = self;
     _projectsTableview.dataSource = self;
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    _projectsTableview.backgroundColor = [UIColor whiteColor];
 
     _HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:_HUD];
 
-    UIBarButtonItem* accountBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_user"] landscapeImagePhone:nil style:UIBarButtonItemStylePlain target:self action:@selector(showAccountView:)];
-    [self.navigationItem setLeftBarButtonItem:accountBtn];
     _editBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editProjectList:)];
     _doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(editProjectListDone:)];
     [self.navigationItem setRightBarButtonItem:_editBtn];
-
     [self.navigationItem setTitle:@"Projects"];
 
     [[OZLSingleton sharedInstance] setLastProjectID:-1];
 }
 
--(void) viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
 	_HUD.labelText = @"Refreshing...";
     _HUD.detailsLabelText = @"";
     _HUD.mode = MBProgressHUDModeIndeterminate;
     [_HUD show:YES];
+    
     // refresh project list
     [OZLNetwork getProjectListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
         
@@ -103,23 +94,12 @@
 
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)showProjectView:(OZLModelProject*)project
 {
-
     OZLProjectViewController *c = [[OZLProjectViewController alloc] initWithNibName:@"OZLProjectViewController" bundle:nil];
     [c setProjectData:project];
 
     [self.navigationController pushViewController:c animated:YES];
-    
-//    UINavigationController *n = [[UINavigationController alloc] initWithRootViewController:c];
-//    [self.revealSideViewController popViewControllerWithNewCenterController:n
-//                                                                   animated:YES];
 }
 
 - (IBAction)showAccountView:(id)sender {
@@ -131,10 +111,6 @@
                          [self.navigationController pushViewController:c animated:NO];
                          [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.navigationController.view cache:NO];
                      }];
-
-//    UINavigationController *n = [[UINavigationController alloc] initWithRootViewController:c];
-//    [self.revealSideViewController popViewControllerWithNewCenterController:n
-//                                                                   animated:YES];
 }
 
 -(void)editProjectList:(id)sender
@@ -253,11 +229,8 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showProjectView:[_projectList objectAtIndex:indexPath.row]];
-    
 }
 
 @end

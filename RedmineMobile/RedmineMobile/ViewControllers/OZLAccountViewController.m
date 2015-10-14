@@ -40,24 +40,9 @@
 
 @implementation OZLAccountViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    UIBarButtonItem* doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(onOk:)];
-    [self.navigationItem setRightBarButtonItem:doneBtn];
-
-    UIBarButtonItem* cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(showProjectList)];
-    [self.navigationItem setLeftBarButtonItem:cancelBtn];
 
     _redmineHomeURL.text = [[OZLSingleton sharedInstance] redmineHomeURL];
     _redmineUserKey.text = [[OZLSingleton sharedInstance] redmineUserKey];
@@ -68,35 +53,7 @@
     [self.view addGestureRecognizer:tapper];
 }
 
--(void)backgroundTapped
-{
-    [self.view endEditing:YES];
-}
-
-- (void) showProjectList {
-    [UIView animateWithDuration:0.75
-                     animations:^{
-                         [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-                         [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:self.navigationController.view cache:NO];
-                     }];
-    [self.navigationController popViewControllerAnimated:NO];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload {
-    [self setRedmineHomeURL:nil];
-    [self setRedmineUserKey:nil];
-    [self setUsername:nil];
-    [self setPassword:nil];
-    [super viewDidUnload];
-}
-
-- (IBAction)onOk:(id)sender {
+- (void)viewWillDisappear:(BOOL)animated {
     [[OZLSingleton sharedInstance] setRedmineUserKey:_redmineUserKey.text];
     [[OZLSingleton sharedInstance] setRedmineHomeURL:_redmineHomeURL.text];
     [[OZLSingleton sharedInstance] setRedmineUserName:_username.text];
@@ -105,7 +62,10 @@
 
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center postNotificationName:NOTIFICATION_REDMINE_ACCOUNT_CHANGED object:nil];
-
-    [self showProjectList];
 }
+
+- (void)backgroundTapped {
+    [self.view endEditing:YES];
+}
+
 @end

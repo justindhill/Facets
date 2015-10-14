@@ -27,7 +27,6 @@
 // THE SOFTWARE.
 
 #import "OZLProjectViewController.h"
-#import "PPRevealSideViewController.h"
 #import "OZLProjectListViewController.h"
 #import "OZLNetwork.h"
 #import "MBProgressHUD.h"
@@ -104,9 +103,9 @@
     // prepare parameters
     OZLSingleton* singleton = [OZLSingleton sharedInstance];
     // meaning of these values is defined in OZLIssueFilterViewController
-    int filterType = [singleton issueListFilterType];
-    int sortType = [singleton issueListSortType];
-    int scendingType = [singleton issueListSortAscending];
+    NSInteger filterType = [singleton issueListFilterType];
+    NSInteger sortType = [singleton issueListSortType];
+    NSInteger scendingType = [singleton issueListSortAscending];
     if (filterType == 0) {// assigned to me
         // TODO:
     }else if(filterType == 1) {// open
@@ -244,26 +243,8 @@
 //    PP_RELEASE(c);
 }
 
-- (void) showProjectList {
+- (void)showProjectList {
     [self.navigationController popViewControllerAnimated:YES];
-
-//    OZLProjectListViewController *c = [[OZLProjectListViewController alloc] initWithNibName:@"OZLProjectListViewController" bundle:nil];
-//    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:c];
-//    [self.revealSideViewController pushViewController:navigationController onDirection:PPRevealSideDirectionLeft withOffset:_sideviewOffset animated:YES];
-//    PP_RELEASE(c);
-}
-
-- (IBAction)changeSideViewOffset:(int)offset {
-    _sideviewOffset = offset;
-    [self.revealSideViewController changeOffset:_sideviewOffset
-                                   forDirection:PPRevealSideDirectionRight];
-    [self.revealSideViewController changeOffset:_sideviewOffset
-                                   forDirection:PPRevealSideDirectionLeft];
-    [self.revealSideViewController changeOffset:_sideviewOffset
-                                   forDirection:PPRevealSideDirectionTop];
-    [self.revealSideViewController changeOffset:_sideviewOffset
-                                   forDirection:PPRevealSideDirectionBottom];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -277,52 +258,48 @@
     [super viewDidUnload];
 }
 
+#pragma mark - Accessors
+- (void)setProjectData:(OZLModelProject *)projectData {
+    _projectData = projectData;
+
+    self.navigationItem.title = _projectData.name;
+}
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-
-    // Return the number of sections.
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-
-    // Return the number of rows in the section.
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_issuesList count];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString* cellidentifier = [NSString stringWithFormat:@"issue_cell_id"];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *cellidentifier = [NSString stringWithFormat:@"issue_cell_id"];
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
+    
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellidentifier];
     }
+    
     OZLModelIssue* issue = [_issuesList objectAtIndex:indexPath.row];
     cell.textLabel.text = issue.subject;
     cell.detailTextLabel.text = issue.description;
+    
     return cell;
 }
 
-
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
 
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 
         _HUD.labelText = @"Deleting Issue...";
@@ -348,7 +325,6 @@
 }
 
 #pragma mark - Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //OZLIssueDetailViewController* detail = [[OZLIssueDetailViewController alloc] initWithNibName:@"OZLIssueDetailViewController" bundle:nil];
@@ -367,12 +343,12 @@
         [_HUD hide:YES afterDelay:2];
         return;
     }
-    //OZLIssueCreateOrUpdateViewController* creator = [[OZLIssueCreateOrUpdateViewController alloc] initWithNibName:@"OZLIssueCreateOrUpdateViewController" bundle:nil];
+    
     UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueCreateOrUpdateViewController" bundle:nil];
     OZLIssueCreateOrUpdateViewController* creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueCreateOrUpdateViewController"];
     [creator setParentProject:_projectData];
     [creator setViewMode:OZLIssueInfoViewModeCreate];
-    //[self.navigationController presentModalViewController:creator animated:YES];
+    
     [self.navigationController pushViewController:creator animated:YES];
 }
 
@@ -389,8 +365,7 @@
     [self.navigationController pushViewController:detail animated:YES];
 }
 
--(void)editIssueList:(id)sender
-{
+- (void)editIssueList:(id)sender {
     if (![OZLSingleton isUserLoggedIn] ) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"No available";
@@ -404,8 +379,7 @@
 
 }
 
--(void)editIssueListDone:(id)sender
-{
+- (void)editIssueListDone:(id)sender {
     [_issuesTableview setEditing:NO animated:YES];
     self.navigationItem.rightBarButtonItem = _editBtn;
 }
