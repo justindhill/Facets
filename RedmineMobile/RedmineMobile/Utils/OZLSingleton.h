@@ -48,7 +48,7 @@
 @property(nonatomic) int issueListSortAscending;
 
 //app status
-@property(nonatomic) int lastProjectID;// last viewed project id
+@property(nonatomic) NSInteger lastProjectID;// last viewed project id
 
 // app data
 @property (strong, nonatomic) NSArray* trackerList;

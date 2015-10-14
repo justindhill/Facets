@@ -30,18 +30,11 @@
 		2BBE440F179E500E00FD9E20 /* OZLIssueLogtimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE440E179E500E00FD9E20 /* OZLIssueLogtimeViewController.m */; };
 		2BBE4411179E503100FD9E20 /* OZLIssueLogtimeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BBE4410179E503100FD9E20 /* OZLIssueLogtimeViewController.storyboard */; };
 		2BBE4414179E586B00FD9E20 /* OZLModelTimeEntryActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE4413179E586B00FD9E20 /* OZLModelTimeEntryActivity.m */; };
-		2BC4DD8C179928C80090F52C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC4DD8B179928C80090F52C /* SenTestingKit.framework */; };
-		2BC4DD8D179928C80090F52C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB80591792F2BF0081662A /* UIKit.framework */; };
-		2BC4DD8E179928C80090F52C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805B1792F2BF0081662A /* Foundation.framework */; };
-		2BC4DD94179928C80090F52C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BC4DD92179928C80090F52C /* InfoPlist.strings */; };
-		2BC4DD97179928C80090F52C /* RedmineMobileUnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BC4DD96179928C80090F52C /* RedmineMobileUnitTest.m */; };
 		2BCBA81D179E292800E5FD46 /* OZLModelIssueJournal.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCBA81C179E292800E5FD46 /* OZLModelIssueJournal.m */; };
 		2BCBA820179E2AA500E5FD46 /* OZLModelIssueJournalDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCBA81F179E2AA400E5FD46 /* OZLModelIssueJournalDetail.m */; };
 		2BCC0FCF179D5458003DFB44 /* OZLIssueHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCC0FCE179D5458003DFB44 /* OZLIssueHistoryViewController.m */; };
 		2BCC0FD2179D56BA003DFB44 /* OZLModelTimeEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCC0FD1179D56BA003DFB44 /* OZLModelTimeEntries.m */; };
 		2BCCA0541795312E00FA8B1A /* OZLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCCA0531795312E00FA8B1A /* OZLConstants.m */; };
-		2BCF880C1793A26A006FC859 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF880B1793A26A006FC859 /* MBProgressHUD.m */; };
-		2BCF88101793ABA0006FC859 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF880F1793ABA0006FC859 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2BCF88121793CB4F006FC859 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF88111793CB4F006FC859 /* CFNetwork.framework */; };
 		2BCF88141793CB94006FC859 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF88131793CB94006FC859 /* SystemConfiguration.framework */; };
 		2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF881D1793F3C8006FC859 /* OZLModelIssue.m */; };
@@ -209,6 +202,8 @@
 		2BEA49BC17A117C3008DBAF9 /* icon_window_lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA491B17A117C3008DBAF9 /* icon_window_lock.png */; };
 		2BEA49BD17A117C3008DBAF9 /* icon_zoom_in.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA491C17A117C3008DBAF9 /* icon_zoom_in.png */; };
 		2BEA49BE17A117C3008DBAF9 /* icon_zoom_out.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA491D17A117C3008DBAF9 /* icon_zoom_out.png */; };
+		C295406F39D612BA1ED056BD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16B071924CA190A9546C03B3 /* libPods.a */; };
+		D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */; };
 		D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB80591792F2BF0081662A /* UIKit.framework */; };
 		D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805B1792F2BF0081662A /* Foundation.framework */; };
 		D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805D1792F2BF0081662A /* CoreGraphics.framework */; };
@@ -218,18 +213,6 @@
 		D5DB806C1792F2BF0081662A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DB806B1792F2BF0081662A /* Default.png */; };
 		D5DB806E1792F2BF0081662A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DB806D1792F2BF0081662A /* Default@2x.png */; };
 		D5DB80701792F2BF0081662A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DB806F1792F2BF0081662A /* Default-568h@2x.png */; };
-		D5DB80961792F3EE0081662A /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80791792F3EE0081662A /* AFHTTPClient.m */; };
-		D5DB80971792F3EE0081662A /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB807B1792F3EE0081662A /* AFHTTPRequestOperation.m */; };
-		D5DB80981792F3EE0081662A /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB807D1792F3EE0081662A /* AFImageRequestOperation.m */; };
-		D5DB80991792F3EE0081662A /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB807F1792F3EE0081662A /* AFJSONRequestOperation.m */; };
-		D5DB809A1792F3EE0081662A /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80811792F3EE0081662A /* AFNetworkActivityIndicatorManager.m */; };
-		D5DB809B1792F3EE0081662A /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80841792F3EE0081662A /* AFPropertyListRequestOperation.m */; };
-		D5DB809C1792F3EE0081662A /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80861792F3EE0081662A /* AFURLConnectionOperation.m */; };
-		D5DB809D1792F3EE0081662A /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80881792F3EE0081662A /* AFXMLRequestOperation.m */; };
-		D5DB809E1792F3EE0081662A /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB808A1792F3EE0081662A /* UIImageView+AFNetworking.m */; };
-		D5DB809F1792F3EE0081662A /* PCLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB808D1792F3EE0081662A /* PCLineChartView.m */; };
-		D5DB80A01792F3EE0081662A /* PCPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB808F1792F3EE0081662A /* PCPieChart.m */; };
-		D5DB80A11792F3EE0081662A /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80921792F3EE0081662A /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D5DB80A21792F3EE0081662A /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80951792F3EE0081662A /* PPRevealSideViewController.m */; };
 		D5DB80A61792F4DE0081662A /* OZLProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80A41792F4DE0081662A /* OZLProjectListViewController.m */; };
 		D5DB80A71792F4DE0081662A /* OZLProjectListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5DB80A51792F4DE0081662A /* OZLProjectListViewController.xib */; };
@@ -243,17 +226,10 @@
 		D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80C117931C8B0081662A /* OZLModelProject.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		2BC4DD9C17992A4D0090F52C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D5DB804E1792F2BF0081662A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D5DB80551792F2BF0081662A;
-			remoteInfo = RedmineMobile;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		0ECA4D90281C24BB02A19D03 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		16B071924CA190A9546C03B3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		267E239DD59CF16F78B49079 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2B45384017A65D7100649D12 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		2B45384217A65DD100649D12 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		2B62D0DE1796498800AC3C19 /* OZLIssueCreateOrUpdateViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = OZLIssueCreateOrUpdateViewController.storyboard; path = ViewControllers/OZLIssueCreateOrUpdateViewController.storyboard; sourceTree = "<group>"; };
@@ -285,7 +261,6 @@
 		2BBE4410179E503100FD9E20 /* OZLIssueLogtimeViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = OZLIssueLogtimeViewController.storyboard; path = ViewControllers/OZLIssueLogtimeViewController.storyboard; sourceTree = "<group>"; };
 		2BBE4412179E586B00FD9E20 /* OZLModelTimeEntryActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelTimeEntryActivity.h; path = Models/OZLModelTimeEntryActivity.h; sourceTree = "<group>"; };
 		2BBE4413179E586B00FD9E20 /* OZLModelTimeEntryActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelTimeEntryActivity.m; path = Models/OZLModelTimeEntryActivity.m; sourceTree = "<group>"; };
-		2BC4DD8A179928C80090F52C /* RedmineMobileUnitTest.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RedmineMobileUnitTest.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BC4DD8B179928C80090F52C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		2BC4DD91179928C80090F52C /* RedmineMobileUnitTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RedmineMobileUnitTest-Info.plist"; sourceTree = "<group>"; };
 		2BC4DD93179928C80090F52C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -302,10 +277,6 @@
 		2BCC0FD1179D56BA003DFB44 /* OZLModelTimeEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelTimeEntries.m; path = Models/OZLModelTimeEntries.m; sourceTree = "<group>"; };
 		2BCCA0521795312E00FA8B1A /* OZLConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLConstants.h; path = Models/OZLConstants.h; sourceTree = "<group>"; };
 		2BCCA0531795312E00FA8B1A /* OZLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLConstants.m; path = Models/OZLConstants.m; sourceTree = "<group>"; };
-		2BCF880A1793A26A006FC859 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		2BCF880B1793A26A006FC859 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		2BCF880E1793ABA0006FC859 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		2BCF880F1793ABA0006FC859 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2BCF88111793CB4F006FC859 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		2BCF88131793CB94006FC859 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2BCF881C1793F3C8006FC859 /* OZLModelIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelIssue.h; path = Models/OZLModelIssue.h; sourceTree = "<group>"; };
@@ -478,6 +449,7 @@
 		2BEA491B17A117C3008DBAF9 /* icon_window_lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_window_lock.png; sourceTree = "<group>"; };
 		2BEA491C17A117C3008DBAF9 /* icon_zoom_in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_zoom_in.png; sourceTree = "<group>"; };
 		2BEA491D17A117C3008DBAF9 /* icon_zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_zoom_out.png; sourceTree = "<group>"; };
+		D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		D5DB80561792F2BF0081662A /* RedmineMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedmineMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5DB80591792F2BF0081662A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5DB805B1792F2BF0081662A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -491,31 +463,6 @@
 		D5DB806B1792F2BF0081662A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		D5DB806D1792F2BF0081662A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		D5DB806F1792F2BF0081662A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		D5DB80781792F3EE0081662A /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
-		D5DB80791792F3EE0081662A /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
-		D5DB807A1792F3EE0081662A /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
-		D5DB807B1792F3EE0081662A /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
-		D5DB807C1792F3EE0081662A /* AFImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageRequestOperation.h; sourceTree = "<group>"; };
-		D5DB807D1792F3EE0081662A /* AFImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageRequestOperation.m; sourceTree = "<group>"; };
-		D5DB807E1792F3EE0081662A /* AFJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFJSONRequestOperation.h; sourceTree = "<group>"; };
-		D5DB807F1792F3EE0081662A /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFJSONRequestOperation.m; sourceTree = "<group>"; };
-		D5DB80801792F3EE0081662A /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
-		D5DB80811792F3EE0081662A /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
-		D5DB80821792F3EE0081662A /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
-		D5DB80831792F3EE0081662A /* AFPropertyListRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPropertyListRequestOperation.h; sourceTree = "<group>"; };
-		D5DB80841792F3EE0081662A /* AFPropertyListRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPropertyListRequestOperation.m; sourceTree = "<group>"; };
-		D5DB80851792F3EE0081662A /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
-		D5DB80861792F3EE0081662A /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
-		D5DB80871792F3EE0081662A /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFXMLRequestOperation.h; sourceTree = "<group>"; };
-		D5DB80881792F3EE0081662A /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
-		D5DB80891792F3EE0081662A /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
-		D5DB808A1792F3EE0081662A /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		D5DB808C1792F3EE0081662A /* PCLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCLineChartView.h; sourceTree = "<group>"; };
-		D5DB808D1792F3EE0081662A /* PCLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCLineChartView.m; sourceTree = "<group>"; };
-		D5DB808E1792F3EE0081662A /* PCPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCPieChart.h; sourceTree = "<group>"; };
-		D5DB808F1792F3EE0081662A /* PCPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCPieChart.m; sourceTree = "<group>"; };
-		D5DB80911792F3EE0081662A /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		D5DB80921792F3EE0081662A /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		D5DB80941792F3EE0081662A /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
 		D5DB80951792F3EE0081662A /* PPRevealSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevealSideViewController.m; sourceTree = "<group>"; };
 		D5DB80A31792F4DE0081662A /* OZLProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLProjectListViewController.h; path = ViewControllers/OZLProjectListViewController.h; sourceTree = "<group>"; };
@@ -538,16 +485,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2BC4DD86179928C80090F52C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2BC4DD8C179928C80090F52C /* SenTestingKit.framework in Frameworks */,
-				2BC4DD8D179928C80090F52C /* UIKit.framework in Frameworks */,
-				2BC4DD8E179928C80090F52C /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D5DB80531792F2BF0081662A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -558,6 +495,7 @@
 				D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */,
 				D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */,
 				D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */,
+				C295406F39D612BA1ED056BD /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,24 +552,6 @@
 			children = (
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		2BCF88091793A26A006FC859 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				2BCF880A1793A26A006FC859 /* MBProgressHUD.h */,
-				2BCF880B1793A26A006FC859 /* MBProgressHUD.m */,
-			);
-			path = MBProgressHUD;
-			sourceTree = "<group>";
-		};
-		2BCF880D1793ABA0006FC859 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				2BCF880E1793ABA0006FC859 /* Reachability.h */,
-				2BCF880F1793ABA0006FC859 /* Reachability.m */,
-			);
-			path = Reachability;
 			sourceTree = "<group>";
 		};
 		2BCF881A1793EF9F006FC859 /* Project */ = {
@@ -845,14 +765,25 @@
 			path = twg_iphone_toolbar_icons;
 			sourceTree = "<group>";
 		};
+		966038A2B746359B7E36B81D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				267E239DD59CF16F78B49079 /* Pods.debug.xcconfig */,
+				0ECA4D90281C24BB02A19D03 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D5DB804D1792F2BF0081662A = {
 			isa = PBXGroup;
 			children = (
+				D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */,
 				D5DB80761792F3EE0081662A /* Libs */,
 				D5DB805F1792F2BF0081662A /* RedmineMobile */,
 				2BC4DD8F179928C80090F52C /* RedmineMobileUnitTest */,
 				D5DB80581792F2BF0081662A /* Frameworks */,
 				D5DB80571792F2BF0081662A /* Products */,
+				966038A2B746359B7E36B81D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -860,7 +791,6 @@
 			isa = PBXGroup;
 			children = (
 				D5DB80561792F2BF0081662A /* RedmineMobile.app */,
-				2BC4DD8A179928C80090F52C /* RedmineMobileUnitTest.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -875,6 +805,7 @@
 				D5DB805B1792F2BF0081662A /* Foundation.framework */,
 				D5DB805D1792F2BF0081662A /* CoreGraphics.framework */,
 				2BC4DD8B179928C80090F52C /* SenTestingKit.framework */,
+				16B071924CA190A9546C03B3 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -914,60 +845,9 @@
 			isa = PBXGroup;
 			children = (
 				2B6F38231797A00A00D06F51 /* MLTableAlert */,
-				2BCF880D1793ABA0006FC859 /* Reachability */,
-				2BCF88091793A26A006FC859 /* MBProgressHUD */,
-				D5DB80771792F3EE0081662A /* AFNetworking */,
-				D5DB808B1792F3EE0081662A /* iOSPlot */,
-				D5DB80901792F3EE0081662A /* JSONKit */,
 				D5DB80931792F3EE0081662A /* PPRevealSideViewController */,
 			);
 			path = Libs;
-			sourceTree = "<group>";
-		};
-		D5DB80771792F3EE0081662A /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				D5DB80781792F3EE0081662A /* AFHTTPClient.h */,
-				D5DB80791792F3EE0081662A /* AFHTTPClient.m */,
-				D5DB807A1792F3EE0081662A /* AFHTTPRequestOperation.h */,
-				D5DB807B1792F3EE0081662A /* AFHTTPRequestOperation.m */,
-				D5DB807C1792F3EE0081662A /* AFImageRequestOperation.h */,
-				D5DB807D1792F3EE0081662A /* AFImageRequestOperation.m */,
-				D5DB807E1792F3EE0081662A /* AFJSONRequestOperation.h */,
-				D5DB807F1792F3EE0081662A /* AFJSONRequestOperation.m */,
-				D5DB80801792F3EE0081662A /* AFNetworkActivityIndicatorManager.h */,
-				D5DB80811792F3EE0081662A /* AFNetworkActivityIndicatorManager.m */,
-				D5DB80821792F3EE0081662A /* AFNetworking.h */,
-				D5DB80831792F3EE0081662A /* AFPropertyListRequestOperation.h */,
-				D5DB80841792F3EE0081662A /* AFPropertyListRequestOperation.m */,
-				D5DB80851792F3EE0081662A /* AFURLConnectionOperation.h */,
-				D5DB80861792F3EE0081662A /* AFURLConnectionOperation.m */,
-				D5DB80871792F3EE0081662A /* AFXMLRequestOperation.h */,
-				D5DB80881792F3EE0081662A /* AFXMLRequestOperation.m */,
-				D5DB80891792F3EE0081662A /* UIImageView+AFNetworking.h */,
-				D5DB808A1792F3EE0081662A /* UIImageView+AFNetworking.m */,
-			);
-			path = AFNetworking;
-			sourceTree = "<group>";
-		};
-		D5DB808B1792F3EE0081662A /* iOSPlot */ = {
-			isa = PBXGroup;
-			children = (
-				D5DB808C1792F3EE0081662A /* PCLineChartView.h */,
-				D5DB808D1792F3EE0081662A /* PCLineChartView.m */,
-				D5DB808E1792F3EE0081662A /* PCPieChart.h */,
-				D5DB808F1792F3EE0081662A /* PCPieChart.m */,
-			);
-			path = iOSPlot;
-			sourceTree = "<group>";
-		};
-		D5DB80901792F3EE0081662A /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				D5DB80911792F3EE0081662A /* JSONKit.h */,
-				D5DB80921792F3EE0081662A /* JSONKit.m */,
-			);
-			path = JSONKit;
 			sourceTree = "<group>";
 		};
 		D5DB80931792F3EE0081662A /* PPRevealSideViewController */ = {
@@ -1038,32 +918,15 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2BC4DD89179928C80090F52C /* RedmineMobileUnitTest */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2BC4DD99179928C80090F52C /* Build configuration list for PBXNativeTarget "RedmineMobileUnitTest" */;
-			buildPhases = (
-				2BC4DD85179928C80090F52C /* Sources */,
-				2BC4DD86179928C80090F52C /* Frameworks */,
-				2BC4DD87179928C80090F52C /* Resources */,
-				2BC4DD88179928C80090F52C /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2BC4DD9D17992A4D0090F52C /* PBXTargetDependency */,
-			);
-			name = RedmineMobileUnitTest;
-			productName = RedmineMobileUnitTest;
-			productReference = 2BC4DD8A179928C80090F52C /* RedmineMobileUnitTest.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 		D5DB80551792F2BF0081662A /* RedmineMobile */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D5DB80731792F2BF0081662A /* Build configuration list for PBXNativeTarget "RedmineMobile" */;
 			buildPhases = (
+				97F9368B5F3A4C5B446B3D65 /* Check Pods Manifest.lock */,
 				D5DB80521792F2BF0081662A /* Sources */,
 				D5DB80531792F2BF0081662A /* Frameworks */,
 				D5DB80541792F2BF0081662A /* Resources */,
+				D26A16C9BABD85D0AA8DA3BB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1081,7 +944,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = OZL;
-				LastUpgradeCheck = 0460;
+				LastTestingUpgradeCheck = 0710;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Lee Zhijie";
 			};
 			buildConfigurationList = D5DB80511792F2BF0081662A /* Build configuration list for PBXProject "RedmineMobile" */;
@@ -1097,20 +961,11 @@
 			projectRoot = "";
 			targets = (
 				D5DB80551792F2BF0081662A /* RedmineMobile */,
-				2BC4DD89179928C80090F52C /* RedmineMobileUnitTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		2BC4DD87179928C80090F52C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2BC4DD94179928C80090F52C /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D5DB80541792F2BF0081662A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1275,6 +1130,7 @@
 				2BEA49A917A117C3008DBAF9 /* icon_text_align_left.png in Resources */,
 				2BEA49AA17A117C3008DBAF9 /* icon_text_align_right.png in Resources */,
 				2BEA49AB17A117C3008DBAF9 /* icon_time.png in Resources */,
+				D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */,
 				2BEA49AC17A117C3008DBAF9 /* icon_timer.png in Resources */,
 				2BEA49AD17A117C3008DBAF9 /* icon_trash.png in Resources */,
 				2BEA49AE17A117C3008DBAF9 /* icon_twg.png in Resources */,
@@ -1302,48 +1158,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2BC4DD88179928C80090F52C /* ShellScript */ = {
+		97F9368B5F3A4C5B446B3D65 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D26A16C9BABD85D0AA8DA3BB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2BC4DD85179928C80090F52C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2BC4DD97179928C80090F52C /* RedmineMobileUnitTest.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D5DB80521792F2BF0081662A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D5DB80661792F2BF0081662A /* main.m in Sources */,
 				D5DB806A1792F2BF0081662A /* OZLAppDelegate.m in Sources */,
-				D5DB80961792F3EE0081662A /* AFHTTPClient.m in Sources */,
-				D5DB80971792F3EE0081662A /* AFHTTPRequestOperation.m in Sources */,
-				D5DB80981792F3EE0081662A /* AFImageRequestOperation.m in Sources */,
-				D5DB80991792F3EE0081662A /* AFJSONRequestOperation.m in Sources */,
-				D5DB809A1792F3EE0081662A /* AFNetworkActivityIndicatorManager.m in Sources */,
-				D5DB809B1792F3EE0081662A /* AFPropertyListRequestOperation.m in Sources */,
-				D5DB809C1792F3EE0081662A /* AFURLConnectionOperation.m in Sources */,
-				D5DB809D1792F3EE0081662A /* AFXMLRequestOperation.m in Sources */,
-				D5DB809E1792F3EE0081662A /* UIImageView+AFNetworking.m in Sources */,
-				D5DB809F1792F3EE0081662A /* PCLineChartView.m in Sources */,
-				D5DB80A01792F3EE0081662A /* PCPieChart.m in Sources */,
-				D5DB80A11792F3EE0081662A /* JSONKit.m in Sources */,
 				D5DB80A21792F3EE0081662A /* PPRevealSideViewController.m in Sources */,
 				D5DB80A61792F4DE0081662A /* OZLProjectListViewController.m in Sources */,
 				D5DB80AC1792F6980081662A /* OZLProjectViewController.m in Sources */,
@@ -1352,8 +1205,6 @@
 				D5DB80BA17930C830081662A /* OZLNetworkBase.m in Sources */,
 				D5DB80BD17930ECD0081662A /* OZLSingleton.m in Sources */,
 				D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */,
-				2BCF880C1793A26A006FC859 /* MBProgressHUD.m in Sources */,
-				2BCF88101793ABA0006FC859 /* Reachability.m in Sources */,
 				2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */,
 				2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */,
 				2BCF88271793F4AA006FC859 /* OZLModelIssueStatus.m in Sources */,
@@ -1377,14 +1228,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		2BC4DD9D17992A4D0090F52C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D5DB80551792F2BF0081662A /* RedmineMobile */;
-			targetProxy = 2BC4DD9C17992A4D0090F52C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		2BC4DD92179928C80090F52C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -1405,40 +1248,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		2BC4DD9A179928C80090F52C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RedmineMobile.app/RedmineMobile";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RedmineMobileUnitTest/RedmineMobileUnitTest-Prefix.pch";
-				INFOPLIST_FILE = "RedmineMobileUnitTest/RedmineMobileUnitTest-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		2BC4DD9B179928C80090F52C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RedmineMobile.app/RedmineMobile";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RedmineMobileUnitTest/RedmineMobileUnitTest-Prefix.pch";
-				INFOPLIST_FILE = "RedmineMobileUnitTest/RedmineMobileUnitTest-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
 		D5DB80711792F2BF0081662A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1453,6 +1262,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1464,7 +1274,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1489,7 +1299,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1499,11 +1309,13 @@
 		};
 		D5DB80741792F2BF0081662A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 267E239DD59CF16F78B49079 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RedmineMobile/RedmineMobile-Prefix.pch";
 				INFOPLIST_FILE = "RedmineMobile/RedmineMobile-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.zhijie.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1512,11 +1324,13 @@
 		};
 		D5DB80751792F2BF0081662A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0ECA4D90281C24BB02A19D03 /* Pods.release.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RedmineMobile/RedmineMobile-Prefix.pch";
 				INFOPLIST_FILE = "RedmineMobile/RedmineMobile-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.zhijie.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1526,15 +1340,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2BC4DD99179928C80090F52C /* Build configuration list for PBXNativeTarget "RedmineMobileUnitTest" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2BC4DD9A179928C80090F52C /* Debug */,
-				2BC4DD9B179928C80090F52C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		D5DB80511792F2BF0081662A /* Build configuration list for PBXProject "RedmineMobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -30,6 +30,8 @@
 
 @implementation OZLModelIssue
 
+@synthesize description=_description;
+
 -(id)initWithDictionary:(NSDictionary*)dic
 {
     self = [super init];

@@ -93,7 +93,7 @@ static OZLSingleton* sharedInstance = nil;
     [userdefaults setObject:redmineUserKey forKey:USER_DEFUALTS_REDMINE_USER_KEY];
     [userdefaults synchronize];    
 }
--(int)lastProjectID
+-(NSInteger)lastProjectID
 {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     return [userdefaults integerForKey:USER_DEFUALTS_LAST_PROJECT_ID];

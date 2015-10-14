@@ -1,0 +1,4 @@
+pod 'AFNetworking', "~> 1.x.x"
+pod 'Reachability'
+pod 'MBProgressHUD'
+pod 'iOSPlot'

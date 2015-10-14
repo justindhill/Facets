@@ -175,7 +175,7 @@
 
 
     UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:creator];
-    [self.navigationController presentModalViewController:nav animated:YES];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)viewDidUnload {

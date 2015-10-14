@@ -42,6 +42,8 @@
 
 @implementation OZLIssueDetailViewController
 
+@synthesize description=_description;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];

@@ -427,7 +427,7 @@
 #pragma mark picker view delegate and datasource
 - (void)pickerView:(UIPickerView *)pV didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    _doneProgressLabel.text = [NSString stringWithFormat:@"%d %%",row  * 10];
+    _doneProgressLabel.text = [NSString stringWithFormat:@"%ld %%", (long)(row * 10)];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -442,7 +442,7 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [NSString stringWithFormat:@"%d %%",row  * 10];
+    return [NSString stringWithFormat:@"%ld %%", (long)(row * 10)];
 }
 
 @end

@@ -42,7 +42,7 @@
     OZLProjectListViewController* projectList = [[OZLProjectListViewController alloc] initWithNibName:@"OZLProjectListViewController" bundle:nil];
     _navigationController = [[UINavigationController alloc] initWithRootViewController:projectList];
 
-    int lastProjectID = [[OZLSingleton sharedInstance] lastProjectID];
+    NSInteger lastProjectID = [[OZLSingleton sharedInstance] lastProjectID];
     if (lastProjectID < 0) {
         
     }else {

@@ -29,7 +29,6 @@
 #import "OZLNetwork.h"
 #import "OZLNetworkBase.h"
 #import "AFHTTPRequestOperation.h"
-#import "JSONKit.h"
 #import "OZLSingleton.h"
 
 @implementation OZLNetwork
