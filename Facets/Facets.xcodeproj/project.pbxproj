@@ -1375,7 +1375,7 @@
 				INFOPLIST_FILE = "Facets/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zhijie.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1396,7 +1396,7 @@
 				INFOPLIST_FILE = "Facets/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zhijie.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
