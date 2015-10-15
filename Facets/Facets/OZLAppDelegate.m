@@ -33,10 +33,19 @@
 #import "OZLAccountViewController.h"
 #import "OZLMainTabControllerViewController.h"
 
+#import <HockeySDK/HockeySDK.h>
+
 @implementation OZLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+#ifndef DEBUG
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"8d240e4921f15253d040d9347ad7d9ac"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    [[[BITHockeyManager sharedHockeyManager] authenticator] authenticateInstallation];
+#endif // DEBUG
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     OZLMainTabControllerViewController *mainVC = [[OZLMainTabControllerViewController alloc] init];
