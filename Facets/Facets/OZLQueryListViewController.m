@@ -66,7 +66,7 @@ NSString * const OZLQueryReuseIdentifier = @"query";
     
     [OZLNetwork getQueryListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
         if (error) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Fetch Error" message:[NSString stringWithFormat:@"Couldn't fetch the query list. \r%@", error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Fetch Error" message:[NSString stringWithFormat:@"Couldn't fetch the query list. \r\r%@", error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
             [weakSelf presentViewController:alert animated:YES completion:nil];
         } else {

@@ -1,3 +1,3 @@
-[submodule "RedmineMobile/Libs/OptionsMenu"]
-	path = RedmineMobile/Libs/OptionsMenu
+[submodule "Facets/Libs/OptionsMenu"]
+	path = Facets/Libs/OptionsMenu
 	url = git@github.com:justindhill/OptionsMenu.git

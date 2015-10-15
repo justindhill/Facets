@@ -461,23 +461,23 @@
 		D03D6C441BD0196A00A47E24 /* OZLQueryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLQueryListViewController.h; sourceTree = "<group>"; };
 		D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLQueryListViewController.m; sourceTree = "<group>"; };
 		D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OZLQueryListViewController.xib; sourceTree = "<group>"; };
-		D048013B1BCF30560047C5DE /* OZLIssueSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLIssueSummaryViewController.h; path = RedmineMobile/ViewControllers/OZLIssueSummaryViewController.h; sourceTree = SOURCE_ROOT; };
-		D048013C1BCF30560047C5DE /* OZLIssueSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLIssueSummaryViewController.m; path = RedmineMobile/ViewControllers/OZLIssueSummaryViewController.m; sourceTree = SOURCE_ROOT; };
-		D048013E1BCF31460047C5DE /* OZLIssueSummaryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OZLIssueSummaryView.xib; path = RedmineMobile/ViewControllers/OZLIssueSummaryView.xib; sourceTree = SOURCE_ROOT; };
+		D048013B1BCF30560047C5DE /* OZLIssueSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLIssueSummaryViewController.h; path = Facets/ViewControllers/OZLIssueSummaryViewController.h; sourceTree = SOURCE_ROOT; };
+		D048013C1BCF30560047C5DE /* OZLIssueSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLIssueSummaryViewController.m; path = Facets/ViewControllers/OZLIssueSummaryViewController.m; sourceTree = SOURCE_ROOT; };
+		D048013E1BCF31460047C5DE /* OZLIssueSummaryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OZLIssueSummaryView.xib; path = Facets/ViewControllers/OZLIssueSummaryView.xib; sourceTree = SOURCE_ROOT; };
 		D04801411BD004E50047C5DE /* CAPSOptionsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenu.swift; sourceTree = "<group>"; };
 		D04801421BD004E50047C5DE /* CAPSOptionsMenuAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuAction.swift; sourceTree = "<group>"; };
 		D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuButton.swift; sourceTree = "<group>"; };
 		D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLMainTabControllerViewController.h; path = ViewControllers/OZLMainTabControllerViewController.h; sourceTree = "<group>"; };
 		D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLMainTabControllerViewController.m; path = ViewControllers/OZLMainTabControllerViewController.m; sourceTree = "<group>"; };
 		D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
-		D5DB80561792F2BF0081662A /* RedmineMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RedmineMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5DB80561792F2BF0081662A /* Facets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Facets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5DB80591792F2BF0081662A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5DB805B1792F2BF0081662A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5DB805D1792F2BF0081662A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		D5DB80611792F2BF0081662A /* RedmineMobile-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RedmineMobile-Info.plist"; sourceTree = "<group>"; };
+		D5DB80611792F2BF0081662A /* Facets-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Facets-Info.plist"; sourceTree = "<group>"; };
 		D5DB80631792F2BF0081662A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D5DB80651792F2BF0081662A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D5DB80671792F2BF0081662A /* RedmineMobile-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RedmineMobile-Prefix.pch"; sourceTree = "<group>"; };
+		D5DB80671792F2BF0081662A /* Facets-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Facets-Prefix.pch"; sourceTree = "<group>"; };
 		D5DB80681792F2BF0081662A /* OZLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OZLAppDelegate.h; sourceTree = "<group>"; };
 		D5DB80691792F2BF0081662A /* OZLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OZLAppDelegate.m; sourceTree = "<group>"; };
 		D5DB806B1792F2BF0081662A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -821,7 +821,7 @@
 			isa = PBXGroup;
 			children = (
 				D5DB80761792F3EE0081662A /* Libs */,
-				D5DB805F1792F2BF0081662A /* RedmineMobile */,
+				D5DB805F1792F2BF0081662A /* Facets */,
 				2BC4DD8F179928C80090F52C /* RedmineMobileUnitTest */,
 				D5DB80581792F2BF0081662A /* Frameworks */,
 				D5DB80571792F2BF0081662A /* Products */,
@@ -832,7 +832,7 @@
 		D5DB80571792F2BF0081662A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D5DB80561792F2BF0081662A /* RedmineMobile.app */,
+				D5DB80561792F2BF0081662A /* Facets.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -852,7 +852,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D5DB805F1792F2BF0081662A /* RedmineMobile */ = {
+		D5DB805F1792F2BF0081662A /* Facets */ = {
 			isa = PBXGroup;
 			children = (
 				2BEA487B17A117C3008DBAF9 /* Resource */,
@@ -864,7 +864,7 @@
 				D5DB80691792F2BF0081662A /* OZLAppDelegate.m */,
 				D5DB80601792F2BF0081662A /* Supporting Files */,
 			);
-			path = RedmineMobile;
+			path = Facets;
 			sourceTree = "<group>";
 		};
 		D5DB80601792F2BF0081662A /* Supporting Files */ = {
@@ -873,10 +873,10 @@
 				D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */,
 				2B45384217A65DD100649D12 /* Icon@2x.png */,
 				2B45384017A65D7100649D12 /* Icon.png */,
-				D5DB80611792F2BF0081662A /* RedmineMobile-Info.plist */,
+				D5DB80611792F2BF0081662A /* Facets-Info.plist */,
 				D5DB80621792F2BF0081662A /* InfoPlist.strings */,
 				D5DB80651792F2BF0081662A /* main.m */,
-				D5DB80671792F2BF0081662A /* RedmineMobile-Prefix.pch */,
+				D5DB80671792F2BF0081662A /* Facets-Prefix.pch */,
 				D5DB806B1792F2BF0081662A /* Default.png */,
 				D5DB806D1792F2BF0081662A /* Default@2x.png */,
 				D5DB806F1792F2BF0081662A /* Default-568h@2x.png */,
@@ -957,9 +957,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D5DB80551792F2BF0081662A /* RedmineMobile */ = {
+		D5DB80551792F2BF0081662A /* Facets */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5DB80731792F2BF0081662A /* Build configuration list for PBXNativeTarget "RedmineMobile" */;
+			buildConfigurationList = D5DB80731792F2BF0081662A /* Build configuration list for PBXNativeTarget "Facets" */;
 			buildPhases = (
 				97F9368B5F3A4C5B446B3D65 /* Check Pods Manifest.lock */,
 				D5DB80521792F2BF0081662A /* Sources */,
@@ -971,9 +971,9 @@
 			);
 			dependencies = (
 			);
-			name = RedmineMobile;
+			name = Facets;
 			productName = RedmineMobile;
-			productReference = D5DB80561792F2BF0081662A /* RedmineMobile.app */;
+			productReference = D5DB80561792F2BF0081662A /* Facets.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -986,14 +986,14 @@
 				LastSwiftMigration = 0710;
 				LastTestingUpgradeCheck = 0710;
 				LastUpgradeCheck = 0710;
-				ORGANIZATIONNAME = "Lee Zhijie";
+				ORGANIZATIONNAME = "Justin Hill";
 				TargetAttributes = {
 					D5DB80551792F2BF0081662A = {
 						DevelopmentTeam = AJ5Q7E6DM4;
 					};
 				};
 			};
-			buildConfigurationList = D5DB80511792F2BF0081662A /* Build configuration list for PBXProject "RedmineMobile" */;
+			buildConfigurationList = D5DB80511792F2BF0081662A /* Build configuration list for PBXProject "Facets" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1005,7 +1005,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D5DB80551792F2BF0081662A /* RedmineMobile */,
+				D5DB80551792F2BF0081662A /* Facets */,
 			);
 		};
 /* End PBXProject section */
@@ -1371,12 +1371,12 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RedmineMobile/RedmineMobile-Prefix.pch";
-				INFOPLIST_FILE = "RedmineMobile/RedmineMobile-Info.plist";
+				GCC_PREFIX_HEADER = "Facets/Facets-Prefix.pch";
+				INFOPLIST_FILE = "Facets/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zhijie.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1392,12 +1392,12 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RedmineMobile/RedmineMobile-Prefix.pch";
-				INFOPLIST_FILE = "RedmineMobile/RedmineMobile-Info.plist";
+				GCC_PREFIX_HEADER = "Facets/Facets-Prefix.pch";
+				INFOPLIST_FILE = "Facets/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zhijie.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1407,7 +1407,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D5DB80511792F2BF0081662A /* Build configuration list for PBXProject "RedmineMobile" */ = {
+		D5DB80511792F2BF0081662A /* Build configuration list for PBXProject "Facets" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5DB80711792F2BF0081662A /* Debug */,
@@ -1416,7 +1416,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5DB80731792F2BF0081662A /* Build configuration list for PBXNativeTarget "RedmineMobile" */ = {
+		D5DB80731792F2BF0081662A /* Build configuration list for PBXNativeTarget "Facets" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5DB80741792F2BF0081662A /* Debug */,

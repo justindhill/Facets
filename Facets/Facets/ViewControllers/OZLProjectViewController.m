@@ -36,7 +36,7 @@
 #import "OZLIssueFilterViewController.h"
 #import "OZLSingleton.h"
 
-#import "RedmineMobile-Swift.h"
+#import "Facets-Swift.h"
 
 @interface OZLProjectViewController () {
     NSMutableArray* _issuesList;
