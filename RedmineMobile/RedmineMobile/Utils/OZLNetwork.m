@@ -471,8 +471,7 @@
 #pragma mark -
 #pragma mark tracker api
 // tracker
-+(void)getTrackerListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
++ (void)getTrackerListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
     NSString* path = @"/trackers.json";
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
@@ -502,6 +501,36 @@
     }];
 }
 
+#pragma mark - Queries
++ (void)getQueryListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
+    NSString* path = @"/queries.json";
+    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    if (accessKey.length > 0) {
+        [paramsDic setObject:accessKey forKey:@"key"];
+    }
+    
+    [[OZLNetworkBase sharedClient] setAuthorizationHeader];
+    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if (block) {
+            NSLog(@"the repsonse:%@",responseObject);
+            NSMutableArray* queries = [[NSMutableArray alloc] init];
+            
+            NSArray* dic = [responseObject objectForKey:@"queries"];
+            for (NSDictionary* p in dic) {
+                [queries addObject:[[OZLModelQuery alloc] initWithDictionary:p]];
+            }
+            block(queries,nil);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        if (block) {
+            block([NSArray array], error);
+        }
+    }];
+}
 
 #pragma mark -
 #pragma mark time entries

@@ -36,6 +36,7 @@
 #import "OZLIssueFilterViewController.h"
 #import "OZLSingleton.h"
 
+#import "RedmineMobile-Swift.h"
 
 @interface OZLProjectViewController () {
     NSMutableArray* _issuesList;
@@ -49,6 +50,7 @@
 }
 
 @property BOOL isFirstAppearance;
+@property CAPSOptionsMenu *optionsMenu;
 
 @end
 
@@ -71,9 +73,7 @@
 {
     [super viewDidLoad];
 
-    _editBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editIssueList:)];
     _doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(editIssueListDone:)];
-    [self.navigationItem setRightBarButtonItem:_editBtn];
 
     _HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:_HUD];
@@ -82,9 +82,24 @@
     [[OZLSingleton sharedInstance] setLastProjectID:_projectData.index];
 }
 
--(void) viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     if (self.isFirstAppearance) {
         [self reloadData];
+        
+        self.optionsMenu = [[CAPSOptionsMenu alloc] initWithViewController:self barButtonSystemItem:UIBarButtonSystemItemAction keepBarButtonAtEdge:NO];
+    
+        __weak OZLProjectViewController *weakSelf = self;
+        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Edit" handler:^(CAPSOptionsMenuAction * _Nonnull action) {
+            [weakSelf editIssueList:nil];
+        }]];
+        
+        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Sort" handler:^(CAPSOptionsMenuAction * _Nonnull action) {
+        }]];
+        
+        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Copy Link" handler:^(CAPSOptionsMenuAction * _Nonnull action) {
+        }]];
     }
     
     self.isFirstAppearance = NO;
@@ -114,23 +129,14 @@
 
     // prepare parameters
     OZLSingleton* singleton = [OZLSingleton sharedInstance];
+    
     // meaning of these values is defined in OZLIssueFilterViewController
     NSInteger filterType = [singleton issueListFilterType];
-    NSInteger sortType = [singleton issueListSortType];
-    NSInteger scendingType = [singleton issueListSortAscending];
-    if (filterType == 0) {// assigned to me
-        // TODO:
-    }else if(filterType == 1) {// open
-
-        [_issueListOption setObject:@"open" forKey:@"status_id"];
-
-    }else if(filterType == 2) {// reported by me
-        // TODO: 
-    }
     
-    NSArray* sortCol = @[@"id",@"tracker",@"status",@"priority",@"category",@"assigned_to_id",@"fixed_version",@"start_date",@"due_date",@"estimated_hours",@"done_ratio",@"updated_on"];
-    NSString* sortstring = [NSString stringWithFormat:@"%@%@",[sortCol objectAtIndex:sortType],(scendingType == 0 ? @"" : @":desc")];
-    [_issueListOption setObject:sortstring forKey:@"sort"];
+    if (filterType == 1) {
+        // open
+        [_issueListOption setObject:@"open" forKey:@"status_id"];
+    }
     
     [OZLNetwork getDetailForProject:_projectData.index withParams:nil andBlock:^(OZLModelProject *result, NSError *error) {
         if (error) {
@@ -364,11 +370,6 @@
     [self.navigationController pushViewController:creator animated:YES];
 }
 
-- (IBAction)onSortSetting:(id)sender {
-    OZLIssueFilterViewController* filter = [[OZLIssueFilterViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    [self.navigationController pushViewController:filter animated:YES];
-}
-
 - (IBAction)onShowInfo:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"OZLProjectInfoViewController" bundle:nil];
     OZLProjectInfoViewController* detail = [storyboard instantiateViewControllerWithIdentifier:@"OZLProjectInfoViewController"];
@@ -378,7 +379,7 @@
 }
 
 - (void)editIssueList:(id)sender {
-    if (![OZLSingleton isUserLoggedIn] ) {
+    if (![OZLSingleton isUserLoggedIn]) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"No available";
         _HUD.detailsLabelText = @"You need to log in to do this.";
@@ -393,6 +394,6 @@
 
 - (void)editIssueListDone:(id)sender {
     [self.tableView setEditing:NO animated:YES];
-    self.navigationItem.rightBarButtonItem = _editBtn;
+    self.navigationItem.rightBarButtonItem = self.optionsMenu.barItem;
 }
 @end

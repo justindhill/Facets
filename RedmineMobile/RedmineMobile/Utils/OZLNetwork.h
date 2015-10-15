@@ -65,6 +65,9 @@
 // tracker
 +(void)getTrackerListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block;
 
+// query list
++ (void)getQueryListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block;
+
 // time entries
 +(void)getTimeEntriesWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block;
 +(void)getTimeEntriesForIssueId:(int)issueid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block;

@@ -32,16 +32,9 @@
 #import "OZLConstants.h"
 #import "OZLNetwork.h"
 
-@interface OZLAccountViewController (){
-    float _sideviewOffset;
-}
-
-@end
-
 @implementation OZLAccountViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     _redmineHomeURL.text = [[OZLSingleton sharedInstance] redmineHomeURL];

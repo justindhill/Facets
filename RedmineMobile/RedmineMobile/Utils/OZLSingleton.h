@@ -31,6 +31,7 @@
 #import "OZLModelUser.h"
 #import "OZLModelIssueStatus.h"
 #import "OZLModelIssuePriority.h"
+#import "OZLModelQuery.h"
 
 @interface OZLSingleton : NSObject
 
