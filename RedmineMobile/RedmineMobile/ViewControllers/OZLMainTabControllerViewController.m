@@ -9,6 +9,7 @@
 #import "OZLMainTabControllerViewController.h"
 #import "OZLAccountViewController.h"
 #import "OZLProjectListViewController.h"
+#import "OZLProjectViewController.h"
 
 @interface OZLMainTabControllerViewController ()
 
@@ -40,26 +41,16 @@
         [OZLSingleton sharedInstance].redminePassword &&
         [OZLSingleton sharedInstance].redmineHomeURL) {
         
-        self.selectedViewController = self.projectListVC.navigationController;
+        if ([OZLSingleton sharedInstance].lastProjectID) {
+            OZLProjectViewController *project = [[OZLProjectViewController alloc] initWithNibName:@"OZLProjectViewController" bundle:nil];
+            self.selectedViewController = self.projectListVC.navigationController;
+        } else {
+            self.selectedViewController = self.projectListVC.navigationController;
+        }
     } else {
         
         self.selectedViewController = self.settingsVC.navigationController;
     }
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

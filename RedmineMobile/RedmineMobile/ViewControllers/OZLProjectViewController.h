@@ -29,7 +29,7 @@
 #import <UIKit/UIKit.h>
 #import "OZLModelProject.h"
 
-@interface OZLProjectViewController : UIViewController
+@interface OZLProjectViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UITableView *issuesTableview;
 @property (nonatomic,strong) OZLModelProject* projectData;
 - (IBAction)onNewIssue:(id)sender;

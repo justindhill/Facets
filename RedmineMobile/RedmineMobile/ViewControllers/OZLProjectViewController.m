@@ -48,6 +48,8 @@
     NSMutableDictionary* _issueListOption;
 }
 
+@property BOOL isFirstAppearance;
+
 @end
 
 @implementation OZLProjectViewController
@@ -56,14 +58,18 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.isFirstAppearance = YES;
+        
+        self.refreshControl = [[UIRefreshControl alloc] init];
+        [self.refreshControl addTarget:self action:@selector(refreshAction:) forControlEvents:UIControlEventValueChanged];
     }
+    
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self changeSideViewOffset:40];
 
     _editBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editIssueList:)];
     _doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(editIssueListDone:)];
@@ -76,18 +82,24 @@
     [[OZLSingleton sharedInstance] setLastProjectID:_projectData.index];
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
-    [self reloadData];
+-(void) viewWillAppear:(BOOL)animated {
+    if (self.isFirstAppearance) {
+        [self reloadData];
+    }
+    
+    self.isFirstAppearance = NO;
 }
 
--(void) reloadData
+- (void)reloadData
 {
     if (_projectData == nil) {
         NSLog(@"error: _projectData have to be set");
         return;
     }
-    [_HUD show:YES];
+    
+    if (!self.refreshControl.isRefreshing) {
+        [self.refreshControl beginRefreshing];
+    }
 
     if (_issueListOption == nil) {
         [self loadIssueRelatedData];
@@ -123,20 +135,20 @@
     [OZLNetwork getDetailForProject:_projectData.index withParams:nil andBlock:^(OZLModelProject *result, NSError *error) {
         if (error) {
             NSLog(@"error getDetailForProject: %@",error.description);
-            [_HUD hide:YES];
+            [self.refreshControl endRefreshing];
         }else {
             _projectData = result;
-            [self.navigationItem setTitle:_projectData.name];
 
             // load issues
             [OZLNetwork getIssueListForProject:_projectData.index withParams:_issueListOption andBlock:^(NSArray *result, NSError *error) {
                 if (error) {
                     NSLog(@"error getIssueListForProject: %@",error.description);
-                }else {
+                    
+                } else {
                     _issuesList = [[NSMutableArray alloc] initWithArray: result];
-                    [_issuesTableview reloadData];
+                    [self.tableView reloadData];
                 }
-                [_HUD hide:YES];
+                [self.refreshControl endRefreshing];
             }];
         }
     }];
@@ -253,16 +265,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidUnload {
-    [self setIssuesTableview:nil];
-    [super viewDidUnload];
-}
-
 #pragma mark - Accessors
 - (void)setProjectData:(OZLModelProject *)projectData {
     _projectData = projectData;
 
     self.navigationItem.title = _projectData.name;
+}
+
+#pragma mark - Actions
+- (void)refreshAction:(UIRefreshControl *)refreshControl {
+    [self reloadData];
 }
 
 #pragma mark - Table view data source
@@ -374,13 +386,13 @@
         [_HUD hide:YES afterDelay:2];
         return;
     }
-    [_issuesTableview setEditing:YES animated:YES];
+    [self.tableView setEditing:YES animated:YES];
     self.navigationItem.rightBarButtonItem = _doneBtn;
 
 }
 
 - (void)editIssueListDone:(id)sender {
-    [_issuesTableview setEditing:NO animated:YES];
+    [self.tableView setEditing:NO animated:YES];
     self.navigationItem.rightBarButtonItem = _editBtn;
 }
 @end
