@@ -38,7 +38,7 @@
 
 #import "Facets-Swift.h"
 
-@interface OZLProjectViewController () {
+@interface OZLProjectViewController () <UIViewControllerPreviewingDelegate> {
     NSMutableArray* _issuesList;
 
     float _sideviewOffset;
@@ -80,6 +80,15 @@
 	_HUD.labelText = @"Loading...";
     
     [[OZLSingleton sharedInstance] setLastProjectID:_projectData.index];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // Check for force touch feature, and add force touch/previewing capability.
+    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        [self registerForPreviewingWithDelegate:self sourceView:self.view];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -245,30 +254,8 @@
     }
 }
 
-
-- (void) viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-//    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preloadLeft) object:nil];
-//    [self performSelector:@selector(preloadLeft) withObject:nil afterDelay:0.3];
-
-}
-
-- (void) preloadLeft {
-//    OZLProjectListViewController *c = [[OZLProjectListViewController alloc] initWithNibName:@"OZLProjectListViewController" bundle:nil];
-//    [self.revealSideViewController preloadViewController:c
-//                                                 forSide:PPRevealSideDirectionLeft
-//                                              withOffset:_sideviewOffset];
-//    PP_RELEASE(c);
-}
-
 - (void)showProjectList {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Accessors
@@ -281,6 +268,21 @@
 #pragma mark - Actions
 - (void)refreshAction:(UIRefreshControl *)refreshControl {
     [self reloadData];
+}
+
+#pragma mark - Previewing
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    
+    UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueDetailViewController" bundle:nil];
+    OZLIssueDetailViewController* detail = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueDetailViewController"];
+    [detail setIssueData:[_issuesList objectAtIndex:indexPath.row]];
+    
+    return detail;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self showViewController:viewControllerToCommit sender:self];
 }
 
 #pragma mark - Table view data source
