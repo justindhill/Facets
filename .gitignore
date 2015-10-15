@@ -48,3 +48,6 @@ proguard/
 *.iws
 .idea/
 
+# CocoaPods
+Pods/
+Podfile.lock
