@@ -1377,7 +1377,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Facets;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "f736c825-f831-42c3-8256-7c5c193ebe2d";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1387,8 +1387,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0ECA4D90281C24BB02A19D03 /* Pods.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1398,7 +1398,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Facets;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "2d7b6dd2-cf56-4850-9317-e0c5696f1d14";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
