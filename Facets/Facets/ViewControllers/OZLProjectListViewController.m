@@ -65,7 +65,7 @@
     [self.navigationItem setRightBarButtonItem:_editBtn];
     [self.navigationItem setTitle:@"Projects"];
     
-    _projectList = [[OZLModelProject allObjects] sortedResultsUsingProperty:@"index" ascending:YES];
+    _projectList = [[OZLModelProject allObjects] sortedResultsUsingProperty:@"name" ascending:YES];
 }
 
 - (void)showProjectView:(OZLModelProject*)project

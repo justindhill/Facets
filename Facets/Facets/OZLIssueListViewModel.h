@@ -10,10 +10,16 @@
 
 @protocol OZLIssueListViewModel
 
+@property NSInteger projectId;
 @property NSString *title;
 @property (readonly) NSArray *issues;
+@property (readonly) BOOL shouldShowProjectSelector;
 
 - (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void(^)(NSError *error))completion;
 - (void)deleteIssueAtIndex:(NSInteger)index completion:(void(^)(NSError *error))completion;
+
+@optional
+@property (readonly) RLMResults *projects;
+- (void)refreshProjectList;
 
 @end

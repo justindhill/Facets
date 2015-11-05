@@ -25,7 +25,9 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
     return (self.activeCount > 0);
 }
 
-- (void)startSync {
+- (void)startSyncCompletion:(void(^)(NSError *error))completion {
+    
+#warning This is gonna need a lot of love when we start syncing more stuff about the server.
     
     __weak OZLServerSync *weakSelf = self;
     [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidBeginNotification object:nil];
@@ -38,7 +40,24 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
             [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidEndNotification object:nil];
         }
         
+        BOOL updateCurrentProjectId = ([OZLSingleton sharedInstance].currentProjectID == NSNotFound);
+        if ([OZLSingleton sharedInstance].currentProjectID != NSNotFound) {
+            // Make sure the current project still exists
+            if (![OZLModelProject objectForPrimaryKey:@([OZLSingleton sharedInstance].currentProjectID)]) {
+                updateCurrentProjectId = YES;
+            }
+        }
+        
+        if (updateCurrentProjectId) {
+            OZLModelProject *newCurrentProject = [[OZLModelProject allObjects] sortedResultsUsingProperty:@"name" ascending:YES].firstObject;
+            [OZLSingleton sharedInstance].currentProjectID = newCurrentProject ? newCurrentProject.index : NSNotFound;
+        }
+        
         weakSelf.activeCount -= 1;
+        
+        if (completion) {
+            completion(error);
+        }
     }];
 }
 

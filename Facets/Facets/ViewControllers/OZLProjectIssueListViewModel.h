@@ -10,6 +10,4 @@
 
 @interface OZLProjectIssueListViewModel : NSObject <OZLIssueListViewModel>
 
-@property NSInteger projectId;
-
 @end

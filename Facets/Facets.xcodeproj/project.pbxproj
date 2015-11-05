@@ -202,10 +202,12 @@
 		2BEA49BC17A117C3008DBAF9 /* icon_window_lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA491B17A117C3008DBAF9 /* icon_window_lock.png */; };
 		2BEA49BD17A117C3008DBAF9 /* icon_zoom_in.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA491C17A117C3008DBAF9 /* icon_zoom_in.png */; };
 		2BEA49BE17A117C3008DBAF9 /* icon_zoom_out.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BEA491D17A117C3008DBAF9 /* icon_zoom_out.png */; };
-		6BCA4383604AEEF2E1AFA7BC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C5E9BA6617EAD9FEAB5308 /* libPods.a */; };
 		D01F9B8F1BEB23FA005B2ED0 /* OZLServerSync.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */; };
 		D01F9B921BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B911BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.m */; };
 		D01F9B981BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B971BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m */; };
+		D01F9B9C1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D01F9B9A1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle */; };
+		D01F9B9D1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B9B1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift */; };
+		D01F9BAE1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9BAD1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m */; };
 		D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */; };
 		D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */; };
 		D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */; };
@@ -235,6 +237,7 @@
 		D5DB80BA17930C830081662A /* OZLNetworkBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80B917930C830081662A /* OZLNetworkBase.m */; };
 		D5DB80BD17930ECD0081662A /* OZLSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80BC17930ECD0081662A /* OZLSingleton.m */; };
 		D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80C117931C8B0081662A /* OZLModelProject.m */; };
+		F355565693E8EE2EBAB48628 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C163F9F68F6FD074DF343739 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -459,6 +462,7 @@
 		2BEA491B17A117C3008DBAF9 /* icon_window_lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_window_lock.png; sourceTree = "<group>"; };
 		2BEA491C17A117C3008DBAF9 /* icon_zoom_in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_zoom_in.png; sourceTree = "<group>"; };
 		2BEA491D17A117C3008DBAF9 /* icon_zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_zoom_out.png; sourceTree = "<group>"; };
+		C163F9F68F6FD074DF343739 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01F9B8D1BEB23FA005B2ED0 /* OZLServerSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLServerSync.h; path = Utils/OZLServerSync.h; sourceTree = "<group>"; };
 		D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLServerSync.m; path = Utils/OZLServerSync.m; sourceTree = "<group>"; };
 		D01F9B901BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLProjectIssueListViewModel.h; path = ViewControllers/OZLProjectIssueListViewModel.h; sourceTree = "<group>"; };
@@ -466,6 +470,10 @@
 		D01F9B931BEB2B4F005B2ED0 /* OZLIssueListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueListViewModel.h; sourceTree = "<group>"; };
 		D01F9B961BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLQueriesIssueListViewModel.h; path = ViewControllers/OZLQueriesIssueListViewModel.h; sourceTree = "<group>"; };
 		D01F9B971BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLQueriesIssueListViewModel.m; path = ViewControllers/OZLQueriesIssueListViewModel.m; sourceTree = "<group>"; };
+		D01F9B9A1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BTNavigationDropdownMenu.bundle; sourceTree = "<group>"; };
+		D01F9B9B1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTNavigationDropdownMenu.swift; sourceTree = "<group>"; };
+		D01F9BAC1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+OZLExtensions.h"; sourceTree = "<group>"; };
+		D01F9BAD1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+OZLExtensions.m"; sourceTree = "<group>"; };
 		D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelQuery.h; path = Models/OZLModelQuery.h; sourceTree = "<group>"; };
 		D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelQuery.m; path = Models/OZLModelQuery.m; sourceTree = "<group>"; };
 		D03D6C441BD0196A00A47E24 /* OZLQueryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLQueryListViewController.h; sourceTree = "<group>"; };
@@ -510,7 +518,6 @@
 		D5DB80BC17930ECD0081662A /* OZLSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLSingleton.m; path = Utils/OZLSingleton.m; sourceTree = "<group>"; };
 		D5DB80C017931C8B0081662A /* OZLModelProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelProject.h; path = Models/OZLModelProject.h; sourceTree = "<group>"; };
 		D5DB80C117931C8B0081662A /* OZLModelProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelProject.m; path = Models/OZLModelProject.m; sourceTree = "<group>"; };
-		F8C5E9BA6617EAD9FEAB5308 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -524,7 +531,7 @@
 				D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */,
 				D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */,
 				D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */,
-				6BCA4383604AEEF2E1AFA7BC /* libPods.a in Frameworks */,
+				F355565693E8EE2EBAB48628 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +810,26 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D01F9B991BEBC107005B2ED0 /* BTNavigationDropdownMenu */ = {
+			isa = PBXGroup;
+			children = (
+				D01F9B9A1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle */,
+				D01F9B9B1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift */,
+			);
+			name = BTNavigationDropdownMenu;
+			path = BTNavigationDropdownMenu/Source;
+			sourceTree = "<group>";
+		};
+		D01F9BAB1BEBC4D9005B2ED0 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D01F9BAC1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.h */,
+				D01F9BAD1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m */,
+			);
+			name = Categories;
+			path = Utils/Categories;
+			sourceTree = "<group>";
+		};
 		D03D6C431BD0194B00A47E24 /* Query List */ = {
 			isa = PBXGroup;
 			children = (
@@ -869,7 +896,7 @@
 				D5DB805B1792F2BF0081662A /* Foundation.framework */,
 				D5DB805D1792F2BF0081662A /* CoreGraphics.framework */,
 				2BC4DD8B179928C80090F52C /* SenTestingKit.framework */,
-				F8C5E9BA6617EAD9FEAB5308 /* libPods.a */,
+				C163F9F68F6FD074DF343739 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -910,6 +937,7 @@
 			isa = PBXGroup;
 			children = (
 				D04801401BD004E50047C5DE /* OptionsMenu */,
+				D01F9B991BEBC107005B2ED0 /* BTNavigationDropdownMenu */,
 				2B6F38231797A00A00D06F51 /* MLTableAlert */,
 			);
 			path = Libs;
@@ -934,6 +962,7 @@
 		D5DB80AE1793008F0081662A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D01F9BAB1BEBC4D9005B2ED0 /* Categories */,
 				D5DB80AF179300B90081662A /* OZLNetwork.h */,
 				D5DB80B0179300B90081662A /* OZLNetwork.m */,
 				D5DB80B817930C830081662A /* OZLNetworkBase.h */,
@@ -1137,6 +1166,7 @@
 				D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */,
 				2BEA496817A117C3008DBAF9 /* icon_font_regular.png in Resources */,
 				2BEA496917A117C3008DBAF9 /* icon_font_underline.png in Resources */,
+				D01F9B9C1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle in Resources */,
 				2BEA496A17A117C3008DBAF9 /* icon_fonts.png in Resources */,
 				2BEA496B17A117C3008DBAF9 /* icon_forum.png in Resources */,
 				2BEA496C17A117C3008DBAF9 /* icon_frame.png in Resources */,
@@ -1302,6 +1332,7 @@
 				2BCF88271793F4AA006FC859 /* OZLModelIssueStatus.m in Sources */,
 				2BCF882A1793F4C9006FC859 /* OZLModelIssuePriority.m in Sources */,
 				D048013D1BCF30560047C5DE /* OZLIssueSummaryViewController.m in Sources */,
+				D01F9BAE1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m in Sources */,
 				D01F9B921BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.m in Sources */,
 				2BCF88301793F5CE006FC859 /* OZLModelUser.m in Sources */,
 				D04801441BD004E50047C5DE /* CAPSOptionsMenu.swift in Sources */,
@@ -1312,6 +1343,7 @@
 				2B8A11E217963CE500906D34 /* OZLIssueDetailViewController.m in Sources */,
 				D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */,
 				2B62D0E81796A8D800AC3C19 /* OZLIssueFilterViewController.m in Sources */,
+				D01F9B9D1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift in Sources */,
 				2B6F38371797A00A00D06F51 /* MLTableAlert.m in Sources */,
 				2BCC0FCF179D5458003DFB44 /* OZLIssueHistoryViewController.m in Sources */,
 				D04801461BD004E50047C5DE /* CAPSOptionsMenuButton.swift in Sources */,
@@ -1413,13 +1445,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 2;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Facets/Facets-Prefix.pch";
 				INFOPLIST_FILE = "Facets/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "f736c825-f831-42c3-8256-7c5c193ebe2d";
@@ -1435,13 +1467,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 2;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Facets/Facets-Prefix.pch";
 				INFOPLIST_FILE = "Facets/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "2d7b6dd2-cf56-4850-9317-e0c5696f1d14";

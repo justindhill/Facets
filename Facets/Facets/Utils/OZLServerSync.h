@@ -15,6 +15,6 @@ extern NSString * const OZLServerSyncDidEndNotification;
 @interface OZLServerSync : NSObject
 
 @property (readonly) BOOL isSyncing;
-- (void)startSync;
+- (void)startSyncCompletion:(void(^)(NSError *error))completion;
 
 @end

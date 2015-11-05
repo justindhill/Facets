@@ -28,7 +28,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class OZLAccountViewController;
+
+@protocol OZLAccountViewControllerDelegate <NSObject>
+
+- (void)accountViewControllerDidSuccessfullyAuthenticate:(OZLAccountViewController *)account shouldTransitionToIssues:(BOOL)shouldTransition;
+
+@end
+
 @interface OZLAccountViewController : UIViewController
+
+@property (weak) id<OZLAccountViewControllerDelegate> delegate;
+
+@property BOOL isFirstLogin;
 
 @property (strong, nonatomic) IBOutlet UITextField *redmineHomeURL;
 @property (strong, nonatomic) IBOutlet UITextField *redmineUserKey;

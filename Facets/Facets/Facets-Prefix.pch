@@ -15,3 +15,5 @@
 
 #import <Realm/Realm.h>
 #import "OZLSingleton.h"
+
+#import "UIFont+OZLExtensions.h"

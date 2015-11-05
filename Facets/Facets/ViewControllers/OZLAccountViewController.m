@@ -31,6 +31,7 @@
 #import "OZLSingleton.h"
 #import "OZLConstants.h"
 #import "OZLNetwork.h"
+#import "OZLModelProject.h"
 
 #import <AFNetworking/AFNetworking.h>
 #import <MBProgressHUD/MBProgressHUD.h>
@@ -77,7 +78,10 @@
             [[OZLSingleton sharedInstance] setRedminePassword:_password.text];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REDMINE_ACCOUNT_CHANGED object:nil];
             
-            [[OZLSingleton sharedInstance].serverSync startSync];
+            [[OZLSingleton sharedInstance].serverSync startSyncCompletion:^(NSError *error) {
+                [weakSelf.delegate accountViewControllerDidSuccessfullyAuthenticate:weakSelf shouldTransitionToIssues:weakSelf.isFirstLogin];
+                weakSelf.isFirstLogin = NO;
+            }];
         }
         
         [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];

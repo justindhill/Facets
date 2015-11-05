@@ -75,25 +75,14 @@
     _HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:_HUD];
 	_HUD.labelText = @"Loading...";
-    
-    [[OZLSingleton sharedInstance] setLastProjectID:_projectData.index];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    // Check for force touch feature, and add force touch/previewing capability.
-    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        [self registerForPreviewingWithDelegate:self sourceView:self.view];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.viewModel.projectId = [OZLSingleton sharedInstance].currentProjectID;
+    
     if (self.isFirstAppearance) {
-        [self reloadData];
-        
         self.optionsMenu = [[CAPSOptionsMenu alloc] initWithViewController:self barButtonSystemItem:UIBarButtonSystemItemAction keepBarButtonAtEdge:NO];
     
         __weak OZLIssueListViewController *weakSelf = self;
@@ -106,9 +95,51 @@
         
         [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Copy Link" handler:^(CAPSOptionsMenuAction * _Nonnull action) {
         }]];
+        
+        [self refreshProjectSelector];
+    }
+    
+    [self reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // Check for force touch feature, and add force touch/previewing capability.
+    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        [self registerForPreviewingWithDelegate:self sourceView:self.view];
+    }
+    
+    if (!self.isFirstAppearance) {
+        [self refreshProjectSelector];
     }
     
     self.isFirstAppearance = NO;
+}
+
+
+- (void)refreshProjectSelector {
+    if (self.viewModel.shouldShowProjectSelector) {
+        //        NSAssert([self.viewModel respondsToSelector:@selector(refreshProjectList)], @"View model states we should show project selector, but refreshProjectList isn't implemented");
+        [self.viewModel refreshProjectList];
+        
+        NSMutableArray *titlesArray = [NSMutableArray arrayWithCapacity:self.viewModel.projects.count];
+        for (OZLModelProject *project in self.viewModel.projects) {
+            [titlesArray addObject:project.name];
+        }
+        
+        // BTNavigationDropdownMenu must be initialized with its items, so we have to re-initialize it every time we want to
+        // change the items. Blech.
+        BTNavigationDropdownMenu *dropdown = [[BTNavigationDropdownMenu alloc] initWithTitle:self.viewModel.title items:titlesArray];
+        dropdown.cellTextLabelFont = [UIFont OZLMediumSystemFontOfSize:17];
+        
+        __weak OZLIssueListViewController *weakSelf = self;
+        dropdown.didSelectItemAtIndexHandler = ^(NSInteger index) {
+            [weakSelf didSelectProjectAtIndex:index];
+        };
+        
+        self.navigationItem.titleView = dropdown;
+    }
 }
 
 - (void)reloadData
@@ -128,16 +159,35 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - Accessors
-- (void)setProjectData:(OZLModelProject *)projectData {
-    _projectData = projectData;
-
-    self.navigationItem.title = _projectData.name;
-}
-
 #pragma mark - Actions
 - (void)refreshAction:(UIRefreshControl *)refreshControl {
     [self reloadData];
+}
+
+#pragma mark - Project selector
+- (void)didSelectProjectAtIndex:(NSInteger)index {
+    OZLModelProject *project = self.viewModel.projects[index];
+    
+    self.viewModel.projectId = project.index;
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.animationType = MBProgressHUDAnimationZoom;
+    
+    __weak OZLIssueListViewController *weakSelf = self;
+    [self.viewModel loadIssuesSortedBy:nil ascending:NO completion:^(NSError *error) {
+        
+        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+        
+        if (error) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Couldn't load issue list" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            
+            [weakSelf presentViewController:alert animated:NO completion:nil];
+            
+        } else {
+            [weakSelf.tableView reloadData];
+        }
+    }];
 }
 
 #pragma mark - Previewing

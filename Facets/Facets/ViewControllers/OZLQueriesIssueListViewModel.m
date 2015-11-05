@@ -20,6 +20,10 @@
 @synthesize title;
 @synthesize issues;
 
+- (BOOL)shouldShowProjectSelector {
+    return NO;
+}
+
 - (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void (^)(NSError *))completion {
     __weak OZLQueriesIssueListViewModel *weakSelf = self;
     [[OZLNetwork sharedInstance] getIssueListForQueryId:self.queryId projectId:self.projectId withParams:nil andBlock:^(NSArray *result, NSError *error) {

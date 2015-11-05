@@ -13,40 +13,51 @@
 @interface OZLProjectIssueListViewModel ()
 
 @property NSMutableArray *issues;
+@property RLMResults *projects;
 
 @end
 
 @implementation OZLProjectIssueListViewModel
 
+@synthesize projectId=_projectId;
 @synthesize title;
 @synthesize issues;
+@synthesize projects;
+
+- (BOOL)shouldShowProjectSelector {
+    return YES;
+}
+
+- (void)refreshProjectList {
+    self.projects = [[OZLModelProject allObjects] sortedResultsUsingProperty:@"name" ascending:YES];
+}
+
+- (NSString *)title {
+    return [OZLModelProject objectForPrimaryKey:@(self.projectId)].name;
+}
+
+- (void)setTitle:(NSString *)title {
+    NSAssert(NO, @"This issue list view model doesn't support setting a custom title");
+}
+
+- (void)setProjectId:(NSInteger)projectId {
+    _projectId = projectId;
+    [OZLSingleton sharedInstance].currentProjectID = projectId;
+}
 
 - (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void (^)(NSError *))completion {
     
-    // TODO: issue filter not working yet
-
-    // prepare parameters
-    OZLSingleton* singleton = [OZLSingleton sharedInstance];
-    
     __weak OZLProjectIssueListViewModel *weakSelf = self;
-    [[OZLNetwork sharedInstance] getDetailForProject:self.projectId withParams:nil andBlock:^(OZLModelProject *result, NSError *error) {
-        if (error) {
-            NSLog(@"error getDetailForProject: %@",error.description);
-            completion(error);
-        } else {
-            weakSelf.title = result.name;
 
-            // load issues
-            [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId withParams:nil andBlock:^(NSArray *result, NSError *error) {
-                if (error) {
-                    NSLog(@"error getIssueListForProject: %@",error.description);
-                    completion(error);
-                    
-                } else {
-                    weakSelf.issues = [result mutableCopy];
-                    completion(nil);
-                }
-            }];
+    // load issues
+    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId withParams:nil andBlock:^(NSArray *result, NSError *error) {
+        if (error) {
+            NSLog(@"error getIssueListForProject: %@",error.description);
+            completion(error);
+            
+        } else {
+            weakSelf.issues = [result mutableCopy];
+            completion(nil);
         }
     }];
 }

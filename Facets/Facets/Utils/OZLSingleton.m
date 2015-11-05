@@ -67,7 +67,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
         NSDictionary *dic = @{
             USER_DEFAULTS_REDMINE_HOME_URL:   @"http://demo.redmine.org",
             USER_DEFAULTS_REDMINE_USER_KEY:   @"",
-            USER_DEFAULTS_LAST_PROJECT_ID:    @(-1),
+            USER_DEFAULTS_LAST_PROJECT_ID:    @(NSNotFound),
             USER_DEFAULTS_REDMINE_USER_NAME:  @"",
             USER_DEFAULTS_REDMINE_PASSWORD:   @"",
             USER_DEFAULTS_ISSUE_LIST_FILTER:  @0,
@@ -111,12 +111,12 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     [userdefaults setObject:redmineUserKey forKey:USER_DEFAULTS_REDMINE_USER_KEY];
     [userdefaults synchronize];    
 }
-- (NSInteger)lastProjectID
+- (NSInteger)currentProjectID
 {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     return [userdefaults integerForKey:USER_DEFAULTS_LAST_PROJECT_ID];
 }
-- (void)setLastProjectID:(NSInteger)projectid {
+- (void)setCurrentProjectID:(NSInteger)projectid {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setInteger:projectid forKey:USER_DEFAULTS_LAST_PROJECT_ID];
     [userdefaults synchronize];
@@ -225,7 +225,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     if (self.isUserLoggedIn) {
-        [self.serverSync startSync];
+        [self.serverSync startSyncCompletion:nil];
     }
 }
 
