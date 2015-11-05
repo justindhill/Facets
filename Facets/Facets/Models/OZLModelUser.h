@@ -30,7 +30,7 @@
 
 @interface OZLModelUser : NSObject
 
-@property(nonatomic) int index;
+@property(nonatomic) NSInteger index;
 @property(nonatomic, strong) NSString* login;
 @property(nonatomic, strong) NSString* firstname;
 @property(nonatomic, strong) NSString* lastname;

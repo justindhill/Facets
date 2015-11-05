@@ -113,7 +113,7 @@
         _entry.createdOn = _dateLabel.text;
     }
 
-    [OZLNetwork createTimeEntry:_entry withParams:nil andBlock:^(BOOL success, NSError *error){
+    [[OZLNetwork sharedInstance] createTimeEntry:_entry withParams:nil andBlock:^(BOOL success, NSError *error){
         if (error) {
             NSLog(@"log time error: %@",error.description);
             _HUD.mode = MBProgressHUDModeText;
@@ -194,9 +194,9 @@
 
     if (_hours.isFirstResponder) {
 
-        NSString* timeStr = [NSString stringWithFormat:@"%d Mins",(int)datepicker.countDownDuration/60];
+        NSString* timeStr = [NSString stringWithFormat:@"%ld Mins",(NSInteger)datepicker.countDownDuration/60];
         _hours.text = timeStr;
-        _hourValue = (int)(datepicker.countDownDuration/3600.f);
+        _hourValue = (NSInteger)(datepicker.countDownDuration/3600.f);
     }else {
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
 

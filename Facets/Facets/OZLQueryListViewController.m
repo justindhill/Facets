@@ -8,6 +8,8 @@
 
 #import "OZLQueryListViewController.h"
 #import "OZLNetwork.h"
+#import "OZLQueriesIssueListViewModel.h"
+#import "OZLIssueListViewController.h"
 
 @interface OZLQueryListViewController ()
 
@@ -57,6 +59,19 @@ NSString * const OZLQueryReuseIdentifier = @"query";
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    OZLModelQuery *query = self.queries[indexPath.row];
+    
+    OZLQueriesIssueListViewModel *vm = [[OZLQueriesIssueListViewModel alloc] init];
+    vm.title = query.name;
+    vm.projectId = query.projectId;
+    vm.queryId = query.queryId;
+    
+    OZLIssueListViewController *vc = [[OZLIssueListViewController alloc] initWithNibName:@"OZLIssueListViewController" bundle:nil];
+    vc.viewModel = vm;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (void)refreshData {
     if (!self.refreshControl.isRefreshing) {
         [self.refreshControl beginRefreshing];
@@ -64,7 +79,7 @@ NSString * const OZLQueryReuseIdentifier = @"query";
     
     __weak OZLQueryListViewController *weakSelf = self;
     
-    [OZLNetwork getQueryListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
+    [[OZLNetwork sharedInstance] getQueryListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
         if (error) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Fetch Error" message:[NSString stringWithFormat:@"Couldn't fetch the query list. \r\r%@", error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];

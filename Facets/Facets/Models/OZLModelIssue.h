@@ -35,9 +35,9 @@
 
 @interface OZLModelIssue : NSObject
 
-@property(nonatomic) int index;
-@property(nonatomic) int projectId;
-@property(nonatomic) int parentIssueId;
+@property(nonatomic) NSInteger index;
+@property(nonatomic) NSInteger projectId;
+@property(nonatomic) NSInteger parentIssueId;
 @property(nonatomic,strong) OZLModelTracker* tracker;
 @property(nonatomic,strong) OZLModelUser* author;
 @property(nonatomic,strong) OZLModelUser* assignedTo;

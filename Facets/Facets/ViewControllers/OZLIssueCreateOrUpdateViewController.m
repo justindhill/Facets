@@ -40,7 +40,7 @@
 
     NSDate* _currentStartDate;
     NSDate* _currentDueDate;
-    int _currentEstimatedTime;//minutes
+    NSInteger _currentEstimatedTime;//minutes
 
     MBProgressHUD* _HUD;
 }
@@ -142,7 +142,7 @@
             _dueDateLabel.text = _issueData.dueDate;
         }
         _estimatedHoursLabel.text = [NSString stringWithFormat:@"%f",_issueData.estimatedHours];
-        _doneProgressLabel.text = [NSString stringWithFormat:@"%d %%",(int)_issueData.doneRatio];
+        _doneProgressLabel.text = [NSString stringWithFormat:@"%ld %%",(long)_issueData.doneRatio];
         
     }else if(_viewMode == OZLIssueInfoViewModeCreate){
         _issueData = [[OZLModelIssue alloc] init];
@@ -215,7 +215,7 @@
     if (_viewMode == OZLIssueInfoViewModeEdit) {
         _HUD.labelText = @"Updating Issue ...";
         [_HUD show:YES];
-        [OZLNetwork updateIssue:_issueData withParams:nil andBlock:^(BOOL success, NSError *error){
+        [[OZLNetwork sharedInstance] updateIssue:_issueData withParams:nil andBlock:^(BOOL success, NSError *error){
             if (error) {
                 NSLog(@"update issue error: %@",error.description);
                 _HUD.mode = MBProgressHUDModeText;
@@ -230,7 +230,7 @@
     }else if(_viewMode == OZLIssueInfoViewModeCreate){
         _HUD.labelText = @"Creating New Issue ...";
         [_HUD show:YES];
-        [OZLNetwork createIssue:_issueData withParams:nil andBlock:^(BOOL success, NSError *error){
+        [[OZLNetwork sharedInstance] createIssue:_issueData withParams:nil andBlock:^(BOOL success, NSError *error){
             [_HUD hide:YES];
             
             if (error) {
@@ -369,10 +369,10 @@
     if (section == 0) {
         NSString* tip ;
         if (_viewMode == OZLIssueInfoViewModeEdit) {
-            tip = [NSString stringWithFormat:@"Update issue #%d",_issueData.index];
+            tip = [NSString stringWithFormat:@"Update issue #%ld",(long)_issueData.index];
         }else if(_viewMode == OZLIssueInfoViewModeCreate){
             if (_parentIssue) {
-                tip = [NSString stringWithFormat:@"Add sub issue to #%d",_parentIssue.index];
+                tip = [NSString stringWithFormat:@"Add sub issue to #%ld",(long)_parentIssue.index];
             }else {
                 tip = [NSString stringWithFormat:@"Add issue to project:%@",_parentProject.name];
             }
@@ -400,9 +400,9 @@
 
     if (_estimatedHoursLabel.isFirstResponder) {
 
-         NSString* timeStr = [NSString stringWithFormat:@"%d Mins",(int)datepicker.countDownDuration/60];
+         NSString* timeStr = [NSString stringWithFormat:@"%ld Mins",(NSInteger)datepicker.countDownDuration/60];
         _estimatedHoursLabel.text = timeStr;
-        _currentEstimatedTime = (int)datepicker.countDownDuration/60;
+        _currentEstimatedTime = (NSInteger)datepicker.countDownDuration/60;
     }else {
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         

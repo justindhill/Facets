@@ -28,19 +28,19 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OZLModelProject : NSObject
+@interface OZLModelProject : RLMObject
 
-@property(nonatomic) int index;
-@property(nonatomic,strong) NSString* identifier;
-@property(nonatomic,strong) NSString* description;
-@property(nonatomic,strong) NSString* name;
-@property(nonatomic) int parentId;
-@property(nonatomic) BOOL isPublic;
-@property(nonatomic,strong) NSString* homepage;
-@property(nonatomic,strong) NSString* createdOn;
-@property(nonatomic,strong) NSString* updatedOn;
+@property (nonatomic) NSInteger index;
+@property (nonatomic,strong) NSString* identifier;
+@property (nonatomic,strong) NSString* description;
+@property (nonatomic,strong) NSString* name;
+@property (nonatomic) NSInteger parentId;
+@property (nonatomic) BOOL isPublic;
+@property (nonatomic,strong) NSString* homepage;
+@property (nonatomic,strong) NSString* createdOn;
+@property (nonatomic,strong) NSString* updatedOn;
 
--(id)initWithDictionary:(NSDictionary*)dic;
--(NSMutableDictionary*) toParametersDic;
+- (id)initWithDictionary:(NSDictionary*)dic;
+- (NSMutableDictionary*) toParametersDic;
 
 @end

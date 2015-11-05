@@ -96,16 +96,16 @@
 {
     NSMutableDictionary* issueData = [[NSMutableDictionary alloc] init];
     if (_projectId > 0) {
-        [issueData setObject:[NSNumber numberWithInt:_projectId] forKey:@"project_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_projectId] forKey:@"project_id"];
     }
     if (_tracker && _tracker.index > 0) {
-        [issueData setObject:[NSNumber numberWithInt:_tracker.index] forKey:@"tracker_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_tracker.index] forKey:@"tracker_id"];
     }
     if (_status && _status.index > 0) {
-        [issueData setObject:[NSNumber numberWithInt:_status.index] forKey:@"status_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_status.index] forKey:@"status_id"];
     }
     if (_priority && _priority.init > 0) {
-        [issueData setObject:[NSNumber numberWithInt:_priority.index] forKey:@"priority_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_priority.index] forKey:@"priority_id"];
     }
     if (_subject.length > 0) {
         [issueData setObject:_subject forKey:@"subject"];
@@ -114,13 +114,13 @@
         [issueData setObject:_description forKey:@"description"];
     }
     if (_category && _category) {
-        [issueData setObject:[NSNumber numberWithInt:_category.index ] forKey:@"categroy_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_category.index ] forKey:@"categroy_id"];
     }
     if (_assignedTo && _assignedTo.index > 0) {
-        [issueData setObject:[NSNumber numberWithInt:_assignedTo.index] forKey:@"assigned_to_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_assignedTo.index] forKey:@"assigned_to_id"];
     }
     if (_parentIssueId > 0) {
-        [issueData setObject:[NSNumber numberWithInt:_parentIssueId] forKey:@"parent_issue_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_parentIssueId] forKey:@"parent_issue_id"];
     }
     if (_spentHours > 0) {
         [issueData setObject:[NSNumber numberWithFloat:_spentHours] forKey:@"spent_hours"];

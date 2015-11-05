@@ -27,7 +27,7 @@
 // THE SOFTWARE.
 
 #import "OZLAppDelegate.h"
-#import "OZLProjectViewController.h"
+#import "OZLIssueListViewController.h"
 #import "OZLSingleton.h"
 #import "OZLModelProject.h"
 #import "OZLAccountViewController.h"

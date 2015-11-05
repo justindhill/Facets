@@ -27,16 +27,17 @@
 // THE SOFTWARE.
 
 #import "OZLProjectListViewController.h"
-#import "OZLProjectViewController.h"
+#import "OZLIssueListViewController.h"
 #import "OZLAccountViewController.h"
 #import "OZLProjectInfoViewController.h"
 #import "OZLNetwork.h"
 #import "OZLModelProject.h"
 #import "MBProgressHUD.h"
 #import "OZLSingleton.h"
+#import "OZLProjectIssueListViewModel.h"
 
 @interface OZLProjectListViewController (){
-    NSMutableArray* _projectList;
+    RLMResults<OZLModelProject *> *_projectList;
 	MBProgressHUD * _HUD;
 
     UIBarButtonItem* _editBtn;
@@ -63,41 +64,18 @@
     _doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(editProjectListDone:)];
     [self.navigationItem setRightBarButtonItem:_editBtn];
     [self.navigationItem setTitle:@"Projects"];
-
-    [[OZLSingleton sharedInstance] setLastProjectID:-1];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	_HUD.labelText = @"Refreshing...";
-    _HUD.detailsLabelText = @"";
-    _HUD.mode = MBProgressHUDModeIndeterminate;
-    [_HUD show:YES];
     
-    // refresh project list
-    [OZLNetwork getProjectListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
-        
-        if (error) {
-            NSLog(@"error load projects");
-            _HUD.mode = MBProgressHUDModeText;
-            _HUD.labelText = @"Connection Failed";
-            _HUD.detailsLabelText = @" Please check network connection or your account setting.";
-            [_HUD hide:YES afterDelay:3];
-
-        }else {
-            NSLog(@"respond:%@",result.description);
-            _projectList = [[NSMutableArray alloc] initWithArray: result];
-            [_projectsTableview reloadData];
-            [_HUD hide:YES];
-        }
-    }];
-
+    _projectList = [[OZLModelProject allObjects] sortedResultsUsingProperty:@"index" ascending:YES];
 }
 
 - (void)showProjectView:(OZLModelProject*)project
 {
-    OZLProjectViewController *c = [[OZLProjectViewController alloc] initWithNibName:@"OZLProjectViewController" bundle:nil];
-    [c setProjectData:project];
+    OZLProjectIssueListViewModel *viewModel = [[OZLProjectIssueListViewModel alloc] init];
+    viewModel.title = project.name;
+    viewModel.projectId = project.index;
+    
+    OZLIssueListViewController *c = [[OZLIssueListViewController alloc] initWithNibName:@"OZLIssueListViewController" bundle:nil];
+    c.viewModel = viewModel;
 
     [self.navigationController pushViewController:c animated:YES];
 }
@@ -115,7 +93,7 @@
 
 -(void)editProjectList:(id)sender
 {
-    if (![OZLSingleton isUserLoggedIn] ) {
+    if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"No available";
         _HUD.detailsLabelText = @"You need to log in to do this.";
@@ -135,7 +113,7 @@
 }
 
 - (IBAction)createProject:(id)sender {
-    if (![OZLSingleton isUserLoggedIn] ) {
+    if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"No available";
         _HUD.detailsLabelText = @"You need to log in to do this.";
@@ -201,31 +179,31 @@
     return YES;
 }
 
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-
-        _HUD.labelText = @"Deleting Project...";
-        [_HUD show:YES];
-        [OZLNetwork deleteProject:[[_projectList objectAtIndex:indexPath.row] index] withParams:nil andBlock:^(BOOL success, NSError *error) {
-            [_HUD hide:YES];
-            if (error) {
-                NSLog(@"failed to delete project");
-                _HUD.mode = MBProgressHUDModeText;
-
-                _HUD.labelText = @"Sorry, something wrong while deleting project.";
-                [_HUD show:YES];
-                [_HUD hide:YES afterDelay:1];
-            }else {
-                [_projectList removeObjectAtIndex:indexPath.row];
-                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            }
-        }];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-}
+//// Override to support editing the table view.
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//
+//        _HUD.labelText = @"Deleting Project...";
+//        [_HUD show:YES];
+//        [[OZLNetwork sharedInstance] deleteProject:[[_projectList objectAtIndex:indexPath.row] index] withParams:nil andBlock:^(BOOL success, NSError *error) {
+//            [_HUD hide:YES];
+//            if (error) {
+//                NSLog(@"failed to delete project");
+//                _HUD.mode = MBProgressHUDModeText;
+//
+//                _HUD.labelText = @"Sorry, something wrong while deleting project.";
+//                [_HUD show:YES];
+//                [_HUD hide:YES afterDelay:1];
+//            }else {
+//                [_projectList removeObjectAtIndex:indexPath.row];
+//                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            }
+//        }];
+//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//    }
+//}
 
 #pragma mark - Table view delegate
 

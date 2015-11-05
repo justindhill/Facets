@@ -70,7 +70,7 @@
     _HUD.mode = MBProgressHUDModeIndeterminate;
     [_HUD show:YES];
     // refresh journal list
-    [OZLNetwork getJournalListForIssue:_issueData.index withParams:nil andBlock:^(NSArray *result, NSError *error) {
+    [[OZLNetwork sharedInstance] getJournalListForIssue:_issueData.index withParams:nil andBlock:^(NSArray *result, NSError *error) {
         if (error) {
             NSLog(@"getJournalListForIssue error: %@",error.description);
             _HUD.mode = MBProgressHUDModeText;

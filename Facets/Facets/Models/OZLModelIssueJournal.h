@@ -53,7 +53,7 @@
  */
 @interface OZLModelIssueJournal : NSObject
 
-@property(nonatomic) int index;
+@property(nonatomic) NSInteger index;
 @property(nonatomic, strong) NSString* notes;
 @property(nonatomic, strong) NSString* createdOn;
 @property(nonatomic, strong) OZLModelUser* user;

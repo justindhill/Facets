@@ -144,7 +144,7 @@
     _HUD.mode = MBProgressHUDModeIndeterminate;
     _HUD.labelText = @"Creating Project...";
     [_HUD show:YES];
-    [OZLNetwork createProject:projectData withParams:nil andBlock:^(BOOL success, NSError *error) {
+    [[OZLNetwork sharedInstance] createProject:projectData withParams:nil andBlock:^(BOOL success, NSError *error) {
         if (error) {
             NSLog(@"create project error: %@",error.description);
             _HUD.mode = MBProgressHUDModeText;

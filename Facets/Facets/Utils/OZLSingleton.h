@@ -32,10 +32,13 @@
 #import "OZLModelIssueStatus.h"
 #import "OZLModelIssuePriority.h"
 #import "OZLModelQuery.h"
+#import "OZLServerSync.h"
 
 @interface OZLSingleton : NSObject
 
 + (OZLSingleton *)sharedInstance;
+
+@property (readonly) OZLServerSync *serverSync;
 
 //network
 @property(nonatomic,strong) NSString* redmineHomeURL;
@@ -57,11 +60,11 @@
 @property (strong, nonatomic) NSArray* statusList;
 @property (strong, nonatomic) NSArray* userList;
 @property (strong, nonatomic) NSArray* timeEntryActivityList;
--(OZLModelTracker*)trackerWithId:(int)index;
--(OZLModelIssuePriority*)issuePriorityWithId:(int)index;
--(OZLModelIssueStatus*)issueStatusWithId:(int)index;
--(OZLModelUser*)userWithId:(int)index;
+-(OZLModelTracker*)trackerWithId:(NSInteger)index;
+-(OZLModelIssuePriority*)issuePriorityWithId:(NSInteger)index;
+-(OZLModelIssueStatus*)issueStatusWithId:(NSInteger)index;
+-(OZLModelUser*)userWithId:(NSInteger)index;
 
-+(BOOL) isUserLoggedIn;
+@property (readonly) BOOL isUserLoggedIn;
 
 @end

@@ -32,10 +32,20 @@
 #import "OZLConstants.h"
 #import "OZLNetwork.h"
 
+#import <AFNetworking/AFNetworking.h>
+#import <MBProgressHUD/MBProgressHUD.h>
+
+@interface OZLAccountViewController ()
+
+
+@end
+
 @implementation OZLAccountViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.title = @"Settings";
 
     _redmineHomeURL.text = [[OZLSingleton sharedInstance] redmineHomeURL];
     _redmineUserKey.text = [[OZLSingleton sharedInstance] redmineUserKey];
@@ -46,15 +56,32 @@
     [self.view addGestureRecognizer:tapper];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [[OZLSingleton sharedInstance] setRedmineUserKey:_redmineUserKey.text];
-    [[OZLSingleton sharedInstance] setRedmineHomeURL:_redmineHomeURL.text];
-    [[OZLSingleton sharedInstance] setRedmineUserName:_username.text];
-    [[OZLSingleton sharedInstance] setRedminePassword:_password.text];
-    [[OZLSingleton sharedInstance] setLastProjectID:-1];
-
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center postNotificationName:NOTIFICATION_REDMINE_ACCOUNT_CHANGED object:nil];
+- (void)saveButtonAction:(id)sender {
+    
+    __weak OZLAccountViewController *weakSelf = self;
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.animationType = MBProgressHUDAnimationZoom;
+    
+    NSURL *baseURL = [NSURL URLWithString:_redmineHomeURL.text];
+    [[OZLNetwork sharedInstance] validateCredentialsWithURL:baseURL username:_username.text password:_password.text completion:^(NSError *error) {
+        if (error) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Couldn't validate credentials" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            
+            [weakSelf presentViewController:alert animated:YES completion:nil];
+        } else {
+            [[OZLSingleton sharedInstance] setRedmineUserKey:_redmineUserKey.text];
+            [[OZLSingleton sharedInstance] setRedmineHomeURL:_redmineHomeURL.text];
+            [[OZLSingleton sharedInstance] setRedmineUserName:_username.text];
+            [[OZLSingleton sharedInstance] setRedminePassword:_password.text];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REDMINE_ACCOUNT_CHANGED object:nil];
+            
+            [[OZLSingleton sharedInstance].serverSync startSync];
+        }
+        
+        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+    }];
 }
 
 - (void)backgroundTapped {

@@ -31,11 +31,53 @@
 #import "AFHTTPRequestOperation.h"
 #import "OZLSingleton.h"
 
+NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
+
+@interface OZLNetwork ()
+
+@property AFHTTPClient *authorizationClient;
+
+@end
+
 @implementation OZLNetwork
+
++ (instancetype)sharedInstance {
+    static OZLNetwork *_sharedInstance;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedInstance = [[self alloc] init];
+    });
+    
+    return _sharedInstance;
+}
+
+#pragma mark - Authorization
+- (void)validateCredentialsWithURL:(NSURL *)url username:(NSString *)username password:(NSString *)password completion:(void(^)(NSError *error))completion {
+    
+    NSAssert(completion, @"validateCredentialsCompletion: expects a completion block");
+    
+    self.authorizationClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    [self.authorizationClient setAuthorizationHeaderWithUsername:username password:password];
+    
+    [self.authorizationClient getPath:@"projects.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completion(nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSError *reportError = error;
+        
+        if (operation.response.statusCode == 401) {
+            reportError = [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidCredentials userInfo:@{NSLocalizedDescriptionKey: @"Invalid username or password."}];
+        }
+        
+        completion(reportError);
+    }];
+    
+}
 
 #pragma mark-
 #pragma mark project api
-+(void)getProjectListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block;
+-(void)getProjectListWithParams:(NSDictionary*)params andBlock:(void (^)(NSError *error))block;
 {
     NSString* path = @"/projects.json";
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -47,29 +89,32 @@
     [[OZLNetworkBase sharedClient] setAuthorizationHeader];
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        [[RLMRealm defaultRealm] beginWriteTransaction];
+        
+        NSArray* projectsDic = [responseObject objectForKey:@"projects"];
+        for (NSDictionary* p in projectsDic) {
+            OZLModelProject *project = [[OZLModelProject alloc] initWithDictionary:p];
+            [OZLModelProject createOrUpdateInDefaultRealmWithValue:project];
+        }
+        
+        [[RLMRealm defaultRealm] commitWriteTransaction];
+        
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
-            NSMutableArray* projects = [[NSMutableArray alloc] init];
-            
-            NSArray* projectsDic = [responseObject objectForKey:@"projects"];
-            for (NSDictionary* p in projectsDic) {
-                [projects addObject:[[OZLModelProject alloc] initWithDictionary:p]];
-            }
-            block(projects,nil);
+            block(nil);
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         if (block) {
-            block([NSArray array], error);
+            block(error);
         }
         
     }];
 }
 
-+(void)getDetailForProject:(int)projectid withParams:(NSDictionary*)params andBlock:(void (^)(OZLModelProject *result, NSError *error))block
+-(void)getDetailForProject:(NSInteger)projectid withParams:(NSDictionary*)params andBlock:(void (^)(OZLModelProject *result, NSError *error))block
 {
-    NSString* path = [NSString stringWithFormat:@"/projects/%d.json",projectid];
+    NSString* path = [NSString stringWithFormat:@"/projects/%ld.json",(long)projectid];
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
     if (accessKey.length > 0) {
@@ -79,7 +124,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
 
             NSDictionary* projectDic = [responseObject objectForKey:@"project"];
             OZLModelProject* project = [[OZLModelProject alloc] initWithDictionary:projectDic];
@@ -96,7 +140,7 @@
     }];
 }
 
-+(void)createProject:(OZLModelProject*)projectData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
+-(void)createProject:(OZLModelProject*)projectData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
 {
     NSString* path = @"/projects.json";
 
@@ -112,7 +156,6 @@
     [[OZLNetworkBase sharedClient] postPath:path parameters:projectDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             block(YES,nil);
         }
 
@@ -125,9 +168,9 @@
     }];
 }
 
-+(void)updateProject:(OZLModelProject*)projectData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
+-(void)updateProject:(OZLModelProject*)projectData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
 {
-    NSString* path = [NSString stringWithFormat:@"/projects/%d.json",projectData.index];
+    NSString* path = [NSString stringWithFormat:@"/projects/%ld.json",(long)projectData.index];
 
     //project info
     NSMutableDictionary* projectDic = [projectData toParametersDic];
@@ -141,8 +184,7 @@
     [[OZLNetworkBase sharedClient] putPath:path parameters:projectDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
-            int repondNumber = [responseObject intValue];
+            NSInteger repondNumber = [responseObject integerValue];
             block(repondNumber == 201,nil);
         }
 
@@ -156,9 +198,9 @@
 
 }
 
-+(void)deleteProject:(int)projectid withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
+-(void)deleteProject:(NSInteger)projectid withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
 {
-    NSString* path = [NSString stringWithFormat:@"/projects/%d.json",projectid];
+    NSString* path = [NSString stringWithFormat:@"/projects/%ld.json",(long)projectid];
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
     if (accessKey.length > 0) {
@@ -168,8 +210,7 @@
     [[OZLNetworkBase sharedClient] deletePath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
-            int repondNumber = [responseObject intValue];
+            NSInteger repondNumber = [responseObject integerValue];
             block(repondNumber == 201,nil);
         }
 
@@ -185,11 +226,11 @@
 
 #pragma mark -
 #pragma mark issue api
-+(void)getIssueListForProject:(int)projectid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
+-(void)getIssueListForProject:(NSInteger)projectid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
     NSString* path = [NSString stringWithFormat:@"/issues.json"];
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    [paramsDic setObject:[NSNumber numberWithInt:projectid] forKey:@"project_id"];
+    [paramsDic setObject:[NSNumber numberWithInteger:projectid] forKey:@"project_id"];
     NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
@@ -198,7 +239,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
 
             NSMutableArray* issues = [[NSMutableArray alloc] init];
 
@@ -218,9 +258,44 @@
     }];
 }
 
-+(void)getDetailFoIssue:(int)issueid withParams:(NSDictionary*)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block
+-(void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
-    NSString* path = [NSString stringWithFormat:@"/issues/%d.json",issueid];
+    NSString* path = [NSString stringWithFormat:@"/issues.json"];
+    
+    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    paramsDic[@"project_id"] = @(projectId);
+    paramsDic[@"query_id"] = @(queryId);
+    
+    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    if (accessKey.length > 0) {
+        [paramsDic setObject:accessKey forKey:@"key"];
+    }
+    
+    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if (block) {
+            
+            NSMutableArray* issues = [[NSMutableArray alloc] init];
+            
+            NSArray* issuesDic = [responseObject objectForKey:@"issues"];
+            for (NSDictionary* p in issuesDic) {
+                [issues addObject:[[OZLModelIssue alloc] initWithDictionary:p]];
+            }
+            block(issues,nil);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        if (block) {
+            block([NSArray array], error);
+        }
+        
+    }];
+}
+
+-(void)getDetailFoIssue:(NSInteger)issueid withParams:(NSDictionary*)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block
+{
+    NSString* path = [NSString stringWithFormat:@"/issues/%ld.json",(long)issueid];
 
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
@@ -231,7 +306,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
 
             NSDictionary* projectDic = [responseObject objectForKey:@"issue"];
             OZLModelIssue* issue = [[OZLModelIssue alloc] initWithDictionary:projectDic];
@@ -248,7 +322,7 @@
     }];
 }
 
-+(void)createIssue:(OZLModelIssue*)issueData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
+-(void)createIssue:(OZLModelIssue*)issueData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
 {
     NSString* path = [NSString stringWithFormat:@"/issues.json"];
 
@@ -264,7 +338,6 @@
     [[OZLNetworkBase sharedClient] postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             block(YES,nil);
         }
 
@@ -276,9 +349,9 @@
         
     }];
 }
-+(void)updateIssue:(OZLModelIssue*)issueData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
+-(void)updateIssue:(OZLModelIssue*)issueData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
 {
-    NSString* path = [NSString stringWithFormat:@"/issues/%d.json",issueData.index];
+    NSString* path = [NSString stringWithFormat:@"/issues/%ld.json",(long)issueData.index];
 
     //project info
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -292,8 +365,7 @@
     [[OZLNetworkBase sharedClient] putPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
-            int repondNumber = [responseObject intValue];
+            NSInteger repondNumber = [responseObject integerValue];
             block(repondNumber == 201,nil);
         }
 
@@ -306,9 +378,9 @@
     }];
 }
 
-+(void)deleteIssue:(int)issueid withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
+-(void)deleteIssue:(NSInteger)issueid withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
 {
-    NSString* path = [NSString stringWithFormat:@"/issues/%d.json",issueid];
+    NSString* path = [NSString stringWithFormat:@"/issues/%ld.json",(long)issueid];
 
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
@@ -319,8 +391,7 @@
     [[OZLNetworkBase sharedClient] deletePath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
-            int repondNumber = [responseObject intValue];
+            NSInteger repondNumber = [responseObject integerValue];
             block(repondNumber == 201,nil);
         }
 
@@ -333,9 +404,9 @@
     }];
 }
 
-+(void)getJournalListForIssue:(int)issueid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
+-(void)getJournalListForIssue:(NSInteger)issueid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
-    NSString* path = [NSString stringWithFormat:@"/issues/%d.json?include=journals",issueid];
+    NSString* path = [NSString stringWithFormat:@"/issues/%ld.json?include=journals",(long)issueid];
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
     if (accessKey.length > 0) {
@@ -345,7 +416,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
 
             NSMutableArray* journals = [[NSMutableArray alloc] init];
 
@@ -368,7 +438,7 @@
 #pragma mark -
 #pragma mark priority api
 // priority
-+(void)getPriorityListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
+-(void)getPriorityListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
     NSString* path = @"/enumerations/issue_priorities.json";
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -381,7 +451,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             NSMutableArray* priorities = [[NSMutableArray alloc] init];
 
             NSArray* dic = [responseObject objectForKey:@"issue_priorities"];
@@ -402,7 +471,7 @@
 #pragma mark -
 #pragma mark user api
 // user
-+(void)getUserListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
+-(void)getUserListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
     NSString* path = @"/users.json";
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -415,7 +484,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             NSMutableArray* priorities = [[NSMutableArray alloc] init];
 
             NSArray* dic = [responseObject objectForKey:@"users"];
@@ -437,7 +505,7 @@
 #pragma mark -
 #pragma mark issue status api
 // issue status
-+(void)getIssueStatusListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
+-(void)getIssueStatusListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
     NSString* path = @"/issue_statuses.json";
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -450,7 +518,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             NSMutableArray* priorities = [[NSMutableArray alloc] init];
 
             NSArray* dic = [responseObject objectForKey:@"issue_statuses"];
@@ -471,7 +538,7 @@
 #pragma mark -
 #pragma mark tracker api
 // tracker
-+ (void)getTrackerListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
+- (void)getTrackerListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
     NSString* path = @"/trackers.json";
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
@@ -483,7 +550,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             NSMutableArray* priorities = [[NSMutableArray alloc] init];
 
             NSArray* dic = [responseObject objectForKey:@"trackers"];
@@ -502,7 +568,7 @@
 }
 
 #pragma mark - Queries
-+ (void)getQueryListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
+- (void)getQueryListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
     NSString* path = @"/queries.json";
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
@@ -514,7 +580,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             NSMutableArray* queries = [[NSMutableArray alloc] init];
             
             NSArray* dic = [responseObject objectForKey:@"queries"];
@@ -535,7 +600,7 @@
 #pragma mark -
 #pragma mark time entries
 // time entries
-+(void)getTimeEntriesWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
+-(void)getTimeEntriesWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
     NSString* path = @"/time_entries.json";
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -548,7 +613,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             NSMutableArray* priorities = [[NSMutableArray alloc] init];
 
             NSArray* dic = [responseObject objectForKey:@"time_entries"];
@@ -567,20 +631,20 @@
 
 }
 
-+(void)getTimeEntriesForIssueId:(int)issueid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
+-(void)getTimeEntriesForIssueId:(NSInteger)issueid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
-    NSDictionary* param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInt:issueid],@"issue_id", nil];
-    [OZLNetwork getTimeEntriesWithParams:param andBlock:block];
+    NSDictionary* param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:issueid],@"issue_id", nil];
+    [[OZLNetwork sharedInstance] getTimeEntriesWithParams:param andBlock:block];
 }
 
-+(void)getTimeEntriesForProjectId:(int)projectid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
+-(void)getTimeEntriesForProjectId:(NSInteger)projectid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
 
-    NSDictionary* param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInt:projectid],@"project_id", nil];
-    [OZLNetwork getTimeEntriesWithParams:param andBlock:block];
+    NSDictionary* param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:projectid],@"project_id", nil];
+    [[OZLNetwork sharedInstance] getTimeEntriesWithParams:param andBlock:block];
 }
 
-+(void)getTimeEntryListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
+-(void)getTimeEntryListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
 {
     NSString* path = @"/enumerations/time_entry_activities.json";
     NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -593,7 +657,6 @@
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             NSMutableArray* activities = [[NSMutableArray alloc] init];
 
             NSArray* dic = [responseObject objectForKey:@"time_entry_activities"];
@@ -610,7 +673,7 @@
         }
     }];
 }
-+(void)createTimeEntry:(OZLModelTimeEntries*)timeEntry withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
+-(void)createTimeEntry:(OZLModelTimeEntries*)timeEntry withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
 {
     NSString* path = [NSString stringWithFormat:@"/time_entries.json"];
 
@@ -626,7 +689,6 @@
     [[OZLNetworkBase sharedClient] postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSLog(@"the repsonse:%@",responseObject);
             block(YES,nil);
         }
 

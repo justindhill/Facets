@@ -1,5 +1,5 @@
 //
-//  OZLProjectViewController.h
+//  OZLIssueListViewController.h
 //  RedmineMobile
 //
 //  Created by Lee Zhijie on 7/14/13.
@@ -28,15 +28,17 @@
 
 #import <UIKit/UIKit.h>
 #import "OZLModelProject.h"
+#import "OZLIssueListViewModel.h"
 
-@interface OZLProjectViewController : UITableViewController
-@property (weak, nonatomic) IBOutlet UITableView *issuesTableview;
+@interface OZLIssueListViewController : UITableViewController
+
+@property (strong) id<OZLIssueListViewModel> viewModel;
+
 @property (nonatomic,strong) OZLModelProject* projectData;
 - (IBAction)onNewIssue:(id)sender;
-- (IBAction)onSortSetting:(id)sender;
 - (IBAction)onShowInfo:(id)sender;
 
-
+@property NSInteger projectId;
 @property (strong, nonatomic) NSArray* trackerList;
 @property (strong, nonatomic) NSArray* priorityList;
 @property (strong, nonatomic) NSArray* statusList;

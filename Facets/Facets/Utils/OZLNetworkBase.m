@@ -65,7 +65,6 @@ static OZLNetworkBase *_sharedClient = nil;
 
 -(void)setAuthorizationHeader
 {
-
     [self clearAuthorizationHeader];
     NSString* username = [[OZLSingleton sharedInstance] redmineUserName];
     NSString* password = [[OZLSingleton sharedInstance] redminePassword];

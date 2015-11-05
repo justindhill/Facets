@@ -29,100 +29,118 @@
 #import "OZLSingleton.h"
 #import "OZLConstants.h"
 
+@interface OZLSingleton ()
+
+@property (strong) OZLServerSync *serverSync;
+
+@end
+
 @implementation OZLSingleton
 
-NSString* USER_DEFUALTS_REDMINE_HOME_URL = @"USER_DEFUALTS_REDMINE_HOME_URL";
-NSString* USER_DEFUALTS_REDMINE_USER_KEY = @"USER_DEFUALTS_REDMINE_USER_KEY";
-NSString* USER_DEFUALTS_LAST_PROJECT_ID = @"USER_DEFUALTS_LAST_PROJECT_ID";
-NSString* USER_DEFUALTS_REDMINE_USER_NAME = @"USER_DEFUALTS_REDMINE_USER_NAME";
-NSString* USER_DEFUALTS_REDMINE_PASSWORD = @"USER_DEFUALTS_REDMINE_PASSWORD";
+NSString * const USER_DEFAULTS_REDMINE_HOME_URL = @"USER_DEFAULTS_REDMINE_HOME_URL";
+NSString * const USER_DEFAULTS_REDMINE_USER_KEY = @"USER_DEFAULTS_REDMINE_USER_KEY";
+NSString * const USER_DEFAULTS_LAST_PROJECT_ID = @"USER_DEFAULTS_LAST_PROJECT_ID";
+NSString * const USER_DEFAULTS_REDMINE_USER_NAME = @"USER_DEFAULTS_REDMINE_USER_NAME";
+NSString * const USER_DEFAULTS_REDMINE_PASSWORD = @"USER_DEFAULTS_REDMINE_PASSWORD";
 
 //issue list option
-NSString* USER_DEFAULTS_ISSUE_LIST_ASCEND = @"USER_DEFUALTS_ISSUE_LIST_ASCEND";// ascend or descend
-NSString* USER_DEFAULTS_ISSUE_LIST_FILTER = @"USER_DEFAULTS_ISSUE_LIST_FILTER";
-NSString* USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT";
+NSString * const USER_DEFAULTS_ISSUE_LIST_ASCEND = @"USER_DEFAULTS_ISSUE_LIST_ASCEND";// ascend or descend
+NSString * const USER_DEFAULTS_ISSUE_LIST_FILTER = @"USER_DEFAULTS_ISSUE_LIST_FILTER";
+NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT";
 
-static OZLSingleton* sharedInstance = nil;
-+(OZLSingleton*) sharedInstance
-{
-    if (sharedInstance == nil) {
-        sharedInstance = [[OZLSingleton alloc] init
-                          ];
-        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-        NSDictionary* dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-                             @"http://demo.redmine.org/",USER_DEFUALTS_REDMINE_HOME_URL,
-                             @"",USER_DEFUALTS_REDMINE_USER_KEY,
-                             [NSNumber numberWithInt:-1],USER_DEFUALTS_LAST_PROJECT_ID,
-                             @"",USER_DEFUALTS_REDMINE_USER_NAME,
-                             @"",USER_DEFUALTS_REDMINE_PASSWORD,
-                             [NSNumber numberWithInt:0],USER_DEFAULTS_ISSUE_LIST_FILTER,
-                             [NSNumber numberWithInt:0],USER_DEFAULTS_ISSUE_LIST_SORT,
-                             [NSNumber numberWithInt:0],USER_DEFAULTS_ISSUE_LIST_ASCEND,
-                             nil];
-        [defaults registerDefaults:dic];
-    }
-    return sharedInstance;
++ (OZLSingleton*) sharedInstance {
+    static OZLSingleton* _sharedInstance = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedInstance = [[OZLSingleton alloc] init];
+    });
+    
+    return _sharedInstance;
 }
 
-+(BOOL) isUserLoggedIn
-{
-    return [[[OZLSingleton sharedInstance] redmineUserName] length] > 0;
+- (instancetype)init {
+    if (self = [super init]) {
+        
+        self.serverSync = [[OZLServerSync alloc] init];
+        
+        NSDictionary *dic = @{
+            USER_DEFAULTS_REDMINE_HOME_URL:   @"http://demo.redmine.org",
+            USER_DEFAULTS_REDMINE_USER_KEY:   @"",
+            USER_DEFAULTS_LAST_PROJECT_ID:    @(-1),
+            USER_DEFAULTS_REDMINE_USER_NAME:  @"",
+            USER_DEFAULTS_REDMINE_PASSWORD:   @"",
+            USER_DEFAULTS_ISSUE_LIST_FILTER:  @0,
+            USER_DEFAULTS_ISSUE_LIST_SORT:    @0,
+            USER_DEFAULTS_ISSUE_LIST_ASCEND:  @0
+        };
+        
+        [[NSUserDefaults standardUserDefaults] registerDefaults:dic];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    }
+    
+    return self;
+}
+
+- (BOOL)isUserLoggedIn {
+    return (self.redmineUserName.length > 0);
 }
 
 #pragma mark getter and setter
 -(NSString*)redmineHomeURL
 {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    return [userdefaults objectForKey:USER_DEFUALTS_REDMINE_HOME_URL];
+    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_HOME_URL];
 }
 -(void)setRedmineHomeURL:(NSString *)redmineHomeURL
 {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:redmineHomeURL forKey:USER_DEFUALTS_REDMINE_HOME_URL];
+    [userdefaults setObject:redmineHomeURL forKey:USER_DEFAULTS_REDMINE_HOME_URL];
     [userdefaults synchronize];
     
 }
 -(NSString*)redmineUserKey
 {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    return [userdefaults objectForKey:USER_DEFUALTS_REDMINE_USER_KEY];
+    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_USER_KEY];
 }
 -(void)setRedmineUserKey:(NSString *)redmineUserKey
 {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:redmineUserKey forKey:USER_DEFUALTS_REDMINE_USER_KEY];
+    [userdefaults setObject:redmineUserKey forKey:USER_DEFAULTS_REDMINE_USER_KEY];
     [userdefaults synchronize];    
 }
 - (NSInteger)lastProjectID
 {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    return [userdefaults integerForKey:USER_DEFUALTS_LAST_PROJECT_ID];
+    return [userdefaults integerForKey:USER_DEFAULTS_LAST_PROJECT_ID];
 }
 - (void)setLastProjectID:(NSInteger)projectid {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setInteger:projectid forKey:USER_DEFUALTS_LAST_PROJECT_ID];
+    [userdefaults setInteger:projectid forKey:USER_DEFAULTS_LAST_PROJECT_ID];
     [userdefaults synchronize];
 }
 
 - (NSString*)redmineUserName {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    return [userdefaults objectForKey:USER_DEFUALTS_REDMINE_USER_NAME];
+    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_USER_NAME];
 }
 
 - (void)setRedmineUserName:(NSString *)redmineUserName {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:redmineUserName forKey:USER_DEFUALTS_REDMINE_USER_NAME];
+    [userdefaults setObject:redmineUserName forKey:USER_DEFAULTS_REDMINE_USER_NAME];
     [userdefaults synchronize];
 }
 
 - (NSString *)redminePassword {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    return [userdefaults objectForKey:USER_DEFUALTS_REDMINE_PASSWORD];
+    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_PASSWORD];
 }
 
 - (void)setRedminePassword:(NSString *)redminePassword {
     NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:redminePassword forKey:USER_DEFUALTS_REDMINE_PASSWORD];
+    [userdefaults setObject:redminePassword forKey:USER_DEFAULTS_REDMINE_PASSWORD];
     [userdefaults synchronize];
 }
 
@@ -162,7 +180,7 @@ static OZLSingleton* sharedInstance = nil;
 
 #pragma mark -
 #pragma mark data retrival
-- (OZLModelTracker *)trackerWithId:(int)index {
+- (OZLModelTracker *)trackerWithId:(NSInteger)index {
     
     for (OZLModelTracker *tracker in _trackerList) {
         if (tracker.index == index) {
@@ -172,7 +190,7 @@ static OZLSingleton* sharedInstance = nil;
     
     return nil;
 }
-- (OZLModelIssuePriority *)issuePriorityWithId:(int)index {
+- (OZLModelIssuePriority *)issuePriorityWithId:(NSInteger)index {
     
     for (OZLModelIssuePriority *priority in _priorityList) {
         if (priority.index == index) {
@@ -183,7 +201,7 @@ static OZLSingleton* sharedInstance = nil;
     return nil;
 }
 
-- (OZLModelIssueStatus *)issueStatusWithId:(int)index {
+- (OZLModelIssueStatus *)issueStatusWithId:(NSInteger)index {
     
     for (OZLModelIssueStatus *status in _statusList) {
         if (status.index == index) {
@@ -194,7 +212,7 @@ static OZLSingleton* sharedInstance = nil;
     return nil;
 }
 
-- (OZLModelUser *)userWithId:(int)index {
+- (OZLModelUser *)userWithId:(NSInteger)index {
     
     for (OZLModelUser * user in _userList) {
         if (user.index == index) {
@@ -203,6 +221,12 @@ static OZLSingleton* sharedInstance = nil;
     }
     
     return nil;
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+    if (self.isUserLoggedIn) {
+        [self.serverSync startSync];
+    }
 }
 
 @end

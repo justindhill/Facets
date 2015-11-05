@@ -32,6 +32,10 @@
 
 @synthesize description=_description;
 
++ (NSString *)primaryKey {
+    return @"index";
+}
+
 -(id)initWithDictionary:(NSDictionary*)dic
 {
     self = [super init];
@@ -64,7 +68,7 @@
         [projectDic setObject:_description forKey:@"description"];
     }
     if (_parentId > 0) {
-        [projectDic setObject:[NSNumber numberWithInt:_parentId] forKey:@"parent_id"];
+        [projectDic setObject:[NSNumber numberWithInteger:_parentId] forKey:@"parent_id"];
     }
     if (_homepage.length > 0) {
         [projectDic setObject:_homepage forKey:@"homepage"];

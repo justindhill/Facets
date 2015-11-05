@@ -1,5 +1,5 @@
 //
-//  OZLProjectViewController.m
+//  OZLIssueListViewController.m
 //  RedmineMobile
 //
 //  Created by Lee Zhijie on 7/14/13.
@@ -26,7 +26,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "OZLProjectViewController.h"
+#import "OZLIssueListViewController.h"
 #import "OZLProjectListViewController.h"
 #import "OZLNetwork.h"
 #import "MBProgressHUD.h"
@@ -38,15 +38,12 @@
 
 #import "Facets-Swift.h"
 
-@interface OZLProjectViewController () <UIViewControllerPreviewingDelegate> {
-    NSMutableArray* _issuesList;
+@interface OZLIssueListViewController () <UIViewControllerPreviewingDelegate> {
 
     float _sideviewOffset;
     MBProgressHUD * _HUD;
     UIBarButtonItem* _editBtn;
     UIBarButtonItem* _doneBtn;
-
-    NSMutableDictionary* _issueListOption;
 }
 
 @property BOOL isFirstAppearance;
@@ -54,7 +51,7 @@
 
 @end
 
-@implementation OZLProjectViewController
+@implementation OZLIssueListViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -99,7 +96,7 @@
         
         self.optionsMenu = [[CAPSOptionsMenu alloc] initWithViewController:self barButtonSystemItem:UIBarButtonSystemItemAction keepBarButtonAtEdge:NO];
     
-        __weak OZLProjectViewController *weakSelf = self;
+        __weak OZLIssueListViewController *weakSelf = self;
         [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Edit" handler:^(CAPSOptionsMenuAction * _Nonnull action) {
             [weakSelf editIssueList:nil];
         }]];
@@ -116,142 +113,15 @@
 
 - (void)reloadData
 {
-    if (_projectData == nil) {
-        NSLog(@"error: _projectData have to be set");
-        return;
-    }
-    
     if (!self.refreshControl.isRefreshing) {
         [self.refreshControl beginRefreshing];
     }
 
-    if (_issueListOption == nil) {
-        [self loadIssueRelatedData];
-    }else {
-        [self loadProjectDetail];
-    }
-}
-
--(void)loadProjectDetail
-{
-    // TODO: issue filter not working yet
-
-    // prepare parameters
-    OZLSingleton* singleton = [OZLSingleton sharedInstance];
-    
-    // meaning of these values is defined in OZLIssueFilterViewController
-    NSInteger filterType = [singleton issueListFilterType];
-    
-    if (filterType == 1) {
-        // open
-        [_issueListOption setObject:@"open" forKey:@"status_id"];
-    }
-    
-    [OZLNetwork getDetailForProject:_projectData.index withParams:nil andBlock:^(OZLModelProject *result, NSError *error) {
-        if (error) {
-            NSLog(@"error getDetailForProject: %@",error.description);
-            [self.refreshControl endRefreshing];
-        }else {
-            _projectData = result;
-
-            // load issues
-            [OZLNetwork getIssueListForProject:_projectData.index withParams:_issueListOption andBlock:^(NSArray *result, NSError *error) {
-                if (error) {
-                    NSLog(@"error getIssueListForProject: %@",error.description);
-                    
-                } else {
-                    _issuesList = [[NSMutableArray alloc] initWithArray: result];
-                    [self.tableView reloadData];
-                }
-                [self.refreshControl endRefreshing];
-            }];
-        }
+    __weak OZLIssueListViewController *weakSelf = self;
+    [self.viewModel loadIssuesSortedBy:nil ascending:NO completion:^(NSError *error) {
+        [weakSelf.tableView reloadData];
+        [weakSelf.refreshControl endRefreshing];
     }];
-}
-
--(void)loadIssueRelatedData
-{
-    _issueListOption = [[NSMutableDictionary alloc] init];
-
-    OZLSingleton* singleton = [OZLSingleton sharedInstance];
-    if (singleton.userList != nil) {
-        _trackerList = singleton.trackerList;
-        _statusList = singleton.statusList;
-        _userList = singleton.userList;
-        _priorityList = singleton.priorityList;
-        _timeEntryActivityList = singleton.timeEntryActivityList;
-        [self loadProjectDetail];
-    }else {
-        static int doneCount = 0;
-        const int totalCount = 5;
-        [OZLNetwork getTrackerListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
-            if (!error) {
-                _trackerList = result;
-                singleton.trackerList = _trackerList;
-            }else {
-                NSLog(@"get tracker list error : %@",error.description);
-            }
-            doneCount ++;
-            if (doneCount == totalCount) {
-                [self loadProjectDetail];
-                doneCount = 0;
-            }
-        }];
-
-        [OZLNetwork getIssueStatusListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
-            if (!error) {
-                _statusList = result;
-                singleton.statusList = _statusList;
-            }else {
-                NSLog(@"get issue status list error : %@",error.description);
-            }
-            doneCount ++;
-            if (doneCount == totalCount) {
-                [self loadProjectDetail];
-                doneCount = 0;
-            }
-        }];
-        [OZLNetwork getPriorityListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
-            if (!error) {
-                _priorityList = result;
-                singleton.priorityList = _priorityList;
-            }else {
-                NSLog(@"get priority list error : %@",error.description);
-            }
-            doneCount ++;
-            if (doneCount == totalCount) {
-                [self loadProjectDetail];
-                doneCount = 0;
-            }
-        }];
-        [OZLNetwork getUserListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
-            if (!error) {
-                _userList = result;
-                singleton.userList = _userList;
-            }else {
-                NSLog(@"get user list error : %@",error.description);
-            }
-            doneCount ++;
-            if (doneCount == totalCount) {
-                [self loadProjectDetail];
-                doneCount = 0;
-            }
-        }];
-
-        [OZLNetwork getTimeEntryListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
-            if (!error) {
-                _timeEntryActivityList = result;
-                singleton.timeEntryActivityList = _timeEntryActivityList;
-            }else {
-                NSLog(@"get user list error : %@",error.description);
-            }
-            doneCount ++;
-            if (doneCount == totalCount) {
-                [self loadProjectDetail];
-                doneCount = 0;
-            }
-        }];
-    }
 }
 
 - (void)showProjectList {
@@ -276,7 +146,9 @@
     
     UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueDetailViewController" bundle:nil];
     OZLIssueDetailViewController* detail = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueDetailViewController"];
-    [detail setIssueData:[_issuesList objectAtIndex:indexPath.row]];
+    
+    OZLModelIssue *issue = self.viewModel.issues[indexPath.row];
+    [detail setIssueData:issue];
     
     return detail;
 }
@@ -292,7 +164,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_issuesList count];
+    return self.viewModel.issues.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -307,7 +179,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellidentifier];
     }
     
-    OZLModelIssue* issue = [_issuesList objectAtIndex:indexPath.row];
+    OZLModelIssue* issue = self.viewModel.issues[indexPath.row];
     cell.textLabel.text = issue.subject;
     cell.detailTextLabel.text = issue.description;
     
@@ -326,21 +198,19 @@
         _HUD.detailsLabelText = @"";
         _HUD.mode = MBProgressHUDModeIndeterminate;
         [_HUD show:YES];
-        [OZLNetwork deleteIssue:[[_issuesList objectAtIndex:indexPath.row] index] withParams:nil andBlock:^(BOOL success, NSError *error) {
+        [self.viewModel deleteIssueAtIndex:indexPath.row completion:^(NSError *error) {
             if (error) {
                 NSLog(@"failed to delete issue");
                 _HUD.mode = MBProgressHUDModeText;
                 _HUD.labelText = @"Connection Failed";
                 _HUD.detailsLabelText = @" Please check network connection or your account setting.";
                 [_HUD hide:YES afterDelay:3];
-            }else {
-                [_issuesList removeObjectAtIndex:indexPath.row];
+                
+            } else {
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                 [_HUD hide:YES];
             }
         }];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
 }
 
@@ -349,13 +219,16 @@
 {
     //OZLIssueDetailViewController* detail = [[OZLIssueDetailViewController alloc] initWithNibName:@"OZLIssueDetailViewController" bundle:nil];
     UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueDetailViewController" bundle:nil];
+    
+    OZLModelIssue *issue = self.viewModel.issues[indexPath.row];
+    
     OZLIssueDetailViewController* detail = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueDetailViewController"];
-    [detail setIssueData:[_issuesList objectAtIndex:indexPath.row]];
+    [detail setIssueData:issue];
     [self.navigationController pushViewController:detail animated:YES];
 }
 
 - (IBAction)onNewIssue:(id)sender {
-    if (![OZLSingleton isUserLoggedIn] ) {
+    if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"No available";
         _HUD.detailsLabelText = @"You need to log in to do this.";
@@ -381,7 +254,7 @@
 }
 
 - (void)editIssueList:(id)sender {
-    if (![OZLSingleton isUserLoggedIn]) {
+    if (![OZLSingleton sharedInstance].isUserLoggedIn) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"No available";
         _HUD.detailsLabelText = @"You need to log in to do this.";

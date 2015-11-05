@@ -104,7 +104,7 @@
                 [self.navigationController pushViewController:history animated:YES];
             }break;
             case 1:{// add sub task
-                if (![OZLSingleton isUserLoggedIn] ) {
+                if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
                     _HUD.mode = MBProgressHUDModeText;
                     _HUD.labelText = @"No available";
                     _HUD.detailsLabelText = @"You need to log in to do this.";
@@ -118,7 +118,7 @@
                 [self.navigationController pushViewController:creator animated:YES];
             }break;
             case 2:{//logtime
-                if (![OZLSingleton isUserLoggedIn] ) {
+                if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
                     _HUD.mode = MBProgressHUDModeText;
                     _HUD.labelText = @"No available";
                     _HUD.detailsLabelText = @"You need to log in to do this.";
@@ -132,7 +132,7 @@
                 [self.navigationController pushViewController:creator animated:YES];
             }break;
             case 3:{ // update
-                if (![OZLSingleton isUserLoggedIn] ) {
+                if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
                     _HUD.mode = MBProgressHUDModeText;
                     _HUD.labelText = @"No available";
                     _HUD.detailsLabelText = @"You need to log in to do this.";

@@ -9,7 +9,7 @@
 #import "OZLMainTabControllerViewController.h"
 #import "OZLAccountViewController.h"
 #import "OZLProjectListViewController.h"
-#import "OZLProjectViewController.h"
+#import "OZLIssueListViewController.h"
 #import "OZLQueryListViewController.h"
 
 @interface OZLMainTabControllerViewController ()
@@ -47,8 +47,7 @@
         [OZLSingleton sharedInstance].redminePassword &&
         [OZLSingleton sharedInstance].redmineHomeURL) {
         
-        if ([OZLSingleton sharedInstance].lastProjectID) {
-            OZLProjectViewController *project = [[OZLProjectViewController alloc] initWithNibName:@"OZLProjectViewController" bundle:nil];
+        if ([OZLSingleton sharedInstance].lastProjectID > 0) {
             self.selectedViewController = self.projectListVC.navigationController;
         } else {
             self.selectedViewController = self.projectListVC.navigationController;

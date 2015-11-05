@@ -30,7 +30,7 @@
 
 @interface OZLModelTracker : NSObject
 
-@property(nonatomic) int index;
+@property(nonatomic) NSInteger index;
 @property(nonatomic, strong) NSString* name;
 
 -(id)initWithDictionary:(NSDictionary*)dic;
