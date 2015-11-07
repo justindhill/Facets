@@ -31,6 +31,7 @@
 #import "OZLNetwork.h"
 #import "MBProgressHUD.h"
 #import "OZLProjectInfoViewController.h"
+#import "OZLIssueViewController.h"
 #import "OZLIssueDetailViewController.h"
 #import "OZLIssueCreateOrUpdateViewController.h"
 #import "OZLIssueFilterViewController.h"
@@ -267,14 +268,16 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    OZLIssueViewController *issue = [[OZLIssueViewController alloc] init];
+    [self.navigationController pushViewController:issue animated:YES];
     //OZLIssueDetailViewController* detail = [[OZLIssueDetailViewController alloc] initWithNibName:@"OZLIssueDetailViewController" bundle:nil];
-    UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueDetailViewController" bundle:nil];
-    
-    OZLModelIssue *issue = self.viewModel.issues[indexPath.row];
-    
-    OZLIssueDetailViewController* detail = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueDetailViewController"];
-    [detail setIssueData:issue];
-    [self.navigationController pushViewController:detail animated:YES];
+//    UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueDetailViewController" bundle:nil];
+//    
+//    OZLModelIssue *issue = self.viewModel.issues[indexPath.row];
+//    
+//    OZLIssueDetailViewController* detail = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueDetailViewController"];
+//    [detail setIssueData:issue];
+//    [self.navigationController pushViewController:detail animated:YES];
 }
 
 - (IBAction)onNewIssue:(id)sender {

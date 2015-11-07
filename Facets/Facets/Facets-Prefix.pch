@@ -17,3 +17,4 @@
 #import "OZLSingleton.h"
 
 #import "UIFont+OZLExtensions.h"
+#import "UIView+OZLExtensions.h"

@@ -4,5 +4,6 @@ pod 'MBProgressHUD'
 pod 'iOSPlot'
 pod 'Reveal-iOS-SDK', :configuration => ['Debug']
 pod 'HockeySDK'
+pod 'DRPSlidingTabView'
 
 pod 'Realm'
