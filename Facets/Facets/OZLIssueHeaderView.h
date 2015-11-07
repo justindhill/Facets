@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OZLModelIssue.h"
 
 @interface OZLIssueHeaderView : UIView
 
 @property (strong) UILabel *titleLabel;
 @property (strong) UILabel *assigneeDisplayNameLabel;
 @property (strong) UIImageView *assigneeProfileImageView;
+@property (assign) CGFloat contentPadding;
+
+- (void)applyIssueModel:(OZLModelIssue *)issue;
 
 @end

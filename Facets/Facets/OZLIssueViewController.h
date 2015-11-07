@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OZLModelIssue.h"
 
 @interface OZLIssueViewController : UITableViewController
+
+@property (nonatomic, strong) OZLModelIssue *issueModel;
 
 @end

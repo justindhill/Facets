@@ -8,8 +8,8 @@
 
 #import "OZLIssueHeaderView.h"
 
-const NSInteger contentPadding = 16.;
-const CGFloat profileSideLen = 32;
+const CGFloat profileSideLen = 32.;
+const CGFloat assigneeTextSize = 14.;
 
 @interface OZLIssueHeaderView ()
 
@@ -20,8 +20,11 @@ const CGFloat profileSideLen = 32;
 
 @implementation OZLIssueHeaderView
 
+#pragma mark - Life cycle
 - (instancetype)init {
     if (self = [super init]) {
+        self.contentPadding = 16.;
+        
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.numberOfLines = 0;
         self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -34,11 +37,11 @@ const CGFloat profileSideLen = 32;
         
         self.assigneeTextLabel = [[UILabel alloc] init];
         self.assigneeTextLabel.text = @"ASSIGNEE";
-        self.assigneeTextLabel.font = [UIFont systemFontOfSize:10];
+        self.assigneeTextLabel.font = [UIFont systemFontOfSize:10.];
         self.assigneeTextLabel.textColor = [UIColor lightGrayColor];
         
         self.assigneeDisplayNameLabel = [[UILabel alloc] init];
-        self.assigneeDisplayNameLabel.font = [UIFont systemFontOfSize:14];
+        self.assigneeDisplayNameLabel.font = [UIFont systemFontOfSize:assigneeTextSize];
         
         self.isFirstLayout = YES;
     }
@@ -46,6 +49,7 @@ const CGFloat profileSideLen = 32;
     return self;
 }
 
+#pragma mark - Layout
 - (void)layoutSubviews {
     if (self.isFirstLayout) {
         [self addSubview:self.titleLabel];
@@ -54,11 +58,11 @@ const CGFloat profileSideLen = 32;
         [self addSubview:self.assigneeDisplayNameLabel];
     }
     
-    self.titleLabel.preferredMaxLayoutWidth = self.frame.size.width - (2 * contentPadding);
-    CGSize size = [self.titleLabel sizeThatFits:CGSizeMake(self.frame.size.width - (2 * contentPadding), CGFLOAT_MAX)];
-    self.titleLabel.frame = (CGRect){{contentPadding, contentPadding}, size};
+    self.titleLabel.preferredMaxLayoutWidth = self.frame.size.width - (2 * self.contentPadding);
+    CGSize size = [self.titleLabel sizeThatFits:CGSizeMake(self.frame.size.width - (2 * self.contentPadding), CGFLOAT_MAX)];
+    self.titleLabel.frame = (CGRect){{self.contentPadding, self.contentPadding}, size};
     
-    self.assigneeProfileImageView.frame = CGRectMake(contentPadding, self.titleLabel.bottom + 12, profileSideLen, profileSideLen);
+    self.assigneeProfileImageView.frame = CGRectMake(self.contentPadding, self.titleLabel.bottom + 12, profileSideLen, profileSideLen);
     
     [self.assigneeTextLabel sizeToFit];
     self.assigneeTextLabel.frame = (CGRect){{self.assigneeProfileImageView.right + 5, self.assigneeProfileImageView.top}, self.assigneeTextLabel.frame.size};
@@ -71,7 +75,37 @@ const CGFloat profileSideLen = 32;
     self.frame = (CGRect){CGPointZero, size};
     [self layoutSubviews];
     
-    return CGSizeMake(size.width, self.assigneeDisplayNameLabel.bottom + contentPadding);
+    return CGSizeMake(size.width, self.assigneeDisplayNameLabel.bottom + self.contentPadding);
+}
+
+#pragma mark - Modeling
+- (void)applyIssueModel:(OZLModelIssue *)issue {
+    self.titleLabel.attributedText = [self applyTitleAttributesToText:issue.subject];
+    
+    if (issue.assignedTo) {
+        self.assigneeDisplayNameLabel.font = [UIFont systemFontOfSize:assigneeTextSize];
+        self.assigneeDisplayNameLabel.text = issue.assignedTo.name;
+        self.assigneeDisplayNameLabel.textColor = [UIColor blackColor];
+        
+    } else {
+        self.assigneeDisplayNameLabel.font = [UIFont italicSystemFontOfSize:assigneeTextSize];
+        self.assigneeDisplayNameLabel.text = @"Unassigned";
+        self.assigneeDisplayNameLabel.textColor = [UIColor grayColor];
+    }
+}
+
+- (NSAttributedString *)applyTitleAttributesToText:(NSString *)text {
+    NSAssert(text, @"Tried to apply title attributes to nil text");
+    if (!text) {
+        return nil;
+    }
+    
+    NSMutableParagraphStyle *para = [[NSMutableParagraphStyle alloc] init];
+    para.lineHeightMultiple = 1.15;
+    
+    NSAttributedString *attr = [[NSAttributedString alloc] initWithString:text attributes:@{ NSParagraphStyleAttributeName: para} ];
+    
+    return attr;
 }
 
 @end

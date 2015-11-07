@@ -266,18 +266,11 @@
 }
 
 #pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    OZLIssueViewController *issue = [[OZLIssueViewController alloc] init];
-    [self.navigationController pushViewController:issue animated:YES];
-    //OZLIssueDetailViewController* detail = [[OZLIssueDetailViewController alloc] initWithNibName:@"OZLIssueDetailViewController" bundle:nil];
-//    UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueDetailViewController" bundle:nil];
-//    
-//    OZLModelIssue *issue = self.viewModel.issues[indexPath.row];
-//    
-//    OZLIssueDetailViewController* detail = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueDetailViewController"];
-//    [detail setIssueData:issue];
-//    [self.navigationController pushViewController:detail animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    OZLIssueViewController *issueVC = [[OZLIssueViewController alloc] init];
+    issueVC.issueModel = self.viewModel.issues[indexPath.row];
+    
+    [self.navigationController pushViewController:issueVC animated:YES];
 }
 
 - (IBAction)onNewIssue:(id)sender {
