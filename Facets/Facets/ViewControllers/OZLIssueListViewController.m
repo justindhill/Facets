@@ -42,9 +42,9 @@
 @interface OZLIssueListViewController () <UIViewControllerPreviewingDelegate> {
 
     float _sideviewOffset;
-    MBProgressHUD * _HUD;
-    UIBarButtonItem* _editBtn;
-    UIBarButtonItem* _doneBtn;
+    MBProgressHUD  *_HUD;
+    UIBarButtonItem *_editBtn;
+    UIBarButtonItem *_doneBtn;
 }
 
 @property BOOL isFirstAppearance;
@@ -54,10 +54,8 @@
 
 @implementation OZLIssueListViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         self.isFirstAppearance = YES;
         
         self.refreshControl = [[UIRefreshControl alloc] init];
@@ -67,8 +65,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     _doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(editIssueListDone:)];
@@ -87,14 +84,14 @@
         self.optionsMenu = [[CAPSOptionsMenu alloc] initWithViewController:self barButtonSystemItem:UIBarButtonSystemItemAction keepBarButtonAtEdge:NO];
     
         __weak OZLIssueListViewController *weakSelf = self;
-        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Edit" handler:^(CAPSOptionsMenuAction * _Nonnull action) {
+        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Edit" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
             [weakSelf editIssueList:nil];
         }]];
         
-        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Sort" handler:^(CAPSOptionsMenuAction * _Nonnull action) {
+        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Sort" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
         }]];
         
-        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Copy Link" handler:^(CAPSOptionsMenuAction * _Nonnull action) {
+        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Copy Link" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
         }]];
         
         [self refreshProjectSelector];
@@ -118,13 +115,13 @@
     self.isFirstAppearance = NO;
 }
 
-
 - (void)refreshProjectSelector {
     if (self.viewModel.shouldShowProjectSelector) {
         //        NSAssert([self.viewModel respondsToSelector:@selector(refreshProjectList)], @"View model states we should show project selector, but refreshProjectList isn't implemented");
         [self.viewModel refreshProjectList];
         
         NSMutableArray *titlesArray = [NSMutableArray arrayWithCapacity:self.viewModel.projects.count];
+        
         for (OZLModelProject *project in self.viewModel.projects) {
             [titlesArray addObject:project.name];
         }
@@ -143,8 +140,7 @@
     }
 }
 
-- (void)reloadData
-{
+- (void)reloadData {
     if (!self.refreshControl.isRefreshing) {
         [self.refreshControl beginRefreshing];
     }
@@ -196,7 +192,7 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     
     UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueDetailViewController" bundle:nil];
-    OZLIssueDetailViewController* detail = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueDetailViewController"];
+    OZLIssueDetailViewController *detail = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueDetailViewController"];
     
     OZLModelIssue *issue = self.viewModel.issues[indexPath.row];
     [detail setIssueData:issue];
@@ -209,7 +205,6 @@
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -224,13 +219,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *cellidentifier = [NSString stringWithFormat:@"issue_cell_id"];
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
     
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellidentifier];
     }
     
-    OZLModelIssue* issue = self.viewModel.issues[indexPath.row];
+    OZLModelIssue *issue = self.viewModel.issues[indexPath.row];
     cell.textLabel.text = issue.subject;
     cell.detailTextLabel.text = issue.description;
     
@@ -284,7 +279,7 @@
     }
     
     UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueCreateOrUpdateViewController" bundle:nil];
-    OZLIssueCreateOrUpdateViewController* creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueCreateOrUpdateViewController"];
+    OZLIssueCreateOrUpdateViewController *creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueCreateOrUpdateViewController"];
     [creator setParentProject:_projectData];
     [creator setViewMode:OZLIssueInfoViewModeCreate];
     
@@ -293,7 +288,7 @@
 
 - (IBAction)onShowInfo:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"OZLProjectInfoViewController" bundle:nil];
-    OZLProjectInfoViewController* detail = [storyboard instantiateViewControllerWithIdentifier:@"OZLProjectInfoViewController"];
+    OZLProjectInfoViewController *detail = [storyboard instantiateViewControllerWithIdentifier:@"OZLProjectInfoViewController"];
     [detail setProjectData:_projectData];
     [detail setViewMode:OZLProjectInfoViewModeDisplay];
     [self.navigationController pushViewController:detail animated:YES];
@@ -317,4 +312,5 @@
     [self.tableView setEditing:NO animated:YES];
     self.navigationItem.rightBarButtonItem = self.optionsMenu.barItem;
 }
+
 @end

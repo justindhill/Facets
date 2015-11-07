@@ -34,43 +34,23 @@
 #import "MBProgressHUD.h"
 
 @interface OZLIssueDetailViewController () {
-    MBProgressHUD * _HUD;
-    
+    MBProgressHUD *_HUD;
 }
 
 @end
 
 @implementation OZLIssueDetailViewController
 
-@synthesize description=_description;
+@synthesize description = _description;
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     _timeEntryActivityList = [[OZLSingleton sharedInstance] timeEntryActivityList];
 
     _subject.text = _issueData.subject;
     _description.text = _issueData.description;
-    _progressbar.progress = _issueData.doneRatio/100;
+    _progressbar.progress = _issueData.doneRatio / 100;
     _status.text = _issueData.status.name ;
     _priority.text = _issueData.priority.name;
     _author.text = _issueData.author.login;
@@ -86,23 +66,16 @@
     [self.navigationItem setTitle:@"Issue Details"];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1) {
         switch (indexPath.row) {
             case 0:{//history
-                OZLIssueHistoryViewController* history = [[OZLIssueHistoryViewController alloc] init];
+                OZLIssueHistoryViewController *history = [[OZLIssueHistoryViewController alloc] init];
                 [history setIssueData:_issueData];
                 [self.navigationController pushViewController:history animated:YES];
             }break;
+                
             case 1:{// add sub task
                 if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
                     _HUD.mode = MBProgressHUDModeText;
@@ -113,10 +86,11 @@
                     return;
                 }
                 UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueCreateOrUpdateViewController" bundle:nil];
-                OZLIssueCreateOrUpdateViewController* creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueCreateOrUpdateViewController"];
+                OZLIssueCreateOrUpdateViewController *creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueCreateOrUpdateViewController"];
                 [creator setParentIssue:_issueData];
                 [self.navigationController pushViewController:creator animated:YES];
             }break;
+                
             case 2:{//logtime
                 if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
                     _HUD.mode = MBProgressHUDModeText;
@@ -127,10 +101,11 @@
                     return;
                 }
                 UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueLogtimeViewController" bundle:nil];
-                OZLIssueLogtimeViewController* creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueLogtimeViewController"];
+                OZLIssueLogtimeViewController *creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueLogtimeViewController"];
                 [creator setIssueData:_issueData];
                 [self.navigationController pushViewController:creator animated:YES];
             }break;
+                
             case 3:{ // update
                 if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
                     _HUD.mode = MBProgressHUDModeText;
@@ -141,7 +116,7 @@
                     return;
                 }
                 UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueCreateOrUpdateViewController" bundle:nil];
-                OZLIssueCreateOrUpdateViewController* creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueCreateOrUpdateViewController"];
+                OZLIssueCreateOrUpdateViewController *creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueCreateOrUpdateViewController"];
                 [creator setIssueData:_issueData];
                 [creator setViewMode:OZLIssueInfoViewModeEdit];
                 [self.navigationController pushViewController:creator animated:YES];
@@ -162,4 +137,5 @@
     [self setDueTime:nil];
     [super viewDidUnload];
 }
+
 @end

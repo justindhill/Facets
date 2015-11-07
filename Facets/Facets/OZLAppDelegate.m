@@ -37,8 +37,7 @@
 
 @implementation OZLAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
 #ifndef DEBUG
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"8d240e4921f15253d040d9347ad7d9ac"];

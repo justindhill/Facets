@@ -41,6 +41,7 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         }
         
         BOOL updateCurrentProjectId = ([OZLSingleton sharedInstance].currentProjectID == NSNotFound);
+        
         if ([OZLSingleton sharedInstance].currentProjectID != NSNotFound) {
             // Make sure the current project still exists
             if (![OZLModelProject objectForPrimaryKey:@([OZLSingleton sharedInstance].currentProjectID)]) {

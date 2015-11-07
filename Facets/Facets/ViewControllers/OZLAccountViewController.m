@@ -38,7 +38,6 @@
 
 @interface OZLAccountViewController ()
 
-
 @end
 
 @implementation OZLAccountViewController
@@ -53,7 +52,7 @@
     _username.text = [[OZLSingleton sharedInstance] redmineUserName];
     _password.text = [[OZLSingleton sharedInstance] redminePassword];
 
-    UITapGestureRecognizer* tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped)];
+    UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped)];
     [self.view addGestureRecognizer:tapper];
 }
 

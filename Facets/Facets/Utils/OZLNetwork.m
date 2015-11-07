@@ -42,7 +42,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 @implementation OZLNetwork
 
 + (instancetype)sharedInstance {
-    static OZLNetwork *_sharedInstance;
+    static OZLNetwork  * _sharedInstance;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -77,11 +77,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 #pragma mark-
 #pragma mark project api
--(void)getProjectListWithParams:(NSDictionary*)params andBlock:(void (^)(NSError *error))block;
+- (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSError *error))block;
 {
-    NSString* path = @"/projects.json";
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSString *path = @"/projects.json";
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -91,8 +92,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
         [[RLMRealm defaultRealm] beginWriteTransaction];
         
-        NSArray* projectsDic = [responseObject objectForKey:@"projects"];
-        for (NSDictionary* p in projectsDic) {
+        NSArray *projectsDic = [responseObject objectForKey:@"projects"];
+        
+        for (NSDictionary *p in projectsDic) {
             OZLModelProject *project = [[OZLModelProject alloc] initWithDictionary:p];
             [OZLModelProject createOrUpdateInDefaultRealmWithValue:project];
         }
@@ -112,11 +114,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
--(void)getDetailForProject:(NSInteger)projectid withParams:(NSDictionary*)params andBlock:(void (^)(OZLModelProject *result, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/projects/%ld.json",(long)projectid];
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+- (void)getDetailForProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelProject *result, NSError *error))block {
+    
+    NSString *path = [NSString stringWithFormat:@"/projects/%ld.json", (long)projectid];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -125,10 +128,10 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
         if (block) {
 
-            NSDictionary* projectDic = [responseObject objectForKey:@"project"];
-            OZLModelProject* project = [[OZLModelProject alloc] initWithDictionary:projectDic];
+            NSDictionary *projectDic = [responseObject objectForKey:@"project"];
+            OZLModelProject *project = [[OZLModelProject alloc] initWithDictionary:projectDic];
 
-            block(project,nil);
+            block(project, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -140,15 +143,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
--(void)createProject:(OZLModelProject*)projectData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
-{
-    NSString* path = @"/projects.json";
+- (void)createProject:(OZLModelProject *)projectData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+    NSString *path = @"/projects.json";
 
     //project info
-    NSMutableDictionary* projectDic = [projectData toParametersDic];
+    NSMutableDictionary *projectDic = [projectData toParametersDic];
     [projectDic addEntriesFromDictionary:params];
     
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [projectDic setObject:accessKey forKey:@"key"];
     }
@@ -156,7 +159,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] postPath:path parameters:projectDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            block(YES,nil);
+            block(YES, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -168,15 +171,16 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
--(void)updateProject:(OZLModelProject*)projectData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/projects/%ld.json",(long)projectData.index];
+- (void)updateProject:(OZLModelProject *)projectData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+    
+    NSString *path = [NSString stringWithFormat:@"/projects/%ld.json", (long)projectData.index];
 
     //project info
-    NSMutableDictionary* projectDic = [projectData toParametersDic];
+    NSMutableDictionary *projectDic = [projectData toParametersDic];
     [projectDic addEntriesFromDictionary:params];
 
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [projectDic setObject:accessKey forKey:@"key"];
     }
@@ -185,7 +189,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
         if (block) {
             NSInteger repondNumber = [responseObject integerValue];
-            block(repondNumber == 201,nil);
+            block(repondNumber == 201, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -198,11 +202,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 }
 
--(void)deleteProject:(NSInteger)projectid withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/projects/%ld.json",(long)projectid];
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+- (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+    
+    NSString *path = [NSString stringWithFormat:@"/projects/%ld.json", (long)projectid];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -211,7 +216,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
         if (block) {
             NSInteger repondNumber = [responseObject integerValue];
-            block(repondNumber == 201,nil);
+            block(repondNumber == 201, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -226,12 +231,13 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 #pragma mark -
 #pragma mark issue api
--(void)getIssueListForProject:(NSInteger)projectid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/issues.json"];
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+- (void)getIssueListForProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+    
+    NSString *path = [NSString stringWithFormat:@"/issues.json"];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     [paramsDic setObject:[NSNumber numberWithInteger:projectid] forKey:@"project_id"];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -240,13 +246,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
         if (block) {
 
-            NSMutableArray* issues = [[NSMutableArray alloc] init];
+            NSMutableArray *issues = [[NSMutableArray alloc] init];
 
-            NSArray* issuesDic = [responseObject objectForKey:@"issues"];
-            for (NSDictionary* p in issuesDic) {
+            NSArray *issuesDic = [responseObject objectForKey:@"issues"];
+            
+            for (NSDictionary *p in issuesDic) {
                 [issues addObject:[[OZLModelIssue alloc] initWithDictionary:p]];
             }
-            block(issues,nil);
+            
+            block(issues, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -258,15 +266,16 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
--(void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/issues.json"];
+- (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
     
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *path = [NSString stringWithFormat:@"/issues.json"];
+    
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     paramsDic[@"project_id"] = @(projectId);
     paramsDic[@"query_id"] = @(queryId);
     
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -275,13 +284,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
         if (block) {
             
-            NSMutableArray* issues = [[NSMutableArray alloc] init];
+            NSMutableArray *issues = [[NSMutableArray alloc] init];
             
-            NSArray* issuesDic = [responseObject objectForKey:@"issues"];
-            for (NSDictionary* p in issuesDic) {
+            NSArray *issuesDic = [responseObject objectForKey:@"issues"];
+            
+            for (NSDictionary *p in issuesDic) {
                 [issues addObject:[[OZLModelIssue alloc] initWithDictionary:p]];
             }
-            block(issues,nil);
+            
+            block(issues, nil);
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -293,12 +304,13 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
--(void)getDetailFoIssue:(NSInteger)issueid withParams:(NSDictionary*)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/issues/%ld.json",(long)issueid];
+- (void)getDetailFoIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block {
+    
+    NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueid];
 
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -307,10 +319,10 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
         if (block) {
 
-            NSDictionary* projectDic = [responseObject objectForKey:@"issue"];
-            OZLModelIssue* issue = [[OZLModelIssue alloc] initWithDictionary:projectDic];
+            NSDictionary *projectDic = [responseObject objectForKey:@"issue"];
+            OZLModelIssue *issue = [[OZLModelIssue alloc] initWithDictionary:projectDic];
 
-            block(issue,nil);
+            block(issue, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -322,15 +334,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
--(void)createIssue:(OZLModelIssue*)issueData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/issues.json"];
+- (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+    NSString *path = [NSString stringWithFormat:@"/issues.json"];
 
     //project info
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     [paramsDic addEntriesFromDictionary:[issueData toParametersDic]];
 
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -338,7 +350,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            block(YES,nil);
+            block(YES, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -349,15 +361,17 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
     }];
 }
--(void)updateIssue:(OZLModelIssue*)issueData withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/issues/%ld.json",(long)issueData.index];
+
+- (void)updateIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+    
+    NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueData.index];
 
     //project info
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     [paramsDic addEntriesFromDictionary:[issueData toParametersDic]];
 
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -366,7 +380,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
         if (block) {
             NSInteger repondNumber = [responseObject integerValue];
-            block(repondNumber == 201,nil);
+            block(repondNumber == 201, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -378,12 +392,13 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
--(void)deleteIssue:(NSInteger)issueid withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/issues/%ld.json",(long)issueid];
+- (void)deleteIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+    
+    NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueid];
 
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -392,7 +407,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
         if (block) {
             NSInteger repondNumber = [responseObject integerValue];
-            block(repondNumber == 201,nil);
+            block(repondNumber == 201, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -404,11 +419,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
--(void)getJournalListForIssue:(NSInteger)issueid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/issues/%ld.json?include=journals",(long)issueid];
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+- (void)getJournalListForIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+    
+    NSString *path = [NSString stringWithFormat:@"/issues/%ld.json?include=journals", (long)issueid];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -417,13 +433,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
         if (block) {
 
-            NSMutableArray* journals = [[NSMutableArray alloc] init];
+            NSMutableArray *journals = [[NSMutableArray alloc] init];
 
-            NSArray* journalsDic = [[responseObject objectForKey:@"issue"] objectForKey:@"journals"];
-            for (NSDictionary* p in journalsDic) {
+            NSArray *journalsDic = [[responseObject objectForKey:@"issue"] objectForKey:@"journals"];
+            
+            for (NSDictionary *p in journalsDic) {
                 [journals addObject:[[OZLModelIssueJournal alloc] initWithDictionary:p]];
             }
-            block(journals,nil);
+            
+            block(journals, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -438,11 +456,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 #pragma mark -
 #pragma mark priority api
 // priority
--(void)getPriorityListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
-    NSString* path = @"/enumerations/issue_priorities.json";
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+- (void)getPriorityListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+    
+    NSString *path = @"/enumerations/issue_priorities.json";
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -451,13 +470,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSMutableArray* priorities = [[NSMutableArray alloc] init];
+            NSMutableArray *priorities = [[NSMutableArray alloc] init];
 
-            NSArray* dic = [responseObject objectForKey:@"issue_priorities"];
-            for (NSDictionary* p in dic) {
+            NSArray *dic = [responseObject objectForKey:@"issue_priorities"];
+            
+            for (NSDictionary *p in dic) {
                 [priorities addObject:[[OZLModelIssuePriority alloc] initWithDictionary:p]];
             }
-            block(priorities,nil);
+            
+            block(priorities, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -471,11 +492,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 #pragma mark -
 #pragma mark user api
 // user
--(void)getUserListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
-    NSString* path = @"/users.json";
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+- (void)getUserListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+    
+    NSString *path = @"/users.json";
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -484,13 +506,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSMutableArray* priorities = [[NSMutableArray alloc] init];
+            NSMutableArray *priorities = [[NSMutableArray alloc] init];
 
-            NSArray* dic = [responseObject objectForKey:@"users"];
-            for (NSDictionary* p in dic) {
+            NSArray *dic = [responseObject objectForKey:@"users"];
+            
+            for (NSDictionary *p in dic) {
                 [priorities addObject:[[OZLModelUser alloc] initWithDictionary:p]];
             }
-            block(priorities,nil);
+            
+            block(priorities, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -501,15 +525,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
-
 #pragma mark -
 #pragma mark issue status api
 // issue status
--(void)getIssueStatusListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
-    NSString* path = @"/issue_statuses.json";
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+- (void)getIssueStatusListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+    
+    NSString *path = @"/issue_statuses.json";
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -518,13 +542,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSMutableArray* priorities = [[NSMutableArray alloc] init];
+            NSMutableArray *priorities = [[NSMutableArray alloc] init];
 
-            NSArray* dic = [responseObject objectForKey:@"issue_statuses"];
-            for (NSDictionary* p in dic) {
+            NSArray *dic = [responseObject objectForKey:@"issue_statuses"];
+            
+            for (NSDictionary *p in dic) {
                 [priorities addObject:[[OZLModelIssueStatus alloc] initWithDictionary:p]];
             }
-            block(priorities,nil);
+            
+            block(priorities, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -539,9 +565,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 #pragma mark tracker api
 // tracker
 - (void)getTrackerListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
-    NSString* path = @"/trackers.json";
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
+    NSString *path = @"/trackers.json";
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -550,13 +578,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSMutableArray* priorities = [[NSMutableArray alloc] init];
+            NSMutableArray *priorities = [[NSMutableArray alloc] init];
 
-            NSArray* dic = [responseObject objectForKey:@"trackers"];
-            for (NSDictionary* p in dic) {
+            NSArray *dic = [responseObject objectForKey:@"trackers"];
+            
+            for (NSDictionary *p in dic) {
                 [priorities addObject:[[OZLModelTracker alloc] initWithDictionary:p]];
             }
-            block(priorities,nil);
+            
+            block(priorities, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -569,9 +599,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 #pragma mark - Queries
 - (void)getQueryListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
-    NSString* path = @"/queries.json";
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
+    NSString *path = @"/queries.json";
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -580,13 +612,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if (block) {
-            NSMutableArray* queries = [[NSMutableArray alloc] init];
+            NSMutableArray *queries = [[NSMutableArray alloc] init];
             
-            NSArray* dic = [responseObject objectForKey:@"queries"];
-            for (NSDictionary* p in dic) {
+            NSArray *dic = [responseObject objectForKey:@"queries"];
+            
+            for (NSDictionary *p in dic) {
                 [queries addObject:[[OZLModelQuery alloc] initWithDictionary:p]];
             }
-            block(queries,nil);
+            
+            block(queries, nil);
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -600,11 +634,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 #pragma mark -
 #pragma mark time entries
 // time entries
--(void)getTimeEntriesWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
-    NSString* path = @"/time_entries.json";
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+- (void)getTimeEntriesWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+    
+    NSString *path = @"/time_entries.json";
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -613,13 +648,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSMutableArray* priorities = [[NSMutableArray alloc] init];
+            NSMutableArray *priorities = [[NSMutableArray alloc] init];
 
-            NSArray* dic = [responseObject objectForKey:@"time_entries"];
-            for (NSDictionary* p in dic) {
+            NSArray *dic = [responseObject objectForKey:@"time_entries"];
+            
+            for (NSDictionary *p in dic) {
                 [priorities addObject:[[OZLModelTimeEntries alloc] initWithDictionary:p]];
             }
-            block(priorities,nil);
+            
+            block(priorities, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -631,24 +668,24 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 }
 
--(void)getTimeEntriesForIssueId:(NSInteger)issueid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
-    NSDictionary* param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:issueid],@"issue_id", nil];
+- (void)getTimeEntriesForIssueId:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+    
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:issueid], @"issue_id", nil];
     [[OZLNetwork sharedInstance] getTimeEntriesWithParams:param andBlock:block];
 }
 
--(void)getTimeEntriesForProjectId:(NSInteger)projectid withParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
+- (void)getTimeEntriesForProjectId:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
 
-    NSDictionary* param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:projectid],@"project_id", nil];
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:projectid], @"project_id", nil];
     [[OZLNetwork sharedInstance] getTimeEntriesWithParams:param andBlock:block];
 }
 
--(void)getTimeEntryListWithParams:(NSDictionary*)params andBlock:(void (^)(NSArray *result, NSError *error))block
-{
-    NSString* path = @"/enumerations/time_entry_activities.json";
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+- (void)getTimeEntryListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+    
+    NSString *path = @"/enumerations/time_entry_activities.json";
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -657,13 +694,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            NSMutableArray* activities = [[NSMutableArray alloc] init];
+            NSMutableArray *activities = [[NSMutableArray alloc] init];
 
-            NSArray* dic = [responseObject objectForKey:@"time_entry_activities"];
-            for (NSDictionary* p in dic) {
+            NSArray *dic = [responseObject objectForKey:@"time_entry_activities"];
+            
+            for (NSDictionary *p in dic) {
                 [activities addObject:[[OZLModelTimeEntryActivity alloc] initWithDictionary:p]];
             }
-            block(activities,nil);
+            
+            block(activities, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -673,15 +712,17 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         }
     }];
 }
--(void)createTimeEntry:(OZLModelTimeEntries*)timeEntry withParams:(NSDictionary*)params andBlock:(void (^)(BOOL success, NSError *error))block
-{
-    NSString* path = [NSString stringWithFormat:@"/time_entries.json"];
+
+- (void)createTimeEntry:(OZLModelTimeEntries *)timeEntry withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+    
+    NSString *path = [NSString stringWithFormat:@"/time_entries.json"];
 
     //project info
-    NSMutableDictionary* paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     [paramsDic addEntriesFromDictionary:[timeEntry toParametersDic]];
 
-    NSString* accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    
     if (accessKey.length > 0) {
         [paramsDic setObject:accessKey forKey:@"key"];
     }
@@ -689,7 +730,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [[OZLNetworkBase sharedClient] postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
-            block(YES,nil);
+            block(YES, nil);
         }
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -700,6 +741,5 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
     }];
 }
-
 
 @end

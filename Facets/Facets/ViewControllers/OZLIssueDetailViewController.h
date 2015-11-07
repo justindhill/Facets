@@ -32,8 +32,8 @@
 
 @interface OZLIssueDetailViewController : UITableViewController
 
-@property(nonatomic, strong) OZLModelIssue* issueData;
-@property(nonatomic, strong) NSArray* timeEntryActivityList;
+@property (nonatomic, strong) OZLModelIssue *issueData;
+@property (nonatomic, strong) NSArray *timeEntryActivityList;
 
 @property (weak, nonatomic) IBOutlet UILabel *subject;
 @property (weak, nonatomic) IBOutlet UILabel *description;
@@ -44,7 +44,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *assignedTo;
 @property (weak, nonatomic) IBOutlet UILabel *startTime;
 @property (weak, nonatomic) IBOutlet UILabel *dueTime;
-
-
 
 @end

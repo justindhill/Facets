@@ -32,6 +32,6 @@
 
 @interface OZLIssueHistoryViewController : UITableViewController
 
-@property(nonatomic,strong) OZLModelIssue* issueData;
+@property (nonatomic, strong) OZLModelIssue *issueData;
 
 @end

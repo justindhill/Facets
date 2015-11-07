@@ -37,15 +37,15 @@
  }
  ]
  */
+
 @interface OZLModelIssueJournalDetail : NSObject
 
-@property(nonatomic, strong) NSString* property;
-@property(nonatomic, strong) NSString* name;
-@property(nonatomic, strong) NSString* oldValue;
-@property(nonatomic, strong) NSString* freshValue;
+@property (nonatomic, strong) NSString *property;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *oldValue;
+@property (nonatomic, strong) NSString *freshValue;
 
--(id)initWithDictionary:(NSDictionary*)dic;
--(NSMutableDictionary*) toParametersDic;
-
+- (id)initWithDictionary:(NSDictionary *)dic;
+- (NSMutableDictionary *)toParametersDic;
 
 @end

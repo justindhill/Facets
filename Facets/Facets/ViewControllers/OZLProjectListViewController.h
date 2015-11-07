@@ -28,7 +28,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OZLProjectListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface OZLProjectListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic) BOOL needRefresh;
 @property (strong, nonatomic) IBOutlet UITableView *projectsTableview;

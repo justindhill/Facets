@@ -32,8 +32,8 @@
 
 @interface OZLIssueLogtimeViewController : UITableViewController
 
-@property (nonatomic, strong) OZLModelIssue* issueData;
-@property (nonatomic, strong) NSArray* timeEntryActivityList;
+@property (nonatomic, strong) OZLModelIssue *issueData;
+@property (nonatomic, strong) NSArray *timeEntryActivityList;
 
 @property (weak, nonatomic) IBOutlet UITextField *hours;
 @property (weak, nonatomic) IBOutlet UITextField *activity;

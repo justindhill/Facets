@@ -53,14 +53,13 @@
  */
 @interface OZLModelIssueJournal : NSObject
 
-@property(nonatomic) NSInteger index;
-@property(nonatomic, strong) NSString* notes;
-@property(nonatomic, strong) NSString* createdOn;
-@property(nonatomic, strong) OZLModelUser* user;
-@property(nonatomic, strong) NSArray* detailArray;
+@property (nonatomic) NSInteger index;
+@property (nonatomic, strong) NSString *notes;
+@property (nonatomic, strong) NSString *createdOn;
+@property (nonatomic, strong) OZLModelUser *user;
+@property (nonatomic, strong) NSArray *detailArray;
 
--(id)initWithDictionary:(NSDictionary*)dic;
--(NSMutableDictionary*) toParametersDic;
-
+- (id)initWithDictionary:(NSDictionary *)dic;
+- (NSMutableDictionary *)toParametersDic;
 
 @end

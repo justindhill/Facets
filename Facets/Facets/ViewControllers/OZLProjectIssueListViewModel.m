@@ -19,7 +19,7 @@
 
 @implementation OZLProjectIssueListViewModel
 
-@synthesize projectId=_projectId;
+@synthesize projectId = _projectId;
 @synthesize title;
 @synthesize issues;
 @synthesize projects;
@@ -52,7 +52,7 @@
     // load issues
     [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId withParams:nil andBlock:^(NSArray *result, NSError *error) {
         if (error) {
-            NSLog(@"error getIssueListForProject: %@",error.description);
+            NSLog(@"error getIssueListForProject: %@", error.description);
             completion(error);
             
         } else {

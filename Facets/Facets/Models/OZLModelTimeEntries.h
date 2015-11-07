@@ -33,24 +33,21 @@
 #import "OZLModelUser.h"
 #import "OZLModelTimeEntryActivity.h"
 
-
 @interface OZLModelTimeEntries : NSObject
 //"id":3880,"project":{"id":14848,"name":"TVS-SCS DEMO PROJ 1"},"issue":{"id":16697},"user":{"id":20600,"name":"Derek Halford"},"activity":{"id":9,"name":"Development"},"hours":1.0,"comments":"Issue has been confirmed","spent_on":"2013-07-22","created_on":"2013-07-22T10:36:57Z","updated_on":"2013-07-22T10:36:57Z"
-@property(nonatomic) NSInteger index;
-@property(nonatomic, strong) OZLModelProject* project;
-@property(nonatomic, strong) OZLModelUser* user;
-@property(nonatomic, strong) OZLModelIssue* issue;
-@property(nonatomic, strong) OZLModelTimeEntryActivity* activity;
-@property(nonatomic) float hours;
-@property(nonatomic, strong) NSString* comments;
-@property(nonatomic, strong) NSString* spentOn;
-@property(nonatomic, strong) NSString* createdOn;
-@property(nonatomic, strong) NSString* updatedOn;
 
+@property (nonatomic) NSInteger index;
+@property (nonatomic, strong) OZLModelProject *project;
+@property (nonatomic, strong) OZLModelUser *user;
+@property (nonatomic, strong) OZLModelIssue *issue;
+@property (nonatomic, strong) OZLModelTimeEntryActivity *activity;
+@property (nonatomic) float hours;
+@property (nonatomic, strong) NSString *comments;
+@property (nonatomic, strong) NSString *spentOn;
+@property (nonatomic, strong) NSString *createdOn;
+@property (nonatomic, strong) NSString *updatedOn;
 
-
--(id)initWithDictionary:(NSDictionary*)dic;
--(NSMutableDictionary*) toParametersDic;
-
+- (id)initWithDictionary:(NSDictionary *)dic;
+- (NSMutableDictionary *)toParametersDic;
 
 @end

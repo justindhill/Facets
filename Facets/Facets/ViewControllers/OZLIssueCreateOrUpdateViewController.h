@@ -36,14 +36,14 @@ typedef enum {
     OZLIssueInfoViewModeEdit
 } OZLIssueInfoViewMode;
 
-@interface OZLIssueCreateOrUpdateViewController : UITableViewController<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface OZLIssueCreateOrUpdateViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 - (IBAction)onCancel:(id)sender;
 - (IBAction)onSave:(id)sender;
 
-@property (weak, nonatomic) NSArray* trackerList;
-@property (weak, nonatomic) NSArray* priorityList;
-@property (weak, nonatomic) NSArray* statusList;
-@property (weak, nonatomic) NSArray* userList;
+@property (weak, nonatomic) NSArray *trackerList;
+@property (weak, nonatomic) NSArray *priorityList;
+@property (weak, nonatomic) NSArray *statusList;
+@property (weak, nonatomic) NSArray *userList;
 
 
 // neccessory
@@ -59,11 +59,9 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UITextField *doneProgressLabel;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextview;
 
-@property(nonatomic,strong) OZLModelProject* parentProject;
-@property(nonatomic,strong) OZLModelIssue* parentIssue;
-@property(nonatomic, strong) OZLModelIssue* issueData;// used for update issue
-@property(nonatomic) OZLIssueInfoViewMode viewMode;
-
-//@property(nonatomic,strong) NSArray* issueList;
+@property (nonatomic, strong) OZLModelProject *parentProject;
+@property (nonatomic, strong) OZLModelIssue *parentIssue;
+@property (nonatomic, strong) OZLModelIssue *issueData;// used for update issue
+@property (nonatomic) OZLIssueInfoViewMode viewMode;
 
 @end

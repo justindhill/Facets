@@ -38,37 +38,27 @@
 
 @interface OZLIssueCreateOrUpdateViewController () {
 
-    NSDate* _currentStartDate;
-    NSDate* _currentDueDate;
+    NSDate *_currentStartDate;
+    NSDate *_currentDueDate;
     NSInteger _currentEstimatedTime;//minutes
 
-    MBProgressHUD* _HUD;
+    MBProgressHUD *_HUD;
 }
 
 @end
 
 @implementation OZLIssueCreateOrUpdateViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
-    OZLSingleton* singleton = [OZLSingleton sharedInstance];
+    OZLSingleton *singleton = [OZLSingleton sharedInstance];
     _trackerList = singleton.trackerList;
     _statusList = singleton.statusList;
     _userList = singleton.userList;
     _priorityList = singleton.priorityList;
 
-    UIBarButtonItem* saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)];
+    UIBarButtonItem *saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)];
     [self.navigationItem setRightBarButtonItem:saveBtn];
 
     [self setupInputviews];
@@ -81,16 +71,16 @@
 
 }
 
--(void) setupInputviews
-{
+- (void)setupInputviews {
+    
     // setup datapicker inputview
-    UIDatePicker* datePicker = [[UIDatePicker alloc]init];
+    UIDatePicker *datePicker = [[UIDatePicker alloc]init];
     [datePicker setDatePickerMode:UIDatePickerModeDate];
     [datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     // accessoryview
-    UIToolbar* inputAccessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-    UIBarButtonItem* accessoryDoneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(accessoryDoneClicked:)];
-    UIBarButtonItem* flexleft = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIToolbar *inputAccessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    UIBarButtonItem *accessoryDoneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(accessoryDoneClicked:)];
+    UIBarButtonItem *flexleft = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     inputAccessoryView.items = [NSArray arrayWithObjects:flexleft, accessoryDoneButton, nil];
 
     _startDateLabel.inputView = datePicker;
@@ -101,7 +91,7 @@
     _dueDateLabel.delegate = self;
 
     // setup time picker inputview
-    UIDatePicker* timerPicker = [[UIDatePicker alloc]init];
+    UIDatePicker *timerPicker = [[UIDatePicker alloc]init];
     [timerPicker setDatePickerMode:UIDatePickerModeCountDownTimer];
     [timerPicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     timerPicker.minuteInterval = 5;
@@ -110,7 +100,7 @@
     _estimatedHoursLabel.delegate = self;
 
     // setup percentage pickerview
-    UIPickerView* percentageView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, 162)];
+    UIPickerView *percentageView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, 162)];
     percentageView.dataSource = self;
     percentageView.delegate = self;
     [percentageView selectRow:0 inComponent:0 animated:NO];
@@ -119,41 +109,40 @@
     _doneProgressLabel.delegate = self;
 }
 
--(void)initializeViewValues
-{
+- (void)initializeViewValues {
     if (_viewMode == OZLIssueInfoViewModeEdit) { // initial values for ui elements
         _subjectTextField.text = _issueData.subject;
+        
         if (_issueData.tracker) {
             _trackerLabel.text = _issueData.tracker.name;
         }
+        
         if (_issueData.status) {
             _statusLabel.text = _issueData.status.name;
         }
+        
         if (_issueData.priority) {
             _priorityLabel.text = _issueData.priority.name;
         }
+        
         if (_issueData.assignedTo) {
             _assigneeLabel.text = _issueData.assignedTo.name;
         }
+        
         if (_issueData.startDate) {
             _startDateLabel.text = _issueData.startDate;
         }
+        
         if (_issueData.dueDate) {
             _dueDateLabel.text = _issueData.dueDate;
         }
-        _estimatedHoursLabel.text = [NSString stringWithFormat:@"%f",_issueData.estimatedHours];
-        _doneProgressLabel.text = [NSString stringWithFormat:@"%ld %%",(long)_issueData.doneRatio];
         
-    }else if(_viewMode == OZLIssueInfoViewModeCreate){
+        _estimatedHoursLabel.text = [NSString stringWithFormat:@"%f", _issueData.estimatedHours];
+        _doneProgressLabel.text = [NSString stringWithFormat:@"%ld %%", (long)_issueData.doneRatio];
+        
+    } else if (_viewMode == OZLIssueInfoViewModeCreate) {
         _issueData = [[OZLModelIssue alloc] init];
     }
-
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)onCancel:(id)sender {
@@ -169,79 +158,90 @@
         [_HUD hide:YES afterDelay:1];
         return;
     }
+    
     if (_issueData.tracker == nil) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"tracker can not be empty.";
         [_HUD show:YES];
         [_HUD hide:YES afterDelay:1];
+        
         return;
     }
+    
     if (_issueData.status == nil) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"status can not be empty.";
         [_HUD show:YES];
         [_HUD hide:YES afterDelay:1];
+        
         return;
     }
+    
     if (_issueData.priority == nil) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"priority can not be empty.";
         [_HUD show:YES];
         [_HUD hide:YES afterDelay:1];
+        
         return;
     }
 
     _issueData.subject = _subjectTextField.text;
+    
     if (_parentIssue) {
         _issueData.parentIssueId = _parentIssue.index;
         _issueData.projectId = _parentIssue.projectId;
-    }else if(_parentProject){
+    } else if (_parentProject) {
         _issueData.projectId = _parentProject.index;
     }
+    
     if (_viewMode == OZLIssueInfoViewModeEdit) {
         _issueData.notes = _descriptionTextview.text;
-    }else if(_viewMode == OZLIssueInfoViewModeCreate) {
+    } else if (_viewMode == OZLIssueInfoViewModeCreate) {
         _issueData.description = _descriptionTextview.text;
     }
+    
     _issueData.startDate = _startDateLabel.text;
     _issueData.dueDate = _dueDateLabel.text;
     _issueData.doneRatio =  [_doneProgressLabel.text integerValue];
-    _issueData.estimatedHours = _currentEstimatedTime/60.0f;
+    _issueData.estimatedHours = _currentEstimatedTime / 60.0f;
     //TODO: is_public is not processed yet
 
 
     _HUD.detailsLabelText = @"";
     _HUD.mode = MBProgressHUDModeIndeterminate;
+    
     if (_viewMode == OZLIssueInfoViewModeEdit) {
         _HUD.labelText = @"Updating Issue ...";
         [_HUD show:YES];
         [[OZLNetwork sharedInstance] updateIssue:_issueData withParams:nil andBlock:^(BOOL success, NSError *error){
             if (error) {
-                NSLog(@"update issue error: %@",error.description);
+                NSLog(@"update issue error: %@", error.description);
                 _HUD.mode = MBProgressHUDModeText;
                 _HUD.labelText = @"Connection Failed";
                 _HUD.detailsLabelText = @" Please check network connection or your account setting.";
                 [_HUD hide:YES afterDelay:3];
-            }else {
+            } else {
                 [self.navigationController popViewControllerAnimated:YES];
                 [_HUD hide:YES];
             }
         }];
-    }else if(_viewMode == OZLIssueInfoViewModeCreate){
+        
+    } else if (_viewMode == OZLIssueInfoViewModeCreate){
         _HUD.labelText = @"Creating New Issue ...";
         [_HUD show:YES];
         [[OZLNetwork sharedInstance] createIssue:_issueData withParams:nil andBlock:^(BOOL success, NSError *error){
             [_HUD hide:YES];
             
             if (error) {
-                NSLog(@"create issue error: %@",error.description);
+                NSLog(@"create issue error: %@", error.description);
 
                 _HUD.mode = MBProgressHUDModeText;
                 _HUD.labelText = @"Sorry, something wrong while creating issue.";
                 [_HUD show:YES];
                 [_HUD hide:YES afterDelay:1];
 
-            }else {
+            } else {
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }];
@@ -262,28 +262,31 @@
     [super viewDidUnload];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSArray* alertTitles = @[@"Select Tracker", @"Select Status", @"Select Priority", @"Select Assignee"];
-    NSArray* dataArray = @[_trackerList, _statusList, _priorityList, _userList];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *alertTitles = @[@"Select Tracker", @"Select Status", @"Select Priority", @"Select Assignee"];
+    NSArray *dataArray = @[_trackerList, _statusList, _priorityList, _userList];
+    
     if (indexPath.section == 1) {
 
-        MLTableAlert* tableAlert = [MLTableAlert tableAlertWithTitle:[alertTitles objectAtIndex:indexPath.row] cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
+        MLTableAlert *tableAlert = [MLTableAlert tableAlertWithTitle:[alertTitles objectAtIndex:indexPath.row] cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
                                     {
                                         return  [[dataArray objectAtIndex:indexPath.row] count] + 1;
                                     }
-                                                            andCells:^UITableViewCell* (MLTableAlert *anAlert, NSIndexPath *alertIndexPath)
+                                                            andCells:^UITableViewCell *(MLTableAlert *anAlert, NSIndexPath *alertIndexPath)
                                     {
-                                        static NSString *CellIdentifier = @"CellIdentifier";
+                                        static NSString * CellIdentifier = @"CellIdentifier";
                                         UITableViewCell *cell = [anAlert.table dequeueReusableCellWithIdentifier:CellIdentifier];
-                                        if (cell == nil)
+                                        
+                                        if (cell == nil) {
                                             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                                        }
 
                                         if (alertIndexPath.row == 0) {
                                             cell.textLabel.text = @"None";
-                                        }else {
+                                        } else {
                                             cell.textLabel.text = [[[dataArray objectAtIndex:indexPath.row ]objectAtIndex:alertIndexPath.row - 1] name];
                                         }
+                                        
                                         return cell;
                                     }];
 
@@ -292,7 +295,8 @@
 
         // configure actions to perform
         [tableAlert configureSelectionBlock:^(NSIndexPath *selectedIndex){
-            UITableViewCell* parentCell = [self.tableView cellForRowAtIndexPath:indexPath];
+            UITableViewCell *parentCell = [self.tableView cellForRowAtIndexPath:indexPath];
+            
             if (selectedIndex.row == 0) {
                 switch (indexPath.row) {
                     case 0:{//tracker
@@ -312,8 +316,9 @@
                 }
 
                 parentCell.detailTextLabel.text = @"None";
-            }else {
+            } else {
                 id data = [[dataArray objectAtIndex:indexPath.row ] objectAtIndex:selectedIndex.row - 1];
+                
                 switch (indexPath.row) {
                     case 0:{//tracker
                         _issueData.tracker = data;
@@ -341,7 +346,7 @@
 
         [tableAlert show];
         
-    }else if( indexPath.section == 2){
+    } else if ( indexPath.section == 2) {
         switch (indexPath.row) {
             case 0:{//start date
                 [_startDateLabel becomeFirstResponder];
@@ -364,24 +369,27 @@
     [self.tableView reloadData];
 }
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        NSString* tip ;
+        NSString *tip ;
+        
         if (_viewMode == OZLIssueInfoViewModeEdit) {
-            tip = [NSString stringWithFormat:@"Update issue #%ld",(long)_issueData.index];
-        }else if(_viewMode == OZLIssueInfoViewModeCreate){
+            tip = [NSString stringWithFormat:@"Update issue #%ld", (long)_issueData.index];
+        } else if (_viewMode == OZLIssueInfoViewModeCreate){
+            
             if (_parentIssue) {
-                tip = [NSString stringWithFormat:@"Add sub issue to #%ld",(long)_parentIssue.index];
-            }else {
-                tip = [NSString stringWithFormat:@"Add issue to project:%@",_parentProject.name];
+                tip = [NSString stringWithFormat:@"Add sub issue to #%ld", (long)_parentIssue.index];
+            } else {
+                tip = [NSString stringWithFormat:@"Add issue to project:%@", _parentProject.name];
             }
         }
+        
         return tip;
-    }else if(section == 3) {
+        
+    } else if (section == 3) {
         if (_viewMode == OZLIssueInfoViewModeEdit) {
             return @"Notes";
-        }else if(_viewMode == OZLIssueInfoViewModeCreate){
+        } else if (_viewMode == OZLIssueInfoViewModeCreate) {
             return @"Description";
         }
     }
@@ -391,55 +399,51 @@
 
 #pragma mark -
 #pragma mark delegate of textfield inputview
-
 #pragma mark data picker value changed
--(void)datePickerValueChanged:(id)sender
-{
-    UIDatePicker* datepicker = (UIDatePicker*)sender;
+- (void)datePickerValueChanged:(id)sender {
+    UIDatePicker *datepicker = (UIDatePicker *)sender;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
     if (_estimatedHoursLabel.isFirstResponder) {
 
-         NSString* timeStr = [NSString stringWithFormat:@"%ld Mins",(long)(datepicker.countDownDuration/60)];
+         NSString *timeStr = [NSString stringWithFormat:@"%ld Mins", (long)(datepicker.countDownDuration / 60)];
         _estimatedHoursLabel.text = timeStr;
-        _currentEstimatedTime = (NSInteger)datepicker.countDownDuration/60;
-    }else {
+        _currentEstimatedTime = (NSInteger)datepicker.countDownDuration / 60;
+        
+    } else {
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         
-        NSString* dateStr = [dateFormatter stringFromDate:datepicker.date];
+        NSString *dateStr = [dateFormatter stringFromDate:datepicker.date];
+        
         if (_startDateLabel.isFirstResponder) {
             _startDateLabel.text = dateStr;
             _currentStartDate = datepicker.date;
-        }else if(_dueDateLabel.isFirstResponder) {
+        } else if (_dueDateLabel.isFirstResponder) {
             _dueDateLabel.text = dateStr;
             _currentDueDate = datepicker.date;
         }
     }
 }
--(void)accessoryDoneClicked:(id)sender
-{
+
+- (void)accessoryDoneClicked:(id)sender {
     [self.view endEditing:YES];
 }
 
 #pragma mark -
 #pragma mark picker view delegate and datasource
-- (void)pickerView:(UIPickerView *)pV didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
+- (void)pickerView:(UIPickerView *)pV didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     _doneProgressLabel.text = [NSString stringWithFormat:@"%ld %%", (long)(row * 10)];
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     return 11;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     return [NSString stringWithFormat:@"%ld %%", (long)(row * 10)];
 }
 

@@ -32,29 +32,17 @@
 #import "MLTableAlert.h"
 
 @interface OZLProjectInfoViewController () {
-    MBProgressHUD * _HUD;
-    
+    MBProgressHUD *_HUD;
 }
 
 @end
 
 @implementation OZLProjectInfoViewController
 
-@synthesize description=_description;
+@synthesize description = _description;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-
 
     _HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:_HUD];
@@ -62,15 +50,12 @@
 
     if (_viewMode == OZLProjectInfoViewModeCreate) {
         [self prepareViewForCreate];
-    }else if(_viewMode == OZLProjectInfoViewModeDisplay) {
+    } else if (_viewMode == OZLProjectInfoViewModeDisplay) {
         [self prepareViewForDisplay];
-    }else if(_viewMode == OZLProjectInfoViewModeEdit) {
-        
     }
 }
 
--(void)prepareViewForDisplay
-{
+- (void)prepareViewForDisplay {
     self.navigationItem.title = @"Project Details";
 
     _name.userInteractionEnabled = NO;
@@ -84,29 +69,22 @@
     _description.text = _projectData.description;
 }
 
--(void)prepareViewForCreate
-{
+- (void)prepareViewForCreate {
 
-    UIBarButtonItem* cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)];
+    UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)];
     [self.navigationItem setLeftBarButtonItem:cancelBtn];
-    UIBarButtonItem* saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)];
+    UIBarButtonItem *saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)];
     [self.navigationItem setRightBarButtonItem:saveBtn];
 
     self.navigationItem.title = @"New Project";
 
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (IBAction)onCancel:(id)sender {
 
     if (_viewMode == OZLProjectInfoViewModeCreate) {
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    }else {
+    } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -121,6 +99,7 @@
         
         return;
     }
+    
     if (_identifier.text.length == 0) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"Project identifier can not be empty.";
@@ -128,15 +107,15 @@
         [_HUD hide:YES afterDelay:1];
         return;
     }
-    
 
-    OZLModelProject* projectData = [[OZLModelProject alloc] init];
+    OZLModelProject *projectData = [[OZLModelProject alloc] init];
     projectData.name = _name.text;
     projectData.identifier = _identifier.text;
     //TODO: is_public is not processed yet
 
     projectData.description = _description.text;
     projectData.homepage = _homepageUrl.text;
+    
     if (_parentProject) {
         projectData.parentId = _parentProject.index;
     }
@@ -146,13 +125,13 @@
     [_HUD show:YES];
     [[OZLNetwork sharedInstance] createProject:projectData withParams:nil andBlock:^(BOOL success, NSError *error) {
         if (error) {
-            NSLog(@"create project error: %@",error.description);
+            NSLog(@"create project error: %@", error.description);
             _HUD.mode = MBProgressHUDModeText;
             _HUD.labelText = @"Connection Failed";
             _HUD.detailsLabelText = @" Please check network connection or your account setting.";
             [_HUD hide:YES afterDelay:3];
 
-        }else {
+        } else {
             [_HUD hide:YES];
             [self onCancel:nil];
         }
@@ -168,28 +147,29 @@
 }
 
 #pragma mark tableview datasource
-
 #pragma mark tableview delegate
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section ==0 && indexPath.row == 4) {//parent project
         // create the alert
-        MLTableAlert* tableAlert = [MLTableAlert tableAlertWithTitle:@"Parent Project" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
+        MLTableAlert *tableAlert = [MLTableAlert tableAlertWithTitle:@"Parent Project" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
                                       {
                                           return  _projectList.count + 1;
                                       }
-                                                              andCells:^UITableViewCell* (MLTableAlert *anAlert, NSIndexPath *indexPath)
+                                                              andCells:^UITableViewCell *(MLTableAlert *anAlert, NSIndexPath *indexPath)
                                       {
-                                          static NSString *CellIdentifier = @"CellIdentifier";
+                                          static NSString * CellIdentifier = @"CellIdentifier";
                                           UITableViewCell *cell = [anAlert.table dequeueReusableCellWithIdentifier:CellIdentifier];
-                                          if (cell == nil)
+                                          
+                                          if (cell == nil) {
                                               cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                                          }
 
                                           if (indexPath.row == 0) {
                                               cell.textLabel.text = @"None";
-                                          }else {
+                                          } else {
                                               cell.textLabel.text = [[_projectList objectAtIndex:indexPath.row - 1] name];
                                           }
+                                          
                                           return cell;
                                       }];
 
@@ -198,14 +178,16 @@
 
         // configure actions to perform
         [tableAlert configureSelectionBlock:^(NSIndexPath *selectedIndex){
-            UITableViewCell* parentCell = [self.tableView cellForRowAtIndexPath:indexPath];
+            UITableViewCell *parentCell = [self.tableView cellForRowAtIndexPath:indexPath];
+            
             if (selectedIndex.row == 0) {
                 _parentProject = nil;
                 parentCell.detailTextLabel.text = @"None";
-            }else {
+            } else {
                 _parentProject = [_projectList objectAtIndex:selectedIndex.row - 1];
                 parentCell.detailTextLabel.text = _parentProject.name;
             }
+            
             [parentCell.detailTextLabel sizeToFit];
         } andCompletionBlock:^{
             
@@ -215,4 +197,5 @@
         [tableAlert show];
     }
 }
+
 @end

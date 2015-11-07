@@ -41,29 +41,30 @@
 @property (readonly) OZLServerSync *serverSync;
 
 //network
-@property(nonatomic,strong) NSString* redmineHomeURL;
-@property(nonatomic,strong) NSString* redmineUserKey;
-@property(nonatomic,strong) NSString* redmineUserName;
-@property(nonatomic,strong) NSString* redminePassword;
+@property (nonatomic, strong) NSString *redmineHomeURL;
+@property (nonatomic, strong) NSString *redmineUserKey;
+@property (nonatomic, strong) NSString *redmineUserName;
+@property (nonatomic, strong) NSString *redminePassword;
 
 // issue list option
-@property(nonatomic) NSInteger issueListFilterType;
-@property(nonatomic) NSInteger issueListSortType;
-@property(nonatomic) NSInteger issueListSortAscending;
+@property (nonatomic) NSInteger issueListFilterType;
+@property (nonatomic) NSInteger issueListSortType;
+@property (nonatomic) NSInteger issueListSortAscending;
 
 //app status
-@property(nonatomic) NSInteger currentProjectID;// last viewed project id
+@property (nonatomic) NSInteger currentProjectID;// last viewed project id
 
 // app data
-@property (strong, nonatomic) NSArray* trackerList;
-@property (strong, nonatomic) NSArray* priorityList;
-@property (strong, nonatomic) NSArray* statusList;
-@property (strong, nonatomic) NSArray* userList;
-@property (strong, nonatomic) NSArray* timeEntryActivityList;
--(OZLModelTracker*)trackerWithId:(NSInteger)index;
--(OZLModelIssuePriority*)issuePriorityWithId:(NSInteger)index;
--(OZLModelIssueStatus*)issueStatusWithId:(NSInteger)index;
--(OZLModelUser*)userWithId:(NSInteger)index;
+@property (strong, nonatomic) NSArray *trackerList;
+@property (strong, nonatomic) NSArray *priorityList;
+@property (strong, nonatomic) NSArray *statusList;
+@property (strong, nonatomic) NSArray *userList;
+@property (strong, nonatomic) NSArray *timeEntryActivityList;
+
+- (OZLModelTracker *)trackerWithId:(NSInteger)index;
+- (OZLModelIssuePriority *)issuePriorityWithId:(NSInteger)index;
+- (OZLModelIssueStatus *)issueStatusWithId:(NSInteger)index;
+- (OZLModelUser *)userWithId:(NSInteger)index;
 
 @property (readonly) BOOL isUserLoggedIn;
 

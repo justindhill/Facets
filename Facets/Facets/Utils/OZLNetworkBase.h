@@ -31,7 +31,7 @@
 
 @interface OZLNetworkBase : AFHTTPClient
 
-+(OZLNetworkBase *)sharedClient;
--(void)setAuthorizationHeader;
++ (OZLNetworkBase *)sharedClient;
+- (void)setAuthorizationHeader;
 
 @end

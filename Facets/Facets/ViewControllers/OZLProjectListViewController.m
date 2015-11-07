@@ -38,18 +38,17 @@
 
 @interface OZLProjectListViewController (){
     RLMResults<OZLModelProject *> *_projectList;
-	MBProgressHUD * _HUD;
+	MBProgressHUD *_HUD;
 
-    UIBarButtonItem* _editBtn;
-    UIBarButtonItem* _doneBtn;
+    UIBarButtonItem *_editBtn;
+    UIBarButtonItem *_doneBtn;
 }
 
 @end
 
 @implementation OZLProjectListViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     _projectsTableview.delegate = self;
     _projectsTableview.dataSource = self;
@@ -68,8 +67,7 @@
     _projectList = [[OZLModelProject allObjects] sortedResultsUsingProperty:@"name" ascending:YES];
 }
 
-- (void)showProjectView:(OZLModelProject*)project
-{
+- (void)showProjectView:(OZLModelProject *)project {
     OZLProjectIssueListViewModel *viewModel = [[OZLProjectIssueListViewModel alloc] init];
     viewModel.title = project.name;
     viewModel.projectId = project.index;
@@ -91,8 +89,8 @@
                      }];
 }
 
--(void)editProjectList:(id)sender
-{
+- (void)editProjectList:(id)sender {
+    
     if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
         _HUD.mode = MBProgressHUDModeText;
         _HUD.labelText = @"No available";
@@ -106,8 +104,7 @@
     
 }
 
--(void)editProjectListDone:(id)sender
-{
+- (void)editProjectListDone:(id)sender {
     [_projectsTableview setEditing:NO animated:YES];
     self.navigationItem.rightBarButtonItem = _editBtn;
 }
@@ -118,49 +115,45 @@
 }
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     // Return the number of sections.
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     // Return the number of rows in the section.
     return [_projectList count];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString* cellidentifier = [NSString stringWithFormat:@"project_cell_id"];
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *cellidentifier = [NSString stringWithFormat:@"project_cell_id"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
+    
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellidentifier];
     }
-    OZLModelProject* project = [_projectList objectAtIndex:indexPath.row];
+    
+    OZLModelProject *project = [_projectList objectAtIndex:indexPath.row];
     cell.textLabel.text = project.name;
     cell.detailTextLabel.text = project.description;
+    
     return cell;
 }
 
-
 // Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
 
 #pragma mark - Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showProjectView:[_projectList objectAtIndex:indexPath.row]];
 }

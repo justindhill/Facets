@@ -96,6 +96,7 @@ const CGFloat assigneeTextSize = 14.;
 
 - (NSAttributedString *)applyTitleAttributesToText:(NSString *)text {
     NSAssert(text, @"Tried to apply title attributes to nil text");
+    
     if (!text) {
         return nil;
     }

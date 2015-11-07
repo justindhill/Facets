@@ -77,7 +77,7 @@
 }
 
 + (CGFloat)heightForWidth:(CGFloat)width description:(NSString *)description contentPadding:(CGFloat)padding {
-    static OZLIssueDescriptionCell *sizingCell;
+    static OZLIssueDescriptionCell * sizingCell;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

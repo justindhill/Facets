@@ -33,50 +33,47 @@
 
 @implementation OZLNetworkBase
 
-static OZLNetworkBase *_sharedClient = nil;
-+(OZLNetworkBase *)sharedClient
-{
-    if (_sharedClient == nil) {
-        
+static OZLNetworkBase * _sharedClient = nil;
++ (OZLNetworkBase *)sharedClient {
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         _sharedClient = [[OZLNetworkBase alloc] initWithBaseURL:[NSURL URLWithString:[[OZLSingleton sharedInstance] redmineHomeURL]]];
-
-    };
+    });
     
     return _sharedClient;
 }
 
 - (id)initWithBaseURL:(NSURL *)url {
-    self = [super initWithBaseURL:url];
-    if (!self) {
-        return nil;
+    if (self = [super initWithBaseURL:url]) {
+    
+        [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        
+        // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
+        [self setDefaultHeader:@"Accept" value:@"application/json"];
+
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(accountChanged) name:NOTIFICATION_REDMINE_ACCOUNT_CHANGED object:nil];
+
+        [self setAuthorizationHeader];
     }
     
-    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    
-    // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
-	[self setDefaultHeader:@"Accept" value:@"application/json"];
-
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(accountChanged) name:NOTIFICATION_REDMINE_ACCOUNT_CHANGED object:nil];
-
-    [self setAuthorizationHeader];
     return self;
 }
 
--(void)setAuthorizationHeader
-{
+- (void)setAuthorizationHeader {
     [self clearAuthorizationHeader];
-    NSString* username = [[OZLSingleton sharedInstance] redmineUserName];
-    NSString* password = [[OZLSingleton sharedInstance] redminePassword];
+    NSString *username = [[OZLSingleton sharedInstance] redmineUserName];
+    NSString *password = [[OZLSingleton sharedInstance] redminePassword];
     [self setAuthorizationHeaderWithUsername:username password:password];
 
 }
 
--(void)accountChanged
-{
+- (void)accountChanged {
     _sharedClient = nil;
 
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self];
 }
+
 @end

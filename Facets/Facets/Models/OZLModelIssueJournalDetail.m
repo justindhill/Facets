@@ -30,21 +30,20 @@
 
 @implementation OZLModelIssueJournalDetail
 
--(id)initWithDictionary:(NSDictionary*)dic
-{
-    self = [super init];
-    if (!self) {
-        return nil;
+- (id)initWithDictionary:(NSDictionary *)dic {
+    
+    if (self = [super init]) {
+        _name = [dic objectForKey:@"name"];
+        _property = [dic objectForKey:@"property"];
+        _oldValue = [dic objectForKey:@"old_value"];
+        _freshValue = [dic objectForKey:@"new_value"];
     }
-    _name = [dic objectForKey:@"name"];
-    _property = [dic objectForKey:@"property"];
-    _oldValue = [dic objectForKey:@"old_value"];
-    _freshValue = [dic objectForKey:@"new_value"];
+    
     return self;
 }
 
--(NSMutableDictionary*) toParametersDic
-{
+- (NSMutableDictionary *)toParametersDic {
     return nil;
 }
+
 @end

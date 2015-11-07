@@ -48,8 +48,8 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_ASCEND = @"USER_DEFAULTS_ISSUE_LIST_AS
 NSString * const USER_DEFAULTS_ISSUE_LIST_FILTER = @"USER_DEFAULTS_ISSUE_LIST_FILTER";
 NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT";
 
-+ (OZLSingleton*) sharedInstance {
-    static OZLSingleton* _sharedInstance = nil;
++ (OZLSingleton *)sharedInstance {
+    static OZLSingleton * _sharedInstance = nil;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -88,95 +88,101 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
 }
 
 #pragma mark getter and setter
--(NSString*)redmineHomeURL
-{
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+- (NSString *)redmineHomeURL {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    
     return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_HOME_URL];
 }
--(void)setRedmineHomeURL:(NSString *)redmineHomeURL
-{
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+
+- (void)setRedmineHomeURL:(NSString *)redmineHomeURL {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redmineHomeURL forKey:USER_DEFAULTS_REDMINE_HOME_URL];
     [userdefaults synchronize];
-    
 }
--(NSString*)redmineUserKey
-{
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+
+- (NSString *)redmineUserKey {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    
     return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_USER_KEY];
 }
--(void)setRedmineUserKey:(NSString *)redmineUserKey
-{
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+
+- (void)setRedmineUserKey:(NSString *)redmineUserKey {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redmineUserKey forKey:USER_DEFAULTS_REDMINE_USER_KEY];
     [userdefaults synchronize];    
 }
-- (NSInteger)currentProjectID
-{
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+
+- (NSInteger)currentProjectID {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    
     return [userdefaults integerForKey:USER_DEFAULTS_LAST_PROJECT_ID];
 }
+
 - (void)setCurrentProjectID:(NSInteger)projectid {
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setInteger:projectid forKey:USER_DEFAULTS_LAST_PROJECT_ID];
     [userdefaults synchronize];
 }
 
-- (NSString*)redmineUserName {
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+- (NSString *)redmineUserName {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    
     return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_USER_NAME];
 }
 
 - (void)setRedmineUserName:(NSString *)redmineUserName {
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redmineUserName forKey:USER_DEFAULTS_REDMINE_USER_NAME];
     [userdefaults synchronize];
 }
 
 - (NSString *)redminePassword {
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    
     return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_PASSWORD];
 }
 
 - (void)setRedminePassword:(NSString *)redminePassword {
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redminePassword forKey:USER_DEFAULTS_REDMINE_PASSWORD];
     [userdefaults synchronize];
 }
 
 - (NSInteger)issueListFilterType {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    
     return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_FILTER] integerValue];
 }
+
 - (void)setIssueListFilterType:(NSInteger)issueListFilterType {
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:@(issueListFilterType) forKey:USER_DEFAULTS_ISSUE_LIST_FILTER];
     [userdefaults synchronize];
 }
 
 - (NSInteger)issueListSortAscending {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    
     return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_ASCEND] integerValue];
 }
 
 - (void)setIssueListSortAscending:(NSInteger)issueListSortAscending {
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:@(issueListSortAscending) forKey:USER_DEFAULTS_ISSUE_LIST_ASCEND];
     [userdefaults synchronize];
 }
 
 - (NSInteger)issueListSortType {
-    NSUserDefaults* userdefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    
     return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_SORT] intValue];
 }
 
-- (void)setIssueListSortType:(NSInteger)issueListSortType
-{
+- (void)setIssueListSortType:(NSInteger)issueListSortType {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:@(issueListSortType) forKey:USER_DEFAULTS_ISSUE_LIST_SORT];
     [userdefaults synchronize];
 }
-
 
 #pragma mark -
 #pragma mark data retrival
@@ -190,6 +196,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     
     return nil;
 }
+
 - (OZLModelIssuePriority *)issuePriorityWithId:(NSInteger)index {
     
     for (OZLModelIssuePriority *priority in _priorityList) {
@@ -214,7 +221,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
 
 - (OZLModelUser *)userWithId:(NSInteger)index {
     
-    for (OZLModelUser * user in _userList) {
+    for (OZLModelUser  *user in _userList) {
         if (user.index == index) {
             return user;
         }

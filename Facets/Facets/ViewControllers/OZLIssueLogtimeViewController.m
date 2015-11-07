@@ -33,24 +33,16 @@
 #import "OZLSingleton.h"
 
 @interface OZLIssueLogtimeViewController () {
-    MBProgressHUD* _HUD;
+    MBProgressHUD *_HUD;
     float _hourValue;
-    OZLModelTimeEntries* _entry;
+    OZLModelTimeEntries *_entry;
 }
+
 @end
 
 @implementation OZLIssueLogtimeViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 
     // initialize data
@@ -58,7 +50,7 @@
     _entry = [[OZLModelTimeEntries alloc] init];
     _timeEntryActivityList = [[OZLSingleton sharedInstance] timeEntryActivityList];
 
-    UIBarButtonItem* saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)];
+    UIBarButtonItem *saveBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)];
     [self.navigationItem setRightBarButtonItem:saveBtn];
 
     [self.navigationItem setTitle:@"Log Time"];
@@ -71,23 +63,22 @@
 	_HUD.labelText = @"Loading...";
 }
 
--(void)setupInputViews
-{
+- (void)setupInputViews {
     [_activity setUserInteractionEnabled:NO];
 
     // setup time picker inputview
-    UIDatePicker* timerPicker = [[UIDatePicker alloc]init];
+    UIDatePicker *timerPicker = [[UIDatePicker alloc]init];
     [timerPicker setDatePickerMode:UIDatePickerModeCountDownTimer];
     [timerPicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     timerPicker.minuteInterval = 5;
     // setup datapicker inputview
-    UIDatePicker* datePicker = [[UIDatePicker alloc]init];
+    UIDatePicker *datePicker = [[UIDatePicker alloc]init];
     [datePicker setDatePickerMode:UIDatePickerModeDate];
     [datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     // accessoryview
-    UIToolbar* inputAccessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-    UIBarButtonItem* accessoryDoneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(accessoryDoneClicked:)];
-    UIBarButtonItem* flexleft = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIToolbar *inputAccessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    UIBarButtonItem *accessoryDoneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(accessoryDoneClicked:)];
+    UIBarButtonItem *flexleft = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     inputAccessoryView.items = [NSArray arrayWithObjects:flexleft, accessoryDoneButton, nil];
 
     _hours.inputView = timerPicker;
@@ -96,8 +87,7 @@
     _dateLabel.inputAccessoryView = inputAccessoryView;
 }
 
--(void) onSave:(id)sender
-{
+- (void)onSave:(id)sender {
     _HUD.mode = MBProgressHUDModeIndeterminate;
     _HUD.labelText = @"Logging time ...";
     _HUD.detailsLabelText = @"";
@@ -106,54 +96,51 @@
     // build entry
     _entry.issue = _issueData;
     _entry.hours = _hourValue;
+    
     if (_comment.text.length > 0) {
         _entry.comments = _comment.text;
     }
+    
     if (_dateLabel.text.length > 0) {
         _entry.createdOn = _dateLabel.text;
     }
 
     [[OZLNetwork sharedInstance] createTimeEntry:_entry withParams:nil andBlock:^(BOOL success, NSError *error){
         if (error) {
-            NSLog(@"log time error: %@",error.description);
+            NSLog(@"log time error: %@", error.description);
             _HUD.mode = MBProgressHUDModeText;
             _HUD.labelText = @"Connection Failed";
             _HUD.detailsLabelText = @" Please check network connection or your account setting.";
             [_HUD hide:YES afterDelay:3];
-        }else {
+        } else {
             [self.navigationController popViewControllerAnimated:YES];
             [_HUD hide:YES];
         }
     }];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && indexPath.row == 1) {//activity
-        MLTableAlert* tableAlert = [MLTableAlert tableAlertWithTitle:@"Activty" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
+        MLTableAlert *tableAlert = [MLTableAlert tableAlertWithTitle:@"Activty" cancelButtonTitle:@"Cancel" numberOfRows:^NSInteger (NSInteger section)
                                     {
                                         return  [_timeEntryActivityList  count] + 1;
                                     }
-                                                            andCells:^UITableViewCell* (MLTableAlert *anAlert, NSIndexPath *alertIndexPath)
+                                                            andCells:^UITableViewCell *(MLTableAlert *anAlert, NSIndexPath *alertIndexPath)
                                     {
-                                        static NSString *CellIdentifier = @"CellIdentifier";
+                                        static NSString * CellIdentifier = @"CellIdentifier";
                                         UITableViewCell *cell = [anAlert.table dequeueReusableCellWithIdentifier:CellIdentifier];
-                                        if (cell == nil)
+                                        
+                                        if (cell == nil) {
                                             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                                        }
 
                                         if (alertIndexPath.row == 0) {
                                             cell.textLabel.text = @"None";
-                                        }else {
+                                        } else {
                                             cell.textLabel.text = [[_timeEntryActivityList objectAtIndex:alertIndexPath.row - 1] name];
                                         }
+                                        
                                         return cell;
                                     }];
 
@@ -165,11 +152,13 @@
             if (selectedIndex.row == 0) {
                 _activity.text = @"None";
                 _entry.activity = nil;
-            }else {
+            } else {
                 _activity.text = [[ _timeEntryActivityList objectAtIndex:selectedIndex.row - 1] name];
-                _entry.activity = [_timeEntryActivityList objectAtIndex:selectedIndex.row -1];
+                _entry.activity = [_timeEntryActivityList objectAtIndex:selectedIndex.row - 1];
             }
+            
             [_activity sizeToFit];
+            
         } andCompletionBlock:^{
             
         }];
@@ -187,26 +176,26 @@
 }
 
 #pragma mark data picker value changed
--(void)datePickerValueChanged:(id)sender
-{
-    UIDatePicker* datepicker = (UIDatePicker*)sender;
+- (void)datePickerValueChanged:(id)sender {
+    
+    UIDatePicker *datepicker = (UIDatePicker *)sender;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
     if (_hours.isFirstResponder) {
 
-        NSString* timeStr = [NSString stringWithFormat:@"%ld Mins",(long)(datepicker.countDownDuration/60)];
+        NSString *timeStr = [NSString stringWithFormat:@"%ld Mins", (long)(datepicker.countDownDuration / 60)];
         _hours.text = timeStr;
-        _hourValue = (NSInteger)(datepicker.countDownDuration/3600.f);
-    }else {
+        _hourValue = (NSInteger)(datepicker.countDownDuration / 3600.f);
+        
+    } else {
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
 
-        NSString* dateStr = [dateFormatter stringFromDate:datepicker.date];
+        NSString *dateStr = [dateFormatter stringFromDate:datepicker.date];
         _dateLabel.text = dateStr;
     }
 }
 
--(void)accessoryDoneClicked:(id)sender
-{
+- (void)accessoryDoneClicked:(id)sender {
     [self.view endEditing:YES];
 }
 

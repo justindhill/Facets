@@ -30,9 +30,9 @@
 
 @interface OZLModelIssueStatus : NSObject
 
-@property(nonatomic) NSInteger index;
-@property(nonatomic, strong) NSString* name;
+@property (nonatomic) NSInteger index;
+@property (nonatomic, strong) NSString *name;
 
--(id)initWithDictionary:(NSDictionary*)dic;
+- (id)initWithDictionary:(NSDictionary *)dic;
 
 @end
