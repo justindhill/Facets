@@ -194,7 +194,7 @@
 
     if (_hours.isFirstResponder) {
 
-        NSString* timeStr = [NSString stringWithFormat:@"%ld Mins",(NSInteger)datepicker.countDownDuration/60];
+        NSString* timeStr = [NSString stringWithFormat:@"%ld Mins",(long)(datepicker.countDownDuration/60)];
         _hours.text = timeStr;
         _hourValue = (NSInteger)(datepicker.countDownDuration/3600.f);
     }else {

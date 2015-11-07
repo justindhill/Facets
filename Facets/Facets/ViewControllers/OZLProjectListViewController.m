@@ -112,26 +112,6 @@
     self.navigationItem.rightBarButtonItem = _editBtn;
 }
 
-- (IBAction)createProject:(id)sender {
-    if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
-        _HUD.mode = MBProgressHUDModeText;
-        _HUD.labelText = @"No available";
-        _HUD.detailsLabelText = @"You need to log in to do this.";
-        [_HUD show:YES];
-        [_HUD hide:YES afterDelay:2];
-        return;
-    }
-
-    UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLProjectInfoViewController" bundle:nil];
-    OZLProjectInfoViewController* creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLProjectInfoViewController"];
-    [creator setProjectList:_projectList];
-    [creator setViewMode:OZLProjectInfoViewModeCreate];
-
-
-    UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:creator];
-    [self.navigationController presentViewController:nav animated:YES completion:nil];
-}
-
 - (void)viewDidUnload {
     [self setProjectsTableview:nil];
     [super viewDidUnload];
@@ -178,32 +158,6 @@
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-
-//// Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//
-//        _HUD.labelText = @"Deleting Project...";
-//        [_HUD show:YES];
-//        [[OZLNetwork sharedInstance] deleteProject:[[_projectList objectAtIndex:indexPath.row] index] withParams:nil andBlock:^(BOOL success, NSError *error) {
-//            [_HUD hide:YES];
-//            if (error) {
-//                NSLog(@"failed to delete project");
-//                _HUD.mode = MBProgressHUDModeText;
-//
-//                _HUD.labelText = @"Sorry, something wrong while deleting project.";
-//                [_HUD show:YES];
-//                [_HUD hide:YES afterDelay:1];
-//            }else {
-//                [_projectList removeObjectAtIndex:indexPath.row];
-//                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//            }
-//        }];
-//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//    }
-//}
 
 #pragma mark - Table view delegate
 

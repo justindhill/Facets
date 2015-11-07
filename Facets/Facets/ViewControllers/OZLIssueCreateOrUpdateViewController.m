@@ -400,7 +400,7 @@
 
     if (_estimatedHoursLabel.isFirstResponder) {
 
-         NSString* timeStr = [NSString stringWithFormat:@"%ld Mins",(NSInteger)datepicker.countDownDuration/60];
+         NSString* timeStr = [NSString stringWithFormat:@"%ld Mins",(long)(datepicker.countDownDuration/60)];
         _estimatedHoursLabel.text = timeStr;
         _currentEstimatedTime = (NSInteger)datepicker.countDownDuration/60;
     }else {
