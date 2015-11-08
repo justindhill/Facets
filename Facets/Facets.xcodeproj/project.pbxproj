@@ -867,6 +867,7 @@
 				D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */,
 			);
 			name = "New Issue";
+			path = ViewControllers/Issue;
 			sourceTree = "<group>";
 		};
 		D01F9C0E1BED9AC6005B2ED0 /* Cells */ = {
@@ -888,6 +889,7 @@
 				D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */,
 			);
 			name = "Query List";
+			path = "ViewControllers/Query List";
 			sourceTree = "<group>";
 		};
 		D04801401BD004E50047C5DE /* OptionsMenu */ = {
