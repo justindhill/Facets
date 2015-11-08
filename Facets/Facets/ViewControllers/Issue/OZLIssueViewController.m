@@ -11,6 +11,7 @@
 #import "OZLIssueDescriptionCell.h"
 #import <DRPSlidingTabView/DRPSlidingTabView.h>
 
+#import "OZLIssueAboutTabView.h"
 #import "OZLTabTestView.h"
 
 const CGFloat contentPadding = 16;
@@ -25,6 +26,9 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 
 @property (strong) OZLIssueHeaderView *issueHeader;
 @property (strong) DRPSlidingTabView *detailView;
+@property (strong) OZLIssueAboutTabView *aboutTabView;
+
+@property BOOL isFirstAppearance;
 
 @end
 
@@ -37,42 +41,46 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
     self.issueHeader = [[OZLIssueHeaderView alloc] init];
     self.issueHeader.contentPadding = contentPadding;
     
-    self.detailView = [[DRPSlidingTabView alloc] init];
-    self.detailView.delegate = self;
-    self.detailView.tabContainerHeight = 35;
-    self.detailView.titleFont = [UIFont systemFontOfSize:14];
-    self.detailView.contentBackgroundColor = [UIColor OZLVeryLightGrayColor];
-    self.detailView.dividerColor = [UIColor OZLVeryLightGrayColor];
-    self.detailView.sliderHeight = 3.;
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OZLDetailReuseIdentifier];
     [self.tableView registerClass:[OZLIssueDescriptionCell class] forCellReuseIdentifier:OZLDescriptionReuseIdentifier];
     
-    OZLTabTestView *aboutView = [[OZLTabTestView alloc] init];
-    aboutView.backgroundColor = [UIColor OZLVeryLightGrayColor];
-    aboutView.heightToReport = 150;
-    [self.detailView addPage:aboutView withTitle:@"ABOUT"];
-    
-    OZLTabTestView *scheduleView = [[OZLTabTestView alloc] init];
-    scheduleView.backgroundColor = [UIColor OZLVeryLightGrayColor];
-    scheduleView.heightToReport = 100;
-    [self.detailView addPage:scheduleView withTitle:@"SCHEDULE"];
-    
-    OZLTabTestView *relatedView = [[OZLTabTestView alloc] init];
-    relatedView.backgroundColor = [UIColor OZLVeryLightGrayColor];
-    relatedView.heightToReport = 200;
-    [self.detailView addPage:relatedView withTitle:@"RELATED"];
-    
-    if (self.issueModel) {
-        [self.issueHeader applyIssueModel:self.issueModel];
-    }
+    self.isFirstAppearance = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self refreshHeaderSize];
+    if (self.isFirstAppearance) {
+        self.detailView = [[DRPSlidingTabView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
+        self.detailView.delegate = self;
+        self.detailView.tabContainerHeight = 35;
+        self.detailView.titleFont = [UIFont systemFontOfSize:14];
+        self.detailView.contentBackgroundColor = [UIColor OZLVeryLightGrayColor];
+        self.detailView.dividerColor = [UIColor OZLVeryLightGrayColor];
+        self.detailView.sliderHeight = 3.;
+        
+        self.aboutTabView = [[OZLIssueAboutTabView alloc] init];
+        self.aboutTabView.backgroundColor = [UIColor OZLVeryLightGrayColor];
+        self.aboutTabView.contentPadding = contentPadding;
+        [self.detailView addPage:self.aboutTabView withTitle:@"ABOUT"];
+        
+        OZLTabTestView *scheduleView = [[OZLTabTestView alloc] init];
+        scheduleView.backgroundColor = [UIColor OZLVeryLightGrayColor];
+        scheduleView.heightToReport = 100;
+        [self.detailView addPage:scheduleView withTitle:@"SCHEDULE"];
+        
+        OZLTabTestView *relatedView = [[OZLTabTestView alloc] init];
+        relatedView.backgroundColor = [UIColor OZLVeryLightGrayColor];
+        relatedView.heightToReport = 200;
+        [self.detailView addPage:relatedView withTitle:@"RELATED"];
+    }
+    
+    if (self.issueModel) {
+        [self applyIssueModel:self.issueModel];
+    }
+    
+    self.isFirstAppearance = NO;
 }
 
 #pragma mark - Accessors
@@ -85,7 +93,9 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 }
 
 - (void)applyIssueModel:(OZLModelIssue *)issue {
+    self.navigationItem.title = issue.tracker.name;
     [self.issueHeader applyIssueModel:issue];
+    [self.aboutTabView applyIssueModel:issue];
     [self refreshHeaderSize];
     
     [self.tableView reloadData];
@@ -124,7 +134,7 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
     } else if (indexPath.section == OZLDescriptionSectionIndex) {
         OZLIssueDescriptionCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLDescriptionReuseIdentifier forIndexPath:indexPath];
         cell.contentPadding = 16.;
-        cell.descriptionPreviewLabel.text = self.issueModel.description;
+        cell.descriptionPreviewString = self.issueModel.description;
         
         return cell;
     }
@@ -138,7 +148,10 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == OZLDetailSectionIndex) {
-        return self.detailView.intrinsicHeight;
+        CGFloat asdf = self.detailView.intrinsicHeight;
+        NSLog(@"detail height: %f", asdf);
+        
+        return asdf;
         
     } else if (indexPath.section == OZLDescriptionSectionIndex) {
 

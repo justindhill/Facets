@@ -10,7 +10,7 @@
 
 @interface OZLIssueDescriptionCell : OZLTableViewCell
 
-@property (readonly, strong) UILabel *descriptionPreviewLabel;
+@property (nonatomic, strong) NSString *descriptionPreviewString;
 @property (readonly, strong) UIButton *showMoreButton;
 
 + (CGFloat)heightForWidth:(CGFloat)width description:(NSString *)description contentPadding:(CGFloat)padding;

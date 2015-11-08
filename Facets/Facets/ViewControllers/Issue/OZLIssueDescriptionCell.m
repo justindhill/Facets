@@ -43,6 +43,12 @@
     return self;
 }
 
+- (void)setDescriptionPreviewString:(NSString *)descriptionPreviewString {
+    _descriptionPreviewString = descriptionPreviewString;
+    
+    self.descriptionPreviewLabel.text = [self transformStringForDisplay:descriptionPreviewString];
+}
+
 - (void)layoutSubviews {
     if (self.isFirstLayout) {
         [self.contentView addSubview:self.descriptionPreviewLabel];
@@ -90,6 +96,10 @@
     [sizingCell layoutSubviews];
     
     return sizingCell.showMoreButton.bottom + padding;
+}
+
+- (NSString *)transformStringForDisplay:(NSString *)string {
+    return [string stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
 }
 
 @end

@@ -32,6 +32,7 @@
 #import "OZLModelUser.h"
 #import "OZLModelIssuePriority.h"
 #import "OZLModelIssueCategory.h"
+#import "OZLModelIssueTargetVersion.h"
 
 @interface OZLModelIssue : NSObject
 
@@ -50,6 +51,7 @@
 @property (nonatomic, strong) NSString *dueDate;
 @property (nonatomic, strong) NSString *createdOn;
 @property (nonatomic, strong) NSString *updatedOn;
+@property (nonatomic, strong) OZLModelIssueTargetVersion *targetVersion;
 @property (nonatomic) float doneRatio;
 @property (nonatomic) float spentHours;
 @property (nonatomic) float estimatedHours;

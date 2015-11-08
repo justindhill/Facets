@@ -71,14 +71,15 @@
         id status = [dic objectForKey:@"status"];
         
         if (status) {
-            _status = [[OZLModelIssueStatus alloc ] initWithDictionary:status];
+            _status = [[OZLModelIssueStatus alloc] initWithDictionary:status];
         }
         
         id category = [dic objectForKey:@"category"];
         
         if (status) {
-            _category = [[OZLModelIssueCategory alloc ] initWithDictionary:category];
+            _category = [[OZLModelIssueCategory alloc] initWithDictionary:category];
         }
+        
         _subject = [dic objectForKey:@"subject"];
         _description = [dic objectForKey:@"description"];
         _startDate = [dic objectForKey:@"start_date"];
@@ -86,6 +87,12 @@
         _createdOn = [dic objectForKey:@"created_on"];
         _updatedOn = [dic objectForKey:@"updated_on"];
         _doneRatio = [[dic objectForKey:@"done_ratio"] floatValue];
+        
+        id targetVersion = dic[@"fixed_version"];
+        
+        if (targetVersion) {
+            _targetVersion = [[OZLModelIssueTargetVersion alloc] initWithDictionary:targetVersion];
+        }
         
         id spentHours = [dic objectForKey:@"spent_hours"];
         

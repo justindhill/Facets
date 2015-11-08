@@ -215,6 +215,8 @@
 		D01F9C111BED9B15005B2ED0 /* OZLIssueDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */; };
 		D01F9C141BEDABB8005B2ED0 /* UIColor+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */; };
 		D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */; };
+		D01F9C1A1BEED9BE005B2ED0 /* OZLIssueAboutTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */; };
+		D01F9C1D1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C1C1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.m */; };
 		D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */; };
 		D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */; };
 		D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */; };
@@ -495,6 +497,10 @@
 		D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+OZLExtensions.m"; sourceTree = "<group>"; };
 		D01F9C151BEEA96C005B2ED0 /* OZLTabTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLTabTestView.h; sourceTree = "<group>"; };
 		D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLTabTestView.m; sourceTree = "<group>"; };
+		D01F9C181BEED9BE005B2ED0 /* OZLIssueAboutTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueAboutTabView.h; sourceTree = "<group>"; };
+		D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueAboutTabView.m; sourceTree = "<group>"; };
+		D01F9C1B1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelIssueTargetVersion.h; sourceTree = "<group>"; };
+		D01F9C1C1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelIssueTargetVersion.m; sourceTree = "<group>"; };
 		D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelQuery.h; path = Models/OZLModelQuery.h; sourceTree = "<group>"; };
 		D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelQuery.m; path = Models/OZLModelQuery.m; sourceTree = "<group>"; };
 		D03D6C441BD0196A00A47E24 /* OZLQueryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLQueryListViewController.h; sourceTree = "<group>"; };
@@ -865,6 +871,8 @@
 				D01F9BDF1BEC84A3005B2ED0 /* OZLIssueHeaderView.m */,
 				D01F9C151BEEA96C005B2ED0 /* OZLTabTestView.h */,
 				D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */,
+				D01F9C181BEED9BE005B2ED0 /* OZLIssueAboutTabView.h */,
+				D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */,
 			);
 			name = "New Issue";
 			path = ViewControllers/Issue;
@@ -1057,6 +1065,8 @@
 				2BBE4413179E586B00FD9E20 /* OZLModelTimeEntryActivity.m */,
 				D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */,
 				D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */,
+				D01F9C1B1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.h */,
+				D01F9C1C1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1386,6 +1396,7 @@
 				D5DB80A61792F4DE0081662A /* OZLProjectListViewController.m in Sources */,
 				D04C9FB01BCEB245000366A7 /* OZLMainTabControllerViewController.m in Sources */,
 				D5DB80AC1792F6980081662A /* OZLIssueListViewController.m in Sources */,
+				D01F9C1D1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.m in Sources */,
 				D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */,
 				D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */,
 				D5DB80BA17930C830081662A /* OZLNetworkBase.m in Sources */,
@@ -1427,6 +1438,7 @@
 				2BCBA820179E2AA500E5FD46 /* OZLModelIssueJournalDetail.m in Sources */,
 				2BBE440F179E500E00FD9E20 /* OZLIssueLogtimeViewController.m in Sources */,
 				2BBE4414179E586B00FD9E20 /* OZLModelTimeEntryActivity.m in Sources */,
+				D01F9C1A1BEED9BE005B2ED0 /* OZLIssueAboutTabView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
