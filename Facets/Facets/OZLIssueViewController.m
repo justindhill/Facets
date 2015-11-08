@@ -11,6 +11,8 @@
 #import "OZLIssueDescriptionCell.h"
 #import <DRPSlidingTabView/DRPSlidingTabView.h>
 
+#import "OZLTabTestView.h"
+
 const CGFloat contentPadding = 16;
 
 const NSInteger OZLDetailSectionIndex = 0;
@@ -19,7 +21,7 @@ const NSInteger OZLDescriptionSectionIndex = 1;
 NSString * const OZLDetailReuseIdentifier = @"OZLDetailReuseIdentifier";
 NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier";
 
-@interface OZLIssueViewController ()
+@interface OZLIssueViewController () <DRPSlidingTabViewDelegate>
 
 @property (strong) OZLIssueHeaderView *issueHeader;
 @property (strong) DRPSlidingTabView *detailView;
@@ -36,6 +38,7 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
     self.issueHeader.contentPadding = contentPadding;
     
     self.detailView = [[DRPSlidingTabView alloc] init];
+    self.detailView.delegate = self;
     self.detailView.tabContainerHeight = 35;
     self.detailView.titleFont = [UIFont systemFontOfSize:14];
     self.detailView.contentBackgroundColor = [UIColor OZLVeryLightGrayColor];
@@ -46,16 +49,19 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OZLDetailReuseIdentifier];
     [self.tableView registerClass:[OZLIssueDescriptionCell class] forCellReuseIdentifier:OZLDescriptionReuseIdentifier];
     
-    UIView *aboutView = [[UIView alloc] init];
+    OZLTabTestView *aboutView = [[OZLTabTestView alloc] init];
     aboutView.backgroundColor = [UIColor OZLVeryLightGrayColor];
+    aboutView.heightToReport = 150;
     [self.detailView addPage:aboutView withTitle:@"ABOUT"];
     
-    UIView *scheduleView = [[UIView alloc] init];
+    OZLTabTestView *scheduleView = [[OZLTabTestView alloc] init];
     scheduleView.backgroundColor = [UIColor OZLVeryLightGrayColor];
+    scheduleView.heightToReport = 100;
     [self.detailView addPage:scheduleView withTitle:@"SCHEDULE"];
     
-    UIView *relatedView = [[UIView alloc] init];
+    OZLTabTestView *relatedView = [[OZLTabTestView alloc] init];
     relatedView.backgroundColor = [UIColor OZLVeryLightGrayColor];
+    relatedView.heightToReport = 200;
     [self.detailView addPage:relatedView withTitle:@"RELATED"];
     
     if (self.issueModel) {
@@ -105,12 +111,13 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == OZLDetailSectionIndex) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLDetailReuseIdentifier forIndexPath:indexPath];
+        cell.clipsToBounds = YES;
+        self.detailView.frame = cell.contentView.bounds;
         
         if (!self.detailView.superview) {
             [cell.contentView addSubview:self.detailView];
         }
         
-        self.detailView.frame = cell.contentView.bounds;
         
         return cell;
         
@@ -131,7 +138,7 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == OZLDetailSectionIndex) {
-        return 250.;
+        return self.detailView.intrinsicHeight;
         
     } else if (indexPath.section == OZLDescriptionSectionIndex) {
 
@@ -145,6 +152,30 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
+}
+
+#pragma mark - DRPSlidingTabViewDelegate
+- (void)view:(UIView *)view intrinsicHeightDidChangeTo:(CGFloat)newHeight {
+    if (view == self.detailView) {
+        if (newHeight > self.detailView.frame.size.height) {
+            [self.tableView beginUpdates];
+            [self.tableView endUpdates];
+            
+            self.detailView.frame = self.detailView.superview.bounds;
+            
+        } else {
+            [CATransaction begin];
+            
+            [CATransaction setCompletionBlock:^{
+                self.detailView.frame = self.detailView.superview.bounds;
+            }];
+            
+            [self.tableView beginUpdates];
+            [self.tableView endUpdates];
+            
+            [CATransaction commit];
+        }
+    }
 }
 
 @end

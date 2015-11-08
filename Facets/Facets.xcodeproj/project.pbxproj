@@ -214,6 +214,7 @@
 		D01F9C0D1BED9ABC005B2ED0 /* OZLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C0C1BED9ABC005B2ED0 /* OZLTableViewCell.m */; };
 		D01F9C111BED9B15005B2ED0 /* OZLIssueDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */; };
 		D01F9C141BEDABB8005B2ED0 /* UIColor+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */; };
+		D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */; };
 		D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */; };
 		D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */; };
 		D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */; };
@@ -492,6 +493,8 @@
 		D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueDescriptionCell.m; sourceTree = "<group>"; };
 		D01F9C121BEDABB8005B2ED0 /* UIColor+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+OZLExtensions.h"; sourceTree = "<group>"; };
 		D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+OZLExtensions.m"; sourceTree = "<group>"; };
+		D01F9C151BEEA96C005B2ED0 /* OZLTabTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLTabTestView.h; sourceTree = "<group>"; };
+		D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLTabTestView.m; sourceTree = "<group>"; };
 		D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelQuery.h; path = Models/OZLModelQuery.h; sourceTree = "<group>"; };
 		D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelQuery.m; path = Models/OZLModelQuery.m; sourceTree = "<group>"; };
 		D03D6C441BD0196A00A47E24 /* OZLQueryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLQueryListViewController.h; sourceTree = "<group>"; };
@@ -860,6 +863,8 @@
 				D01F9BD71BEC8283005B2ED0 /* OZLIssueViewController.m */,
 				D01F9BDE1BEC84A3005B2ED0 /* OZLIssueHeaderView.h */,
 				D01F9BDF1BEC84A3005B2ED0 /* OZLIssueHeaderView.m */,
+				D01F9C151BEEA96C005B2ED0 /* OZLTabTestView.h */,
+				D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */,
 			);
 			name = "New Issue";
 			sourceTree = "<group>";
@@ -1392,6 +1397,7 @@
 				2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */,
 				2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */,
 				2BCF88271793F4AA006FC859 /* OZLModelIssueStatus.m in Sources */,
+				D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */,
 				2BCF882A1793F4C9006FC859 /* OZLModelIssuePriority.m in Sources */,
 				D048013D1BCF30560047C5DE /* OZLIssueSummaryViewController.m in Sources */,
 				D01F9BAE1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m in Sources */,
