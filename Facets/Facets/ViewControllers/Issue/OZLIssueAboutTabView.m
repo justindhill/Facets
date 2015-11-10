@@ -37,11 +37,6 @@
     return self;
 }
 
-- (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
-    NSLog(@"%@", NSStringFromCGRect(frame));
-}
-
 - (void)setup {
     self.labels = [NSMutableArray array];
     self.fieldNameFont = [UIFont OZLMediumSystemFontOfSize:12.];

@@ -56,7 +56,7 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
         self.detailView.delegate = self;
         self.detailView.tabContainerHeight = 35;
         self.detailView.titleFont = [UIFont systemFontOfSize:14];
-        self.detailView.contentBackgroundColor = [UIColor OZLVeryLightGrayColor];
+        self.detailView.backgroundColor = [UIColor OZLVeryLightGrayColor];
         self.detailView.dividerColor = [UIColor OZLVeryLightGrayColor];
         self.detailView.sliderHeight = 3.;
         
@@ -148,10 +148,7 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == OZLDetailSectionIndex) {
-        CGFloat asdf = self.detailView.intrinsicHeight;
-        NSLog(@"detail height: %f", asdf);
-        
-        return asdf;
+        return self.detailView.intrinsicHeight;
         
     } else if (indexPath.section == OZLDescriptionSectionIndex) {
 
@@ -170,24 +167,13 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 #pragma mark - DRPSlidingTabViewDelegate
 - (void)view:(UIView *)view intrinsicHeightDidChangeTo:(CGFloat)newHeight {
     if (view == self.detailView) {
-        if (newHeight > self.detailView.frame.size.height) {
-            [self.tableView beginUpdates];
-            [self.tableView endUpdates];
-            
-            self.detailView.frame = self.detailView.superview.bounds;
-            
-        } else {
-            [CATransaction begin];
-            
-            [CATransaction setCompletionBlock:^{
-                self.detailView.frame = self.detailView.superview.bounds;
-            }];
-            
-            [self.tableView beginUpdates];
-            [self.tableView endUpdates];
-            
-            [CATransaction commit];
-        }
+        [UIView beginAnimations:nil context:NULL];
+        
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+        self.detailView.frame = self.detailView.superview.bounds;
+        
+        [UIView commitAnimations];
     }
 }
 
