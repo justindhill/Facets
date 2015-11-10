@@ -191,13 +191,10 @@
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     
-    UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueDetailViewController" bundle:nil];
-    OZLIssueDetailViewController *detail = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueDetailViewController"];
+    OZLIssueViewController *issueVC = [[OZLIssueViewController alloc] init];
+    issueVC.issueModel = self.viewModel.issues[indexPath.row];
     
-    OZLModelIssue *issue = self.viewModel.issues[indexPath.row];
-    [detail setIssueData:issue];
-    
-    return detail;
+    return issueVC;
 }
 
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
