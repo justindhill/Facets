@@ -13,6 +13,7 @@
 @property NSMutableArray *labels;
 @property CGFloat minColumnWidth;
 @property NSInteger currentLayoutItemsPerColumn;
+@property OZLModelIssue *issueModel;
 
 @end
 
@@ -50,6 +51,8 @@
 
 - (void)applyIssueModel:(OZLModelIssue *)issueModel {
     [self.labels makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    self.issueModel = issueModel;
     
     NSMutableArray *labels = [NSMutableArray array];
     
@@ -134,10 +137,19 @@
         return 0;
     }
     
-    self.bounds = CGRectMake(0, 0, width, 0);
-    [self layoutSubviews];
+    static OZLIssueAboutTabView *sizingView;
     
-    UILabel *bottomRowLabel = self.labels[self.currentLayoutItemsPerColumn - 1];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sizingView = [[OZLIssueAboutTabView alloc] init];
+    });
+    
+    sizingView.bounds = CGRectMake(0, 0, width, 0);
+    sizingView.contentPadding = self.contentPadding;
+    [sizingView applyIssueModel:self.issueModel];
+    [sizingView layoutSubviews];
+    
+    UILabel *bottomRowLabel = sizingView.labels[sizingView.currentLayoutItemsPerColumn - 1];
     
     return bottomRowLabel.bottom + self.contentPadding;
 }
