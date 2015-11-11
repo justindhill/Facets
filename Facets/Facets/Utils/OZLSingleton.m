@@ -66,7 +66,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
         self.serverSync = [[OZLServerSync alloc] init];
         
         NSDictionary *dic = @{
-            USER_DEFAULTS_REDMINE_HOME_URL:   @"http://demo.redmine.org",
+            USER_DEFAULTS_REDMINE_HOME_URL:   @"https://redmine.franklychat.com",
             USER_DEFAULTS_REDMINE_USER_KEY:   @"",
             USER_DEFAULTS_LAST_PROJECT_ID:    @(NSNotFound),
             USER_DEFAULTS_REDMINE_USER_NAME:  @"",
