@@ -95,6 +95,7 @@
         [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Copy Link" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
         }]];
         
+        self.view.tintColor = self.parentViewController.view.tintColor;
         [self refreshProjectSelector];
     }
     
@@ -142,6 +143,13 @@
         // change the items. Blech.
         BTNavigationDropdownMenu *dropdown = [[BTNavigationDropdownMenu alloc] initWithTitle:self.viewModel.title items:titlesArray];
         dropdown.cellTextLabelFont = [UIFont OZLMediumSystemFontOfSize:17];
+        dropdown.tintColor = self.view.tintColor;
+        dropdown.cellBackgroundColor = [UIColor colorWithRed:(249. / 255.) green:(249. / 255.) blue:(249. / 255.) alpha:1.];
+        dropdown.cellSeparatorColor = [UIColor lightGrayColor];
+        dropdown.cellTextLabelColor = [UIColor darkGrayColor];
+        dropdown.cellSelectionColor = [UIColor OZLVeryLightGrayColor];
+        dropdown.arrowImage = [dropdown.arrowImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        dropdown.checkMarkImage = nil;
         
         __weak OZLIssueListViewController *weakSelf = self;
         dropdown.didSelectItemAtIndexHandler = ^(NSInteger index) {
