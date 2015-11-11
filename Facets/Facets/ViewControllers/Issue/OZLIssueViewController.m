@@ -11,6 +11,7 @@
 #import "OZLIssueDescriptionCell.h"
 #import <DRPSlidingTabView/DRPSlidingTabView.h>
 #import "OZLIssueFullDescriptionViewController.h"
+#import "OZLLoadingView.h"
 
 #import "OZLIssueAboutTabView.h"
 #import "OZLTabTestView.h"
@@ -98,6 +99,7 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
     [self.issueHeader applyIssueModel:issue];
     [self.aboutTabView applyIssueModel:issue];
     [self refreshHeaderSize];
+    [self showLoadingSpinner];
     
     [self.tableView reloadData];
 }
@@ -106,6 +108,15 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
     CGSize newSize = [self.issueHeader sizeThatFits:CGSizeMake(self.view.frame.size.width, UIViewNoIntrinsicMetric)];
     self.issueHeader.frame = (CGRect){CGPointZero, newSize};
     self.tableView.tableHeaderView = self.issueHeader;
+}
+
+- (void)showLoadingSpinner {
+    if (!self.tableView.tableFooterView) {
+        OZLLoadingView *loadingView = [[OZLLoadingView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+        self.tableView.tableFooterView = loadingView;
+        
+        [loadingView.loadingSpinner startAnimating];
+    }
 }
 
 #pragma mark - Button actions

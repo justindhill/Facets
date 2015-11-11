@@ -220,6 +220,7 @@
 		D0292D621BF2D9CD00F717F2 /* OZLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D611BF2D9CD00F717F2 /* OZLView.m */; };
 		D0292D691BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D681BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m */; };
 		D0292D6B1BF2EEB200F717F2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0292D6A1BF2EEB200F717F2 /* SafariServices.framework */; };
+		D0292D701BF3141900F717F2 /* OZLLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D6F1BF3141900F717F2 /* OZLLoadingView.m */; };
 		D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */; };
 		D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */; };
 		D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */; };
@@ -509,6 +510,8 @@
 		D0292D681BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueFullDescriptionViewController.m; sourceTree = "<group>"; };
 		D0292D6A1BF2EEB200F717F2 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		D0292D6C1BF2EF4E00F717F2 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		D0292D6E1BF3141900F717F2 /* OZLLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLLoadingView.h; sourceTree = "<group>"; };
+		D0292D6F1BF3141900F717F2 /* OZLLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLLoadingView.m; sourceTree = "<group>"; };
 		D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelQuery.h; path = Models/OZLModelQuery.h; sourceTree = "<group>"; };
 		D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelQuery.m; path = Models/OZLModelQuery.m; sourceTree = "<group>"; };
 		D03D6C441BD0196A00A47E24 /* OZLQueryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLQueryListViewController.h; sourceTree = "<group>"; };
@@ -875,6 +878,8 @@
 			children = (
 				D0292D661BF2DB4D00F717F2 /* Description view controller */,
 				D01F9C0E1BED9AC6005B2ED0 /* Cells */,
+				D0292D6E1BF3141900F717F2 /* OZLLoadingView.h */,
+				D0292D6F1BF3141900F717F2 /* OZLLoadingView.m */,
 				D01F9BD61BEC8283005B2ED0 /* OZLIssueViewController.h */,
 				D01F9BD71BEC8283005B2ED0 /* OZLIssueViewController.m */,
 				D01F9BDE1BEC84A3005B2ED0 /* OZLIssueHeaderView.h */,
@@ -1425,6 +1430,7 @@
 				D01F9B8F1BEB23FA005B2ED0 /* OZLServerSync.m in Sources */,
 				D0292D691BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m in Sources */,
 				D04801451BD004E50047C5DE /* CAPSOptionsMenuAction.swift in Sources */,
+				D0292D701BF3141900F717F2 /* OZLLoadingView.m in Sources */,
 				D01F9C111BED9B15005B2ED0 /* OZLIssueDescriptionCell.m in Sources */,
 				2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */,
 				2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */,
