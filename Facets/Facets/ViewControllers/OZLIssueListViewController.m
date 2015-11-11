@@ -54,6 +54,7 @@
 
 @implementation OZLIssueListViewController
 
+#pragma mark - Life cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         self.isFirstAppearance = YES;
@@ -104,8 +105,10 @@
     [super viewDidAppear:animated];
     
     // Check for force touch feature, and add force touch/previewing capability.
-    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        [self registerForPreviewingWithDelegate:self sourceView:self.view];
+    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
+        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+            [self registerForPreviewingWithDelegate:self sourceView:self.view];
+        }
     }
     
     if (!self.isFirstAppearance) {
@@ -115,6 +118,15 @@
     self.isFirstAppearance = NO;
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    for (NSIndexPath *indexPath in self.tableView.indexPathsForSelectedRows) {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+}
+
+#pragma mark - Behavior
 - (void)refreshProjectSelector {
     if (self.viewModel.shouldShowProjectSelector) {
         //        NSAssert([self.viewModel respondsToSelector:@selector(refreshProjectList)], @"View model states we should show project selector, but refreshProjectList isn't implemented");
