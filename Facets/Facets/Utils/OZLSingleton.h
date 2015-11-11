@@ -34,11 +34,15 @@
 #import "OZLModelQuery.h"
 #import "OZLServerSync.h"
 
+#import <AFNetworking/AFNetworking.h>
+
 @interface OZLSingleton : NSObject
 
 + (OZLSingleton *)sharedInstance;
 
 @property (readonly) OZLServerSync *serverSync;
+
+@property (nonatomic, readonly) AFHTTPClient *httpClient;
 
 //network
 @property (nonatomic, strong) NSString *redmineHomeURL;

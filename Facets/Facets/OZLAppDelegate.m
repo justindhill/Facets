@@ -47,6 +47,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.tintColor = [UIColor facetsBrandColor];
+    self.window.backgroundColor = [UIColor whiteColor];
 
     OZLMainTabControllerViewController *mainVC = [[OZLMainTabControllerViewController alloc] init];
     self.window.rootViewController = mainVC;

@@ -70,21 +70,30 @@
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
             
             [weakSelf presentViewController:alert animated:YES completion:nil];
+            [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
         } else {
             [[OZLSingleton sharedInstance] setRedmineUserKey:_redmineUserKey.text];
             [[OZLSingleton sharedInstance] setRedmineHomeURL:_redmineHomeURL.text];
             [[OZLSingleton sharedInstance] setRedmineUserName:_username.text];
             [[OZLSingleton sharedInstance] setRedminePassword:_password.text];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_REDMINE_ACCOUNT_CHANGED object:nil];
             
-            [[OZLSingleton sharedInstance].serverSync startSyncCompletion:^(NSError *error) {
-                [weakSelf.delegate accountViewControllerDidSuccessfullyAuthenticate:weakSelf shouldTransitionToIssues:weakSelf.isFirstLogin];
-                weakSelf.isFirstLogin = NO;
-            }];
+            [weakSelf startSync];
         }
-        
-        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
     }];
+    
+    
+}
+
+- (void)startSync {
+    __weak OZLAccountViewController *weakSelf = self;
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[OZLSingleton sharedInstance].serverSync startSyncCompletion:^(NSError *error) {
+            [weakSelf.delegate accountViewControllerDidSuccessfullyAuthenticate:weakSelf shouldTransitionToIssues:weakSelf.isFirstLogin];
+            weakSelf.isFirstLogin = NO;
+            [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+        }];
+    });
 }
 
 - (void)backgroundTapped {

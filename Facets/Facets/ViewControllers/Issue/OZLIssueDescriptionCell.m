@@ -102,4 +102,8 @@
     return [string stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
 }
 
+- (void)prepareForReuse {
+    [self.showMoreButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+}
+
 @end

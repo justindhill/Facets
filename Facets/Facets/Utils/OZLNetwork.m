@@ -27,7 +27,6 @@
 // THE SOFTWARE.
 
 #import "OZLNetwork.h"
-#import "OZLNetworkBase.h"
 #import "AFHTTPRequestOperation.h"
 #import "OZLSingleton.h"
 
@@ -57,10 +56,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSAssert(completion, @"validateCredentialsCompletion: expects a completion block");
     
-    self.authorizationClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    [self.authorizationClient setAuthorizationHeaderWithUsername:username password:password];
+    if (!self.authorizationClient) {
+        self.authorizationClient = [[AFHTTPClient alloc] initWithBaseURL:url];
+    }
     
-    [self.authorizationClient getPath:@"projects.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.authorizationClient setAuthorizationHeaderWithUsername:username password:password];
+    [self.authorizationClient getPath:@"users/current.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         completion(nil);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -77,8 +78,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 #pragma mark-
 #pragma mark project api
-- (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSError *error))block;
-{
+- (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSError *error))block {
     NSString *path = @"/projects.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
@@ -87,8 +87,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] setAuthorizationHeader];
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         [[RLMRealm defaultRealm] beginWriteTransaction];
         
@@ -124,7 +123,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
 
@@ -156,7 +155,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [projectDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] postPath:path parameters:projectDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient postPath:path parameters:projectDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             block(YES, nil);
@@ -185,7 +184,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [projectDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] putPath:path parameters:projectDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient putPath:path parameters:projectDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSInteger repondNumber = [responseObject integerValue];
@@ -212,7 +211,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] deletePath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient deletePath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSInteger repondNumber = [responseObject integerValue];
@@ -242,7 +241,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
 
@@ -280,7 +279,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
     
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if (block) {
             
@@ -315,7 +314,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
 
@@ -347,7 +346,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             block(YES, nil);
@@ -376,7 +375,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] putPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient putPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSInteger repondNumber = [responseObject integerValue];
@@ -403,7 +402,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
     
-    [[OZLNetworkBase sharedClient] deletePath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient deletePath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSInteger repondNumber = [responseObject integerValue];
@@ -429,7 +428,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
 
@@ -466,8 +465,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] setAuthorizationHeader];
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -502,8 +500,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] setAuthorizationHeader];
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -538,8 +535,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] setAuthorizationHeader];
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -574,8 +570,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] setAuthorizationHeader];
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -608,8 +603,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
     
-    [[OZLNetworkBase sharedClient] setAuthorizationHeader];
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if (block) {
             NSMutableArray *queries = [[NSMutableArray alloc] init];
@@ -644,8 +638,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] setAuthorizationHeader];
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -690,8 +683,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] setAuthorizationHeader];
-    [[OZLNetworkBase sharedClient] getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             NSMutableArray *activities = [[NSMutableArray alloc] init];
@@ -727,7 +719,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLNetworkBase sharedClient] postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OZLSingleton sharedInstance].httpClient postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
         if (block) {
             block(YES, nil);

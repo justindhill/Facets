@@ -217,6 +217,9 @@
 		D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */; };
 		D01F9C1A1BEED9BE005B2ED0 /* OZLIssueAboutTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */; };
 		D01F9C1D1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C1C1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.m */; };
+		D0292D621BF2D9CD00F717F2 /* OZLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D611BF2D9CD00F717F2 /* OZLView.m */; };
+		D0292D691BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D681BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m */; };
+		D0292D6B1BF2EEB200F717F2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0292D6A1BF2EEB200F717F2 /* SafariServices.framework */; };
 		D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */; };
 		D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */; };
 		D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */; };
@@ -243,7 +246,6 @@
 		D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80B0179300B90081662A /* OZLNetwork.m */; };
 		D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80B31793016B0081662A /* OZLAccountViewController.m */; };
 		D5DB80B61793016B0081662A /* OZLAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5DB80B41793016B0081662A /* OZLAccountViewController.xib */; };
-		D5DB80BA17930C830081662A /* OZLNetworkBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80B917930C830081662A /* OZLNetworkBase.m */; };
 		D5DB80BD17930ECD0081662A /* OZLSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80BC17930ECD0081662A /* OZLSingleton.m */; };
 		D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80C117931C8B0081662A /* OZLModelProject.m */; };
 		F355565693E8EE2EBAB48628 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C163F9F68F6FD074DF343739 /* libPods.a */; };
@@ -501,6 +503,12 @@
 		D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueAboutTabView.m; sourceTree = "<group>"; };
 		D01F9C1B1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelIssueTargetVersion.h; sourceTree = "<group>"; };
 		D01F9C1C1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelIssueTargetVersion.m; sourceTree = "<group>"; };
+		D0292D601BF2D9CD00F717F2 /* OZLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLView.h; sourceTree = "<group>"; };
+		D0292D611BF2D9CD00F717F2 /* OZLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLView.m; sourceTree = "<group>"; };
+		D0292D671BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueFullDescriptionViewController.h; sourceTree = "<group>"; };
+		D0292D681BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueFullDescriptionViewController.m; sourceTree = "<group>"; };
+		D0292D6A1BF2EEB200F717F2 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		D0292D6C1BF2EF4E00F717F2 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelQuery.h; path = Models/OZLModelQuery.h; sourceTree = "<group>"; };
 		D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelQuery.m; path = Models/OZLModelQuery.m; sourceTree = "<group>"; };
 		D03D6C441BD0196A00A47E24 /* OZLQueryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLQueryListViewController.h; sourceTree = "<group>"; };
@@ -539,8 +547,6 @@
 		D5DB80B21793016B0081662A /* OZLAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLAccountViewController.h; path = ViewControllers/OZLAccountViewController.h; sourceTree = "<group>"; };
 		D5DB80B31793016B0081662A /* OZLAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLAccountViewController.m; path = ViewControllers/OZLAccountViewController.m; sourceTree = "<group>"; };
 		D5DB80B41793016B0081662A /* OZLAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OZLAccountViewController.xib; path = ViewControllers/OZLAccountViewController.xib; sourceTree = "<group>"; };
-		D5DB80B817930C830081662A /* OZLNetworkBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLNetworkBase.h; path = Utils/OZLNetworkBase.h; sourceTree = "<group>"; };
-		D5DB80B917930C830081662A /* OZLNetworkBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLNetworkBase.m; path = Utils/OZLNetworkBase.m; sourceTree = "<group>"; };
 		D5DB80BB17930ECD0081662A /* OZLSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLSingleton.h; path = Utils/OZLSingleton.h; sourceTree = "<group>"; };
 		D5DB80BC17930ECD0081662A /* OZLSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLSingleton.m; path = Utils/OZLSingleton.m; sourceTree = "<group>"; };
 		D5DB80C017931C8B0081662A /* OZLModelProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelProject.h; path = Models/OZLModelProject.h; sourceTree = "<group>"; };
@@ -552,6 +558,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0292D6B1BF2EEB200F717F2 /* SafariServices.framework in Frameworks */,
 				2B6F38391797BEBA00D06F51 /* QuartzCore.framework in Frameworks */,
 				2BCF88141793CB94006FC859 /* SystemConfiguration.framework in Frameworks */,
 				2BCF88121793CB4F006FC859 /* CFNetwork.framework in Frameworks */,
@@ -616,6 +623,8 @@
 				D048013B1BCF30560047C5DE /* OZLIssueSummaryViewController.h */,
 				D048013C1BCF30560047C5DE /* OZLIssueSummaryViewController.m */,
 				D048013E1BCF31460047C5DE /* OZLIssueSummaryView.xib */,
+				D0292D601BF2D9CD00F717F2 /* OZLView.h */,
+				D0292D611BF2D9CD00F717F2 /* OZLView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -864,6 +873,7 @@
 		D01F9BD51BEC8265005B2ED0 /* New Issue */ = {
 			isa = PBXGroup;
 			children = (
+				D0292D661BF2DB4D00F717F2 /* Description view controller */,
 				D01F9C0E1BED9AC6005B2ED0 /* Cells */,
 				D01F9BD61BEC8283005B2ED0 /* OZLIssueViewController.h */,
 				D01F9BD71BEC8283005B2ED0 /* OZLIssueViewController.m */,
@@ -887,6 +897,15 @@
 				D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		D0292D661BF2DB4D00F717F2 /* Description view controller */ = {
+			isa = PBXGroup;
+			children = (
+				D0292D671BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.h */,
+				D0292D681BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m */,
+			);
+			path = "Description view controller";
 			sourceTree = "<group>";
 		};
 		D03D6C431BD0194B00A47E24 /* Query List */ = {
@@ -949,6 +968,8 @@
 		D5DB80581792F2BF0081662A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0292D6C1BF2EF4E00F717F2 /* MobileCoreServices.framework */,
+				D0292D6A1BF2EEB200F717F2 /* SafariServices.framework */,
 				2B6F38381797BEBA00D06F51 /* QuartzCore.framework */,
 				2BCF88131793CB94006FC859 /* SystemConfiguration.framework */,
 				2BCF88111793CB4F006FC859 /* CFNetwork.framework */,
@@ -1026,8 +1047,6 @@
 				D01F9BAB1BEBC4D9005B2ED0 /* Categories */,
 				D5DB80AF179300B90081662A /* OZLNetwork.h */,
 				D5DB80B0179300B90081662A /* OZLNetwork.m */,
-				D5DB80B817930C830081662A /* OZLNetworkBase.h */,
-				D5DB80B917930C830081662A /* OZLNetworkBase.m */,
 				D5DB80BB17930ECD0081662A /* OZLSingleton.h */,
 				D5DB80BC17930ECD0081662A /* OZLSingleton.m */,
 				2BCCA0521795312E00FA8B1A /* OZLConstants.h */,
@@ -1399,12 +1418,12 @@
 				D01F9C1D1BEEEB5C005B2ED0 /* OZLModelIssueTargetVersion.m in Sources */,
 				D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */,
 				D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */,
-				D5DB80BA17930C830081662A /* OZLNetworkBase.m in Sources */,
 				D5DB80BD17930ECD0081662A /* OZLSingleton.m in Sources */,
 				D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */,
 				D01F9B981BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m in Sources */,
 				D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */,
 				D01F9B8F1BEB23FA005B2ED0 /* OZLServerSync.m in Sources */,
+				D0292D691BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m in Sources */,
 				D04801451BD004E50047C5DE /* CAPSOptionsMenuAction.swift in Sources */,
 				D01F9C111BED9B15005B2ED0 /* OZLIssueDescriptionCell.m in Sources */,
 				2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */,
@@ -1428,6 +1447,7 @@
 				D01F9B9D1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift in Sources */,
 				D01F9BE01BEC84A3005B2ED0 /* OZLIssueHeaderView.m in Sources */,
 				2B6F38371797A00A00D06F51 /* MLTableAlert.m in Sources */,
+				D0292D621BF2D9CD00F717F2 /* OZLView.m in Sources */,
 				D01F9BD81BEC8283005B2ED0 /* OZLIssueViewController.m in Sources */,
 				D01F9C141BEDABB8005B2ED0 /* UIColor+OZLExtensions.m in Sources */,
 				2BCC0FCF179D5458003DFB44 /* OZLIssueHistoryViewController.m in Sources */,

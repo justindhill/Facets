@@ -32,6 +32,7 @@
 @interface OZLSingleton ()
 
 @property (strong) OZLServerSync *serverSync;
+@property (nonatomic, strong) AFHTTPClient *httpClient;
 
 @end
 
@@ -77,6 +78,10 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
         
         [[NSUserDefaults standardUserDefaults] registerDefaults:dic];
         
+        if (self.redmineHomeURL) {
+            self.httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:self.redmineHomeURL]];
+        }
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     
@@ -87,7 +92,17 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     return (self.redmineUserName.length > 0);
 }
 
-#pragma mark getter and setter
+#pragma mark - Accessors
+- (void)setHttpClient:(AFHTTPClient *)httpClient {
+    _httpClient = httpClient;
+    
+    if (httpClient) {
+        [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+        [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        [self updateAuthHeader];
+    }
+}
+
 - (NSString *)redmineHomeURL {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     
@@ -98,6 +113,12 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redmineHomeURL forKey:USER_DEFAULTS_REDMINE_HOME_URL];
     [userdefaults synchronize];
+    
+    NSURL *url = [NSURL URLWithString:redmineHomeURL];
+    
+    if (![url isEqual:self.httpClient.baseURL]) {
+        self.httpClient = [AFHTTPClient clientWithBaseURL:url];
+    }
 }
 
 - (NSString *)redmineUserKey {
@@ -134,6 +155,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redmineUserName forKey:USER_DEFAULTS_REDMINE_USER_NAME];
     [userdefaults synchronize];
+    [self updateAuthHeader];
 }
 
 - (NSString *)redminePassword {
@@ -146,6 +168,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redminePassword forKey:USER_DEFAULTS_REDMINE_PASSWORD];
     [userdefaults synchronize];
+    [self updateAuthHeader];
 }
 
 - (NSInteger)issueListFilterType {
@@ -182,6 +205,10 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:@(issueListSortType) forKey:USER_DEFAULTS_ISSUE_LIST_SORT];
     [userdefaults synchronize];
+}
+
+- (void)updateAuthHeader {
+    [self.httpClient setAuthorizationHeaderWithUsername:self.redmineUserName password:self.redminePassword];
 }
 
 #pragma mark -

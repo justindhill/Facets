@@ -61,11 +61,16 @@
 - (void)accountViewControllerDidSuccessfullyAuthenticate:(OZLAccountViewController *)account shouldTransitionToIssues:(BOOL)shouldTransition {
     if (shouldTransition) {
         [CATransaction begin];
-        [UIView transitionFromView:self.selectedViewController.view toView:self.projectIssuesVC.navigationController.view duration:.4 options:UIViewAnimationOptionTransitionFlipFromLeft completion:^(BOOL finished) {
-            if (finished) {
-                self.selectedViewController = self.projectIssuesVC.navigationController;
-            }
-        }];
+        
+        CATransition *transition = [[CATransition alloc] init];
+        transition.duration = .3;
+        transition.type = kCATransitionPush;
+        transition.subtype = kCATransitionFromLeft;
+        [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+        [self.view.layer addAnimation:transition forKey:nil];
+        
+        [self setSelectedIndex:0];
+        
         [CATransaction commit];
     }
 }

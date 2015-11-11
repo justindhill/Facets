@@ -10,6 +10,7 @@
 #import "OZLIssueHeaderView.h"
 #import "OZLIssueDescriptionCell.h"
 #import <DRPSlidingTabView/DRPSlidingTabView.h>
+#import "OZLIssueFullDescriptionViewController.h"
 
 #import "OZLIssueAboutTabView.h"
 #import "OZLTabTestView.h"
@@ -107,6 +108,15 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
     self.tableView.tableHeaderView = self.issueHeader;
 }
 
+#pragma mark - Button actions
+- (void)descriptionShowMoreAction:(UIButton *)button {
+    OZLIssueFullDescriptionViewController *descriptionVC = [[OZLIssueFullDescriptionViewController alloc] init];
+    descriptionVC.descriptionLabel.text = self.issueModel.description;
+    descriptionVC.contentPadding = contentPadding;
+    
+    [self.navigationController pushViewController:descriptionVC animated:YES];
+}
+
 #pragma mark - UITableViewDelegate / DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == OZLDetailSectionIndex) {
@@ -128,13 +138,13 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
             [cell.contentView addSubview:self.detailView];
         }
         
-        
         return cell;
         
     } else if (indexPath.section == OZLDescriptionSectionIndex) {
         OZLIssueDescriptionCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLDescriptionReuseIdentifier forIndexPath:indexPath];
         cell.contentPadding = 16.;
         cell.descriptionPreviewString = self.issueModel.description;
+        [cell.showMoreButton addTarget:self action:@selector(descriptionShowMoreAction:) forControlEvents:UIControlEventTouchUpInside];
         
         return cell;
     }
