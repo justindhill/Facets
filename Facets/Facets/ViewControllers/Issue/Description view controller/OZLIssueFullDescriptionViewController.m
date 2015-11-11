@@ -80,8 +80,13 @@
 #pragma mark - TTTAttributedLabelDelegate
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
     if (NSClassFromString(@"SFSafariViewController") != Nil) {
-        SFSafariViewController *safari = [[SFSafariViewController alloc] initWithURL:url];
-        [self presentViewController:safari animated:YES completion:nil];
+        if ([url.scheme hasPrefix:@"http"]) {
+            SFSafariViewController *safari = [[SFSafariViewController alloc] initWithURL:url];
+            [self presentViewController:safari animated:YES completion:nil];
+            
+        } else {
+            [[UIApplication sharedApplication] openURL:url];
+        }
         
     } else {
         [[UIApplication sharedApplication] openURL:url];
