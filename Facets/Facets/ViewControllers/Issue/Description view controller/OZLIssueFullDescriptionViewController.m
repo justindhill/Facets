@@ -30,6 +30,7 @@
         self.descriptionLabel.numberOfLines = 0;
         self.descriptionLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
         self.descriptionLabel.delegate = self;
+        self.descriptionLabel.extendsLinkTouchArea = NO;
         
         self.isFirstAppearance = YES;
         self.title = @"Description";
