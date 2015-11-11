@@ -28,7 +28,7 @@
         self.descriptionLabel.textColor = [UIColor darkGrayColor];
         self.descriptionLabel.font = [UIFont systemFontOfSize:14.];
         self.descriptionLabel.numberOfLines = 0;
-        self.descriptionLabel.enabledTextCheckingTypes = NSTextCheckingTypeLink;
+        self.descriptionLabel.enabledTextCheckingTypes = NSTextCheckingAllSystemTypes;
         self.descriptionLabel.delegate = self;
         self.descriptionLabel.extendsLinkTouchArea = NO;
         
