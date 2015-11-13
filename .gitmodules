@@ -3,4 +3,4 @@
 	url = git@github.com:justindhill/OptionsMenu.git
 [submodule "Facets/Libs/BTNavigationDropdownMenu"]
 	path = Facets/Libs/BTNavigationDropdownMenu
-	url = git@github.com:PhamBaTho/BTNavigationDropdownMenu.git
+	url = git@github.com:justindhill/BTNavigationDropdownMenu.git
