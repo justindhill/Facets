@@ -32,6 +32,7 @@
 #import "OZLModelProject.h"
 #import "OZLAccountViewController.h"
 #import "OZLMainTabControllerViewController.h"
+#import "OZLURLProtocol.h"
 
 #import <HockeySDK/HockeySDK.h>
 
@@ -44,6 +45,8 @@
     [[BITHockeyManager sharedHockeyManager] startManager];
     [[[BITHockeyManager sharedHockeyManager] authenticator] authenticateInstallation];
 #endif // DEBUG
+    
+    [NSURLProtocol registerClass:[OZLURLProtocol class]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.tintColor = [UIColor facetsBrandColor];
