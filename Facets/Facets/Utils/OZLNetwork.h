@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 @interface OZLNetwork : NSObject
 
 + (instancetype)sharedInstance;
++ (NSString *)encodedCredentialStringWithUsername:(NSString *)username password:(NSString *)password;
 
 // Authorization
 - (void)validateCredentialsWithURL:(NSURL *)url username:(NSString *)username password:(NSString *)password completion:(void(^)(NSError *error))completion;
@@ -81,7 +82,7 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 - (void)getTrackerListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
 
 // query list
-- (void)getQueryListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block;
+- (void)getQueryListForProject:(NSInteger)project params:(NSDictionary *)params completion:(void(^)(NSArray *result, NSError *error))completion;
 
 // time entries
 - (void)getTimeEntriesWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;

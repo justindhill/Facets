@@ -29,14 +29,9 @@
 #import "OZLNetwork.h"
 #import "AFHTTPRequestOperation.h"
 #import "OZLSingleton.h"
+#import "OZLURLProtocol.h"
 
 NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
-
-@interface OZLNetwork ()
-
-@property AFHTTPClient *authorizationClient;
-
-@end
 
 @implementation OZLNetwork
 
@@ -50,30 +45,44 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     return _sharedInstance;
 }
++ (NSString *)encodedCredentialStringWithUsername:(NSString *)username password:(NSString *)password {
+    NSString *credentials = [NSString stringWithFormat:@"%@:%@", username, password];
+    NSData *credentialData = [credentials dataUsingEncoding:NSUTF8StringEncoding];
+    
+    return [credentialData base64EncodedStringWithOptions:0];
+}
 
 #pragma mark - Authorization
 - (void)validateCredentialsWithURL:(NSURL *)url username:(NSString *)username password:(NSString *)password completion:(void(^)(NSError *error))completion {
     
     NSAssert(completion, @"validateCredentialsCompletion: expects a completion block");
     
-    if (!self.authorizationClient) {
-        self.authorizationClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-    }
-    
-    [self.authorizationClient setAuthorizationHeaderWithUsername:username password:password];
-    [self.authorizationClient getPath:@"users/current.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completion(nil);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
+        components.path = @"/users/current.json";
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:components.URL];
+        
+        // Bypass the URL protocol so the stored credentials don't get applied, if any.
+        [NSURLProtocol setProperty:@YES forKey:OZLURLProtocolBypassKey inRequest:request];
+        
+        NSString *credentials = [OZLNetwork encodedCredentialStringWithUsername:username password:password];
+        [request setValue:[NSString stringWithFormat:@"Basic %@", credentials] forHTTPHeaderField:@"Authorization"];
+        
+        NSError *error;
+        NSHTTPURLResponse *response;
+        [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        
         NSError *reportError = error;
         
-        if (operation.response.statusCode == 401) {
+        if (response.statusCode == 401) {
             reportError = [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidCredentials userInfo:@{NSLocalizedDescriptionKey: @"Invalid username or password."}];
         }
         
-        completion(reportError);
-    }];
-    
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(reportError);
+        });
+    });
 }
 
 #pragma mark-
@@ -593,10 +602,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 }
 
 #pragma mark - Queries
-- (void)getQueryListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
+- (void)getQueryListForProject:(NSInteger)project params:(NSDictionary *)params completion:(void(^)(NSArray *result, NSError *error))completion {
     
     NSString *path = @"/queries.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
+    
     NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
     
     if (accessKey.length > 0) {
@@ -605,22 +615,23 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        if (block) {
+        if (completion) {
             NSMutableArray *queries = [[NSMutableArray alloc] init];
             
             NSArray *dic = [responseObject objectForKey:@"queries"];
+            dic = [dic filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"project_id = %ld", project]];
             
             for (NSDictionary *p in dic) {
                 [queries addObject:[[OZLModelQuery alloc] initWithDictionary:p]];
             }
             
-            block(queries, nil);
+            completion(queries, nil);
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        if (block) {
-            block([NSArray array], error);
+        if (completion) {
+            completion([NSArray array], error);
         }
     }];
 }

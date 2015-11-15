@@ -15,6 +15,7 @@
 
 @property BOOL isFirstAppearance;
 @property NSArray *queries;
+@property NSInteger displayedProjectId;
 
 @end
 
@@ -26,6 +27,7 @@ NSString * const OZLQueryReuseIdentifier = @"query";
     [super viewDidLoad];
     
     self.isFirstAppearance = YES;
+    self.displayedProjectId = NSNotFound;
     
     // Do any additional setup after loading the view from its nib.
     self.title = @"Queries";
@@ -39,10 +41,15 @@ NSString * const OZLQueryReuseIdentifier = @"query";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (self.isFirstAppearance) {
+    BOOL needsRefresh = self.displayedProjectId == NSNotFound || !(self.displayedProjectId == [OZLSingleton sharedInstance].currentProjectID);
+    
+    if (needsRefresh) {
+        self.queries = nil;
+        [self.tableView reloadData];
         [self refreshData];
-        self.isFirstAppearance = NO;
     }
+    
+    self.isFirstAppearance = NO;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -79,12 +86,15 @@ NSString * const OZLQueryReuseIdentifier = @"query";
     
     __weak OZLQueryListViewController *weakSelf = self;
     
-    [[OZLNetwork sharedInstance] getQueryListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
+    NSInteger projectId = [OZLSingleton sharedInstance].currentProjectID;
+    
+    [[OZLNetwork sharedInstance] getQueryListForProject:projectId params:nil completion:^(NSArray *result, NSError *error) {
         if (error) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Fetch Error" message:[NSString stringWithFormat:@"Couldn't fetch the query list. \r\r%@", error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
             [weakSelf presentViewController:alert animated:YES completion:nil];
         } else {
+            weakSelf.displayedProjectId = projectId;
             weakSelf.queries = result;
         }
         

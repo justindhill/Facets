@@ -7,7 +7,10 @@
 //
 
 #import "OZLURLProtocol.h"
+#import "OZLNetwork.h"
 #import <AFNetworking/AFNetworking.h>
+
+NSString * const OZLURLProtocolBypassKey = @"OZLURLProtocolBypassKey";
 
 @interface OZLURLProtocol ()
 
@@ -18,7 +21,7 @@
 @implementation OZLURLProtocol
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
-    if ([NSURLProtocol propertyForKey:@"MyURLProtocolHandledKey" inRequest:request]) {
+    if ([NSURLProtocol propertyForKey:OZLURLProtocolBypassKey inRequest:request]) {
         return NO;
     }
     
@@ -35,13 +38,11 @@
 
 - (void)startLoading {
     NSMutableURLRequest *newRequest = [self.request mutableCopy];
-    [NSURLProtocol setProperty:@YES forKey:@"MyURLProtocolHandledKey" inRequest:newRequest];
+    [NSURLProtocol setProperty:@YES forKey:OZLURLProtocolBypassKey inRequest:newRequest];
     
-    NSString *credentials = [NSString stringWithFormat:@"%@:%@", [OZLSingleton sharedInstance].redmineUserName, [OZLSingleton sharedInstance].redminePassword];
-    NSData *credentialData = [credentials dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *encodedCredentials = [credentialData base64EncodedStringWithOptions:0];
+    NSString *credentials = [OZLNetwork encodedCredentialStringWithUsername:[OZLSingleton sharedInstance].redmineUserName password:[OZLSingleton sharedInstance].redminePassword];
     
-    [newRequest setValue:[NSString stringWithFormat:@"Basic %@", encodedCredentials] forHTTPHeaderField:@"Authorization"];
+    [newRequest setValue:[NSString stringWithFormat:@"Basic %@", credentials] forHTTPHeaderField:@"Authorization"];
     
     self.connection = [NSURLConnection connectionWithRequest:newRequest delegate:self];
 }

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const OZLURLProtocolBypassKey;
+
 @interface OZLURLProtocol : NSURLProtocol
 
 @end
