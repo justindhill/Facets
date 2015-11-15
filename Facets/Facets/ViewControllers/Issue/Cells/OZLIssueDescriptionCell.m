@@ -32,10 +32,8 @@
         [self.showMoreButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         self.showMoreButton.titleLabel.font = [UIFont systemFontOfSize:12];
         
-        self.titleLabel = [[UILabel alloc] init];
+        self.titleLabel = [OZLTableViewCell labelConfiguredForTitle];
         self.titleLabel.text = @"DESCRIPTION";
-        self.titleLabel.font = [UIFont systemFontOfSize:14];
-        self.titleLabel.textColor = [UIColor lightGrayColor];
         
         self.isFirstLayout = YES;
     }
@@ -82,7 +80,7 @@
     self.isFirstLayout = NO;
 }
 
-+ (CGFloat)heightForWidth:(CGFloat)width description:(NSString *)description contentPadding:(CGFloat)padding {
++ (CGFloat)heightWithWidth:(CGFloat)width description:(NSString *)description contentPadding:(CGFloat)padding {
     static OZLIssueDescriptionCell * sizingCell;
     
     static dispatch_once_t onceToken;
@@ -95,7 +93,7 @@
     sizingCell.descriptionPreviewLabel.text = description;
     [sizingCell layoutSubviews];
     
-    return sizingCell.showMoreButton.bottom + padding;
+    return sizingCell.showMoreButton.bottom;
 }
 
 - (NSString *)transformStringForDisplay:(NSString *)string {

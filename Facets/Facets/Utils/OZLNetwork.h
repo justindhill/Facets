@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 // issue
 - (void)getIssueListForProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
 - (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
-- (void)getDetailFoIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block;
+- (void)getDetailForIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block;
 - (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
 - (void)updateIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
 - (void)deleteIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;

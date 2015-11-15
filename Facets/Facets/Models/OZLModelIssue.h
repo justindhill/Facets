@@ -33,6 +33,7 @@
 #import "OZLModelIssuePriority.h"
 #import "OZLModelIssueCategory.h"
 #import "OZLModelIssueTargetVersion.h"
+#import "OZLModelAttachment.h"
 
 @interface OZLModelIssue : NSObject
 
@@ -56,6 +57,11 @@
 @property (nonatomic) float spentHours;
 @property (nonatomic) float estimatedHours;
 @property (nonatomic, strong) NSString *notes;// used as paramter to update a issue
+
+/**
+ *  @brief Attachments attached to the issue.
+ */
+@property (strong) NSArray<OZLModelAttachment *> *attachments;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)toParametersDic;

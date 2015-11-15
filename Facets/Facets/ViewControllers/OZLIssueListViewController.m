@@ -211,8 +211,11 @@
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     
+    OZLModelIssue *issueModel = self.viewModel.issues[indexPath.row];
+    OZLIssueViewModel *viewModel = [[OZLIssueViewModel alloc] initWithIssueModel:issueModel];
+    
     OZLIssueViewController *issueVC = [[OZLIssueViewController alloc] init];
-    issueVC.issueModel = self.viewModel.issues[indexPath.row];
+    issueVC.viewModel = viewModel;
     
     return issueVC;
 }
@@ -279,8 +282,11 @@
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    OZLModelIssue *issueModel = self.viewModel.issues[indexPath.row];
+    OZLIssueViewModel *viewModel = [[OZLIssueViewModel alloc] initWithIssueModel:issueModel];
+    
     OZLIssueViewController *issueVC = [[OZLIssueViewController alloc] init];
-    issueVC.issueModel = self.viewModel.issues[indexPath.row];
+    issueVC.viewModel = viewModel;
     
     [self.navigationController pushViewController:issueVC animated:YES];
 }

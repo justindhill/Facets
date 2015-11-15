@@ -109,6 +109,19 @@
         } else {
             _estimatedHours = 0.0f;
         }
+        
+        NSArray *attachmentDictArray = dic[@"attachments"];
+        
+        if ([attachmentDictArray isKindOfClass:[NSArray class]]) {
+            NSMutableArray <OZLModelAttachment *> *attachmentArray = [NSMutableArray array];
+            
+            for (NSDictionary *attachmentDict in attachmentDictArray) {
+                OZLModelAttachment *attachment = [[OZLModelAttachment alloc] initWithDictionary:attachmentDict];
+                [attachmentArray addObject:attachment];
+            }
+            
+            self.attachments = attachmentArray;
+        }
     }
 
     return self;

@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSString *descriptionPreviewString;
 @property (readonly, strong) UIButton *showMoreButton;
 
-+ (CGFloat)heightForWidth:(CGFloat)width description:(NSString *)description contentPadding:(CGFloat)padding;
++ (CGFloat)heightWithWidth:(CGFloat)width description:(NSString *)description contentPadding:(CGFloat)padding;
 
 @end

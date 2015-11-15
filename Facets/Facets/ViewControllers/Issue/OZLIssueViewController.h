@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "OZLModelIssue.h"
+#import "OZLIssueViewModel.h"
 
 @interface OZLIssueViewController : UITableViewController
 
-@property (nonatomic, strong) OZLModelIssue *issueModel;
+@property (nonatomic, strong) OZLIssueViewModel *viewModel;
 
 @end

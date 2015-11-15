@@ -15,4 +15,6 @@
  */
 @property CGFloat contentPadding;
 
++ (UILabel *)labelConfiguredForTitle;
+
 @end

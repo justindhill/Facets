@@ -15,6 +15,11 @@
 
 #import "OZLIssueAboutTabView.h"
 #import "OZLTabTestView.h"
+#import "OZLIssueAttachmentGalleryCell.h"
+
+#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <URBMediaFocusViewController/URBMediaFocusViewController.h>
 
 const CGFloat contentPadding = 16;
 
@@ -23,12 +28,14 @@ const NSInteger OZLDescriptionSectionIndex = 1;
 
 NSString * const OZLDetailReuseIdentifier = @"OZLDetailReuseIdentifier";
 NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier";
+NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier";
 
-@interface OZLIssueViewController () <DRPSlidingTabViewDelegate>
+@interface OZLIssueViewController () <OZLIssueViewModelDelegate, DRPSlidingTabViewDelegate, OZLIssueAttachmentGalleryCellDelegate, AVAssetResourceLoaderDelegate, URBMediaFocusViewControllerDelegate>
 
 @property (strong) OZLIssueHeaderView *issueHeader;
 @property (strong) DRPSlidingTabView *detailView;
 @property (strong) OZLIssueAboutTabView *aboutTabView;
+@property (strong) URBMediaFocusViewController *focusView;
 
 @property BOOL isFirstAppearance;
 
@@ -40,18 +47,24 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.focusView = [[URBMediaFocusViewController alloc] init];
+    self.focusView.delegate = self;
+    
     self.issueHeader = [[OZLIssueHeaderView alloc] init];
     self.issueHeader.contentPadding = contentPadding;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OZLDetailReuseIdentifier];
     [self.tableView registerClass:[OZLIssueDescriptionCell class] forCellReuseIdentifier:OZLDescriptionReuseIdentifier];
+    [self.tableView registerClass:[OZLIssueAttachmentGalleryCell class] forCellReuseIdentifier:OZLAttachmentsReuseIdentifier];
     
     self.isFirstAppearance = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    NSAssert(self.viewModel.issueModel, @"Attempted to show an issue view controller with no issue.");
     
     if (self.isFirstAppearance) {
         self.detailView = [[DRPSlidingTabView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
@@ -78,19 +91,21 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
         [self.detailView addPage:relatedView withTitle:@"RELATED"];
     }
     
-    if (self.issueModel) {
-        [self applyIssueModel:self.issueModel];
+    if (self.viewModel.issueModel) {
+        [self applyIssueModel:self.viewModel.issueModel];
     }
     
     self.isFirstAppearance = NO;
 }
 
 #pragma mark - Accessors
-- (void)setIssueModel:(OZLModelIssue *)issueModel {
-    _issueModel = issueModel;
+- (void)setViewModel:(OZLIssueViewModel *)viewModel {
     
-    if (self.isViewLoaded) {
-        [self applyIssueModel:issueModel];
+    _viewModel = viewModel;
+    viewModel.delegate = self;
+    
+    if (self.isViewLoaded && viewModel.issueModel) {
+        [self applyIssueModel:viewModel.issueModel];
     }
 }
 
@@ -99,7 +114,11 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
     [self.issueHeader applyIssueModel:issue];
     [self.aboutTabView applyIssueModel:issue];
     [self refreshHeaderSize];
-    [self showLoadingSpinner];
+    
+    if (self.viewModel.completeness == OZLIssueCompletenessSome) {
+        [self showLoadingSpinner];
+        [self.viewModel loadIssueData];
+    }
     
     [self.tableView reloadData];
 }
@@ -119,10 +138,16 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
     }
 }
 
+- (void)hideLoadingSpinner {
+    if (self.tableView.tableFooterView) {
+        self.tableView.tableFooterView = nil;
+    }
+}
+
 #pragma mark - Button actions
 - (void)descriptionShowMoreAction:(UIButton *)button {
     OZLIssueFullDescriptionViewController *descriptionVC = [[OZLIssueFullDescriptionViewController alloc] init];
-    descriptionVC.descriptionLabel.text = self.issueModel.description;
+    descriptionVC.descriptionLabel.text = self.viewModel.issueModel.description;
     descriptionVC.contentPadding = contentPadding;
     
     [self.navigationController pushViewController:descriptionVC animated:YES];
@@ -130,17 +155,13 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 
 #pragma mark - UITableViewDelegate / DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == OZLDetailSectionIndex) {
-        return 1;
-    } else if (section == OZLDescriptionSectionIndex) {
-        return 1;
-    }
-    
-    return 0;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == OZLDetailSectionIndex) {
+    NSString *sectionName = self.viewModel.currentSectionNames[indexPath.section];
+    
+    if ([sectionName isEqualToString:OZLIssueSectionDetail]) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLDetailReuseIdentifier forIndexPath:indexPath];
         cell.clipsToBounds = YES;
         self.detailView.frame = cell.contentView.bounds;
@@ -151,11 +172,19 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
         
         return cell;
         
-    } else if (indexPath.section == OZLDescriptionSectionIndex) {
+    } else if ([sectionName isEqualToString:OZLIssueSectionDescription]) {
         OZLIssueDescriptionCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLDescriptionReuseIdentifier forIndexPath:indexPath];
         cell.contentPadding = 16.;
-        cell.descriptionPreviewString = self.issueModel.description;
+        cell.descriptionPreviewString = self.viewModel.issueModel.description;
         [cell.showMoreButton addTarget:self action:@selector(descriptionShowMoreAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        return cell;
+        
+    } else if ([sectionName isEqualToString:OZLIssueSectionAttachments]) {
+        OZLIssueAttachmentGalleryCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLAttachmentsReuseIdentifier forIndexPath:indexPath];
+        cell.contentPadding = 16.;
+        cell.attachments = self.viewModel.issueModel.attachments;
+        cell.delegate = self;
         
         return cell;
     }
@@ -164,19 +193,23 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return self.viewModel.currentSectionNames.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == OZLDetailSectionIndex) {
+    NSString *sectionName = self.viewModel.currentSectionNames[indexPath.section];
+    
+    if ([sectionName isEqualToString:OZLIssueSectionDetail]) {
         return self.detailView.intrinsicHeight;
         
-    } else if (indexPath.section == OZLDescriptionSectionIndex) {
-
-        return [OZLIssueDescriptionCell heightForWidth:tableView.frame.size.width
-                                           description:self.issueModel.description
+    } else if ([sectionName isEqualToString:OZLIssueSectionDescription]) {
+        return [OZLIssueDescriptionCell heightWithWidth:tableView.frame.size.width
+                                           description:self.viewModel.issueModel.description
                                         contentPadding:contentPadding];
-    };
+        
+    } else if ([sectionName isEqualToString:OZLIssueSectionAttachments]) {
+        return 140.;
+    }
     
     return 44.;
 }
@@ -196,6 +229,40 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
         
         [UIView commitAnimations];
     }
+}
+
+#pragma mark - OZLIssueViewModelDelegate
+- (void)viewModel:(OZLIssueViewModel *)viewModel didFinishLoadingIssueWithError:(NSError *)error {
+    [self hideLoadingSpinner];
+    [self.tableView reloadData];
+}
+
+#pragma mark - OZLIssueAttachmentGalleryCellDelegate
+- (void)galleryCell:(OZLIssueAttachmentGalleryCell *)galleryCell didSelectAttachment:(OZLModelAttachment *)attachment withCellRelativeFrame:(CGRect)frame {
+    
+    if ([attachment.contentType hasPrefix:@"video"] || [attachment.contentType containsString:@"mp4"]) {
+        
+        AVPlayerViewController *playerVC = [[AVPlayerViewController alloc] init];
+        playerVC.player = [AVPlayer playerWithURL:[NSURL URLWithString:attachment.contentURL]];
+        playerVC.showsPlaybackControls = YES;
+        
+        [self presentViewController:playerVC animated:YES completion:nil];
+        
+    } else if ([attachment.contentType hasPrefix:@"image"]) {
+        CGRect rect = [galleryCell convertRect:frame toView:self.view];
+        
+        [self.focusView showImageFromURL:[NSURL URLWithString:attachment.contentURL] fromRect:rect];
+    }
+    NSLog(@"Attachment selected: %@", attachment);
+}
+
+#pragma mark - URBFocusViewControllerDelegate
+- (void)mediaFocusViewController:(URBMediaFocusViewController *)mediaFocusViewController didFailLoadingImageWithError:(NSError *)error {
+    NSLog(@"%@", error);
+}
+
+- (void)mediaFocusViewController:(URBMediaFocusViewController *)mediaFocusViewController didFinishLoadingImage:(UIImage *)image {
+    NSLog(@"");
 }
 
 @end

@@ -303,7 +303,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
-- (void)getDetailFoIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block {
+- (void)getDetailForIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block {
     
     NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueid];
 
