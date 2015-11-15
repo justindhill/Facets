@@ -205,6 +205,7 @@
 		D000B1D11BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D000B1D01BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m */; };
 		D000B1D41BF7D9A300CA2845 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D000B1D21BF7D9A300CA2845 /* AVFoundation.framework */; };
 		D000B1D51BF7D9A300CA2845 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D000B1D31BF7D9A300CA2845 /* AVKit.framework */; };
+		D000B1DB1BF816D400CA2845 /* OZLURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */; };
 		D01F9B8F1BEB23FA005B2ED0 /* OZLServerSync.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */; };
 		D01F9B921BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B911BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.m */; };
 		D01F9B981BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B971BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m */; };
@@ -486,6 +487,8 @@
 		D000B1D01BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueAttachmentGalleryItemCell.m; sourceTree = "<group>"; };
 		D000B1D21BF7D9A300CA2845 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D000B1D31BF7D9A300CA2845 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		D000B1D91BF816D400CA2845 /* OZLURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLURLProtocol.h; path = Utils/OZLURLProtocol.h; sourceTree = "<group>"; };
+		D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLURLProtocol.m; path = Utils/OZLURLProtocol.m; sourceTree = "<group>"; };
 		D01F9B8D1BEB23FA005B2ED0 /* OZLServerSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLServerSync.h; path = Utils/OZLServerSync.h; sourceTree = "<group>"; };
 		D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLServerSync.m; path = Utils/OZLServerSync.m; sourceTree = "<group>"; };
 		D01F9B901BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLProjectIssueListViewModel.h; path = ViewControllers/OZLProjectIssueListViewModel.h; sourceTree = "<group>"; };
@@ -1097,6 +1100,8 @@
 				2BCCA0531795312E00FA8B1A /* OZLConstants.m */,
 				D01F9B8D1BEB23FA005B2ED0 /* OZLServerSync.h */,
 				D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */,
+				D000B1D91BF816D400CA2845 /* OZLURLProtocol.h */,
+				D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1477,6 +1482,7 @@
 				2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */,
 				2BCF88271793F4AA006FC859 /* OZLModelIssueStatus.m in Sources */,
 				D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */,
+				D000B1DB1BF816D400CA2845 /* OZLURLProtocol.m in Sources */,
 				2BCF882A1793F4C9006FC859 /* OZLModelIssuePriority.m in Sources */,
 				D0CD7C8A1BF791FA0043C94B /* OZLModelAttachment.m in Sources */,
 				D0403EF91BF4291B002B6B98 /* OZLIssueViewModel.m in Sources */,
@@ -1603,7 +1609,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1625,7 +1631,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
