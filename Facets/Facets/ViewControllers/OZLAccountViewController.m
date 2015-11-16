@@ -33,7 +33,6 @@
 #import "OZLNetwork.h"
 #import "OZLModelProject.h"
 
-#import <AFNetworking/AFNetworking.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 
 @interface OZLAccountViewController ()
@@ -80,20 +79,16 @@
             [weakSelf startSync];
         }
     }];
-    
-    
 }
 
 - (void)startSync {
     __weak OZLAccountViewController *weakSelf = self;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[OZLSingleton sharedInstance].serverSync startSyncCompletion:^(NSError *error) {
-            [weakSelf.delegate accountViewControllerDidSuccessfullyAuthenticate:weakSelf shouldTransitionToIssues:weakSelf.isFirstLogin];
-            weakSelf.isFirstLogin = NO;
-            [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
-        }];
-    });
+    [[OZLSingleton sharedInstance].serverSync startSyncCompletion:^(NSError *error) {
+        [weakSelf.delegate accountViewControllerDidSuccessfullyAuthenticate:weakSelf shouldTransitionToIssues:weakSelf.isFirstLogin];
+        weakSelf.isFirstLogin = NO;
+        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+    }];
 }
 
 - (void)backgroundTapped {

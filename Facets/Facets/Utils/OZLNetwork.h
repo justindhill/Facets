@@ -46,6 +46,9 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 
 @interface OZLNetwork : NSObject
 
+@property NSURL *baseURL;
+@property (readonly) NSURLSession *urlSession;
+
 + (instancetype)sharedInstance;
 + (NSString *)encodedCredentialStringWithUsername:(NSString *)username password:(NSString *)password;
 

@@ -73,8 +73,9 @@ NSString * const OZLAttachmentCellReuseIdentifier = @"OZLAttachmentCellReuseIden
         [layout invalidateLayout];
     }
     
+    const CGFloat itemWHRatio = 1.15;
     if (layout.itemSize.height != galleryHeight) {
-        layout.itemSize = CGSizeMake(galleryHeight, galleryHeight);
+        layout.itemSize = CGSizeMake(ceilf(galleryHeight * itemWHRatio), ceilf(galleryHeight));
         [layout invalidateLayout];
     }
     

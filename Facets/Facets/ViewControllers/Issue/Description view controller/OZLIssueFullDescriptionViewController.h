@@ -19,4 +19,9 @@
  */
 @property (strong) TTTAttributedLabel *descriptionLabel;
 
+/**
+ *  @brief URL to load the text from
+ */
+@property (strong) NSURL *sourceURL;
+
 @end

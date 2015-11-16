@@ -8,6 +8,7 @@
 
 #import "OZLIssueFullDescriptionViewController.h"
 #import <SafariServices/SafariServices.h>
+#import "OZLLoadingView.h"
 
 @interface OZLIssueFullDescriptionViewController () <TTTAttributedLabelDelegate>
 
@@ -52,12 +53,11 @@
         [self.view addSubview:self.descriptionLabel];
     }
     
-    CGFloat width = self.view.frame.size.width - (2 * self.contentPadding);
-    self.descriptionLabel.frame = CGRectMake(self.contentPadding, self.contentPadding, width, 0);
-    [self.descriptionLabel sizeToFit];
+    NSString *text = self.descriptionLabel.text;
     
-    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
-                                             self.descriptionLabel.bottom + self.contentPadding);
+    if (text.length > 0) {
+        [self sizeAndLayoutText];
+    }
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -70,6 +70,15 @@
     [super viewDidAppear:animated];
     
     self.isFirstAppearance = NO;
+}
+
+- (void)sizeAndLayoutText {
+    CGFloat width = self.view.frame.size.width - (2 * self.contentPadding);
+    self.descriptionLabel.frame = CGRectMake(self.contentPadding, self.contentPadding, width, 0);
+    [self.descriptionLabel sizeToFit];
+    
+    self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width,
+                                             self.descriptionLabel.bottom + self.contentPadding);
 }
 
 #pragma mark - Accessors

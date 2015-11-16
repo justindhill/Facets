@@ -8,7 +8,6 @@
 
 #import "OZLURLProtocol.h"
 #import "OZLNetwork.h"
-#import <AFNetworking/AFNetworking.h>
 
 NSString * const OZLURLProtocolBypassKey = @"OZLURLProtocolBypassKey";
 
@@ -21,7 +20,7 @@ NSString * const OZLURLProtocolBypassKey = @"OZLURLProtocolBypassKey";
 @implementation OZLURLProtocol
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
-    if ([NSURLProtocol propertyForKey:OZLURLProtocolBypassKey inRequest:request]) {
+    if ([NSURLProtocol propertyForKey:OZLURLProtocolBypassKey inRequest:request] || !request.URL) {
         return NO;
     }
     
@@ -29,6 +28,17 @@ NSString * const OZLURLProtocolBypassKey = @"OZLURLProtocolBypassKey";
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
+//    if ([request.URL.path containsString:@"attachments/thumbnail"]) {
+//        // Redmine always returns text/html for thumbnails, so modify the request to accept
+//        // text/html even though we know it's an image coming back.
+//        
+//        NSMutableURLRequest *mutableRequest = request.mutableCopy;
+//        [mutableRequest setValue:@"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8" forHTTPHeaderField:@"Accept"];
+//        [mutableRequest setValue:@"gzip, deflate, sdch" forHTTPHeaderField:@"Accept-Encoding"];
+//        
+//        request = mutableRequest;
+//    }
+    
     return request;
 }
 
@@ -41,8 +51,18 @@ NSString * const OZLURLProtocolBypassKey = @"OZLURLProtocolBypassKey";
     [NSURLProtocol setProperty:@YES forKey:OZLURLProtocolBypassKey inRequest:newRequest];
     
     NSString *credentials = [OZLNetwork encodedCredentialStringWithUsername:[OZLSingleton sharedInstance].redmineUserName password:[OZLSingleton sharedInstance].redminePassword];
-    
     [newRequest setValue:[NSString stringWithFormat:@"Basic %@", credentials] forHTTPHeaderField:@"Authorization"];
+    
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", @"_redmine_session"];
+//    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:newRequest.URL];
+//    NSHTTPCookie *cookie = [[cookies filteredArrayUsingPredicate:predicate] firstObject];
+//    
+//    if (newRequest.HTTPShouldHandleCookies && cookie) {
+//        NSString *cookieString = [NSString stringWithFormat:@"_redmine_session=%@", cookie.value];
+//        [newRequest setValue:cookieString forHTTPHeaderField:@"Cookie"];
+//        
+//        NSLog(@"set cookie: %@", cookieString);
+//    }
     
     self.connection = [NSURLConnection connectionWithRequest:newRequest delegate:self];
 }
@@ -64,6 +84,17 @@ NSString * const OZLURLProtocolBypassKey = @"OZLURLProtocolBypassKey";
         NSLog(@"response: %@", r);
         
         [self.client URLProtocol:self didReceiveResponse:r cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        
+    } else if ([connection.originalRequest.URL.path containsString:@"attachments/thumbnail"]) {
+        // Redmine doesn't return proper mime types for attachment thumbnails, so just override
+        // the response Content-Type with "image/jpeg"... nothing could possibly go wrong... right, guys?
+        NSMutableDictionary *mutableHeaders = [hr.allHeaderFields mutableCopy];
+        mutableHeaders[@"Content-Type"] = @"image/jpeg";
+        
+        NSHTTPURLResponse *r = [[NSHTTPURLResponse alloc] initWithURL:hr.URL statusCode:hr.statusCode HTTPVersion:nil headerFields:mutableHeaders];
+        
+        [self.client URLProtocol:self didReceiveResponse:r cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        
     } else {
         [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
     }

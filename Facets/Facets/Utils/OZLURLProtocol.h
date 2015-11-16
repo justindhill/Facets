@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const OZLURLProtocolBypassKey;
+extern NSString * const OZLURLProtocolStripCookieKey;
 
 @interface OZLURLProtocol : NSURLProtocol
 

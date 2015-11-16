@@ -28,11 +28,12 @@
 
 #import "OZLSingleton.h"
 #import "OZLConstants.h"
+#import "OZLNetwork.h"
 
 @interface OZLSingleton ()
 
 @property (strong) OZLServerSync *serverSync;
-@property (nonatomic, strong) AFHTTPClient *httpClient;
+@property (strong) NSURLSession *urlSession;
 
 @end
 
@@ -76,12 +77,10 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
             USER_DEFAULTS_ISSUE_LIST_ASCEND:  @0
         };
         
+        [OZLNetwork sharedInstance].baseURL = [NSURL URLWithString:self.redmineHomeURL];
+        [self updateAuthHeader];
+        
         [[NSUserDefaults standardUserDefaults] registerDefaults:dic];
-        
-        if (self.redmineHomeURL) {
-            self.httpClient = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:self.redmineHomeURL]];
-        }
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     
@@ -93,16 +92,6 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
 }
 
 #pragma mark - Accessors
-- (void)setHttpClient:(AFHTTPClient *)httpClient {
-    _httpClient = httpClient;
-    
-    if (httpClient) {
-        [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-        [httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-        [self updateAuthHeader];
-    }
-}
-
 - (NSString *)redmineHomeURL {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     
@@ -115,10 +104,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     [userdefaults synchronize];
     
     NSURL *url = [NSURL URLWithString:redmineHomeURL];
-    
-    if (![url isEqual:self.httpClient.baseURL]) {
-        self.httpClient = [AFHTTPClient clientWithBaseURL:url];
-    }
+    [OZLNetwork sharedInstance].baseURL = url;
 }
 
 - (NSString *)redmineUserKey {
@@ -208,7 +194,31 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
 }
 
 - (void)updateAuthHeader {
-    [self.httpClient setAuthorizationHeaderWithUsername:self.redmineUserName password:self.redminePassword];
+    
+    NSURLCredential *credential = [NSURLCredential credentialWithUser:self.redmineUserName
+                                                             password:self.redminePassword
+                                                          persistence:NSURLCredentialPersistenceForSession];
+    
+    NSURLComponents *components = [NSURLComponents componentsWithString:self.redmineHomeURL];
+    NSInteger port;
+    if (components.port) {
+        port = [components.port integerValue];
+    } else if ([components.scheme isEqualToString:@"https"]) {
+        port = 443;
+    } else {
+        port = 80;
+    }
+    
+    NSURLProtectionSpace *protectionSpace = [[NSURLProtectionSpace alloc]
+                                             initWithHost:components.host
+                                             port:port
+                                             protocol:components.scheme
+                                             realm:@"Redmine API"
+                                             authenticationMethod:NSURLAuthenticationMethodHTTPBasic];
+    
+    
+    [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential:credential
+                                                        forProtectionSpace:protectionSpace];
 }
 
 #pragma mark -
@@ -259,7 +269,11 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     if (self.isUserLoggedIn) {
-        [self.serverSync startSyncCompletion:nil];
+        [[OZLNetwork sharedInstance] validateCredentialsWithURL:[NSURL URLWithString:self.redmineHomeURL] username:self.redmineUserName password:self.redminePassword completion:^(NSError *error) {
+            if (!error) {
+                 [self.serverSync startSyncCompletion:nil];
+            }
+        }];
     }
 }
 

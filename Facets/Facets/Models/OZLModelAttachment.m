@@ -37,9 +37,9 @@
 - (NSString *)thumbnailURL {
     if ([self.contentType hasPrefix:@"image"]) {
         NSURLComponents *c = [NSURLComponents componentsWithString:self.contentURL];
-        c.path = [c.path stringByReplacingOccurrencesOfString:@"/download/" withString:@"/thumbnail/"];
+        c.path = [NSString stringWithFormat:@"/attachments/thumbnail/%ld", self.attachmentID];
         
-        return c.URL.absoluteString;
+        return [c.URL.absoluteString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
     
     return nil;

@@ -11,6 +11,7 @@
 #import "OZLIssueDescriptionCell.h"
 #import <DRPSlidingTabView/DRPSlidingTabView.h>
 #import "OZLIssueFullDescriptionViewController.h"
+#import "OZLWebViewController.h"
 #import "OZLLoadingView.h"
 
 #import "OZLIssueAboutTabView.h"
@@ -110,7 +111,7 @@ NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier
 }
 
 - (void)applyIssueModel:(OZLModelIssue *)issue {
-    self.navigationItem.title = issue.tracker.name;
+    self.navigationItem.title = [NSString stringWithFormat:@"%@ #%ld", issue.tracker.name, issue.index];
     [self.issueHeader applyIssueModel:issue];
     [self.aboutTabView applyIssueModel:issue];
     [self refreshHeaderSize];
@@ -252,6 +253,12 @@ NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier
         CGRect rect = [galleryCell convertRect:frame toView:self.view];
         
         [self.focusView showImageFromURL:[NSURL URLWithString:attachment.contentURL] fromRect:rect];
+        
+    } else if ([attachment.contentType isEqualToString:@"text/plain"]) {
+        OZLWebViewController *textVC = [[OZLWebViewController alloc] init];
+        textVC.sourceURL = [NSURL URLWithString:attachment.contentURL];
+        
+        [self.navigationController pushViewController:textVC animated:YES];
     }
     NSLog(@"Attachment selected: %@", attachment);
 }

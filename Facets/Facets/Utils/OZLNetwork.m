@@ -27,11 +27,16 @@
 // THE SOFTWARE.
 
 #import "OZLNetwork.h"
-#import "AFHTTPRequestOperation.h"
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
 
 NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
+
+@interface OZLNetwork () <NSURLSessionDelegate>
+
+@property (strong) NSURLSession *urlSession;
+
+@end
 
 @implementation OZLNetwork
 
@@ -45,11 +50,27 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     return _sharedInstance;
 }
+
 + (NSString *)encodedCredentialStringWithUsername:(NSString *)username password:(NSString *)password {
     NSString *credentials = [NSString stringWithFormat:@"%@:%@", username, password];
     NSData *credentialData = [credentials dataUsingEncoding:NSUTF8StringEncoding];
     
     return [credentialData base64EncodedStringWithOptions:0];
+}
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+    }
+    
+    return self;
+}
+
+- (NSURL *)urlWithRelativePath:(NSString *)path {
+    NSURLComponents *components = [NSURLComponents componentsWithURL:self.baseURL resolvingAgainstBaseURL:YES];
+    components.path = path;
+    
+    return components.URL;
 }
 
 #pragma mark - Authorization
@@ -59,12 +80,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
-        components.path = @"/users/current.json";
+        components.path = @"/users/current";
         
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:components.URL];
-        
-        // Bypass the URL protocol so the stored credentials don't get applied, if any.
-        [NSURLProtocol setProperty:@YES forKey:OZLURLProtocolBypassKey inRequest:request];
         
         NSString *credentials = [OZLNetwork encodedCredentialStringWithUsername:username password:password];
         [request setValue:[NSString stringWithFormat:@"Basic %@", credentials] forHTTPHeaderField:@"Authorization"];
@@ -73,6 +91,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSHTTPURLResponse *response;
         [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         
+        NSLog(@"response cookie: %@", response.allHeaderFields[@"Set-Cookie"]);
+        NSLog(@"cookie iOS stored: %@", [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:components.URL] firstObject].value);
         NSError *reportError = error;
         
         if (response.statusCode == 401) {
@@ -88,15 +108,19 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 #pragma mark-
 #pragma mark project api
 - (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSError *error))block {
-    NSString *path = @"/projects.json";
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
 
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self GET:@"/projects.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        
+        if (error && block) {
+            block(error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(jsonError);
+        }
         
         [[RLMRealm defaultRealm] beginWriteTransaction];
         
@@ -112,13 +136,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         if (block) {
             block(nil);
         }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        if (block) {
-            block(error);
-        }
-        
     }];
 }
 
@@ -132,7 +149,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
 
         if (block) {
 
@@ -141,41 +169,31 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
             block(project, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block(nil, error);
-        }
-
     }];
+    
+    [task resume];
 }
 
 - (void)createProject:(OZLModelProject *)projectData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
-    NSString *path = @"/projects.json";
-
     //project info
     NSMutableDictionary *projectDic = [projectData toParametersDic];
-    [projectDic addEntriesFromDictionary:params];
     
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [projectDic setObject:accessKey forKey:@"key"];
+    NSData *data;
+    if (projectDic) {
+        NSError *jsonError;
+        data = [NSJSONSerialization dataWithJSONObject:projectDic options:0 error:&jsonError];
+        
+        NSAssert(!jsonError, @"Couldn't serialize payload");
     }
-
-    [[OZLSingleton sharedInstance].httpClient postPath:path parameters:projectDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+    
+    [self POST:@"/projects.json" bodyData:data completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         if (block) {
-            block(YES, nil);
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            
+            BOOL success = (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 && !error);
+            
+            block(success, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block(NO, error);
-        }
-
     }];
 }
 
@@ -185,72 +203,58 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
     //project info
     NSMutableDictionary *projectDic = [projectData toParametersDic];
-    [projectDic addEntriesFromDictionary:params];
-
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
     
-    if (accessKey.length > 0) {
-        [projectDic setObject:accessKey forKey:@"key"];
-    }
-
-    [[OZLSingleton sharedInstance].httpClient putPath:path parameters:projectDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-        if (block) {
-            NSInteger repondNumber = [responseObject integerValue];
-            block(repondNumber == 201, nil);
-        }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block(NO, error);
-        }
+    NSData *data;
+    if (projectDic) {
+        NSError *jsonError;
+        data = [NSJSONSerialization dataWithJSONObject:projectDic options:0 error:&jsonError];
         
+        NSAssert(!jsonError, @"Couldn't serialize payload");
+    }
+    
+    [self PUT:path bodyData:data completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        if (block) {
+            BOOL success = (response.statusCode == 201 && !error);
+            
+            block(success, nil);
+        }
     }];
-
 }
 
 - (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
     
     NSString *path = [NSString stringWithFormat:@"/projects/%ld.json", (long)projectid];
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
     
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
-
-    [[OZLSingleton sharedInstance].httpClient deletePath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+    [self DELETE:path completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         if (block) {
-            NSInteger repondNumber = [responseObject integerValue];
-            block(repondNumber == 201, nil);
+            BOOL success = (response.statusCode == 201 && !error);
+            
+            block(success, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block(NO, error);
-        }
-        
     }];
-
 }
 
 #pragma mark -
 #pragma mark issue api
 - (void)getIssueListForProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
     
-    NSString *path = [NSString stringWithFormat:@"/issues.json"];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     [paramsDic setObject:[NSNumber numberWithInteger:projectid] forKey:@"project_id"];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
     
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
-
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self GET:@"/issues.json" params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        
+        if (error && block) {
+            block(nil, error);
+            return;
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+            return;
+        }
 
         if (block) {
 
@@ -264,13 +268,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             block(issues, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block([NSArray array], error);
-        }
-        
     }];
 }
 
@@ -288,7 +285,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
     
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
         
         if (block) {
             
@@ -302,28 +310,27 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             block(issues, nil);
         }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        if (block) {
-            block([NSArray array], error);
-        }
-        
     }];
+    
+    [task resume];
 }
 
 - (void)getDetailForIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block {
     
     NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueid];
 
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
-
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self GET:path params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
 
         if (block) {
 
@@ -332,41 +339,28 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
             block(issue, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block(nil, error);
-        }
-        
     }];
 }
 
 - (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
-    NSString *path = [NSString stringWithFormat:@"/issues.json"];
-
-    //project info
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    [paramsDic addEntriesFromDictionary:[issueData toParametersDic]];
-
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSDictionary *issueDict = [issueData toParametersDic];
     
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
+    NSError *jsonError;
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:issueDict options:0 error:&jsonError];
+    
+    if (jsonError) {
+        NSAssert(NO, @"Error serializing payload");
+        block(NO, jsonError);
+        return;
     }
 
-    [[OZLSingleton sharedInstance].httpClient postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-        if (block) {
-            block(YES, nil);
-        }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block(NO, error);
-        }
+    [self POST:@"/issues.json" bodyData:bodyData completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
+        BOOL success = (response.statusCode == 201 && !error);
+
+        if (block) {
+            block(success, nil);
+        }
     }];
 }
 
@@ -375,28 +369,23 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueData.index];
 
     //project info
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    [paramsDic addEntriesFromDictionary:[issueData toParametersDic]];
-
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSDictionary *issueDict = [issueData toParametersDic];
     
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
+    NSError *jsonError;
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:issueDict options:0 error:&jsonError];
+    
+    if (jsonError) {
+        NSAssert(NO, @"Error serializing payload");
+        block(NO, jsonError);
+        return;
     }
 
-    [[OZLSingleton sharedInstance].httpClient putPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+    [self PUT:path bodyData:bodyData completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         if (block) {
-            NSInteger repondNumber = [responseObject integerValue];
-            block(repondNumber == 201, nil);
+            BOOL success = (response.statusCode == 201 && !error);
+            
+            block(success, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block(NO, error);
-        }
-        
     }];
 }
 
@@ -411,19 +400,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
     
-    [[OZLSingleton sharedInstance].httpClient deletePath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+    [self DELETE:path completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         if (block) {
-            NSInteger repondNumber = [responseObject integerValue];
-            block(repondNumber == 201, nil);
+            BOOL success = (response.statusCode == 201 && !error);
+            
+            block(success, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block(NO, error);
-        }
-        
     }];
 }
 
@@ -437,7 +419,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
 
         if (block) {
 
@@ -451,14 +444,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             block(journals, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block([NSArray array], error);
-        }
-        
     }];
+    
+    [task resume];
 }
 
 #pragma mark -
@@ -474,7 +462,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -487,13 +486,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             block(priorities, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block([NSArray array], error);
-        }
     }];
+    
+    [task resume];
 }
 
 #pragma mark -
@@ -509,7 +504,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -522,13 +528,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             block(priorities, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block([NSArray array], error);
-        }
     }];
+    
+    [task resume];
 }
 
 #pragma mark -
@@ -544,7 +546,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -557,13 +570,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             block(priorities, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block([NSArray array], error);
-        }
     }];
+    
+    [task resume];
 }
 
 #pragma mark -
@@ -579,7 +588,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -592,28 +612,26 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             block(priorities, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block([NSArray array], error);
-        }
     }];
+    
+    [task resume];
 }
 
 #pragma mark - Queries
 - (void)getQueryListForProject:(NSInteger)project params:(NSDictionary *)params completion:(void(^)(NSArray *result, NSError *error))completion {
     
-    NSString *path = @"/queries.json";
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
-    
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self GET:@"/queries.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        
+        if (error && completion) {
+            completion(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+        
+        if (jsonError && completion) {
+            completion(nil, jsonError);
+        }
         
         if (completion) {
             NSMutableArray *queries = [[NSMutableArray alloc] init];
@@ -626,12 +644,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             }
             
             completion(queries, nil);
-        }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        if (completion) {
-            completion([NSArray array], error);
         }
     }];
 }
@@ -649,7 +661,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
 
         if (block) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
@@ -662,14 +685,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             block(priorities, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block([NSArray array], error);
-        }
     }];
-
+    
+    [task resume];
 }
 
 - (void)getTimeEntriesForIssueId:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
@@ -694,7 +712,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [paramsDic setObject:accessKey forKey:@"key"];
     }
 
-    [[OZLSingleton sharedInstance].httpClient getPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (error && block) {
+            block(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        
+        if (jsonError && block) {
+            block(nil, jsonError);
+        }
 
         if (block) {
             NSMutableArray *activities = [[NSMutableArray alloc] init];
@@ -707,13 +736,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             block(activities, nil);
         }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block([NSArray array], error);
-        }
     }];
+    
+    [task resume];
 }
 
 - (void)createTimeEntry:(OZLModelTimeEntries *)timeEntry withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
@@ -721,28 +746,126 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSString *path = [NSString stringWithFormat:@"/time_entries.json"];
 
     //project info
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    [paramsDic addEntriesFromDictionary:[timeEntry toParametersDic]];
-
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSDictionary *timeDict = [timeEntry toParametersDic];
     
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
+    NSError *jsonError;
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:timeDict options:0 error:&jsonError];
+    
+    if (jsonError) {
+        NSAssert(NO, @"Error serializing payload");
+        block(NO, jsonError);
+        return;
     }
 
-    [[OZLSingleton sharedInstance].httpClient postPath:path parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-        if (block) {
-            block(YES, nil);
-        }
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        if (block) {
-            block(NO, error);
-        }
+    [self POST:path bodyData:bodyData completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
+        if (block) {
+            BOOL success = (response.statusCode == 201 && !error);
+            
+            block(success, nil);
+        }
     }];
 }
+
+#pragma mark - Generic internal requests
+- (void)GET:(NSString *)relativePath params:(NSDictionary *)params completion:(void(^)(NSData *responseData, NSHTTPURLResponse *response, NSError *error))completion {
+    
+    NSURL *url = [self urlWithRelativePath:relativePath];
+    NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
+    
+    NSString *queryString;
+    BOOL isFirst = YES;
+    
+    for (NSString *key in params.allKeys) {
+        NSString *value = params[key];
+    
+        if (isFirst) {
+            queryString = [NSString stringWithFormat:@"%@=%@", key, value];
+        } else {
+            queryString = [queryString stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", key, value]];
+        }
+    }
+    
+    components.query = queryString;
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:components.URL];
+    request.HTTPMethod = @"GET";
+    
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (completion) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                completion(data, httpResponse, error);
+            });
+        }
+    }];
+    
+    [task resume];
+}
+
+- (void)POST:(NSString *)relativePath bodyData:(NSData *)bodyData completion:(void(^)(NSData *responseData, NSHTTPURLResponse *response, NSError *error))completion {
+    
+    NSURL *url = [self urlWithRelativePath:relativePath];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = bodyData;
+    
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (completion) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                completion(data, httpResponse, error);
+            });
+        }
+    }];
+    
+    [task resume];
+}
+
+- (void)PUT:(NSString *)relativePath bodyData:(NSData *)bodyData completion:(void(^)(NSData *responseData, NSHTTPURLResponse *response, NSError *error))completion {
+    
+    NSURL *url = [self urlWithRelativePath:relativePath];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"PUT";
+    request.HTTPBody = bodyData;
+    
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (completion) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                completion(data, httpResponse, error);
+            });
+        }
+    }];
+    
+    [task resume];
+}
+
+- (void)DELETE:(NSString *)relativePath completion:(void(^)(NSData *responseData, NSHTTPURLResponse *response, NSError *error))completion {
+    
+    NSURL *url = [self urlWithRelativePath:relativePath];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"DELETE";
+    
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        if (completion) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                completion(data, httpResponse, error);
+            });
+        }
+    }];
+    
+    [task resume];
+}
+
+#pragma mark - NSURLSessionDelegate
 
 @end

@@ -33,6 +33,7 @@
 #import "OZLAccountViewController.h"
 #import "OZLMainTabControllerViewController.h"
 #import "OZLURLProtocol.h"
+#import "OZLNetwork.h"
 
 #import <HockeySDK/HockeySDK.h>
 
@@ -45,6 +46,9 @@
     [[BITHockeyManager sharedHockeyManager] startManager];
     [[[BITHockeyManager sharedHockeyManager] authenticator] authenticateInstallation];
 #endif // DEBUG
+    
+    [OZLNetwork sharedInstance];
+    [OZLSingleton sharedInstance];
     
     [NSURLProtocol registerClass:[OZLURLProtocol class]];
     

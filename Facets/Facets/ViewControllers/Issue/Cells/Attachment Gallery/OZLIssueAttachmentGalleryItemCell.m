@@ -22,8 +22,10 @@
     if (self = [super initWithFrame:frame]) {
         self.isFirstLayout = YES;
         self.typeLabel = [[UILabel alloc] init];
-        self.typeLabel.font = [UIFont systemFontOfSize:18.];
+        self.typeLabel.font = [UIFont systemFontOfSize:12.];
+        self.typeLabel.numberOfLines = 999.;
         self.typeLabel.textColor = [UIColor lightGrayColor];
+        self.typeLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
         self.layer.borderColor = [UIColor lightGrayColor].CGColor;
         
         self.thumbnailImageView = [[UIImageView alloc] init];
@@ -39,10 +41,9 @@
 - (void)setAttachment:(OZLModelAttachment *)attachment {
     _attachment = attachment;
     
-    NSString *type = [[attachment.contentType componentsSeparatedByString:@"/"] lastObject];
-    self.typeLabel.text = type;
+    self.typeLabel.text = attachment.name;
     
-    [self.thumbnailImageView setImageWithURL:[NSURL URLWithString:attachment.thumbnailURL]];
+//    [self.thumbnailImageView setImageWithURL:[NSURL URLWithString:attachment.thumbnailURL]];
     [self setNeedsLayout];
 }
 
@@ -54,25 +55,35 @@
         [self.contentView addSubview:self.thumbnailImageView];
     }
     
+    const CGFloat padding = 5.;
+    
+    self.typeLabel.frame = CGRectMake(0, 0, self.frame.size.width - (2 * padding), 0);
+    
     [self.typeLabel sizeToFit];
     
-    CGFloat xOffset = (self.contentView.frame.size.width - self.typeLabel.frame.size.width) / 2.;
-    CGFloat yOffset = (self.contentView.frame.size.height - self.typeLabel.frame.size.height) / 2.;
+    CGSize finalSize = self.typeLabel.frame.size;
     
-    self.typeLabel.frame = (CGRect){{xOffset, yOffset}, self.typeLabel.frame.size};
+    if (self.typeLabel.frame.size.height > self.frame.size.height - (2 * padding)) {
+        finalSize.height = self.frame.size.height - (2 * padding);
+    }
+    
+    CGFloat xOffset = (self.contentView.frame.size.width - finalSize.width) / 2.;
+    CGFloat yOffset = (self.contentView.frame.size.height - finalSize.height) / 2.;
+    
+    self.typeLabel.frame = (CGRect){{xOffset, yOffset}, finalSize};
     self.thumbnailImageView.frame = self.contentView.bounds;
     
     NSString *thumbnailURL = self.attachment.thumbnailURL;
     
     if (thumbnailURL && !self.thumbnailImageView.image) {
-        [self.thumbnailImageView setImageWithURL:[NSURL URLWithString:thumbnailURL]];
+//        [self.thumbnailImageView setImageWithURL:[NSURL URLWithString:thumbnailURL]];
     }
     
     self.isFirstLayout = NO;
 }
 
 - (void)prepareForReuse {
-    [self.thumbnailImageView cancelImageRequestOperation];
+//    [self.thumbnailImageView cancelImageRequestOperation];
     self.thumbnailImageView.image = nil;
 }
 
