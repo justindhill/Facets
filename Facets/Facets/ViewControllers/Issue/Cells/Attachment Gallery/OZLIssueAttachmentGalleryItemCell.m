@@ -7,12 +7,13 @@
 //
 
 #import "OZLIssueAttachmentGalleryItemCell.h"
+#import "Facets-Swift.h"
 
 @interface OZLIssueAttachmentGalleryItemCell ()
 
 @property BOOL isFirstLayout;
 @property UILabel *typeLabel;
-@property UIImageView *thumbnailImageView;
+@property OZLAsyncImageView *thumbnailImageView;
 
 @end
 
@@ -28,7 +29,7 @@
         self.typeLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
         self.layer.borderColor = [UIColor lightGrayColor].CGColor;
         
-        self.thumbnailImageView = [[UIImageView alloc] init];
+        self.thumbnailImageView = [[OZLAsyncImageView alloc] init];
         self.thumbnailImageView.contentMode = UIViewContentModeScaleAspectFill;
         
         self.layer.borderWidth = 1.;
@@ -43,7 +44,7 @@
     
     self.typeLabel.text = attachment.name;
     
-//    [self.thumbnailImageView setImageWithURL:[NSURL URLWithString:attachment.thumbnailURL]];
+    self.thumbnailImageView.url = [NSURL URLWithString:attachment.thumbnailURL];
     [self setNeedsLayout];
 }
 
@@ -76,15 +77,14 @@
     NSString *thumbnailURL = self.attachment.thumbnailURL;
     
     if (thumbnailURL && !self.thumbnailImageView.image) {
-//        [self.thumbnailImageView setImageWithURL:[NSURL URLWithString:thumbnailURL]];
+        self.thumbnailImageView.url = [NSURL URLWithString:thumbnailURL];
     }
     
     self.isFirstLayout = NO;
 }
 
 - (void)prepareForReuse {
-//    [self.thumbnailImageView cancelImageRequestOperation];
-    self.thumbnailImageView.image = nil;
+    self.thumbnailImageView.url = nil;
 }
 
 @end

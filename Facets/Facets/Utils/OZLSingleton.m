@@ -77,10 +77,11 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
             USER_DEFAULTS_ISSUE_LIST_ASCEND:  @0
         };
         
+        [[NSUserDefaults standardUserDefaults] registerDefaults:dic];
+        
         [OZLNetwork sharedInstance].baseURL = [NSURL URLWithString:self.redmineHomeURL];
         [self updateAuthHeader];
         
-        [[NSUserDefaults standardUserDefaults] registerDefaults:dic];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     
@@ -269,7 +270,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     if (self.isUserLoggedIn) {
-        [[OZLNetwork sharedInstance] validateCredentialsWithURL:[NSURL URLWithString:self.redmineHomeURL] username:self.redmineUserName password:self.redminePassword completion:^(NSError *error) {
+        [[OZLNetwork sharedInstance] authenticateCredentialsWithURL:[NSURL URLWithString:self.redmineHomeURL] username:self.redmineUserName password:self.redminePassword completion:^(NSError *error) {
             if (!error) {
                  [self.serverSync startSyncCompletion:nil];
             }

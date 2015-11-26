@@ -237,6 +237,7 @@
 		D04801451BD004E50047C5DE /* CAPSOptionsMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04801421BD004E50047C5DE /* CAPSOptionsMenuAction.swift */; };
 		D04801461BD004E50047C5DE /* CAPSOptionsMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */; };
 		D04C9FB01BCEB245000366A7 /* OZLMainTabControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */; };
+		D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */; };
 		D0CD7C8A1BF791FA0043C94B /* OZLModelAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C891BF791FA0043C94B /* OZLModelAttachment.m */; };
 		D0CD7C8D1BF795FA0043C94B /* NSDate+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C8C1BF795FA0043C94B /* NSDate+OZLExtensions.m */; };
 		D0CD7C901BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C8F1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m */; };
@@ -546,6 +547,8 @@
 		D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuButton.swift; sourceTree = "<group>"; };
 		D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLMainTabControllerViewController.h; path = ViewControllers/OZLMainTabControllerViewController.h; sourceTree = "<group>"; };
 		D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLMainTabControllerViewController.m; path = ViewControllers/OZLMainTabControllerViewController.m; sourceTree = "<group>"; };
+		D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAsyncImageView.swift; sourceTree = "<group>"; };
+		D0987AB81C0772BA00D55DEB /* Facets-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facets-Bridging-Header.h"; sourceTree = "<group>"; };
 		D0CD7C881BF791FA0043C94B /* OZLModelAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelAttachment.h; path = Models/OZLModelAttachment.h; sourceTree = "<group>"; };
 		D0CD7C891BF791FA0043C94B /* OZLModelAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelAttachment.m; path = Models/OZLModelAttachment.m; sourceTree = "<group>"; };
 		D0CD7C8B1BF795FA0043C94B /* NSDate+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+OZLExtensions.h"; sourceTree = "<group>"; };
@@ -913,6 +916,7 @@
 				D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */,
 				D0CD7C8B1BF795FA0043C94B /* NSDate+OZLExtensions.h */,
 				D0CD7C8C1BF795FA0043C94B /* NSDate+OZLExtensions.m */,
+				D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */,
 			);
 			name = Categories;
 			path = Utils/Categories;
@@ -983,6 +987,14 @@
 			path = OptionsMenu/Classes;
 			sourceTree = "<group>";
 		};
+		D0987AB71C0772BA00D55DEB /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				D0987AB81C0772BA00D55DEB /* Facets-Bridging-Header.h */,
+			);
+			path = Supporting;
+			sourceTree = "<group>";
+		};
 		D0B293851BE59D1800F71A55 /* Issue List */ = {
 			isa = PBXGroup;
 			children = (
@@ -1002,6 +1014,7 @@
 			isa = PBXGroup;
 			children = (
 				D5DB80761792F3EE0081662A /* Libs */,
+				D0987AB71C0772BA00D55DEB /* Supporting */,
 				D5DB805F1792F2BF0081662A /* Facets */,
 				2BC4DD8F179928C80090F52C /* RedmineMobileUnitTest */,
 				D5DB80581792F2BF0081662A /* Frameworks */,
@@ -1479,6 +1492,7 @@
 				D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */,
 				D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */,
 				D5DB80BD17930ECD0081662A /* OZLSingleton.m in Sources */,
+				D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */,
 				D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */,
 				D01F9B981BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m in Sources */,
 				D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */,
@@ -1630,6 +1644,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "f736c825-f831-42c3-8256-7c5c193ebe2d";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1652,6 +1667,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "2d7b6dd2-cf56-4850-9317-e0c5696f1d14";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

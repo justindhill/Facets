@@ -63,7 +63,7 @@
     hud.animationType = MBProgressHUDAnimationZoom;
     
     NSURL *baseURL = [NSURL URLWithString:_redmineHomeURL.text];
-    [[OZLNetwork sharedInstance] validateCredentialsWithURL:baseURL username:_username.text password:_password.text completion:^(NSError *error) {
+    [[OZLNetwork sharedInstance] authenticateCredentialsWithURL:baseURL username:_username.text password:_password.text completion:^(NSError *error) {
         if (error) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Couldn't validate credentials" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];

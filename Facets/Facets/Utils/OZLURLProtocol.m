@@ -28,16 +28,10 @@ NSString * const OZLURLProtocolBypassKey = @"OZLURLProtocolBypassKey";
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
-//    if ([request.URL.path containsString:@"attachments/thumbnail"]) {
-//        // Redmine always returns text/html for thumbnails, so modify the request to accept
-//        // text/html even though we know it's an image coming back.
-//        
-//        NSMutableURLRequest *mutableRequest = request.mutableCopy;
-//        [mutableRequest setValue:@"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8" forHTTPHeaderField:@"Accept"];
-//        [mutableRequest setValue:@"gzip, deflate, sdch" forHTTPHeaderField:@"Accept-Encoding"];
-//        
-//        request = mutableRequest;
-//    }
+    
+    // Keep Redmine from setting a new cookie on us. We like ours just fine, thank you very much.
+    NSMutableURLRequest *mutableRequest = [request mutableCopy];
+    mutableRequest.HTTPShouldHandleCookies = NO;
     
     return request;
 }
@@ -50,19 +44,23 @@ NSString * const OZLURLProtocolBypassKey = @"OZLURLProtocolBypassKey";
     NSMutableURLRequest *newRequest = [self.request mutableCopy];
     [NSURLProtocol setProperty:@YES forKey:OZLURLProtocolBypassKey inRequest:newRequest];
     
-    NSString *credentials = [OZLNetwork encodedCredentialStringWithUsername:[OZLSingleton sharedInstance].redmineUserName password:[OZLSingleton sharedInstance].redminePassword];
-    [newRequest setValue:[NSString stringWithFormat:@"Basic %@", credentials] forHTTPHeaderField:@"Authorization"];
-    
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", @"_redmine_session"];
-//    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:newRequest.URL];
-//    NSHTTPCookie *cookie = [[cookies filteredArrayUsingPredicate:predicate] firstObject];
-//    
-//    if (newRequest.HTTPShouldHandleCookies && cookie) {
-//        NSString *cookieString = [NSString stringWithFormat:@"_redmine_session=%@", cookie.value];
-//        [newRequest setValue:cookieString forHTTPHeaderField:@"Cookie"];
-//        
-//        NSLog(@"set cookie: %@", cookieString);
-//    }
+    if ([newRequest.URL.host isEqualToString:[OZLNetwork sharedInstance].baseURL.host]) {
+        NSString *credentials = [OZLNetwork encodedCredentialStringWithUsername:[OZLSingleton sharedInstance].redmineUserName password:[OZLSingleton sharedInstance].redminePassword];
+        [newRequest setValue:[NSString stringWithFormat:@"Basic %@", credentials] forHTTPHeaderField:@"Authorization"];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", @"_redmine_session"];
+        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:newRequest.URL];
+        NSHTTPCookie *cookie = [[cookies filteredArrayUsingPredicate:predicate] firstObject];
+        
+        NSLog(@"cookie: %@", cookie);
+
+        if (cookie) {
+            NSString *cookieString = [NSString stringWithFormat:@"_redmine_session=%@", cookie.value];
+            [newRequest setValue:cookieString forHTTPHeaderField:@"Cookie"];
+            
+            NSLog(@"set cookie: %@", cookieString);
+        }
+    }
     
     self.connection = [NSURLConnection connectionWithRequest:newRequest delegate:self];
 }

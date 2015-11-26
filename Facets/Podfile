@@ -6,5 +6,7 @@ pod 'DRPSlidingTabView', '~> 0.2'
 pod 'DRPLoadingSpinner'
 pod 'TTTAttributedLabel'
 pod 'URBMediaFocusViewController'
+pod 'RaptureXML'
+pod 'SDWebImage'
 
 pod 'Realm'

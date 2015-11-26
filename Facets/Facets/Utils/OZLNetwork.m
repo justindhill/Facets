@@ -29,10 +29,11 @@
 #import "OZLNetwork.h"
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
+#import <RaptureXML/RXMLElement.h>
 
 NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
-@interface OZLNetwork () <NSURLSessionDelegate>
+@interface OZLNetwork () <NSURLSessionDelegate, NSURLSessionTaskDelegate>
 
 @property (strong) NSURLSession *urlSession;
 
@@ -60,7 +61,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        config.HTTPCookieAcceptPolicy = NSHTTPCookieAcceptPolicyNever;
+        self.urlSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     }
     
     return self;
@@ -74,35 +77,129 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 }
 
 #pragma mark - Authorization
-- (void)validateCredentialsWithURL:(NSURL *)url username:(NSString *)username password:(NSString *)password completion:(void(^)(NSError *error))completion {
+- (void)authenticateCredentialsWithURL:(NSURL *)url username:(NSString *)username password:(NSString *)password completion:(void(^)(NSError *error))completion {
     
     NSAssert(completion, @"validateCredentialsCompletion: expects a completion block");
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+    __weak OZLNetwork *weakSelf = self;
+    
+    [self fetchAuthValidationTokensWithBaseURL:url completion:^(NSString *authCookie, NSString *authToken, NSError *error) {
+        NSLog(@"authCookie: %@\nauthToken: %@", authCookie, authToken);
+        
+        if (error) {
+            
+            if (completion) {
+                completion(error);
+            }
+            
+            return;
+        }
+    
         NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:YES];
-        components.path = @"/users/current";
+        components.path = @"/login";
         
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:components.URL];
+        request.HTTPShouldHandleCookies = NO;
+        request.HTTPMethod = @"POST";
         
-        NSString *credentials = [OZLNetwork encodedCredentialStringWithUsername:username password:password];
-        [request setValue:[NSString stringWithFormat:@"Basic %@", credentials] forHTTPHeaderField:@"Authorization"];
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        [request setValue:authCookie forHTTPHeaderField:@"Cookie"];
         
-        NSError *error;
-        NSHTTPURLResponse *response;
-        [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        NSString *encodedBackURL = [url.absoluteString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
+        NSString *encodedToken = [authToken stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
+        NSString *formValueString = [NSString stringWithFormat:@"username=%@&password=%@&authenticity_token=%@&back_url=%@", username, password, encodedToken, encodedBackURL];
+        request.HTTPBody = [formValueString dataUsingEncoding:NSUTF8StringEncoding];
         
-        NSLog(@"response cookie: %@", response.allHeaderFields[@"Set-Cookie"]);
-        NSLog(@"cookie iOS stored: %@", [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:components.URL] firstObject].value);
-        NSError *reportError = error;
+        NSLog(@"request: %@", request);
+        NSLog(@"form string: '%@'", formValueString);
         
-        if (response.statusCode == 401) {
-            reportError = [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidCredentials userInfo:@{NSLocalizedDescriptionKey: @"Invalid username or password."}];
+        NSURLSessionDataTask *task = [weakSelf.urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            NSError *reportError = error;
+        
+            // 302 Found indicates that the login was successful and we are being redirected. 200 OK indicates that the login
+            // failed and we successfully loaded /login.
+            if (httpResponse.statusCode != 302) {
+                reportError = [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidCredentials userInfo:@{NSLocalizedDescriptionKey: @"Invalid username or password."}];
+            
+            }
+            
+            [self updateSessionCookieWithHost:components.host cookieHeader:httpResponse.allHeaderFields[@"Set-Cookie"]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(reportError);
+            });
+        }];
+        
+        [task resume];
+    }];
+}
+
+- (void)fetchAuthValidationTokensWithBaseURL:(NSURL *)baseURL completion:(void(^)(NSString *authCookie, NSString *authToken, NSError *error))completion {
+    
+    NSURLComponents *components = [NSURLComponents componentsWithURL:baseURL resolvingAgainstBaseURL:YES];
+    components.path = @"/login";
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:components.URL];
+    request.HTTPShouldHandleCookies = NO;
+    
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        
+        NSError *errorToReport = error;
+        
+        if (!errorToReport && (httpResponse.statusCode < 200 || httpResponse.statusCode >= 300)) {
+            NSString *errorString = [NSString stringWithFormat:@"Received an unacceptable status code from the server. (%ld)", httpResponse.statusCode];
+            errorToReport = [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorUnacceptableStatusCode userInfo:@{NSLocalizedDescriptionKey: errorString}];
+        }
+    
+        if (errorToReport) {
+            if (completion) {
+                completion(nil, nil, error);
+            }
+            
+            return;
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(reportError);
-        });
-    });
+        NSString *authCookie = httpResponse.allHeaderFields[@"Set-Cookie"];
+        
+        __block NSString *authToken;
+        
+        RXMLElement *ele = [RXMLElement elementFromXMLData:data];
+        RXMLElement *head = [ele child:@"head"];
+        
+        [head iterate:@"meta" usingBlock:^(RXMLElement *metaEle) {
+            if ([[metaEle attribute:@"name"] isEqualToString:@"csrf-token"]) {
+                authToken = [metaEle attribute:@"content"];
+            }
+        }];
+        
+        if (completion) {
+            
+            if (authCookie && authToken) {
+                completion(authCookie, authToken, nil);
+            } else {
+                completion(nil, nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorCouldntParseTokens userInfo:@{NSLocalizedDescriptionKey: @"Couldn't parse either the auth cookie or the auth token."}]);
+            }
+        }
+    }];
+    
+    [task resume];
+}
+
+- (void)updateSessionCookieWithHost:(NSString *)host cookieHeader:(NSString *)cookieHeader {
+    NSString *cookieName = @"_redmine_session";
+    NSString *cookieString = [cookieHeader substringFromIndex:cookieName.length + 1];
+    NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:@{NSHTTPCookieName: cookieName,
+                                                                NSHTTPCookieValue: cookieString,
+                                                                NSHTTPCookiePath: @"/",
+                                                                NSHTTPCookieDomain: host}];
+    
+    NSAssert(cookie, @"Couldn't create cookie");
+    
+    NSLog(@"set cookie: %@", cookie);
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
 }
 
 #pragma mark-
@@ -867,5 +964,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 }
 
 #pragma mark - NSURLSessionDelegate
+
+#pragma mark - NSURLSessionTaskDelegate
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler {
+    if ([task.originalRequest.URL.path isEqualToString:@"/login"]) {
+        completionHandler(nil);
+        return;
+    }
+    
+    completionHandler(request);
+}
 
 @end

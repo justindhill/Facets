@@ -41,7 +41,9 @@
 extern NSString * const OZLNetworkErrorDomain;
 
 typedef NS_ENUM(NSInteger, OZLNetworkError) {
-    OZLNetworkErrorInvalidCredentials
+    OZLNetworkErrorInvalidCredentials,
+    OZLNetworkErrorCouldntParseTokens,
+    OZLNetworkErrorUnacceptableStatusCode
 };
 
 @interface OZLNetwork : NSObject
@@ -53,7 +55,7 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 + (NSString *)encodedCredentialStringWithUsername:(NSString *)username password:(NSString *)password;
 
 // Authorization
-- (void)validateCredentialsWithURL:(NSURL *)url username:(NSString *)username password:(NSString *)password completion:(void(^)(NSError *error))completion;
+- (void)authenticateCredentialsWithURL:(NSURL *)url username:(NSString *)username password:(NSString *)password completion:(void(^)(NSError *error))completion;
 
 // project 
 - (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSError *error))block;
