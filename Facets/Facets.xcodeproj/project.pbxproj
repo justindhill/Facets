@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B45384117A65D7100649D12 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B45384017A65D7100649D12 /* Icon.png */; };
-		2B45384317A65DD100649D12 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B45384217A65DD100649D12 /* Icon@2x.png */; };
 		2B62D0DF1796498800AC3C19 /* OZLIssueCreateOrUpdateViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B62D0DE1796498800AC3C19 /* OZLIssueCreateOrUpdateViewController.storyboard */; };
 		2B62D0E1179649A800AC3C19 /* OZLIssueDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B62D0E0179649A800AC3C19 /* OZLIssueDetailViewController.storyboard */; };
 		2B62D0E31796A15C00AC3C19 /* OZLProjectInfoViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B62D0E21796A15C00AC3C19 /* OZLProjectInfoViewController.storyboard */; };
@@ -238,6 +236,7 @@
 		D04801461BD004E50047C5DE /* CAPSOptionsMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */; };
 		D04C9FB01BCEB245000366A7 /* OZLMainTabControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */; };
 		D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */; };
+		D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0987ABB1C07818500D55DEB /* Images.xcassets */; };
 		D0CD7C8A1BF791FA0043C94B /* OZLModelAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C891BF791FA0043C94B /* OZLModelAttachment.m */; };
 		D0CD7C8D1BF795FA0043C94B /* NSDate+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C8C1BF795FA0043C94B /* NSDate+OZLExtensions.m */; };
 		D0CD7C901BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C8F1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m */; };
@@ -245,12 +244,8 @@
 		D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB80591792F2BF0081662A /* UIKit.framework */; };
 		D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805B1792F2BF0081662A /* Foundation.framework */; };
 		D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805D1792F2BF0081662A /* CoreGraphics.framework */; };
-		D5DB80641792F2BF0081662A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D5DB80621792F2BF0081662A /* InfoPlist.strings */; };
 		D5DB80661792F2BF0081662A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80651792F2BF0081662A /* main.m */; };
 		D5DB806A1792F2BF0081662A /* OZLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80691792F2BF0081662A /* OZLAppDelegate.m */; };
-		D5DB806C1792F2BF0081662A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DB806B1792F2BF0081662A /* Default.png */; };
-		D5DB806E1792F2BF0081662A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DB806D1792F2BF0081662A /* Default@2x.png */; };
-		D5DB80701792F2BF0081662A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DB806F1792F2BF0081662A /* Default-568h@2x.png */; };
 		D5DB80A61792F4DE0081662A /* OZLProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80A41792F4DE0081662A /* OZLProjectListViewController.m */; };
 		D5DB80A71792F4DE0081662A /* OZLProjectListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5DB80A51792F4DE0081662A /* OZLProjectListViewController.xib */; };
 		D5DB80AC1792F6980081662A /* OZLIssueListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80AA1792F6980081662A /* OZLIssueListViewController.m */; };
@@ -266,8 +261,6 @@
 /* Begin PBXFileReference section */
 		0ECA4D90281C24BB02A19D03 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		267E239DD59CF16F78B49079 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		2B45384017A65D7100649D12 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
-		2B45384217A65DD100649D12 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		2B62D0DE1796498800AC3C19 /* OZLIssueCreateOrUpdateViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = OZLIssueCreateOrUpdateViewController.storyboard; path = ViewControllers/OZLIssueCreateOrUpdateViewController.storyboard; sourceTree = "<group>"; };
 		2B62D0E0179649A800AC3C19 /* OZLIssueDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = OZLIssueDetailViewController.storyboard; path = ViewControllers/OZLIssueDetailViewController.storyboard; sourceTree = "<group>"; };
 		2B62D0E21796A15C00AC3C19 /* OZLProjectInfoViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = OZLProjectInfoViewController.storyboard; path = ViewControllers/OZLProjectInfoViewController.storyboard; sourceTree = "<group>"; };
@@ -544,26 +537,23 @@
 		D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLMainTabControllerViewController.m; path = ViewControllers/OZLMainTabControllerViewController.m; sourceTree = "<group>"; };
 		D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAsyncImageView.swift; sourceTree = "<group>"; };
 		D0987AB81C0772BA00D55DEB /* Facets-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facets-Bridging-Header.h"; sourceTree = "<group>"; };
+		D0987ABB1C07818500D55DEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D0CD7C881BF791FA0043C94B /* OZLModelAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelAttachment.h; path = Models/OZLModelAttachment.h; sourceTree = "<group>"; };
 		D0CD7C891BF791FA0043C94B /* OZLModelAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelAttachment.m; path = Models/OZLModelAttachment.m; sourceTree = "<group>"; };
 		D0CD7C8B1BF795FA0043C94B /* NSDate+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+OZLExtensions.h"; sourceTree = "<group>"; };
 		D0CD7C8C1BF795FA0043C94B /* NSDate+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+OZLExtensions.m"; sourceTree = "<group>"; };
 		D0CD7C8E1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueAttachmentGalleryCell.h; sourceTree = "<group>"; };
 		D0CD7C8F1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueAttachmentGalleryCell.m; sourceTree = "<group>"; };
-		D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../Launch Screen.storyboard"; sourceTree = "<group>"; };
+		D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		D5DB80561792F2BF0081662A /* Facets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Facets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5DB80591792F2BF0081662A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5DB805B1792F2BF0081662A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5DB805D1792F2BF0081662A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D5DB80611792F2BF0081662A /* Facets-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Facets-Info.plist"; sourceTree = "<group>"; };
-		D5DB80631792F2BF0081662A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D5DB80651792F2BF0081662A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D5DB80671792F2BF0081662A /* Facets-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Facets-Prefix.pch"; sourceTree = "<group>"; };
 		D5DB80681792F2BF0081662A /* OZLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OZLAppDelegate.h; sourceTree = "<group>"; };
 		D5DB80691792F2BF0081662A /* OZLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OZLAppDelegate.m; sourceTree = "<group>"; };
-		D5DB806B1792F2BF0081662A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		D5DB806D1792F2BF0081662A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		D5DB806F1792F2BF0081662A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D5DB80A31792F4DE0081662A /* OZLProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLProjectListViewController.h; path = ViewControllers/OZLProjectListViewController.h; sourceTree = "<group>"; };
 		D5DB80A41792F4DE0081662A /* OZLProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLProjectListViewController.m; path = ViewControllers/OZLProjectListViewController.m; sourceTree = "<group>"; };
 		D5DB80A51792F4DE0081662A /* OZLProjectListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OZLProjectListViewController.xib; path = ViewControllers/OZLProjectListViewController.xib; sourceTree = "<group>"; };
@@ -965,7 +955,12 @@
 		D0987AB71C0772BA00D55DEB /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */,
+				D5DB80611792F2BF0081662A /* Facets-Info.plist */,
+				D5DB80651792F2BF0081662A /* main.m */,
+				D5DB80671792F2BF0081662A /* Facets-Prefix.pch */,
 				D0987AB81C0772BA00D55DEB /* Facets-Bridging-Header.h */,
+				D0987ABB1C07818500D55DEB /* Images.xcassets */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -1035,26 +1030,8 @@
 				D5DB80A81792F4E40081662A /* ViewControllers */,
 				D5DB80681792F2BF0081662A /* OZLAppDelegate.h */,
 				D5DB80691792F2BF0081662A /* OZLAppDelegate.m */,
-				D5DB80601792F2BF0081662A /* Supporting Files */,
 			);
 			path = Facets;
-			sourceTree = "<group>";
-		};
-		D5DB80601792F2BF0081662A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */,
-				2B45384217A65DD100649D12 /* Icon@2x.png */,
-				2B45384017A65D7100649D12 /* Icon.png */,
-				D5DB80611792F2BF0081662A /* Facets-Info.plist */,
-				D5DB80621792F2BF0081662A /* InfoPlist.strings */,
-				D5DB80651792F2BF0081662A /* main.m */,
-				D5DB80671792F2BF0081662A /* Facets-Prefix.pch */,
-				D5DB806B1792F2BF0081662A /* Default.png */,
-				D5DB806D1792F2BF0081662A /* Default@2x.png */,
-				D5DB806F1792F2BF0081662A /* Default-568h@2x.png */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		D5DB80761792F3EE0081662A /* Libs */ = {
@@ -1200,10 +1177,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5DB80641792F2BF0081662A /* InfoPlist.strings in Resources */,
-				D5DB806C1792F2BF0081662A /* Default.png in Resources */,
-				D5DB806E1792F2BF0081662A /* Default@2x.png in Resources */,
-				D5DB80701792F2BF0081662A /* Default-568h@2x.png in Resources */,
 				D5DB80A71792F4DE0081662A /* OZLProjectListViewController.xib in Resources */,
 				D5DB80AD1792F6980081662A /* OZLIssueListViewController.xib in Resources */,
 				D5DB80B61793016B0081662A /* OZLAccountViewController.xib in Resources */,
@@ -1329,6 +1302,7 @@
 				2BEA498717A117C3008DBAF9 /* icon_mute.png in Resources */,
 				2BEA498817A117C3008DBAF9 /* icon_paint.png in Resources */,
 				2BEA498917A117C3008DBAF9 /* icon_paper_plane.png in Resources */,
+				D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */,
 				2BEA498A17A117C3008DBAF9 /* icon_paper_trash.png in Resources */,
 				2BEA498B17A117C3008DBAF9 /* icon_paperclip.png in Resources */,
 				2BEA498C17A117C3008DBAF9 /* icon_paragraph.png in Resources */,
@@ -1383,8 +1357,6 @@
 				2BEA49BC17A117C3008DBAF9 /* icon_window_lock.png in Resources */,
 				2BEA49BD17A117C3008DBAF9 /* icon_zoom_in.png in Resources */,
 				2BEA49BE17A117C3008DBAF9 /* icon_zoom_out.png in Resources */,
-				2B45384117A65D7100649D12 /* Icon.png in Resources */,
-				2B45384317A65DD100649D12 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1520,17 +1492,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		D5DB80621792F2BF0081662A /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D5DB80631792F2BF0081662A /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		D5DB80711792F2BF0081662A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1597,14 +1558,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 267E239DD59CF16F78B49079 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Images";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 14;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Facets/Facets-Prefix.pch";
-				INFOPLIST_FILE = "Facets/Facets-Info.plist";
+				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
+				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
@@ -1620,14 +1583,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0ECA4D90281C24BB02A19D03 /* Pods.release.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Images";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 14;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Facets/Facets-Prefix.pch";
-				INFOPLIST_FILE = "Facets/Facets-Info.plist";
+				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
+				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.franklychat.${PRODUCT_NAME:rfc1034identifier}";
