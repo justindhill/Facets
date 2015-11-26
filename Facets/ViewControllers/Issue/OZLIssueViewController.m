@@ -111,8 +111,8 @@ NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier
 }
 
 - (void)applyIssueModel:(OZLModelIssue *)issue {
-    self.navigationItem.title = [NSString stringWithFormat:@"%@ #%ld", issue.tracker.name, issue.index];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"#%ld", issue.index] style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.title = [NSString stringWithFormat:@"%@ #%ld", issue.tracker.name, (long)issue.index];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"#%ld", (long)issue.index] style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.issueHeader applyIssueModel:issue];
     [self.aboutTabView applyIssueModel:issue];
     [self refreshHeaderSize];

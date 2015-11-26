@@ -150,7 +150,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSError *errorToReport = error;
         
         if (!errorToReport && (httpResponse.statusCode < 200 || httpResponse.statusCode >= 300)) {
-            NSString *errorString = [NSString stringWithFormat:@"Received an unacceptable status code from the server. (%ld)", httpResponse.statusCode];
+            NSString *errorString = [NSString stringWithFormat:@"Received an unacceptable status code from the server. (%ld)", (long)httpResponse.statusCode];
             errorToReport = [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorUnacceptableStatusCode userInfo:@{NSLocalizedDescriptionKey: errorString}];
         }
     
