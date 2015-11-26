@@ -1,6 +1,6 @@
-[submodule "Facets/Libs/OptionsMenu"]
-	path = Facets/Libs/OptionsMenu
+[submodule "Libs/OptionsMenu"]
+	path = Libs/OptionsMenu
 	url = git@github.com:justindhill/OptionsMenu.git
-[submodule "Facets/Libs/BTNavigationDropdownMenu"]
-	path = Facets/Libs/BTNavigationDropdownMenu
+[submodule "Libs/BTNavigationDropdownMenu"]
+	path = Libs/BTNavigationDropdownMenu
 	url = git@github.com:justindhill/BTNavigationDropdownMenu.git
