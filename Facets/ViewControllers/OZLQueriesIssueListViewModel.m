@@ -12,6 +12,8 @@
 @interface OZLQueriesIssueListViewModel ()
 
 @property NSMutableArray *issues;
+@property BOOL moreIssuesAvailable;
+@property BOOL isLoading;
 
 @end
 
@@ -26,9 +28,46 @@
 
 - (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void (^)(NSError *))completion {
     __weak OZLQueriesIssueListViewModel *weakSelf = self;
-    [[OZLNetwork sharedInstance] getIssueListForQueryId:self.queryId projectId:self.projectId withParams:nil andBlock:^(NSArray *result, NSError *error) {
+    
+    if (self.isLoading) {
+        return;
+    }
+    
+    self.isLoading = YES;
+    
+    [[OZLNetwork sharedInstance] getIssueListForQueryId:self.queryId projectId:self.projectId offset:0 limit:25 params:nil andBlock:^(NSArray *result, NSInteger totalCount, NSError *error) {
+        
+        weakSelf.isLoading = NO;
+        weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
+        
         weakSelf.issues = [result mutableCopy];
+        weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
         completion(error);
+    }];
+}
+
+- (void)loadMoreIssuesCompletion:(void (^)(NSError *))completion {
+    __weak OZLQueriesIssueListViewModel *weakSelf = self;
+    
+    if (self.isLoading) {
+        return;
+    }
+    
+    self.isLoading = YES;
+    
+    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:self.issues.count limit:25 params:nil andBlock:^(NSArray *result, NSInteger totalCount, NSError *error) {
+        
+        weakSelf.isLoading = NO;
+        weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
+        
+        if (error) {
+            NSLog(@"error getIssueListForProject: %@", error.description);
+            completion(error);
+            
+        } else {
+            weakSelf.issues = [[weakSelf.issues arrayByAddingObjectsFromArray:result] mutableCopy];
+            completion(nil);
+        }
     }];
 }
 

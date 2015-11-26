@@ -333,15 +333,23 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 #pragma mark -
 #pragma mark issue api
-- (void)getIssueListForProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+- (void)getIssueListForProject:(NSInteger)projectid offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))block {
     
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     [paramsDic setObject:[NSNumber numberWithInteger:projectid] forKey:@"project_id"];
     
+    if (offset > 0) {
+        paramsDic[@"offset"] = @(offset);
+    }
+    
+    if (limit > 0) {
+        paramsDic[@"limit"] = @(limit);
+    }
+    
     [self GET:@"/issues.json" params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error && block) {
-            block(nil, error);
+            block(nil, 0, error);
             return;
         }
         
@@ -349,7 +357,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError && block) {
-            block(nil, jsonError);
+            block(nil, 0, jsonError);
             return;
         }
 
@@ -357,59 +365,59 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
             NSMutableArray *issues = [[NSMutableArray alloc] init];
 
+            NSInteger totalCount = [[responseObject objectForKey:@"total_count"] integerValue];
             NSArray *issuesDic = [responseObject objectForKey:@"issues"];
             
             for (NSDictionary *p in issuesDic) {
                 [issues addObject:[[OZLModelIssue alloc] initWithDictionary:p]];
             }
             
-            block(issues, nil);
+            block(issues, totalCount, nil);
         }
     }];
 }
 
-- (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
-    
-    NSString *path = [NSString stringWithFormat:@"/issues.json"];
+- (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))block {
     
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     paramsDic[@"project_id"] = @(projectId);
     paramsDic[@"query_id"] = @(queryId);
     
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
+    if (offset > 0) {
+        paramsDic[@"offset"] = @(offset);
     }
     
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    if (limit > 0) {
+        paramsDic[@"limit"] = @(limit);
+    }
+    
+    [self GET:@"/issues.json" params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error && block) {
-            block(nil, error);
+            block(nil, 0, error);
         }
         
         NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError && block) {
-            block(nil, jsonError);
+            block(nil, 0, jsonError);
         }
         
         if (block) {
             
             NSMutableArray *issues = [[NSMutableArray alloc] init];
             
+            NSInteger totalCount = [responseObject[@"total_count"] integerValue];
             NSArray *issuesDic = [responseObject objectForKey:@"issues"];
             
             for (NSDictionary *p in issuesDic) {
                 [issues addObject:[[OZLModelIssue alloc] initWithDictionary:p]];
             }
             
-            block(issues, nil);
+            block(issues, totalCount, nil);
         }
     }];
-    
-    [task resume];
 }
 
 - (void)getDetailForIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block {
@@ -878,6 +886,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
         if (isFirst) {
             queryString = [NSString stringWithFormat:@"%@=%@", key, value];
+            isFirst = NO;
         } else {
             queryString = [queryString stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", key, value]];
         }

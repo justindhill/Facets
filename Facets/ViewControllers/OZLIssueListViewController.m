@@ -36,6 +36,7 @@
 #import "OZLIssueCreateOrUpdateViewController.h"
 #import "OZLIssueFilterViewController.h"
 #import "OZLSingleton.h"
+#import "OZLLoadingView.h"
 
 #import "Facets-Swift.h"
 
@@ -97,9 +98,10 @@
         
         self.view.tintColor = self.parentViewController.view.tintColor;
         [self refreshProjectSelector];
+        
+        [self showFooterActivityIndicator];
+        [self reloadData];
     }
-    
-    [self reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -161,9 +163,6 @@
 }
 
 - (void)reloadData {
-    if (!self.refreshControl.isRefreshing) {
-        [self.refreshControl beginRefreshing];
-    }
 
     __weak OZLIssueListViewController *weakSelf = self;
     [self.viewModel loadIssuesSortedBy:nil ascending:NO completion:^(NSError *error) {
@@ -185,15 +184,16 @@
 - (void)didSelectProjectAtIndex:(NSInteger)index {
     OZLModelProject *project = self.viewModel.projects[index];
     
-    self.viewModel.projectId = project.index;
+    if (self.viewModel.projectId == project.index) {
+        return;
+    }
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.animationType = MBProgressHUDAnimationZoom;
+    [self showFooterActivityIndicator];
+    self.viewModel.projectId = project.index;
+    [self.tableView reloadData];
     
     __weak OZLIssueListViewController *weakSelf = self;
     [self.viewModel loadIssuesSortedBy:nil ascending:NO completion:^(NSError *error) {
-        
-        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
         
         if (error) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Couldn't load issue list" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
@@ -275,6 +275,44 @@
             } else {
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                 [_HUD hide:YES];
+            }
+        }];
+    }
+}
+
+- (void)showFooterActivityIndicator {
+    if (self.tableView.tableFooterView) {
+        return;
+    }
+    
+    OZLLoadingView *loadingView = [[OZLLoadingView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    [loadingView.loadingSpinner startAnimating];
+    self.tableView.tableFooterView = loadingView;
+}
+
+- (void)hideFooterActivityIndicator {
+    self.tableView.tableFooterView = nil;
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat distanceFromBottom = scrollView.contentSize.height -
+                                 scrollView.contentOffset.y -
+                                 scrollView.frame.size.height;
+    
+    if (self.viewModel.isLoading) {
+        return;
+    }
+    
+    __weak OZLIssueListViewController *weakSelf = self;
+    
+    if (self.viewModel.moreIssuesAvailable && distanceFromBottom <= 44. &&
+        self.tableView.contentSize.height > self.tableView.frame.size.height) {
+        [self.viewModel loadMoreIssuesCompletion:^(NSError *error) {
+            [weakSelf.tableView reloadData];
+            
+            if (!weakSelf.viewModel.moreIssuesAvailable) {
+                [weakSelf hideFooterActivityIndicator];
             }
         }];
     }

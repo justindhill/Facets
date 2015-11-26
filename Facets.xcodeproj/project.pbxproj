@@ -984,12 +984,12 @@
 		D5DB804D1792F2BF0081662A = {
 			isa = PBXGroup;
 			children = (
-				D5DB80761792F3EE0081662A /* Libs */,
-				D0987AB71C0772BA00D55DEB /* Supporting */,
 				D5DB805F1792F2BF0081662A /* Facets */,
+				D5DB80761792F3EE0081662A /* Libs */,
 				D5DB80581792F2BF0081662A /* Frameworks */,
-				D5DB80571792F2BF0081662A /* Products */,
+				D0987AB71C0772BA00D55DEB /* Supporting */,
 				966038A2B746359B7E36B81D /* Pods */,
+				D5DB80571792F2BF0081662A /* Products */,
 			);
 			sourceTree = "<group>";
 		};

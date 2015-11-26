@@ -14,8 +14,11 @@
 @property NSString *title;
 @property (readonly) NSArray *issues;
 @property (readonly) BOOL shouldShowProjectSelector;
+@property (readonly) BOOL moreIssuesAvailable;
+@property (readonly) BOOL isLoading;
 
 - (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void(^)(NSError *error))completion;
+- (void)loadMoreIssuesCompletion:(void(^)(NSError *error))completion;
 - (void)deleteIssueAtIndex:(NSInteger)index completion:(void(^)(NSError *error))completion;
 
 @optional

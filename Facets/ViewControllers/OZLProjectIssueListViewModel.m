@@ -14,6 +14,8 @@
 
 @property NSMutableArray *issues;
 @property RLMResults *projects;
+@property BOOL moreIssuesAvailable;
+@property BOOL isLoading;
 
 @end
 
@@ -23,6 +25,14 @@
 @synthesize title;
 @synthesize issues;
 @synthesize projects;
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.moreIssuesAvailable = YES;
+    }
+    
+    return self;
+}
 
 - (BOOL)shouldShowProjectSelector {
     return YES;
@@ -41,22 +51,62 @@
 }
 
 - (void)setProjectId:(NSInteger)projectId {
+    if (projectId != _projectId) {
+        self.issues = [NSMutableArray array];
+        [OZLSingleton sharedInstance].currentProjectID = projectId;
+    }
+    
     _projectId = projectId;
-    [OZLSingleton sharedInstance].currentProjectID = projectId;
 }
 
-- (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void (^)(NSError *))completion {
+- (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void (^)(NSError *error))completion {
     
     __weak OZLProjectIssueListViewModel *weakSelf = self;
+    
+    if (self.isLoading) {
+        return;
+    }
+    
+    self.isLoading = YES;
 
     // load issues
-    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId withParams:nil andBlock:^(NSArray *result, NSError *error) {
+    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:0 limit:25 params:nil andBlock:^(NSArray *result, NSInteger totalCount, NSError *error) {
+        
+        weakSelf.isLoading = NO;
+        weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
+        
         if (error) {
             NSLog(@"error getIssueListForProject: %@", error.description);
             completion(error);
             
         } else {
             weakSelf.issues = [result mutableCopy];
+            completion(nil);
+        }
+    }];
+}
+
+- (void)loadMoreIssuesCompletion:(void(^)(NSError *error))completion {
+    
+    __weak OZLProjectIssueListViewModel *weakSelf = self;
+    
+    if (self.isLoading) {
+        return;
+    }
+    
+    self.isLoading = YES;
+    
+    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:self.issues.count limit:25 params:nil andBlock:^(NSArray *result, NSInteger totalCount, NSError *error) {
+        
+        weakSelf.isLoading = NO;
+        weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
+        
+        if (error) {
+            NSLog(@"error getIssueListForProject: %@", error.description);
+            completion(error);
+            
+        } else {
+            weakSelf.issues = [[weakSelf.issues arrayByAddingObjectsFromArray:result] mutableCopy];
             completion(nil);
         }
     }];

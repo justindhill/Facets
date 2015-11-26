@@ -66,8 +66,9 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 
 
 // issue
-- (void)getIssueListForProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
-- (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
+
+- (void)getIssueListForProject:(NSInteger)projectid offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))block;
+- (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))block;
 - (void)getDetailForIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block;
 - (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
 - (void)updateIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
