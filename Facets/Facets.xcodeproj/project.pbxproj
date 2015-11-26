@@ -298,11 +298,6 @@
 		2BBE4412179E586B00FD9E20 /* OZLModelTimeEntryActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelTimeEntryActivity.h; path = Models/OZLModelTimeEntryActivity.h; sourceTree = "<group>"; };
 		2BBE4413179E586B00FD9E20 /* OZLModelTimeEntryActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelTimeEntryActivity.m; path = Models/OZLModelTimeEntryActivity.m; sourceTree = "<group>"; };
 		2BC4DD8B179928C80090F52C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		2BC4DD91179928C80090F52C /* RedmineMobileUnitTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RedmineMobileUnitTest-Info.plist"; sourceTree = "<group>"; };
-		2BC4DD93179928C80090F52C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2BC4DD95179928C80090F52C /* RedmineMobileUnitTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RedmineMobileUnitTest.h; sourceTree = "<group>"; };
-		2BC4DD96179928C80090F52C /* RedmineMobileUnitTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RedmineMobileUnitTest.m; sourceTree = "<group>"; };
-		2BC4DD98179928C80090F52C /* RedmineMobileUnitTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RedmineMobileUnitTest-Prefix.pch"; sourceTree = "<group>"; };
 		2BCBA81B179E292800E5FD46 /* OZLModelIssueJournal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelIssueJournal.h; path = Models/OZLModelIssueJournal.h; sourceTree = "<group>"; };
 		2BCBA81C179E292800E5FD46 /* OZLModelIssueJournal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLModelIssueJournal.m; path = Models/OZLModelIssueJournal.m; sourceTree = "<group>"; };
 		2BCBA81E179E2AA400E5FD46 /* OZLModelIssueJournalDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLModelIssueJournalDetail.h; path = Models/OZLModelIssueJournalDetail.h; sourceTree = "<group>"; };
@@ -631,26 +626,6 @@
 				2B6F382C1797A00A00D06F51 /* MLTableAlertShadowMask@2x.png */,
 			);
 			path = Images;
-			sourceTree = "<group>";
-		};
-		2BC4DD8F179928C80090F52C /* RedmineMobileUnitTest */ = {
-			isa = PBXGroup;
-			children = (
-				2BC4DD95179928C80090F52C /* RedmineMobileUnitTest.h */,
-				2BC4DD96179928C80090F52C /* RedmineMobileUnitTest.m */,
-				2BC4DD90179928C80090F52C /* Supporting Files */,
-			);
-			path = RedmineMobileUnitTest;
-			sourceTree = "<group>";
-		};
-		2BC4DD90179928C80090F52C /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				2BC4DD91179928C80090F52C /* RedmineMobileUnitTest-Info.plist */,
-				2BC4DD92179928C80090F52C /* InfoPlist.strings */,
-				2BC4DD98179928C80090F52C /* RedmineMobileUnitTest-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		2BCB50FD1796370F006845AC /* Views */ = {
@@ -1016,7 +991,6 @@
 				D5DB80761792F3EE0081662A /* Libs */,
 				D0987AB71C0772BA00D55DEB /* Supporting */,
 				D5DB805F1792F2BF0081662A /* Facets */,
-				2BC4DD8F179928C80090F52C /* RedmineMobileUnitTest */,
 				D5DB80581792F2BF0081662A /* Frameworks */,
 				D5DB80571792F2BF0081662A /* Products */,
 				966038A2B746359B7E36B81D /* Pods */,
@@ -1547,14 +1521,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		2BC4DD92179928C80090F52C /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2BC4DD93179928C80090F52C /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		D5DB80621792F2BF0081662A /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
