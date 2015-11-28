@@ -14,6 +14,7 @@ class OZLModelJournal: NSObject {
     private(set) var notes: String? = nil
     private(set) var journalId: Int? = nil
     private(set) var creationDate: NSDate? = nil
+    private(set) var details: Array<OZLModelJournalDetail> = []
     
     init(attributes: Dictionary<String, AnyObject>) {
         if let authorDict = attributes["user"] as? Dictionary<String, AnyObject> {
@@ -27,6 +28,21 @@ class OZLModelJournal: NSObject {
             self.creationDate = NSDate(ISO8601String: dateString)
         }
         
+        if let details = attributes["details"] as? Array<Dictionary<String, AnyObject>> {
+            var detailModels: Array<OZLModelJournalDetail> = []
+            for detailDict in details {
+                detailModels.append(OZLModelJournalDetail(attributes: detailDict))
+            }
+            
+            self.details = detailModels
+        }
+        
         super.init()
+    }
+    
+    override var description: String {
+        get {
+            return "<OZLModelJournal: \(unsafeAddressOf(self))> By \(self.author?.name) on \(self.creationDate) (\(self.details.count) details)"
+        }
     }
 }

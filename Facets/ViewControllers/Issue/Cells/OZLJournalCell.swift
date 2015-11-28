@@ -13,6 +13,11 @@ class OZLJournalCell: OZLTableViewCell {
     private static let profileSideLen: CGFloat = 28.0
     private static let dateFormatter = NSDateFormatter()
     
+    private static let detailFont = UIFont.italicSystemFontOfSize(12.0)
+    private static let commentFont = UIFont.systemFontOfSize(12.0)
+    private static let dateFont = UIFont.systemFontOfSize(10.0)
+    private static let authorFont = UIFont.OZLMediumSystemFontOfSize(12.0)
+    
     let profileImageView = UIImageView()
     let usernameLabel = UILabel()
     let dateLabel = UILabel()
@@ -48,13 +53,13 @@ class OZLJournalCell: OZLTableViewCell {
         self.profileImageView.layer.masksToBounds = true
         self.profileImageView.backgroundColor = UIColor.lightGrayColor()
         
-        self.usernameLabel.font = UIFont.OZLMediumSystemFontOfSize(12.0)
+        self.usernameLabel.font = OZLJournalCell.authorFont
         self.usernameLabel.textColor = UIColor.darkGrayColor()
         
-        self.dateLabel.font = UIFont.systemFontOfSize(10.0)
+        self.dateLabel.font = OZLJournalCell.dateFont
         self.dateLabel.textColor = UIColor.lightGrayColor()
         
-        self.commentLabel.font = UIFont.systemFontOfSize(12.0)
+        self.commentLabel.font = OZLJournalCell.commentFont
         self.commentLabel.numberOfLines = 0
         self.commentLabel.textColor = UIColor.darkGrayColor()
     }
@@ -98,14 +103,67 @@ class OZLJournalCell: OZLTableViewCell {
             self.dateLabel.text = nil
         }
         
-        self.commentLabel.text = journal.notes
+        if journal.details.count > 0 {
+            self.commentLabel.attributedText = self.composeDetails(journal.details, note: journal.notes)
+        } else {
+            self.commentLabel.text = journal.notes
+        }
+    }
+    
+    private func composeDetails(details: Array<OZLModelJournalDetail>, note: String?) -> NSAttributedString {
+        let str = NSMutableAttributedString()
+        
+        let detailPara = NSMutableParagraphStyle()
+        detailPara.lineHeightMultiple = 1.15
+        
+        let detailAttributes = [
+            NSForegroundColorAttributeName: UIColor.darkGrayColor(),
+            NSFontAttributeName: OZLJournalCell.detailFont,
+            NSParagraphStyleAttributeName: detailPara
+        ]
+        
+        for (index, detail) in details.enumerate() {
+            var detailString: String!
+            
+            if let name = detail.displayName, let old = detail.oldValue, let new = detail.newValue {
+                if old.characters.count > 20 || new.characters.count > 20 {
+                    detailString  = "Updated \(name)"
+                } else {
+                    detailString = "Changed \(name): \(old) -> \(new)"
+                    str.appendAttributedString(NSAttributedString(string: detailString, attributes:  detailAttributes))
+                }
+                
+            } else if let name = detail.displayName, let new = detail.newValue {
+                detailString  = "Set \(name) to \(new)"
+                
+            } else if detail.oldValue != nil, let name = detail.displayName {
+                detailString  = "Removed \(name)"
+            }
+            
+            str.appendAttributedString(NSAttributedString(string: detailString, attributes:  detailAttributes))
+            
+            if index < details.count - 1 || (index == details.count - 1 && note?.characters.count > 0) {
+                str.appendAttributedString(NSAttributedString(string: "\n", attributes: detailAttributes))
+            }
+        }
+        
+        if let note = note {
+            let noteAttributes = [
+                NSForegroundColorAttributeName: UIColor.darkGrayColor(),
+                NSFontAttributeName: OZLJournalCell.commentFont
+            ]
+            
+            str.appendAttributedString(NSAttributedString(string: note, attributes: noteAttributes))
+        }
+        
+        return str
     }
     
     private static let sizingCell = OZLJournalCell(frame: CGRectZero)
     @objc class func heightWithWidth(width: CGFloat, contentPadding: CGFloat, journalModel: OZLModelJournal) -> CGFloat {
         sizingCell.frame.size.width = width
         
-        if journalModel.notes?.characters.count > 0 {
+        if journalModel.notes?.characters.count > 0 || journalModel.details.count > 0 {
             sizingCell.contentPadding = contentPadding
             sizingCell.journal = journalModel
             sizingCell.layoutSubviews()
