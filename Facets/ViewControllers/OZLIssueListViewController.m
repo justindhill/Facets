@@ -4,37 +4,12 @@
 //
 //  Created by Lee Zhijie on 7/14/13.
 
-// This code is distributed under the terms and conditions of the MIT license.
-
-// Copyright (c) 2013 Zhijie Lee(onezeros.lee@gmail.com)
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 #import "OZLIssueListViewController.h"
 #import "OZLProjectListViewController.h"
 #import "OZLNetwork.h"
 #import "MBProgressHUD.h"
 #import "OZLProjectInfoViewController.h"
 #import "OZLIssueViewController.h"
-#import "OZLIssueDetailViewController.h"
-#import "OZLIssueCreateOrUpdateViewController.h"
-#import "OZLIssueFilterViewController.h"
 #import "OZLSingleton.h"
 #import "OZLLoadingView.h"
 
@@ -327,24 +302,6 @@
     issueVC.viewModel = viewModel;
     
     [self.navigationController pushViewController:issueVC animated:YES];
-}
-
-- (IBAction)onNewIssue:(id)sender {
-    if (![OZLSingleton sharedInstance].isUserLoggedIn ) {
-        _HUD.mode = MBProgressHUDModeText;
-        _HUD.labelText = @"No available";
-        _HUD.detailsLabelText = @"You need to log in to do this.";
-        [_HUD show:YES];
-        [_HUD hide:YES afterDelay:2];
-        return;
-    }
-    
-    UIStoryboard *tableViewStoryboard = [UIStoryboard storyboardWithName:@"OZLIssueCreateOrUpdateViewController" bundle:nil];
-    OZLIssueCreateOrUpdateViewController *creator = [tableViewStoryboard instantiateViewControllerWithIdentifier:@"OZLIssueCreateOrUpdateViewController"];
-    [creator setParentProject:_projectData];
-    [creator setViewMode:OZLIssueInfoViewModeCreate];
-    
-    [self.navigationController pushViewController:creator animated:YES];
 }
 
 - (IBAction)onShowInfo:(id)sender {

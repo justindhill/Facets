@@ -12,6 +12,7 @@
 extern NSString * const OZLIssueSectionDetail;
 extern NSString * const OZLIssueSectionDescription;
 extern NSString * const OZLIssueSectionAttachments;
+extern NSString * const OZLIssueSectionRecentActivity;
 
 typedef NS_ENUM(NSInteger, OZLIssueCompleteness) {
     OZLIssueCompletenessNone,
@@ -30,10 +31,14 @@ typedef NS_ENUM(NSInteger, OZLIssueCompleteness) {
 
 - (instancetype)initWithIssueModel:(OZLModelIssue *)issueModel NS_DESIGNATED_INITIALIZER;
 - (void)loadIssueData;
+- (OZLModelJournal *)recentActivityAtIndex:(NSInteger)index;
+- (NSString *)displayNameForSectionName:(NSString *)sectionName;
+
 
 @property (weak) id<OZLIssueViewModelDelegate> delegate;
 @property (nonatomic, strong) OZLModelIssue *issueModel;
 @property (readonly) NSArray *currentSectionNames;
 @property (readonly) OZLIssueCompleteness completeness;
+@property (readonly) NSInteger recentActivityCount;
 
 @end

@@ -12,7 +12,6 @@
 
 @property (strong) UILabel *descriptionPreviewLabel;
 @property (strong) UIButton *showMoreButton;
-@property UILabel *titleLabel;
 
 @property BOOL isFirstLayout;
 
@@ -32,9 +31,6 @@
         [self.showMoreButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         self.showMoreButton.titleLabel.font = [UIFont systemFontOfSize:12];
         
-        self.titleLabel = [OZLTableViewCell labelConfiguredForTitle];
-        self.titleLabel.text = @"DESCRIPTION";
-        
         self.isFirstLayout = YES;
     }
     
@@ -51,13 +47,7 @@
     if (self.isFirstLayout) {
         [self.contentView addSubview:self.descriptionPreviewLabel];
         [self.contentView addSubview:self.showMoreButton];
-        [self.contentView addSubview:self.titleLabel];
-        
-        // This will never be changed, size it only once.
-        [self.titleLabel sizeToFit];
     }
-    
-    self.titleLabel.frame = (CGRect){{self.contentPadding, self.contentPadding}, self.titleLabel.frame.size};
     
     if (self.descriptionPreviewLabel.text) {
         NSMutableParagraphStyle *para = [[NSMutableParagraphStyle alloc] init];
@@ -72,7 +62,7 @@
     
     CGSize descSize = [self.descriptionPreviewLabel sizeThatFits:CGSizeMake(self.frame.size.width - (self.contentPadding * 2), CGFLOAT_MAX)];
     
-    self.descriptionPreviewLabel.frame = (CGRect){{self.contentPadding, self.titleLabel.bottom + 6.}, descSize};
+    self.descriptionPreviewLabel.frame = (CGRect){{self.contentPadding, 6.}, descSize};
     
     [self.showMoreButton sizeToFit];
     self.showMoreButton.frame = (CGRect){{self.contentPadding, self.descriptionPreviewLabel.bottom + 10}, self.showMoreButton.frame.size};

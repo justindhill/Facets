@@ -34,6 +34,7 @@
 #import "OZLModelIssueCategory.h"
 #import "OZLModelIssueTargetVersion.h"
 #import "OZLModelAttachment.h"
+#import "Facets-Swift.h"
 
 @interface OZLModelIssue : NSObject
 
@@ -62,6 +63,11 @@
  *  @brief Attachments attached to the issue.
  */
 @property (strong) NSArray<OZLModelAttachment *> *attachments;
+
+/**
+ *  @brief Journals attached to the issue
+ */
+@property (strong) NSArray<OZLModelJournal *> *journals;
 
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)toParametersDic;

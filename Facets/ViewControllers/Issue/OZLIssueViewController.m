@@ -30,6 +30,7 @@ const NSInteger OZLDescriptionSectionIndex = 1;
 NSString * const OZLDetailReuseIdentifier = @"OZLDetailReuseIdentifier";
 NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier";
 NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier";
+NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIdentifier";
 
 @interface OZLIssueViewController () <OZLIssueViewModelDelegate, DRPSlidingTabViewDelegate, OZLIssueAttachmentGalleryCellDelegate, AVAssetResourceLoaderDelegate, URBMediaFocusViewControllerDelegate>
 
@@ -45,6 +46,14 @@ NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier
 @implementation OZLIssueViewController
 
 #pragma mark - Life cycle
+- (instancetype)init {
+    if (self = [super initWithStyle:UITableViewStyleGrouped]) {
+        self.tableView.backgroundColor = [UIColor whiteColor];
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -58,6 +67,7 @@ NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OZLDetailReuseIdentifier];
     [self.tableView registerClass:[OZLIssueDescriptionCell class] forCellReuseIdentifier:OZLDescriptionReuseIdentifier];
     [self.tableView registerClass:[OZLIssueAttachmentGalleryCell class] forCellReuseIdentifier:OZLAttachmentsReuseIdentifier];
+    [self.tableView registerClass:[OZLJournalCell class] forCellReuseIdentifier:OZLRecentActivityReuseIdentifier];
     
     self.isFirstAppearance = YES;
 }
@@ -157,6 +167,12 @@ NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier
 
 #pragma mark - UITableViewDelegate / DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSString *sectionName = self.viewModel.currentSectionNames[section];
+    
+    if ([sectionName isEqualToString:OZLIssueSectionRecentActivity]) {
+        return self.viewModel.recentActivityCount;
+    }
+    
     return 1;
 }
 
@@ -189,6 +205,15 @@ NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier
         cell.delegate = self;
         
         return cell;
+        
+    } else if ([sectionName isEqualToString:OZLIssueSectionRecentActivity]) {
+        OZLJournalCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLRecentActivityReuseIdentifier forIndexPath:indexPath];
+        
+        OZLModelJournal *journal = [self.viewModel recentActivityAtIndex:indexPath.row];
+        cell.contentPadding = contentPadding;
+        cell.journal = journal;
+        
+        return cell;
     }
     
     return nil;
@@ -210,7 +235,12 @@ NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier
                                         contentPadding:contentPadding];
         
     } else if ([sectionName isEqualToString:OZLIssueSectionAttachments]) {
-        return 140.;
+        return 110.;
+        
+    } else if ([sectionName isEqualToString:OZLIssueSectionRecentActivity]) {
+        OZLModelJournal *journal = [self.viewModel recentActivityAtIndex:indexPath.row];
+        
+        return [OZLJournalCell heightWithWidth:self.view.frame.size.width contentPadding:contentPadding journalModel:journal];
     }
     
     return 44.;
@@ -218,6 +248,30 @@ NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    NSString *sectionName = self.viewModel.currentSectionNames[section];
+    
+    if ([sectionName isEqualToString:OZLIssueSectionDetail]) {
+        return 0.;
+    }
+    
+    return 40.;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    NSString *sectionName = self.viewModel.currentSectionNames[section];
+    
+    OZLIssueSectionHeaderView *header = [[OZLIssueSectionHeaderView alloc] init];
+    header.contentPadding = contentPadding;
+    header.sectionTitleLabel.text = [self.viewModel displayNameForSectionName:sectionName];
+    
+    return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return CGFLOAT_MIN;
 }
 
 #pragma mark - DRPSlidingTabViewDelegate

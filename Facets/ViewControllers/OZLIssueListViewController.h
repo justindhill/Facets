@@ -35,8 +35,6 @@
 @property (strong) id<OZLIssueListViewModel> viewModel;
 
 @property (nonatomic, strong) OZLModelProject *projectData;
-- (IBAction)onNewIssue:(id)sender;
-- (IBAction)onShowInfo:(id)sender;
 
 @property NSInteger projectId;
 @property (strong, nonatomic) NSArray *trackerList;

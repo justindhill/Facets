@@ -7,6 +7,7 @@
 //
 
 #import "OZLModelAttachment.h"
+#import <ISO8601/ISO8601.h>
 
 @implementation OZLModelAttachment
 
@@ -27,7 +28,7 @@
     
     self.contentType = dict[@"content_type"];
     self.contentURL = dict[@"content_url"];
-    self.creationDate = [NSDate OZLDateWithServerTimestamp:dict[@"created_on"]];
+    self.creationDate = [NSDate dateWithISO8601String:dict[@"created_on"]];
     self.detailDescription = dict[@"description"];
     self.name = dict[@"filename"];
     self.size = [dict[@"filesize"] integerValue];

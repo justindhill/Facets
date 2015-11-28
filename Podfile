@@ -8,5 +8,6 @@ pod 'TTTAttributedLabel'
 pod 'URBMediaFocusViewController'
 pod 'RaptureXML'
 pod 'SDWebImage'
+pod 'ISO8601'
 
 pod 'Realm'

@@ -122,6 +122,19 @@
             
             self.attachments = attachmentArray;
         }
+        
+        NSArray *journalDictArray = dic[@"journals"];
+        
+        if ([journalDictArray isKindOfClass:[NSArray class]]) {
+            NSMutableArray <OZLModelJournal *> *journalArray = [NSMutableArray array];
+            
+            for (NSDictionary *journalDict in journalDictArray) {
+                OZLModelJournal *journal = [[OZLModelJournal alloc] initWithAttributes:journalDict];
+                [journalArray addObject:journal];
+            }
+            
+            self.journals = journalArray;
+        }
     }
 
     return self;

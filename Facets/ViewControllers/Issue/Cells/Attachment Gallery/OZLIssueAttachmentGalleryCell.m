@@ -12,7 +12,6 @@
 @interface OZLIssueAttachmentGalleryCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property BOOL isFirstLayout;
-@property UILabel *titleLabel;
 @property UICollectionView *galleryView;
 
 @end
@@ -25,9 +24,6 @@ NSString * const OZLAttachmentCellReuseIdentifier = @"OZLAttachmentCellReuseIden
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.isFirstLayout = YES;
-        
-        self.titleLabel = [OZLTableViewCell labelConfiguredForTitle];
-        self.titleLabel.text = @"ATTACHMENTS";
         
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -54,14 +50,10 @@ NSString * const OZLAttachmentCellReuseIdentifier = @"OZLAttachmentCellReuseIden
     [super layoutSubviews];
     
     if (self.isFirstLayout) {
-        [self.titleLabel sizeToFit];
-        [self.contentView addSubview:self.titleLabel];
         [self.contentView addSubview:self.galleryView];
     }
     
-    self.titleLabel.frame = (CGRect){{self.contentPadding, self.contentPadding}, self.titleLabel.frame.size};
-    
-    CGFloat galleryYOffset = (self.titleLabel.bottom + (self.contentPadding / 2));
+    CGFloat galleryYOffset = self.contentPadding / 2.;
     CGFloat galleryHeight = self.contentView.frame.size.height - galleryYOffset - self.contentPadding;
     self.galleryView.frame = (CGRect){{0, galleryYOffset}, {self.contentView.frame.size.width, galleryHeight}};
     
