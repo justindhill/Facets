@@ -130,7 +130,6 @@ class OZLJournalCell: OZLTableViewCell {
                     detailString  = "Updated \(name)"
                 } else {
                     detailString = "Changed \(name): \(old) -> \(new)"
-                    str.appendAttributedString(NSAttributedString(string: detailString, attributes:  detailAttributes))
                 }
                 
             } else if let name = detail.displayName, let new = detail.newValue {
