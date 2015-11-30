@@ -8,6 +8,10 @@
 
 @implementation OZLModelTracker
 
++ (NSString *)primaryKey {
+    return @"index";
+}
+
 - (id)initWithDictionary:(NSDictionary *)dic {
     
     if (self = [super init]) {

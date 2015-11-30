@@ -6,7 +6,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OZLModelTracker : NSObject
+@interface OZLModelTracker : RLMObject
 
 @property (nonatomic) NSInteger index;
 @property (nonatomic, strong) NSString *name;

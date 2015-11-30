@@ -32,7 +32,17 @@ import UIKit
             if self.cachedDisplayName != nil {
                 return self.cachedDisplayName
             } else {
-                // WARNING: Once custom fields are stored in Realm, fetch name here.
+                if self.type == .CustomField, let name = self.name {
+                    if let id = Int(name) {
+                        if let customField = OZLModelCustomField(forPrimaryKey: id) {
+                            self.cachedDisplayName = customField.name
+                            return customField.name
+                        }
+                    }
+                } else if self.type == .Attribute, let name = self.name {
+                    return OZLModelIssue.displayNameForAttributeName(name)
+                }
+                
                 return self.name
             }
         }

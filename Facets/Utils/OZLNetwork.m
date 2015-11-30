@@ -201,6 +201,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
         NSArray *projectsDic = [responseObject objectForKey:@"projects"];
         
+        [[RLMRealm defaultRealm] deleteObjects:[OZLModelProject allObjects]];
+        
         for (NSDictionary *p in projectsDic) {
             OZLModelProject *project = [[OZLModelProject alloc] initWithDictionary:p];
             [OZLModelProject createOrUpdateInDefaultRealmWithValue:project];
@@ -211,6 +213,58 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         if (block) {
             block(nil);
         }
+    }];
+}
+
+- (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelCustomField *> *fields, NSError *error))completion {
+    NSDictionary *params = @{ @"project_id": @(project), @"limit": @(1) };
+    
+    [self GET:@"/issues.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        if (error && completion) {
+            completion(nil, error);
+        }
+        
+        NSError *jsonError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+        
+        if (jsonError && completion) {
+            completion(nil, jsonError);
+            return;
+        }
+        
+        NSArray *issuesArray = responseObject[@"issues"];
+        
+        if (issuesArray.count == 0) {
+            if (completion) {
+                completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:nil]);
+            }
+            
+            return;
+        }
+        
+        NSArray *fields = issuesArray[0][@"custom_fields"];
+        
+        if (!fields) {
+            if (completion) {
+                completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:nil]);
+            }
+            
+            return;
+        }
+        
+        NSMutableArray *fieldModels = [NSMutableArray array];
+        
+        [[RLMRealm defaultRealm] beginWriteTransaction];
+        [[RLMRealm defaultRealm] deleteObjects:[OZLModelCustomField allObjects]];
+        
+        for (NSDictionary *field in fields) {
+            OZLModelCustomField *fieldModel = [[OZLModelCustomField alloc] initWithAttributeDictionary:field];
+            [fieldModels addObject:fieldModel];
+            [OZLModelCustomField createOrUpdateInDefaultRealmWithValue:fieldModel];
+        }
+        
+        [[RLMRealm defaultRealm] commitWriteTransaction];
+        
     }];
 }
 
@@ -620,44 +674,40 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 #pragma mark -
 #pragma mark tracker api
-// tracker
 - (void)getTrackerListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
     
-    NSString *path = @"/trackers.json";
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
-
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [self GET:@"/trackers.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error && block) {
             block(nil, error);
         }
         
         NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError && block) {
             block(nil, jsonError);
         }
 
         if (block) {
-            NSMutableArray *priorities = [[NSMutableArray alloc] init];
+            NSMutableArray *trackers = [[NSMutableArray alloc] init];
 
             NSArray *dic = [responseObject objectForKey:@"trackers"];
             
+            [[RLMRealm defaultRealm] beginWriteTransaction];
+            [[RLMRealm defaultRealm] deleteObjects:[OZLModelTracker allObjects]];
+            
             for (NSDictionary *p in dic) {
-                [priorities addObject:[[OZLModelTracker alloc] initWithDictionary:p]];
+                OZLModelTracker *tracker = [[OZLModelTracker alloc] initWithDictionary:p];
+                [trackers addObject:tracker];
+                [OZLModelTracker createOrUpdateInDefaultRealmWithValue:tracker];
             }
             
-            block(priorities, nil);
+            [[RLMRealm defaultRealm] commitWriteTransaction];
+            
+            block(trackers, nil);
         }
     }];
-    
-    [task resume];
 }
 
 #pragma mark - Queries

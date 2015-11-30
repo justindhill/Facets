@@ -16,6 +16,7 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
 @interface OZLServerSync ()
 
 @property NSInteger activeCount;
+@property (copy) void (^completionBlock)(NSError *error);
 
 @end
 
@@ -27,17 +28,17 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
 
 - (void)startSyncCompletion:(void(^)(NSError *error))completion {
     
-#warning This is gonna need a lot of love when we start syncing more stuff about the server.
-    
     __weak OZLServerSync *weakSelf = self;
     [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidBeginNotification object:nil];
     
     self.activeCount += 1;
+    self.completionBlock = completion;
+    
     [[OZLNetwork sharedInstance] getProjectListWithParams:nil andBlock:^(NSError *error) {
         if (error) {
             [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidFailNotification object:nil];
-        } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidEndNotification object:nil];
+            
+            return;
         }
         
         BOOL updateCurrentProjectId = ([OZLSingleton sharedInstance].currentProjectID == NSNotFound);
@@ -55,11 +56,23 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         }
         
         weakSelf.activeCount -= 1;
-        
-        if (completion) {
-            completion(error);
-        }
     }];
+    
+    self.activeCount += 1;
+    [[OZLNetwork sharedInstance] getTrackerListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
+        weakSelf.activeCount -= 1;
+    }];
+}
+
+- (void)checkForCompletion {
+    if (self.activeCount == 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidEndNotification object:nil];
+        
+        if (self.completionBlock) {
+            self.completionBlock(nil);
+            self.completionBlock = nil;
+        }
+    }
 }
 
 @end

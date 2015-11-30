@@ -147,7 +147,7 @@
     }
     
     if (_category) {
-        [issueData setObject:[NSNumber numberWithInteger:_category.index ] forKey:@"categroy_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_category.index ] forKey:@"category_id"];
     }
     
     if (_assignedTo && _assignedTo.index > 0) {
@@ -167,6 +167,16 @@
     }
 
     return [[NSMutableDictionary alloc] initWithObjectsAndKeys:issueData, @"issue", nil];
+}
+
++ (NSString *)displayNameForAttributeName:(NSString *)attributeName {
+    if ([attributeName isEqualToString:@"fixed_version_id"]) {
+        return @"Target version";
+    } else if ([attributeName isEqualToString:@"assigned_to_id"]) {
+        return @"Assignee";
+    }
+    
+    return attributeName;
 }
 
 @end
