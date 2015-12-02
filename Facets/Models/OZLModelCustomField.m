@@ -8,13 +8,6 @@
 
 #import "OZLModelCustomField.h"
 
-@interface OZLModelCustomField ()
-
-@property (assign) NSInteger fieldId;
-@property (strong) NSString *name;
-
-@end
-
 @implementation OZLModelCustomField
 
 + (NSString *)primaryKey {

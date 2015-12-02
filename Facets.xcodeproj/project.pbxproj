@@ -46,6 +46,8 @@
 		D0292D691BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D681BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m */; };
 		D0292D6B1BF2EEB200F717F2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0292D6A1BF2EEB200F717F2 /* SafariServices.framework */; };
 		D0292D701BF3141900F717F2 /* OZLLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D6F1BF3141900F717F2 /* OZLLoadingView.m */; };
+		D02BD4FC1C0F58AA00753EFF /* OZLModelStringContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = D02BD4FB1C0F58AA00753EFF /* OZLModelStringContainer.m */; };
+		D02D4E4D1C0E11C60050B593 /* OZLRedmineHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D4E4C1C0E11C60050B593 /* OZLRedmineHTMLParser.m */; };
 		D035A4AD1C0A04BD0057AA48 /* OZLModelJournalDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035A4AC1C0A04BD0057AA48 /* OZLModelJournalDetail.swift */; };
 		D035A4BF1C0A98D80057AA48 /* OZLModelCustomField.m in Sources */ = {isa = PBXBuildFile; fileRef = D035A4BE1C0A98D80057AA48 /* OZLModelCustomField.m */; };
 		D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */; };
@@ -165,6 +167,10 @@
 		D0292D6C1BF2EF4E00F717F2 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		D0292D6E1BF3141900F717F2 /* OZLLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLLoadingView.h; sourceTree = "<group>"; };
 		D0292D6F1BF3141900F717F2 /* OZLLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLLoadingView.m; sourceTree = "<group>"; };
+		D02BD4FA1C0F58AA00753EFF /* OZLModelStringContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelStringContainer.h; sourceTree = "<group>"; };
+		D02BD4FB1C0F58AA00753EFF /* OZLModelStringContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelStringContainer.m; sourceTree = "<group>"; };
+		D02D4E4B1C0E11C60050B593 /* OZLRedmineHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLRedmineHTMLParser.h; path = Utils/OZLRedmineHTMLParser.h; sourceTree = "<group>"; };
+		D02D4E4C1C0E11C60050B593 /* OZLRedmineHTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLRedmineHTMLParser.m; path = Utils/OZLRedmineHTMLParser.m; sourceTree = "<group>"; };
 		D035A4AC1C0A04BD0057AA48 /* OZLModelJournalDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLModelJournalDetail.swift; sourceTree = "<group>"; };
 		D035A4BD1C0A98D80057AA48 /* OZLModelCustomField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelCustomField.h; sourceTree = "<group>"; };
 		D035A4BE1C0A98D80057AA48 /* OZLModelCustomField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelCustomField.m; sourceTree = "<group>"; };
@@ -532,6 +538,8 @@
 				D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */,
 				D000B1D91BF816D400CA2845 /* OZLURLProtocol.h */,
 				D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */,
+				D02D4E4B1C0E11C60050B593 /* OZLRedmineHTMLParser.h */,
+				D02D4E4C1C0E11C60050B593 /* OZLRedmineHTMLParser.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -567,6 +575,8 @@
 				D035A4AC1C0A04BD0057AA48 /* OZLModelJournalDetail.swift */,
 				D035A4BD1C0A98D80057AA48 /* OZLModelCustomField.h */,
 				D035A4BE1C0A98D80057AA48 /* OZLModelCustomField.m */,
+				D02BD4FA1C0F58AA00753EFF /* OZLModelStringContainer.h */,
+				D02BD4FB1C0F58AA00753EFF /* OZLModelStringContainer.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -762,6 +772,7 @@
 				2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */,
 				2BCF88271793F4AA006FC859 /* OZLModelIssueStatus.m in Sources */,
 				D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */,
+				D02D4E4D1C0E11C60050B593 /* OZLRedmineHTMLParser.m in Sources */,
 				D000B1DB1BF816D400CA2845 /* OZLURLProtocol.m in Sources */,
 				2BCF882A1793F4C9006FC859 /* OZLModelIssuePriority.m in Sources */,
 				D0CD7C8A1BF791FA0043C94B /* OZLModelAttachment.m in Sources */,
@@ -788,6 +799,7 @@
 				2BCC0FD2179D56BA003DFB44 /* OZLModelTimeEntries.m in Sources */,
 				D000B1D11BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m in Sources */,
 				D0CD7C901BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m in Sources */,
+				D02BD4FC1C0F58AA00753EFF /* OZLModelStringContainer.m in Sources */,
 				2BBE4414179E586B00FD9E20 /* OZLModelTimeEntryActivity.m in Sources */,
 				D0987AD31C0801E000D55DEB /* OZLModelJournal.swift in Sources */,
 				D01F9C1A1BEED9BE005B2ED0 /* OZLIssueAboutTabView.m in Sources */,

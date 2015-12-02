@@ -34,16 +34,27 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
     self.activeCount += 1;
     self.completionBlock = completion;
     
-    [[OZLNetwork sharedInstance] getProjectListWithParams:nil andBlock:^(NSError *error) {
+    [[OZLNetwork sharedInstance] getProjectListWithParams:nil andBlock:^(NSArray<OZLModelProject *> *result, NSError *error) {
         if (error) {
             [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidFailNotification object:nil];
             
             return;
         }
         
+        RLMResults *allObjects = [OZLModelProject allObjects];
+        
+        [[RLMRealm defaultRealm] transactionWithBlock:^{
+            
+            [[RLMRealm defaultRealm] deleteObjects:allObjects];
+            
+            for (OZLModelProject *project in result) {
+                [OZLModelProject createOrUpdateInDefaultRealmWithValue:project];
+            }
+        }];
+        
         BOOL updateCurrentProjectId = ([OZLSingleton sharedInstance].currentProjectID == NSNotFound);
         
-        if ([OZLSingleton sharedInstance].currentProjectID != NSNotFound) {
+        if (!updateCurrentProjectId) {
             // Make sure the current project still exists
             if (![OZLModelProject objectForPrimaryKey:@([OZLSingleton sharedInstance].currentProjectID)]) {
                 updateCurrentProjectId = YES;
@@ -55,12 +66,52 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
             [OZLSingleton sharedInstance].currentProjectID = newCurrentProject ? newCurrentProject.index : NSNotFound;
         }
         
+        for (OZLModelProject *project in allObjects) {
+            NSLog(@"Fetching custom fields for \"%@\"", project.name);
+            [weakSelf fetchCustomFieldsForProject:project.index];
+        }
+        
         weakSelf.activeCount -= 1;
+        [weakSelf checkForCompletion];
     }];
     
     self.activeCount += 1;
     [[OZLNetwork sharedInstance] getTrackerListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
+        if (!error) {
+            [[RLMRealm defaultRealm] beginWriteTransaction];
+            [[RLMRealm defaultRealm] deleteObjects:[OZLModelTracker allObjects]];
+            [[RLMRealm defaultRealm] addObjects:result];
+            [[RLMRealm defaultRealm] commitWriteTransaction];
+        }
+        
         weakSelf.activeCount -= 1;
+        [weakSelf checkForCompletion];
+    }];
+}
+
+- (void)fetchCustomFieldsForProject:(NSInteger)project {
+    self.activeCount += 1;
+    
+    __weak OZLServerSync *weakSelf = self;
+    [[OZLNetwork sharedInstance] getCustomFieldsForProject:project completion:^(NSArray<OZLModelCustomField *> *fields, NSError *error) {
+        weakSelf.activeCount -= 1;
+        
+        [[RLMRealm defaultRealm] beginWriteTransaction];
+        
+        for (OZLModelCustomField *field in fields) {
+            OZLModelCustomField *existingField = [OZLModelCustomField objectForPrimaryKey:@(field.fieldId)];
+            
+            // Just replace all the options currently in the store.
+            if (existingField) {
+                [[RLMRealm defaultRealm] deleteObjects:existingField.options];
+            }
+            
+            [OZLModelCustomField createOrUpdateInDefaultRealmWithValue:field];
+        }
+        
+        [[RLMRealm defaultRealm] commitWriteTransaction];
+        
+        [weakSelf checkForCompletion];
     }];
 }
 

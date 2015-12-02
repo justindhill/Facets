@@ -7,6 +7,7 @@
 #import "OZLNetwork.h"
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
+#import "OZLRedmineHTMLParser.h"
 #import <RaptureXML/RXMLElement.h>
 
 NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
@@ -182,89 +183,58 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 #pragma mark-
 #pragma mark project api
-- (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSError *error))block {
+- (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
 
     [self GET:@"/projects.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error && block) {
-            block(error);
+            block(nil, error);
         }
         
         NSError *jsonError;
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError && block) {
-            block(jsonError);
+            block(nil, jsonError);
         }
         
-        [[RLMRealm defaultRealm] beginWriteTransaction];
-        
         NSArray *projectsDic = [responseObject objectForKey:@"projects"];
-        
-        [[RLMRealm defaultRealm] deleteObjects:[OZLModelProject allObjects]];
+        NSMutableArray *projectModels = [NSMutableArray array];
         
         for (NSDictionary *p in projectsDic) {
             OZLModelProject *project = [[OZLModelProject alloc] initWithDictionary:p];
-            [OZLModelProject createOrUpdateInDefaultRealmWithValue:project];
+            [projectModels addObject:project];
         }
         
-        [[RLMRealm defaultRealm] commitWriteTransaction];
-        
         if (block) {
-            block(nil);
+            block(projectModels, nil);
         }
     }];
 }
 
 - (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelCustomField *> *fields, NSError *error))completion {
-    NSDictionary *params = @{ @"project_id": @(project), @"limit": @(1) };
     
-    [self GET:@"/issues.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+    NSString *path = [NSString stringWithFormat:@"/projects/%ld/issues/new", project];
+    
+    [self GET:path params:nil completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         if (error && completion) {
             completion(nil, error);
-        }
-        
-        NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
-        
-        if (jsonError && completion) {
-            completion(nil, jsonError);
             return;
         }
         
-        NSArray *issuesArray = responseObject[@"issues"];
+        NSString *htmlString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
         
-        if (issuesArray.count == 0) {
-            if (completion) {
-                completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:nil]);
-            }
-            
+        NSError *parseError;
+        NSArray<OZLModelCustomField *> *fields = [OZLRedmineHTMLParser parseCustomFieldsHTMLString:htmlString error:&parseError];
+        
+        NSAssert(!parseError, @"There was an error parsing the custom fields from the HTML");
+        
+        if (parseError) {
+            completion(nil, parseError);
             return;
         }
         
-        NSArray *fields = issuesArray[0][@"custom_fields"];
-        
-        if (!fields) {
-            if (completion) {
-                completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:nil]);
-            }
-            
-            return;
-        }
-        
-        NSMutableArray *fieldModels = [NSMutableArray array];
-        
-        [[RLMRealm defaultRealm] beginWriteTransaction];
-        [[RLMRealm defaultRealm] deleteObjects:[OZLModelCustomField allObjects]];
-        
-        for (NSDictionary *field in fields) {
-            OZLModelCustomField *fieldModel = [[OZLModelCustomField alloc] initWithAttributeDictionary:field];
-            [fieldModels addObject:fieldModel];
-            [OZLModelCustomField createOrUpdateInDefaultRealmWithValue:fieldModel];
-        }
-        
-        [[RLMRealm defaultRealm] commitWriteTransaction];
-        
+        completion(fields, nil);
     }];
 }
 
@@ -694,16 +664,10 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
             NSArray *dic = [responseObject objectForKey:@"trackers"];
             
-            [[RLMRealm defaultRealm] beginWriteTransaction];
-            [[RLMRealm defaultRealm] deleteObjects:[OZLModelTracker allObjects]];
-            
             for (NSDictionary *p in dic) {
                 OZLModelTracker *tracker = [[OZLModelTracker alloc] initWithDictionary:p];
                 [trackers addObject:tracker];
-                [OZLModelTracker createOrUpdateInDefaultRealmWithValue:tracker];
             }
-            
-            [[RLMRealm defaultRealm] commitWriteTransaction];
             
             block(trackers, nil);
         }

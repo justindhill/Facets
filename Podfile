@@ -9,5 +9,6 @@ pod 'URBMediaFocusViewController'
 pod 'RaptureXML'
 pod 'SDWebImage'
 pod 'ISO8601'
+pod 'GTMNSStringHTMLAdditions'
 
 pod 'Realm'

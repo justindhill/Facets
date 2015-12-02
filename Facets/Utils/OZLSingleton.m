@@ -107,8 +107,6 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
 - (void)setCurrentProjectID:(NSInteger)projectid {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     
-#warning Move this somewhere else
-    [[OZLNetwork sharedInstance] getCustomFieldsForProject:projectid completion:nil];
     [userdefaults setInteger:projectid forKey:USER_DEFAULTS_LAST_PROJECT_ID];
     [userdefaults synchronize];
 }

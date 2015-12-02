@@ -7,12 +7,27 @@
 //
 
 #import <Realm/Realm.h>
+#import "OZLModelStringContainer.h"
+
+#warning Custom field support is incomplete! Need to parse the rest of the types.
+typedef NS_ENUM(NSInteger, OZLModelCustomFieldType) {
+    OZLModelCustomFieldTypeInvalid,
+    OZLModelCustomFieldTypeList,
+    OZLModelCustomFieldTypeVersion,
+    OZLModelCustomFieldTypeBool,
+    OZLModelCustomFieldTypeInt
+};
+
+RLM_ARRAY_TYPE(OZLModelStringContainer)
 
 @interface OZLModelCustomField : RLMObject
 
 - (instancetype)initWithAttributeDictionary:(NSDictionary *)attributes;
 
-@property (readonly) NSInteger fieldId;
-@property (readonly) NSString *name;
+@property NSInteger fieldId;
+@property OZLModelCustomFieldType type;
+@property (strong) NSString *name;
+
+@property (strong) RLMArray<OZLModelStringContainer *><OZLModelStringContainer> *options;
 
 @end

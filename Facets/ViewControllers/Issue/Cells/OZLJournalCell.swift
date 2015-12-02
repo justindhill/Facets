@@ -115,6 +115,7 @@ class OZLJournalCell: OZLTableViewCell {
         
         let detailPara = NSMutableParagraphStyle()
         detailPara.lineHeightMultiple = 1.15
+        detailPara.lineBreakMode = .ByWordWrapping
         
         let detailAttributes = [
             NSForegroundColorAttributeName: UIColor.darkGrayColor(),
@@ -127,16 +128,16 @@ class OZLJournalCell: OZLTableViewCell {
             
             if let name = detail.displayName, let old = detail.oldValue, let new = detail.newValue {
                 if old.characters.count > 20 || new.characters.count > 20 {
-                    detailString  = "Updated \(name)"
+                    detailString  = "Updated \(name.lowercaseString)"
                 } else {
-                    detailString = "Changed \(name): \(old) -> \(new)"
+                    detailString = "Changed \(name.lowercaseString): \(old) → \(new)"
                 }
                 
             } else if let name = detail.displayName, let new = detail.newValue {
-                detailString  = "Set \(name) to \(new)"
+                detailString  = "Set \(name.lowercaseString) to \(new)"
                 
             } else if detail.oldValue != nil, let name = detail.displayName {
-                detailString  = "Removed \(name)"
+                detailString  = "Removed \(name.lowercaseString)"
             }
             
             str.appendAttributedString(NSAttributedString(string: detailString, attributes:  detailAttributes))
@@ -147,9 +148,14 @@ class OZLJournalCell: OZLTableViewCell {
         }
         
         if let note = note {
+            let commentPara = NSMutableParagraphStyle()
+            commentPara.lineHeightMultiple = 1.15
+            commentPara.lineBreakMode = .ByWordWrapping
+            
             let noteAttributes = [
                 NSForegroundColorAttributeName: UIColor.darkGrayColor(),
-                NSFontAttributeName: OZLJournalCell.commentFont
+                NSFontAttributeName: OZLJournalCell.commentFont,
+                NSParagraphStyleAttributeName: commentPara
             ]
             
             str.appendAttributedString(NSAttributedString(string: note, attributes: noteAttributes))

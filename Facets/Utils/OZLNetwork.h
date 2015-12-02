@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 - (void)authenticateCredentialsWithURL:(NSURL *)url username:(NSString *)username password:(NSString *)password completion:(void(^)(NSError *error))completion;
 
 // project 
-- (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSError *error))block;
+- (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
 - (void)getDetailForProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelProject *result, NSError *error))block;
 - (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelCustomField *> *fields, NSError *error))completion;
 - (void)createProject:(OZLModelProject *)projectData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;

@@ -19,32 +19,21 @@ import UIKit
     private(set) var oldValue: String? = nil
     private(set) var newValue: String? = nil
     
-    private(set) var name: String? = nil {
-        didSet {
-            // this is probably super paranoid, 'cause these are externally immutable
-            self.cachedDisplayName = nil
-        }
-    }
+    private(set) var name: String? = nil
     
-    private var cachedDisplayName: String?
     var displayName: String? {
         get {
-            if self.cachedDisplayName != nil {
-                return self.cachedDisplayName
-            } else {
-                if self.type == .CustomField, let name = self.name {
-                    if let id = Int(name) {
-                        if let customField = OZLModelCustomField(forPrimaryKey: id) {
-                            self.cachedDisplayName = customField.name
-                            return customField.name
-                        }
+            if self.type == .CustomField, let name = self.name {
+                if let id = Int(name) {
+                    if let customField = OZLModelCustomField(forPrimaryKey: id) {
+                        return customField.name
                     }
-                } else if self.type == .Attribute, let name = self.name {
-                    return OZLModelIssue.displayNameForAttributeName(name)
                 }
-                
-                return self.name
+            } else if self.type == .Attribute, let name = self.name {
+                return OZLModelIssue.displayNameForAttributeName(name)
             }
+            
+            return self.name
         }
     }
     
