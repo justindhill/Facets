@@ -106,6 +106,22 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         weakSelf.activeCount -= 1;
         [weakSelf checkForCompletion];
     }];
+    
+    self.activeCount += 1;
+    [[OZLNetwork sharedInstance] getPriorityListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
+        if (!error) {
+            [[RLMRealm defaultRealm] beginWriteTransaction];
+            
+            for (OZLModelIssuePriority *priority in result) {
+                [OZLModelIssuePriority createOrUpdateInDefaultRealmWithValue:priority];
+            }
+            
+            [[RLMRealm defaultRealm] commitWriteTransaction];
+        }
+        
+        weakSelf.activeCount -= 1;
+        [weakSelf checkForCompletion];
+    }];
 }
 
 - (void)fetchCustomFieldsForProject:(NSInteger)project {

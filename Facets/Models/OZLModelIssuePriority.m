@@ -6,14 +6,21 @@
 
 @implementation OZLModelIssuePriority
 
-- (id)initWithDictionary:(NSDictionary *)dic {
-    
++ (NSString *)primaryKey {
+    return @"priorityId";
+}
+
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes {
     if (self = [super init]) {
-        _index = [[dic objectForKey:@"id"] integerValue];
-        _name = [dic objectForKey:@"name"];
+        [self applyAttributeDictionary:attributes];
     }
 
     return self;
+}
+
+- (void)applyAttributeDictionary:(NSDictionary *)attributes {
+    self.priorityId = [[attributes objectForKey:@"id"] integerValue];
+    self.name = [attributes objectForKey:@"name"];
 }
 
 @end

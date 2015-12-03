@@ -43,7 +43,7 @@
         id priority = [dic objectForKey:@"priority"];
         
         if (priority != nil) {
-            _priority = [[OZLModelIssuePriority alloc] initWithDictionary:priority];
+            _priority = [[OZLModelIssuePriority alloc] initWithAttributeDictionary:priority];
         }
         
         id status = [dic objectForKey:@"status"];
@@ -135,7 +135,7 @@
     }
     
     if (_priority && _priority.init > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_priority.index] forKey:@"priority_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_priority.priorityId] forKey:@"priority_id"];
     }
     
     if (_subject.length > 0) {

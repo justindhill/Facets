@@ -6,11 +6,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OZLModelIssuePriority : NSObject
+@interface OZLModelIssuePriority : RLMObject
 
-@property (nonatomic) NSInteger index;
+@property (nonatomic) NSInteger priorityId;
 @property (nonatomic, strong) NSString *name;
 
-- (id)initWithDictionary:(NSDictionary *)dic;
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes;
 
 @end

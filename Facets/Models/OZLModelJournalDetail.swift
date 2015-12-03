@@ -125,7 +125,7 @@ import UIKit
                 } else if self.name == "category_id" {
                     return OZLModelIssueCategory(forPrimaryKey: attributeId)?.name ?? attributeValue
                 } else if self.name == "priority_id" {
-                    return attributeValue
+                    return OZLModelIssuePriority(forPrimaryKey: attributeId)?.name ?? attributeValue
                 }
                 
             } else if self.type == .CustomField {

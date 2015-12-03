@@ -10,6 +10,7 @@
 #import "OZLModelIssueStatus.h"
 #import "OZLModelVersion.h"
 #import "OZLModelIssueCategory.h"
+#import "OZLModelIssuePriority.h"
 #import "OZLTableViewCell.h"
 #import "UIFont+OZLExtensions.h"
 #import "UIView+OZLExtensions.h"

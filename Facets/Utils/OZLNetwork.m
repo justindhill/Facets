@@ -537,7 +537,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             NSArray *dic = [responseObject objectForKey:@"issue_priorities"];
             
             for (NSDictionary *p in dic) {
-                [priorities addObject:[[OZLModelIssuePriority alloc] initWithDictionary:p]];
+                [priorities addObject:[[OZLModelIssuePriority alloc] initWithAttributeDictionary:p]];
             }
             
             block(priorities, nil);
