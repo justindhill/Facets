@@ -59,15 +59,6 @@
 		D04C9FB01BCEB245000366A7 /* OZLMainTabControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */; };
 		D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */; };
 		D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0987ABB1C07818500D55DEB /* Images.xcassets */; };
-		D0987AC91C0785F800D55DEB /* MLTableAlertBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = D0987ABF1C0785F800D55DEB /* MLTableAlertBackground.png */; };
-		D0987ACA1C0785F800D55DEB /* MLTableAlertBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0987AC01C0785F800D55DEB /* MLTableAlertBackground@2x.png */; };
-		D0987ACB1C0785F800D55DEB /* MLTableAlertButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D0987AC11C0785F800D55DEB /* MLTableAlertButton.png */; };
-		D0987ACC1C0785F800D55DEB /* MLTableAlertButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0987AC21C0785F800D55DEB /* MLTableAlertButton@2x.png */; };
-		D0987ACD1C0785F800D55DEB /* MLTableAlertButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = D0987AC31C0785F800D55DEB /* MLTableAlertButtonPressed.png */; };
-		D0987ACE1C0785F800D55DEB /* MLTableAlertButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0987AC41C0785F800D55DEB /* MLTableAlertButtonPressed@2x.png */; };
-		D0987ACF1C0785F800D55DEB /* MLTableAlertShadowMask.png in Resources */ = {isa = PBXBuildFile; fileRef = D0987AC51C0785F800D55DEB /* MLTableAlertShadowMask.png */; };
-		D0987AD01C0785F800D55DEB /* MLTableAlertShadowMask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0987AC61C0785F800D55DEB /* MLTableAlertShadowMask@2x.png */; };
-		D0987AD11C0785F800D55DEB /* MLTableAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = D0987AC81C0785F800D55DEB /* MLTableAlert.m */; };
 		D0987AD31C0801E000D55DEB /* OZLModelJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD21C0801E000D55DEB /* OZLModelJournal.swift */; };
 		D0987AD51C0904C200D55DEB /* OZLIssueSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD41C0904C200D55DEB /* OZLIssueSectionHeaderView.swift */; };
 		D0987AD71C09488200D55DEB /* OZLJournalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD61C09488200D55DEB /* OZLJournalCell.swift */; };
@@ -187,16 +178,6 @@
 		D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAsyncImageView.swift; sourceTree = "<group>"; };
 		D0987AB81C0772BA00D55DEB /* Facets-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facets-Bridging-Header.h"; sourceTree = "<group>"; };
 		D0987ABB1C07818500D55DEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		D0987ABF1C0785F800D55DEB /* MLTableAlertBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MLTableAlertBackground.png; sourceTree = "<group>"; };
-		D0987AC01C0785F800D55DEB /* MLTableAlertBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MLTableAlertBackground@2x.png"; sourceTree = "<group>"; };
-		D0987AC11C0785F800D55DEB /* MLTableAlertButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MLTableAlertButton.png; sourceTree = "<group>"; };
-		D0987AC21C0785F800D55DEB /* MLTableAlertButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MLTableAlertButton@2x.png"; sourceTree = "<group>"; };
-		D0987AC31C0785F800D55DEB /* MLTableAlertButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MLTableAlertButtonPressed.png; sourceTree = "<group>"; };
-		D0987AC41C0785F800D55DEB /* MLTableAlertButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MLTableAlertButtonPressed@2x.png"; sourceTree = "<group>"; };
-		D0987AC51C0785F800D55DEB /* MLTableAlertShadowMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MLTableAlertShadowMask.png; sourceTree = "<group>"; };
-		D0987AC61C0785F800D55DEB /* MLTableAlertShadowMask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MLTableAlertShadowMask@2x.png"; sourceTree = "<group>"; };
-		D0987AC71C0785F800D55DEB /* MLTableAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLTableAlert.h; sourceTree = "<group>"; };
-		D0987AC81C0785F800D55DEB /* MLTableAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLTableAlert.m; sourceTree = "<group>"; };
 		D0987AD21C0801E000D55DEB /* OZLModelJournal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLModelJournal.swift; sourceTree = "<group>"; };
 		D0987AD41C0904C200D55DEB /* OZLIssueSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueSectionHeaderView.swift; sourceTree = "<group>"; };
 		D0987AD61C09488200D55DEB /* OZLJournalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLJournalCell.swift; sourceTree = "<group>"; };
@@ -399,32 +380,6 @@
 			path = Supporting;
 			sourceTree = "<group>";
 		};
-		D0987ABD1C0785F800D55DEB /* MLTableAlert */ = {
-			isa = PBXGroup;
-			children = (
-				D0987ABE1C0785F800D55DEB /* Images */,
-				D0987AC71C0785F800D55DEB /* MLTableAlert.h */,
-				D0987AC81C0785F800D55DEB /* MLTableAlert.m */,
-			);
-			name = MLTableAlert;
-			path = "MLTableAlert/MLTableAlert Files";
-			sourceTree = "<group>";
-		};
-		D0987ABE1C0785F800D55DEB /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				D0987ABF1C0785F800D55DEB /* MLTableAlertBackground.png */,
-				D0987AC01C0785F800D55DEB /* MLTableAlertBackground@2x.png */,
-				D0987AC11C0785F800D55DEB /* MLTableAlertButton.png */,
-				D0987AC21C0785F800D55DEB /* MLTableAlertButton@2x.png */,
-				D0987AC31C0785F800D55DEB /* MLTableAlertButtonPressed.png */,
-				D0987AC41C0785F800D55DEB /* MLTableAlertButtonPressed@2x.png */,
-				D0987AC51C0785F800D55DEB /* MLTableAlertShadowMask.png */,
-				D0987AC61C0785F800D55DEB /* MLTableAlertShadowMask@2x.png */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
 		D0B293851BE59D1800F71A55 /* Issue List */ = {
 			isa = PBXGroup;
 			children = (
@@ -498,7 +453,6 @@
 			children = (
 				D04801401BD004E50047C5DE /* OptionsMenu */,
 				D01F9B991BEBC107005B2ED0 /* BTNavigationDropdownMenu */,
-				D0987ABD1C0785F800D55DEB /* MLTableAlert */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -645,18 +599,10 @@
 				D5DB80A71792F4DE0081662A /* OZLProjectListViewController.xib in Resources */,
 				D5DB80AD1792F6980081662A /* OZLIssueListViewController.xib in Resources */,
 				D5DB80B61793016B0081662A /* OZLAccountViewController.xib in Resources */,
-				D0987ACA1C0785F800D55DEB /* MLTableAlertBackground@2x.png in Resources */,
-				D0987ACC1C0785F800D55DEB /* MLTableAlertButton@2x.png in Resources */,
-				D0987AD01C0785F800D55DEB /* MLTableAlertShadowMask@2x.png in Resources */,
-				D0987ACE1C0785F800D55DEB /* MLTableAlertButtonPressed@2x.png in Resources */,
-				D0987ACD1C0785F800D55DEB /* MLTableAlertButtonPressed.png in Resources */,
 				D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */,
 				D01F9B9C1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle in Resources */,
-				D0987ACB1C0785F800D55DEB /* MLTableAlertButton.png in Resources */,
 				D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */,
-				D0987AC91C0785F800D55DEB /* MLTableAlertBackground.png in Resources */,
 				D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */,
-				D0987ACF1C0785F800D55DEB /* MLTableAlertShadowMask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,7 +701,6 @@
 				D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */,
 				D5DB80BD17930ECD0081662A /* OZLSingleton.m in Sources */,
 				D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */,
-				D0987AD11C0785F800D55DEB /* MLTableAlert.m in Sources */,
 				D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */,
 				D01F9B981BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m in Sources */,
 				D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */,

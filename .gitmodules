@@ -4,6 +4,3 @@
 [submodule "Libs/BTNavigationDropdownMenu"]
 	path = Libs/BTNavigationDropdownMenu
 	url = git@github.com:justindhill/BTNavigationDropdownMenu.git
-[submodule "Libs/MLTableAlert"]
-	path = Libs/MLTableAlert
-	url = git@github.com:MatthewLabs/MLTableAlert
