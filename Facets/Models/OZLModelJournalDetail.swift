@@ -129,14 +129,11 @@ import UIKit
                 }
                 
             } else if self.type == .CustomField {
-                if let name = self.name {
-                    if let fieldId = Int(name) {
-                        let field = OZLModelCustomField(forPrimaryKey: fieldId)
-                        
-                        // WARNING: Handle the rest of the custom field types! (just users, I think)
-                        if field?.type == .Version {
-                            return OZLModelVersion(forPrimaryKey: attributeId)?.name ?? attributeValue
-                        }
+                if let field = self.customField {
+                    
+                    // WARNING: Handle the rest of the custom field types! (just users, I think)
+                    if field.type == .Version {
+                        return OZLModelVersion(forPrimaryKey: attributeId)?.name ?? attributeValue
                     }
                 }
             }
