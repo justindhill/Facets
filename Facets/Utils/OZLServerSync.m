@@ -90,6 +90,22 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         weakSelf.activeCount -= 1;
         [weakSelf checkForCompletion];
     }];
+    
+    self.activeCount += 1;
+    [[OZLNetwork sharedInstance] getIssueStatusListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
+        if (!error) {
+            [[RLMRealm defaultRealm] beginWriteTransaction];
+            
+            for (OZLModelIssueStatus *status in result) {
+                [OZLModelIssueStatus createOrUpdateInDefaultRealmWithValue:status];
+            }
+            
+            [[RLMRealm defaultRealm] commitWriteTransaction];
+        }
+        
+        weakSelf.activeCount -= 1;
+        [weakSelf checkForCompletion];
+    }];
 }
 
 - (void)fetchCustomFieldsForProject:(NSInteger)project {

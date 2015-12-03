@@ -8,14 +8,22 @@
 
 @implementation OZLModelIssueStatus
 
-- (id)initWithDictionary:(NSDictionary *)dic {
++ (NSString *)primaryKey {
+    return @"statusId";
+}
+
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes {
     
     if (self = [super init]) {
-        _index = [[dic objectForKey:@"id"] intValue];
-        _name = [dic objectForKey:@"name"];
+        [self applyAttributeDictionary:attributes];
     }
     
     return self;
+}
+
+- (void)applyAttributeDictionary:(NSDictionary *)attributes {
+    self.statusId = [[attributes objectForKey:@"id"] integerValue];
+    self.name = [attributes objectForKey:@"name"];
 }
 
 @end

@@ -7,6 +7,7 @@
 #import "OZLModelTracker.h"
 #import "OZLModelCustomField.h"
 #import "OZLModelIssue.h"
+#import "OZLModelIssueStatus.h"
 #import "OZLModelVersion.h"
 #import "OZLModelIssueCategory.h"
 #import "OZLTableViewCell.h"

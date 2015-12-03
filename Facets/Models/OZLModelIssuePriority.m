@@ -9,7 +9,7 @@
 - (id)initWithDictionary:(NSDictionary *)dic {
     
     if (self = [super init]) {
-        _index = [[dic objectForKey:@"id"] intValue];
+        _index = [[dic objectForKey:@"id"] integerValue];
         _name = [dic objectForKey:@"name"];
     }
 

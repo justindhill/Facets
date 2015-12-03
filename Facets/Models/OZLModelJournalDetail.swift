@@ -119,7 +119,7 @@ import UIKit
                 } else if self.name == "fixed_version_id" {
                     return OZLModelVersion(forPrimaryKey: attributeId)?.name ?? attributeValue
                 } else if self.name == "status_id" {
-                    return attributeValue
+                    return OZLModelIssueStatus(forPrimaryKey: attributeId)?.name ?? attributeValue
                 } else if self.name == "assigned_to_id" {
                     return attributeValue
                 } else if self.name == "category_id" {

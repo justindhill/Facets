@@ -26,7 +26,7 @@
 }
 
 - (void)applyAttributeDictionary:(NSDictionary *)attributes {
-    self.projectId = [[attributes objectForKey:@"id"] intValue];
+    self.projectId = [[attributes objectForKey:@"id"] integerValue];
     self.identifier = [attributes objectForKey:@"identifier"];
     self.name = [attributes objectForKey:@"name"];
     self.description = [attributes objectForKey:@"description"];
@@ -37,7 +37,7 @@
     NSDictionary *parent = [attributes objectForKey:@"parent"];
     
     if ([parent isKindOfClass:[NSDictionary class]]) {
-        _parentId = [[parent objectForKey:@"id"] intValue];
+        _parentId = [[parent objectForKey:@"id"] integerValue];
     } else {
         _parentId = -1;
     }

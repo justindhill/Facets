@@ -22,7 +22,7 @@
 }
 
 - (void)applyAttributeDictionary:(NSDictionary *)attributes {
-    self.trackerId = [[attributes objectForKey:@"id"] intValue];
+    self.trackerId = [[attributes objectForKey:@"id"] integerValue];
     self.name = [attributes objectForKey:@"name"];
 }
 

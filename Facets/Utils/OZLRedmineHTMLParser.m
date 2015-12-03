@@ -40,7 +40,7 @@
         NSInteger fieldId = [[self.formatter numberFromString:fieldIdString] integerValue];
         OZLModelCustomFieldType fieldType = [self fieldTypeFromParagraph:p];
         
-        NSLog(@"field name: %@, id: %ld, type: %ld", fieldName, (long)fieldId, fieldType);
+        NSLog(@"field name: %@, id: %ld, type: %ld", fieldName, (long)fieldId, (long)fieldType);
         
         NSArray<OZLModelStringContainer *> *options;
         

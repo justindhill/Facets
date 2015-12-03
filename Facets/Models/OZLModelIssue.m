@@ -12,12 +12,12 @@
 
 - (id)initWithDictionary:(NSDictionary *)dic {
     if (self = [super init]) {
-        _index = [[dic objectForKey:@"id"] intValue];
-        _projectId = [[[dic objectForKey:@"project"] objectForKey:@"id"] intValue];
+        _index = [[dic objectForKey:@"id"] integerValue];
+        _projectId = [[[dic objectForKey:@"project"] objectForKey:@"id"] integerValue];
         id parent = [dic objectForKey:@"parent"];
         
         if (parent != nil) {
-            _parentIssueId = [[parent objectForKey:@"id"] intValue];
+            _parentIssueId = [[parent objectForKey:@"id"] integerValue];
         } else {
             _parentIssueId = -1;
         }
@@ -49,7 +49,7 @@
         id status = [dic objectForKey:@"status"];
         
         if (status) {
-            _status = [[OZLModelIssueStatus alloc] initWithDictionary:status];
+            _status = [[OZLModelIssueStatus alloc] initWithAttributeDictionary:status];
         }
         
         id category = [dic objectForKey:@"category"];
@@ -130,8 +130,8 @@
         [issueData setObject:[NSNumber numberWithInteger:_tracker.trackerId] forKey:@"tracker_id"];
     }
     
-    if (_status && _status.index > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_status.index] forKey:@"status_id"];
+    if (_status && _status.statusId > 0) {
+        [issueData setObject:[NSNumber numberWithInteger:_status.statusId] forKey:@"status_id"];
     }
     
     if (_priority && _priority.init > 0) {

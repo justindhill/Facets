@@ -6,11 +6,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OZLModelIssueStatus : NSObject
+@interface OZLModelIssueStatus : RLMObject
 
-@property (nonatomic) NSInteger index;
+@property (nonatomic) NSInteger statusId;
 @property (nonatomic, strong) NSString *name;
 
-- (id)initWithDictionary:(NSDictionary *)dic;
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes;
 
 @end

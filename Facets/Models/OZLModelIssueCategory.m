@@ -21,7 +21,7 @@
 }
 
 - (void)applyAttributeDictionary:(NSDictionary *)attributes {
-    self.categoryId = [[attributes objectForKey:@"id"] intValue];
+    self.categoryId = [[attributes objectForKey:@"id"] integerValue];
     self.name = [attributes objectForKey:@"name"];
 }
 
