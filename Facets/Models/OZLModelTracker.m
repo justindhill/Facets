@@ -9,17 +9,21 @@
 @implementation OZLModelTracker
 
 + (NSString *)primaryKey {
-    return @"index";
+    return @"trackerId";
 }
 
-- (id)initWithDictionary:(NSDictionary *)dic {
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes {
     
     if (self = [super init]) {
-        _index = [[dic objectForKey:@"id"] intValue];
-        _name = [dic objectForKey:@"name"];
+        [self applyAttributeDictionary:attributes];
     }
 
     return self;
+}
+
+- (void)applyAttributeDictionary:(NSDictionary *)attributes {
+    self.trackerId = [[attributes objectForKey:@"id"] intValue];
+    self.name = [attributes objectForKey:@"name"];
 }
 
 @end

@@ -21,19 +21,45 @@ import UIKit
     
     private(set) var name: String? = nil
     
+    private lazy var customField: OZLModelCustomField? = {
+        if let id = self.name {
+            if let intId = Int(id) {
+                return OZLModelCustomField(forPrimaryKey: intId)
+            }
+        }
+        
+        return nil
+    }()
+    
     var displayName: String? {
         get {
-            if self.type == .CustomField, let name = self.name {
-                if let id = Int(name) {
-                    if let customField = OZLModelCustomField(forPrimaryKey: id) {
-                        return customField.name
-                    }
-                }
+            if self.type == .CustomField, let customField = self.customField {
+                return customField.name
             } else if self.type == .Attribute, let name = self.name {
-                return OZLModelIssue.displayNameForAttributeName(name)
+                return self.displayNameForAttributeName(name)
             }
             
             return self.name
+        }
+    }
+    
+    var displayOldValue: String? {
+        get {
+            if let oldValue = self.oldValue {
+                return self.displayValueForAttributeValue(oldValue)
+            }
+            
+            return self.oldValue
+        }
+    }
+    
+    var displayNewValue: String? {
+        get {
+            if let newValue = self.newValue {
+                return displayValueForAttributeValue(newValue)
+            }
+            
+            return self.newValue
         }
     }
     
@@ -61,6 +87,62 @@ import UIKit
                 self.newValue = newValue
             }
         }
+    }
+    
+    private func displayNameForAttributeName(attributeName: String) -> String {
+        if attributeName == "project_id" {
+            return "Project"
+        } else if attributeName == "tracker_id" {
+            return "Tracker"
+        } else if attributeName == "fixed_version_id" {
+            return "Target version"
+        } else if attributeName == "status_id" {
+            return "Status"
+        } else if attributeName == "assigned_to_id" {
+            return "Assignee"
+        } else if attributeName == "category_id" {
+            return "Category"
+        } else if attributeName == "priority_id" {
+            return "Priority"
+        }
+        
+        return attributeName
+    }
+    
+    private func displayValueForAttributeValue(attributeValue: String) -> String {
+        if let attributeId = Int(attributeValue) {
+            if self.type == .Attribute {
+                if self.name == "project_id" {
+                    return OZLModelProject(forPrimaryKey: attributeId)?.name ?? attributeValue
+                } else if self.name == "tracker_id" {
+                    return OZLModelTracker(forPrimaryKey: attributeId)?.name ?? attributeValue
+                } else if self.name == "fixed_version_id" {
+                    return OZLModelVersion(forPrimaryKey: attributeId)?.name ?? attributeValue
+                } else if self.name == "status_id" {
+                    return attributeValue
+                } else if self.name == "assigned_to_id" {
+                    return attributeValue
+                } else if self.name == "category_id" {
+                    return OZLModelIssueCategory(forPrimaryKey: attributeId)?.name ?? attributeValue
+                } else if self.name == "priority_id" {
+                    return attributeValue
+                }
+                
+            } else if self.type == .CustomField {
+                if let name = self.name {
+                    if let fieldId = Int(name) {
+                        let field = OZLModelCustomField(forPrimaryKey: fieldId)
+                        
+                        // WARNING: Handle the rest of the custom field types! (just users, I think)
+                        if field?.type == .Version {
+                            return OZLModelVersion(forPrimaryKey: attributeId)?.name ?? attributeValue
+                        }
+                    }
+                }
+            }
+        }
+        
+        return attributeValue
     }
     
     override var description: String {

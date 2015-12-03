@@ -126,14 +126,14 @@ class OZLJournalCell: OZLTableViewCell {
         for (index, detail) in details.enumerate() {
             var detailString: String!
             
-            if let name = detail.displayName, let old = detail.oldValue, let new = detail.newValue {
+            if let name = detail.displayName, let old = detail.displayOldValue, let new = detail.displayNewValue {
                 if old.characters.count > 20 || new.characters.count > 20 {
                     detailString  = "Updated \(name.lowercaseString)"
                 } else {
                     detailString = "Changed \(name.lowercaseString): \(old) → \(new)"
                 }
                 
-            } else if let name = detail.displayName, let new = detail.newValue {
+            } else if let name = detail.displayName, let new = detail.displayNewValue {
                 detailString  = "Set \(name.lowercaseString) to \(new)"
                 
             } else if detail.oldValue != nil, let name = detail.displayName {

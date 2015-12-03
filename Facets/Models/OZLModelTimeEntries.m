@@ -15,7 +15,7 @@
         id project = [dic objectForKey:@"project"];
         
         if (project != nil) {
-            _project = [[OZLModelProject alloc] initWithDictionary:project];
+            _project = [[OZLModelProject alloc] initWithAttributeDictionary:project];
         }
         
         id user = [dic objectForKey:@"user"];
@@ -54,7 +54,7 @@
     if (_issue) {
         [entryDic setObject:[NSNumber numberWithInteger:_issue.index] forKey:@"issue_id"];
     } else if (_project) {
-        [entryDic setObject:[NSNumber numberWithInteger:_project.index] forKey:@"project_id"];
+        [entryDic setObject:[NSNumber numberWithInteger:_project.projectId] forKey:@"project_id"];
     }
     
     if (_spentOn) {

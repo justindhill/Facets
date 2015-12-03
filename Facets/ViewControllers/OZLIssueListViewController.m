@@ -8,7 +8,6 @@
 #import "OZLProjectListViewController.h"
 #import "OZLNetwork.h"
 #import "MBProgressHUD.h"
-#import "OZLProjectInfoViewController.h"
 #import "OZLIssueViewController.h"
 #import "OZLSingleton.h"
 #import "OZLLoadingView.h"
@@ -159,12 +158,12 @@
 - (void)didSelectProjectAtIndex:(NSInteger)index {
     OZLModelProject *project = self.viewModel.projects[index];
     
-    if (self.viewModel.projectId == project.index) {
+    if (self.viewModel.projectId == project.projectId) {
         return;
     }
     
     [self showFooterActivityIndicator];
-    self.viewModel.projectId = project.index;
+    self.viewModel.projectId = project.projectId;
     [self.tableView reloadData];
     
     __weak OZLIssueListViewController *weakSelf = self;
@@ -302,14 +301,6 @@
     issueVC.viewModel = viewModel;
     
     [self.navigationController pushViewController:issueVC animated:YES];
-}
-
-- (IBAction)onShowInfo:(id)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"OZLProjectInfoViewController" bundle:nil];
-    OZLProjectInfoViewController *detail = [storyboard instantiateViewControllerWithIdentifier:@"OZLProjectInfoViewController"];
-    [detail setProjectData:_projectData];
-    [detail setViewMode:OZLProjectInfoViewModeDisplay];
-    [self.navigationController pushViewController:detail animated:YES];
 }
 
 - (void)editIssueList:(id)sender {

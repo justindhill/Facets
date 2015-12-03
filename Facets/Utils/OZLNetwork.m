@@ -202,7 +202,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSMutableArray *projectModels = [NSMutableArray array];
         
         for (NSDictionary *p in projectsDic) {
-            OZLModelProject *project = [[OZLModelProject alloc] initWithDictionary:p];
+            OZLModelProject *project = [[OZLModelProject alloc] initWithAttributeDictionary:p];
             [projectModels addObject:project];
         }
         
@@ -214,7 +214,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 - (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelCustomField *> *fields, NSError *error))completion {
     
-    NSString *path = [NSString stringWithFormat:@"/projects/%ld/issues/new", project];
+    NSString *path = [NSString stringWithFormat:@"/projects/%ld/issues/new", (long)project];
     
     [self GET:path params:nil completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         if (error && completion) {
@@ -235,6 +235,42 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         }
         
         completion(fields, nil);
+    }];
+}
+
+- (void)getVersionsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelVersion *> *versions, NSError *error))completion {
+    
+    NSString *path = [NSString stringWithFormat:@"/projects/%ld/versions.json", (long)project];
+    
+    [self GET:path params:nil completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        if (error && completion) {
+            completion(nil, error);
+            return;
+        }
+        
+        NSError *parseError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&parseError];
+        NSArray *versionDicts = responseObject[@"versions"];
+        NSAssert(!parseError, @"There was an error deserializing the response.");
+        
+        if (parseError) {
+            completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"There was an error deserializing the response."}]);
+            return;
+        }
+        
+        NSAssert([versionDicts isKindOfClass:[NSArray class]], @"The response was of an unexpected type.");
+        if (![versionDicts isKindOfClass:[NSArray class]]) {
+            completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"The response was of an unexpected type."}]);
+            return;
+        }
+        
+        NSMutableArray<OZLModelVersion *> *versions = [NSMutableArray array];
+        
+        for (NSDictionary *versionDict in versionDicts) {
+            [versions addObject:[[OZLModelVersion alloc] initWithAttributeDictionary:versionDict]];
+        }
+        
+        completion(versions, nil);
     }];
 }
 
@@ -264,60 +300,13 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         if (block) {
 
             NSDictionary *projectDic = [responseObject objectForKey:@"project"];
-            OZLModelProject *project = [[OZLModelProject alloc] initWithDictionary:projectDic];
+            OZLModelProject *project = [[OZLModelProject alloc] initWithAttributeDictionary:projectDic];
 
             block(project, nil);
         }
     }];
     
     [task resume];
-}
-
-- (void)createProject:(OZLModelProject *)projectData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
-    //project info
-    NSMutableDictionary *projectDic = [projectData toParametersDic];
-    
-    NSData *data;
-    if (projectDic) {
-        NSError *jsonError;
-        data = [NSJSONSerialization dataWithJSONObject:projectDic options:0 error:&jsonError];
-        
-        NSAssert(!jsonError, @"Couldn't serialize payload");
-    }
-    
-    [self POST:@"/projects.json" bodyData:data completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
-        if (block) {
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-            
-            BOOL success = (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 && !error);
-            
-            block(success, nil);
-        }
-    }];
-}
-
-- (void)updateProject:(OZLModelProject *)projectData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
-    
-    NSString *path = [NSString stringWithFormat:@"/projects/%ld.json", (long)projectData.index];
-
-    //project info
-    NSMutableDictionary *projectDic = [projectData toParametersDic];
-    
-    NSData *data;
-    if (projectDic) {
-        NSError *jsonError;
-        data = [NSJSONSerialization dataWithJSONObject:projectDic options:0 error:&jsonError];
-        
-        NSAssert(!jsonError, @"Couldn't serialize payload");
-    }
-    
-    [self PUT:path bodyData:data completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
-        if (block) {
-            BOOL success = (response.statusCode == 201 && !error);
-            
-            block(success, nil);
-        }
-    }];
 }
 
 - (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
@@ -665,7 +654,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             NSArray *dic = [responseObject objectForKey:@"trackers"];
             
             for (NSDictionary *p in dic) {
-                OZLModelTracker *tracker = [[OZLModelTracker alloc] initWithDictionary:p];
+                OZLModelTracker *tracker = [[OZLModelTracker alloc] initWithAttributeDictionary:p];
                 [trackers addObject:tracker];
             }
             

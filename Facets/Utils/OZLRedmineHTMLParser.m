@@ -40,10 +40,11 @@
         NSInteger fieldId = [[self.formatter numberFromString:fieldIdString] integerValue];
         OZLModelCustomFieldType fieldType = [self fieldTypeFromParagraph:p];
         
-        NSLog(@"field name: %@, id: %ld, type: %ld", fieldName, fieldId, fieldType);
+        NSLog(@"field name: %@, id: %ld, type: %ld", fieldName, (long)fieldId, fieldType);
         
         NSArray<OZLModelStringContainer *> *options;
         
+#warning Custom field support is incomplete! Need to parse the rest of the types.
         if (fieldType == OZLModelCustomFieldTypeInvalid) {
             continue;
         } else if (fieldType == OZLModelCustomFieldTypeList) {
@@ -97,9 +98,9 @@
     } else if ([fieldTypeString containsString:@"version_cf"]) {
         return OZLModelCustomFieldTypeVersion;
     } else if ([fieldTypeString containsString:@"int_cf"]) {
-        return OZLModelCustomFieldTypeInt;
+        return OZLModelCustomFieldTypeInteger;
     } else if ([fieldTypeString containsString:@"bool_cf"]) {
-        return OZLModelCustomFieldTypeBool;
+        return OZLModelCustomFieldTypeBoolean;
     } else {
         NSLog(@"%@ not implemented!", fieldTypeString);
         return OZLModelCustomFieldTypeInvalid;

@@ -8,18 +8,21 @@
 
 @implementation OZLModelIssueCategory
 
-- (id)initWithDictionary:(NSDictionary *)dic {
-    
++ (NSString *)primaryKey {
+    return @"categoryId";
+}
+
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes {
     if (self = [super init]) {
-        _index = [[dic objectForKey:@"id"] intValue];
-        _name = [dic objectForKey:@"name"];
+        [self applyAttributeDictionary:attributes];
     }
     
     return self;
 }
 
-- (NSMutableDictionary *)toParametersDic {
-    return nil;
+- (void)applyAttributeDictionary:(NSDictionary *)attributes {
+    self.categoryId = [[attributes objectForKey:@"id"] intValue];
+    self.name = [attributes objectForKey:@"name"];
 }
 
 @end

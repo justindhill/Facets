@@ -13,50 +13,50 @@
 @synthesize description = _description;
 
 + (NSString *)primaryKey {
-    return @"index";
+    return @"projectId";
 }
 
-- (id)initWithDictionary:(NSDictionary *)dic {
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes {
     
     if (self = [super init]) {
-
-        _index = [[dic objectForKey:@"id"] intValue];
-        _identifier = [dic objectForKey:@"identifier"];
-        _name = [dic objectForKey:@"name"];
-        _description = [dic objectForKey:@"description"];
-        _homepage = [dic objectForKey:@"homepage"];
-        _createdOn = [dic objectForKey:@"created_on"];
-        _updatedOn = [dic objectForKey:@"updated_on"];
-        NSDictionary *parent = [dic objectForKey:@"parent"];
-        
-        if (parent) {
-            _parentId = [[parent objectForKey:@"id"] intValue];
-        } else {
-            _parentId = -1;
-        }
+        [self applyAttributeDictionary:attributes];
     }
     
     return self;
 }
 
-- (NSMutableDictionary *)toParametersDic {
-    NSMutableDictionary *projectDic = [[NSMutableDictionary alloc] init];
-    [projectDic setObject:_name forKey:@"name"];
-    [projectDic setObject:_identifier forKey:@"identifier"];
+- (void)applyAttributeDictionary:(NSDictionary *)attributes {
+    self.projectId = [[attributes objectForKey:@"id"] intValue];
+    self.identifier = [attributes objectForKey:@"identifier"];
+    self.name = [attributes objectForKey:@"name"];
+    self.description = [attributes objectForKey:@"description"];
+    self.homepage = [attributes objectForKey:@"homepage"];
+    self.createdOn = [attributes objectForKey:@"created_on"];
+    self.updatedOn = [attributes objectForKey:@"updated_on"];
     
-    if (_description.length > 0) {
-        [projectDic setObject:_description forKey:@"description"];
+    NSDictionary *parent = [attributes objectForKey:@"parent"];
+    
+    if ([parent isKindOfClass:[NSDictionary class]]) {
+        _parentId = [[parent objectForKey:@"id"] intValue];
+    } else {
+        _parentId = -1;
     }
     
-    if (_parentId > 0) {
-        [projectDic setObject:[NSNumber numberWithInteger:_parentId] forKey:@"parent_id"];
+    NSArray *categoryDicts = attributes[@"issue_categories"];
+    
+    if ([categoryDicts isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *categoryDict in categoryDicts) {
+            [self.issueCategories addObject:[[OZLModelIssueCategory alloc] initWithAttributeDictionary:categoryDict]];
+        }
     }
     
-    if (_homepage.length > 0) {
-        [projectDic setObject:_homepage forKey:@"homepage"];
+    NSArray *trackerDicts = attributes[@"trackers"];
+    
+    if ([trackerDicts isKindOfClass:[NSArray class]]) {
+        for (NSDictionary *trackerDict in trackerDicts) {
+            [self.trackers addObject:[[OZLModelTracker alloc] initWithAttributeDictionary:trackerDict]];
+        }
     }
-
-    return [[NSMutableDictionary alloc] initWithObjectsAndKeys:projectDic, @"project", nil];
 }
 
 @end

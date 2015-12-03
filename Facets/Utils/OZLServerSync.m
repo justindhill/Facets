@@ -34,7 +34,9 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
     self.activeCount += 1;
     self.completionBlock = completion;
     
-    [[OZLNetwork sharedInstance] getProjectListWithParams:nil andBlock:^(NSArray<OZLModelProject *> *result, NSError *error) {
+    NSDictionary *params = @{ @"include": @"trackers,issue_categories" };
+    
+    [[OZLNetwork sharedInstance] getProjectListWithParams:params andBlock:^(NSArray<OZLModelProject *> *result, NSError *error) {
         if (error) {
             [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidFailNotification object:nil];
             
@@ -63,12 +65,13 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         
         if (updateCurrentProjectId) {
             OZLModelProject *newCurrentProject = [[OZLModelProject allObjects] sortedResultsUsingProperty:@"name" ascending:YES].firstObject;
-            [OZLSingleton sharedInstance].currentProjectID = newCurrentProject ? newCurrentProject.index : NSNotFound;
+            [OZLSingleton sharedInstance].currentProjectID = newCurrentProject ? newCurrentProject.projectId : NSNotFound;
         }
         
         for (OZLModelProject *project in allObjects) {
             NSLog(@"Fetching custom fields for \"%@\"", project.name);
-            [weakSelf fetchCustomFieldsForProject:project.index];
+            [weakSelf fetchCustomFieldsForProject:project.projectId];
+            [weakSelf fetchVersionsForProject:project.projectId];
         }
         
         weakSelf.activeCount -= 1;
@@ -107,6 +110,25 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
             }
             
             [OZLModelCustomField createOrUpdateInDefaultRealmWithValue:field];
+        }
+        
+        [[RLMRealm defaultRealm] commitWriteTransaction];
+        
+        [weakSelf checkForCompletion];
+    }];
+}
+
+- (void)fetchVersionsForProject:(NSInteger)project {
+    self.activeCount += 1;
+    
+    __weak OZLServerSync *weakSelf = self;
+    [[OZLNetwork sharedInstance] getVersionsForProject:project completion:^(NSArray<OZLModelVersion *> *versions, NSError *error) {
+        weakSelf.activeCount -= 1;
+        
+        [[RLMRealm defaultRealm] beginWriteTransaction];
+        
+        for (OZLModelVersion *version in versions) {
+            [OZLModelVersion createOrUpdateInDefaultRealmWithValue:version];
         }
         
         [[RLMRealm defaultRealm] commitWriteTransaction];

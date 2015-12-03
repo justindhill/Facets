@@ -25,7 +25,7 @@
         id tracker = [dic objectForKey:@"tracker"];
         
         if (tracker != nil) {
-            _tracker = [[OZLModelTracker alloc] initWithDictionary:tracker];
+            _tracker = [[OZLModelTracker alloc] initWithAttributeDictionary:tracker];
         }
         
         id author = [dic objectForKey:@"author"];
@@ -55,7 +55,7 @@
         id category = [dic objectForKey:@"category"];
         
         if (status) {
-            _category = [[OZLModelIssueCategory alloc] initWithDictionary:category];
+            _category = [[OZLModelIssueCategory alloc] initWithAttributeDictionary:category];
         }
         
         _subject = [dic objectForKey:@"subject"];
@@ -126,8 +126,8 @@
         [issueData setObject:[NSNumber numberWithInteger:_projectId] forKey:@"project_id"];
     }
     
-    if (_tracker && _tracker.index > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_tracker.index] forKey:@"tracker_id"];
+    if (_tracker && _tracker.trackerId > 0) {
+        [issueData setObject:[NSNumber numberWithInteger:_tracker.trackerId] forKey:@"tracker_id"];
     }
     
     if (_status && _status.index > 0) {
@@ -147,7 +147,7 @@
     }
     
     if (_category) {
-        [issueData setObject:[NSNumber numberWithInteger:_category.index ] forKey:@"category_id"];
+        [issueData setObject:[NSNumber numberWithInteger:_category.categoryId] forKey:@"category_id"];
     }
     
     if (_assignedTo && _assignedTo.index > 0) {
@@ -167,16 +167,6 @@
     }
 
     return [[NSMutableDictionary alloc] initWithObjectsAndKeys:issueData, @"issue", nil];
-}
-
-+ (NSString *)displayNameForAttributeName:(NSString *)attributeName {
-    if ([attributeName isEqualToString:@"fixed_version_id"]) {
-        return @"Target version";
-    } else if ([attributeName isEqualToString:@"assigned_to_id"]) {
-        return @"Assignee";
-    }
-    
-    return attributeName;
 }
 
 @end

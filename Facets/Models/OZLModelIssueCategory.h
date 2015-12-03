@@ -4,12 +4,11 @@
 //
 //  Created by lizhijie on 7/16/13.
 
-@interface OZLModelIssueCategory : NSObject
+@interface OZLModelIssueCategory : RLMObject
 
-@property (nonatomic) NSInteger index;
+@property (nonatomic) NSInteger categoryId;
 @property (nonatomic, strong) NSString *name;
 
-- (id)initWithDictionary:(NSDictionary *)dic;
-- (NSMutableDictionary *)toParametersDic;
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes;
 
 @end

@@ -48,8 +48,6 @@
  */
 @property (strong) NSArray<OZLModelJournal *> *journals;
 
-+ (NSString *)displayNameForAttributeName:(NSString *)attributeName;
-
 - (id)initWithDictionary:(NSDictionary *)dic;
 - (NSMutableDictionary *)toParametersDic;
 

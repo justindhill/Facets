@@ -9,13 +9,18 @@
 #import <Realm/Realm.h>
 #import "OZLModelStringContainer.h"
 
-#warning Custom field support is incomplete! Need to parse the rest of the types.
 typedef NS_ENUM(NSInteger, OZLModelCustomFieldType) {
     OZLModelCustomFieldTypeInvalid,
+    OZLModelCustomFieldTypeBoolean,
+    OZLModelCustomFieldTypeDate,
+    OZLModelCustomFieldTypeFloat,
+    OZLModelCustomFieldTypeInteger,
+    OZLModelCustomFieldTypeLink,
     OZLModelCustomFieldTypeList,
-    OZLModelCustomFieldTypeVersion,
-    OZLModelCustomFieldTypeBool,
-    OZLModelCustomFieldTypeInt
+    OZLModelCustomFieldTypeLongText,
+    OZLModelCustomFieldTypeText,
+    OZLModelCustomFieldTypeUser,
+    OZLModelCustomFieldTypeVersion
 };
 
 RLM_ARRAY_TYPE(OZLModelStringContainer)

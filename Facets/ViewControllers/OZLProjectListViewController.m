@@ -7,7 +7,6 @@
 #import "OZLProjectListViewController.h"
 #import "OZLIssueListViewController.h"
 #import "OZLAccountViewController.h"
-#import "OZLProjectInfoViewController.h"
 #import "OZLNetwork.h"
 #import "OZLModelProject.h"
 #import "MBProgressHUD.h"
@@ -48,7 +47,7 @@
 - (void)showProjectView:(OZLModelProject *)project {
     OZLProjectIssueListViewModel *viewModel = [[OZLProjectIssueListViewModel alloc] init];
     viewModel.title = project.name;
-    viewModel.projectId = project.index;
+    viewModel.projectId = project.projectId;
     
     OZLIssueListViewController *c = [[OZLIssueListViewController alloc] initWithNibName:@"OZLIssueListViewController" bundle:nil];
     c.viewModel = viewModel;

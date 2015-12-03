@@ -23,11 +23,6 @@ NSString * const USER_DEFAULTS_LAST_PROJECT_ID = @"USER_DEFAULTS_LAST_PROJECT_ID
 NSString * const USER_DEFAULTS_REDMINE_USER_NAME = @"USER_DEFAULTS_REDMINE_USER_NAME";
 NSString * const USER_DEFAULTS_REDMINE_PASSWORD = @"USER_DEFAULTS_REDMINE_PASSWORD";
 
-//issue list option
-NSString * const USER_DEFAULTS_ISSUE_LIST_ASCEND = @"USER_DEFAULTS_ISSUE_LIST_ASCEND";// ascend or descend
-NSString * const USER_DEFAULTS_ISSUE_LIST_FILTER = @"USER_DEFAULTS_ISSUE_LIST_FILTER";
-NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT";
-
 + (OZLSingleton *)sharedInstance {
     static OZLSingleton * _sharedInstance = nil;
     
@@ -49,10 +44,7 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
             USER_DEFAULTS_REDMINE_USER_KEY:   @"",
             USER_DEFAULTS_LAST_PROJECT_ID:    @(NSNotFound),
             USER_DEFAULTS_REDMINE_USER_NAME:  @"",
-            USER_DEFAULTS_REDMINE_PASSWORD:   @"",
-            USER_DEFAULTS_ISSUE_LIST_FILTER:  @0,
-            USER_DEFAULTS_ISSUE_LIST_SORT:    @0,
-            USER_DEFAULTS_ISSUE_LIST_ASCEND:  @0
+            USER_DEFAULTS_REDMINE_PASSWORD:   @""
         };
         
         [[NSUserDefaults standardUserDefaults] registerDefaults:dic];
@@ -137,42 +129,6 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     [self updateAuthHeader];
 }
 
-- (NSInteger)issueListFilterType {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    
-    return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_FILTER] integerValue];
-}
-
-- (void)setIssueListFilterType:(NSInteger)issueListFilterType {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:@(issueListFilterType) forKey:USER_DEFAULTS_ISSUE_LIST_FILTER];
-    [userdefaults synchronize];
-}
-
-- (NSInteger)issueListSortAscending {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    
-    return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_ASCEND] integerValue];
-}
-
-- (void)setIssueListSortAscending:(NSInteger)issueListSortAscending {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:@(issueListSortAscending) forKey:USER_DEFAULTS_ISSUE_LIST_ASCEND];
-    [userdefaults synchronize];
-}
-
-- (NSInteger)issueListSortType {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    
-    return [[userdefaults objectForKey:USER_DEFAULTS_ISSUE_LIST_SORT] intValue];
-}
-
-- (void)setIssueListSortType:(NSInteger)issueListSortType {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:@(issueListSortType) forKey:USER_DEFAULTS_ISSUE_LIST_SORT];
-    [userdefaults synchronize];
-}
-
 - (void)updateAuthHeader {
     
     NSURLCredential *credential = [NSURLCredential credentialWithUser:self.redmineUserName
@@ -199,52 +155,6 @@ NSString * const USER_DEFAULTS_ISSUE_LIST_SORT = @"USER_DEFAULTS_ISSUE_LIST_SORT
     
     [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential:credential
                                                         forProtectionSpace:protectionSpace];
-}
-
-#pragma mark -
-#pragma mark data retrival
-- (OZLModelTracker *)trackerWithId:(NSInteger)index {
-    
-    for (OZLModelTracker *tracker in _trackerList) {
-        if (tracker.index == index) {
-            return tracker;
-        }
-    }
-    
-    return nil;
-}
-
-- (OZLModelIssuePriority *)issuePriorityWithId:(NSInteger)index {
-    
-    for (OZLModelIssuePriority *priority in _priorityList) {
-        if (priority.index == index) {
-            return priority;
-        }
-    }
-    
-    return nil;
-}
-
-- (OZLModelIssueStatus *)issueStatusWithId:(NSInteger)index {
-    
-    for (OZLModelIssueStatus *status in _statusList) {
-        if (status.index == index) {
-            return status;
-        }
-    }
-    
-    return nil;
-}
-
-- (OZLModelUser *)userWithId:(NSInteger)index {
-    
-    for (OZLModelUser  *user in _userList) {
-        if (user.index == index) {
-            return user;
-        }
-    }
-    
-    return nil;
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {

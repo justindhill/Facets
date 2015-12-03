@@ -8,9 +8,9 @@
 
 @interface OZLModelTracker : RLMObject
 
-@property (nonatomic) NSInteger index;
+@property (nonatomic) NSInteger trackerId;
 @property (nonatomic, strong) NSString *name;
 
-- (id)initWithDictionary:(NSDictionary *)dic;
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes;
 
 @end
