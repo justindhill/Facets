@@ -38,9 +38,9 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 
 // project 
 - (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
-- (void)getDetailForProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelProject *result, NSError *error))block;
 - (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelCustomField *> *fields, NSError *error))completion;
 - (void)getVersionsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelVersion *> *versions, NSError *error))completion;
+- (void)getMembershipsForProject:(NSInteger)project offset:(NSInteger)offset limit:(NSInteger)limit completion:(void (^)(NSArray<OZLModelMembership *> *memberships, NSInteger totalCount, NSError *error))completion;
 - (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
 
 

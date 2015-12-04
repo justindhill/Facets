@@ -18,7 +18,7 @@ class OZLModelJournal: NSObject {
     
     init(attributes: Dictionary<String, AnyObject>) {
         if let authorDict = attributes["user"] as? Dictionary<String, AnyObject> {
-            self.author = OZLModelUser(dictionary: authorDict)
+            self.author = OZLModelUser(attributeDictionary: authorDict)
         }
         
         self.notes = attributes["notes"] as? String

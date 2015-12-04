@@ -6,24 +6,42 @@
 
 @implementation OZLModelUser
 
-- (id)initWithDictionary:(NSDictionary *)dic {
-    if (self = [super init]) {
-        _index = [[dic objectForKey:@"id"] integerValue];
-        _login = [dic objectForKey:@"login"];
-        _firstname = [dic objectForKey:@"firstname"];
-        _lastname = [dic objectForKey:@"lastname"];
-        _mail = [dic objectForKey:@"mail"];
-        _createdOn = [dic objectForKey:@"created_on"];
-        _lastLoginIn = [dic objectForKey:@"last_login_on"];
++ (NSString *)primaryKey {
+    return @"userId";
+}
 
-        _name = [dic objectForKey:@"name"];
-        
-        if (_name == nil) {
-            _name = _login;
-        }
+- (id)initWithAttributeDictionary:(NSDictionary *)attributes {
+    if (self = [super init]) {
+        [self applyAttributeDictionary:attributes];
     }
 
     return  self;
+}
+
+- (void)applyAttributeDictionary:(NSDictionary *)attributes {
+    self.userId = [[attributes objectForKey:@"id"] integerValue];
+    self.login = [attributes objectForKey:@"login"];
+    self.firstname = [attributes objectForKey:@"firstname"];
+    self.lastname = [attributes objectForKey:@"lastname"];
+    self.mail = [attributes objectForKey:@"mail"];
+    
+    NSString *creationDateString = [attributes objectForKey:@"created_on"];
+    
+    if ([creationDateString isKindOfClass:[NSString class]]) {
+        self.creationDate = [NSDate dateWithISO8601String:creationDateString];
+    }
+    
+    NSString *lastLoginString = [attributes objectForKey:@"last_login_on"];
+    
+    if ([lastLoginString isKindOfClass:[NSString class]]) {
+        self.lastLoginDate = [NSDate dateWithISO8601String:lastLoginString];
+    }
+
+    NSString *name = [attributes objectForKey:@"name"];
+    
+    if (name) {
+        self.name = name;
+    }
 }
 
 @end

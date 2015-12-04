@@ -15,6 +15,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 @interface OZLNetwork () <NSURLSessionDelegate, NSURLSessionTaskDelegate>
 
 @property (strong) NSURLSession *urlSession;
+@property NSOperationQueue *taskCallbackQueue;
 
 @end
 
@@ -42,7 +43,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     if (self = [super init]) {
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         config.HTTPCookieAcceptPolicy = NSHTTPCookieAcceptPolicyNever;
-        self.urlSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+        
+        self.taskCallbackQueue = [[NSOperationQueue alloc] init];
+        self.urlSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:self.taskCallbackQueue];
     }
     
     return self;
@@ -274,39 +277,51 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
-- (void)getDetailForProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelProject *result, NSError *error))block {
+- (void)getMembershipsForProject:(NSInteger)project offset:(NSInteger)offset limit:(NSInteger)limit completion:(void (^)(NSArray<OZLModelMembership *> *memberships, NSInteger totalCount, NSError *error))completion {
     
-    NSString *path = [NSString stringWithFormat:@"/projects/%ld.json", (long)projectid];
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
+    NSString *path = [NSString stringWithFormat:@"/projects/%ld/memberships.json", (long)project];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
+    if (offset > 0) {
+        params[@"offset"] = @(offset);
     }
-
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        if (error && block) {
-            block(nil, error);
+    
+    if (limit > 0) {
+        params[@"limit"] = @(limit);
+    }
+    
+    [self GET:path params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        if (error && completion) {
+            completion(nil, 0, error);
+            return;
         }
         
-        NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        NSError *parseError;
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&parseError];
+        NSArray *membershipDicts = responseObject[@"memberships"];
+        NSInteger totalCount = [responseObject[@"total_count"] integerValue];
+        NSAssert(!parseError, @"There was an error deserializing the response.");
         
-        if (jsonError && block) {
-            block(nil, jsonError);
+        if (parseError) {
+            completion(nil, 0, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"There was an error deserializing the response."}]);
+            return;
         }
-
-        if (block) {
-
-            NSDictionary *projectDic = [responseObject objectForKey:@"project"];
-            OZLModelProject *project = [[OZLModelProject alloc] initWithAttributeDictionary:projectDic];
-
-            block(project, nil);
+        
+        NSAssert([membershipDicts isKindOfClass:[NSArray class]], @"The response was of an unexpected type.");
+        if (![membershipDicts isKindOfClass:[NSArray class]]) {
+            completion(nil, 0, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"The response was of an unexpected type."}]);
+            return;
         }
+        
+        NSMutableArray<OZLModelMembership *> *memberships = [NSMutableArray array];
+        
+        for (NSDictionary *membershipDict in membershipDicts) {
+            [memberships addObject:[[OZLModelMembership alloc] initWithAttributeDictionary:membershipDict]];
+        }
+        
+        completion(memberships, totalCount, nil);
     }];
     
-    [task resume];
 }
 
 - (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
@@ -579,7 +594,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             NSArray *dic = [responseObject objectForKey:@"users"];
             
             for (NSDictionary *p in dic) {
-                [priorities addObject:[[OZLModelUser alloc] initWithDictionary:p]];
+                [priorities addObject:[[OZLModelUser alloc] initWithAttributeDictionary:p]];
             }
             
             block(priorities, nil);

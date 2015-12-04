@@ -69,9 +69,10 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         }
         
         for (OZLModelProject *project in allObjects) {
-            NSLog(@"Fetching custom fields for \"%@\"", project.name);
+//            NSLog(@"Fetching custom fields for \"%@\"", project.name);
             [weakSelf fetchCustomFieldsForProject:project.projectId];
             [weakSelf fetchVersionsForProject:project.projectId];
+            [weakSelf fetchUsersForProject:project.projectId offset:0 limit:100 continueIfLimitReached:YES];
         }
         
         weakSelf.activeCount -= 1;
@@ -169,13 +170,45 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
     }];
 }
 
+- (void)fetchUsersForProject:(NSInteger)project offset:(NSInteger)offset limit:(NSInteger)limit continueIfLimitReached:(BOOL)shouldContinue {
+    self.activeCount += 1;
+    
+    __weak OZLServerSync *weakSelf = self;
+    [[OZLNetwork sharedInstance] getMembershipsForProject:project offset:offset limit:100 completion:^(NSArray<OZLModelMembership *> *memberships, NSInteger totalCount, NSError *error) {
+        
+        [[RLMRealm defaultRealm] beginWriteTransaction];
+        
+        for (OZLModelMembership *membership in memberships) {
+            if (membership.user) {
+                [OZLModelUser createOrUpdateInDefaultRealmWithValue:membership.user];
+            }
+        }
+        
+        [[RLMRealm defaultRealm] commitWriteTransaction];
+        
+        if (memberships.count < totalCount && shouldContinue) {
+            for (NSUInteger i = memberships.count; i < totalCount; i += limit) {
+                [weakSelf fetchUsersForProject:project offset:i limit:limit continueIfLimitReached:NO];
+            }
+        }
+        
+        weakSelf.activeCount -= 1;
+        [weakSelf checkForCompletion];
+    }];
+}
+
 - (void)checkForCompletion {
     if (self.activeCount == 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidEndNotification object:nil];
         
+        __weak OZLServerSync *weakSelf = self;
+        
         if (self.completionBlock) {
-            self.completionBlock(nil);
-            self.completionBlock = nil;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.completionBlock(nil);
+                weakSelf.completionBlock = nil;
+            });
+            
         }
     }
 }

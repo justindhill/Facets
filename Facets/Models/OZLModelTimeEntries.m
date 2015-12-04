@@ -21,7 +21,7 @@
         id user = [dic objectForKey:@"user"];
         
         if (user != nil) {
-            _user = [[OZLModelUser alloc] initWithDictionary:user];
+            _user = [[OZLModelUser alloc] initWithAttributeDictionary:user];
         }
         
         id issue = [dic objectForKey:@"issue"];

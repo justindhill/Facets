@@ -40,7 +40,7 @@
         NSInteger fieldId = [[self.formatter numberFromString:fieldIdString] integerValue];
         OZLModelCustomFieldType fieldType = [self fieldTypeFromParagraph:p];
         
-        NSLog(@"field name: %@, id: %ld, type: %ld", fieldName, (long)fieldId, (long)fieldType);
+//        NSLog(@"field name: %@, id: %ld, type: %ld", fieldName, (long)fieldId, (long)fieldType);
         
         NSArray<OZLModelStringContainer *> *options;
         
@@ -70,7 +70,7 @@
     NSMutableArray *options = [NSMutableArray array];
     [p iterate:@"select.option" usingBlock:^(RXMLElement *optionEle) {
         NSString *optionText = [optionEle.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSLog(@"option value: %@", optionText);
+//        NSLog(@"option value: %@", optionText);
         
         if (optionText.length == 0) {
             return;

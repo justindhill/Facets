@@ -121,7 +121,7 @@ import UIKit
                 } else if self.name == "status_id" {
                     return OZLModelIssueStatus(forPrimaryKey: attributeId)?.name ?? attributeValue
                 } else if self.name == "assigned_to_id" {
-                    return attributeValue
+                    return OZLModelUser(forPrimaryKey: attributeId)?.name ?? attributeValue
                 } else if self.name == "category_id" {
                     return OZLModelIssueCategory(forPrimaryKey: attributeId)?.name ?? attributeValue
                 } else if self.name == "priority_id" {

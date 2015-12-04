@@ -31,13 +31,13 @@
         id author = [dic objectForKey:@"author"];
         
         if (author != nil) {
-            _author = [[OZLModelUser alloc] initWithDictionary:author];
+            _author = [[OZLModelUser alloc] initWithAttributeDictionary:author];
         }
         
         id assignedTo = [dic objectForKey:@"assigned_to"];
         
         if (assignedTo != nil) {
-            _assignedTo = [[OZLModelUser alloc] initWithDictionary:assignedTo];
+            _assignedTo = [[OZLModelUser alloc] initWithAttributeDictionary:assignedTo];
         }
         
         id priority = [dic objectForKey:@"priority"];
@@ -150,8 +150,8 @@
         [issueData setObject:[NSNumber numberWithInteger:_category.categoryId] forKey:@"category_id"];
     }
     
-    if (_assignedTo && _assignedTo.index > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_assignedTo.index] forKey:@"assigned_to_id"];
+    if (_assignedTo && _assignedTo.userId > 0) {
+        [issueData setObject:[NSNumber numberWithInteger:_assignedTo.userId] forKey:@"assigned_to_id"];
     }
     
     if (_parentIssueId > 0) {

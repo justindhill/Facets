@@ -23,7 +23,7 @@
     NSDictionary *attacherDict = dict[@"author"];
     
     if ([attacherDict isKindOfClass:[NSDictionary class]]) {
-        self.attacher = [[OZLModelUser alloc] initWithDictionary:attacherDict];
+        self.attacher = [[OZLModelUser alloc] initWithAttributeDictionary:attacherDict];
     }
     
     self.contentType = dict[@"content_type"];
