@@ -97,13 +97,13 @@
             [self addSubview:label];
         }
         
-        CGFloat xOffset = self.contentPadding + (colIndex * colWidth);
+        CGFloat xOffset = ceilf(self.contentPadding + (colIndex * colWidth));
         CGFloat yOffset;
         
         if (rowIndex == 0) {
-            yOffset = self.contentPadding;
+            yOffset = ceilf(self.contentPadding);
         } else {
-            yOffset = previousLabel.bottom + (self.contentPadding / 3);
+            yOffset = ceilf(previousLabel.bottom + (self.contentPadding / 3));
         }
         
 //        NSLog(@"index: %ld, x: %f, y: %f", i, xOffset, yOffset);

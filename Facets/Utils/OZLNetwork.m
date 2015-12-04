@@ -63,8 +63,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSAssert(completion, @"validateCredentialsCompletion: expects a completion block");
     
-    __weak OZLNetwork *weakSelf = self;
-    
     [self fetchAuthValidationTokensWithBaseURL:url completion:^(NSString *authCookie, NSString *authToken, NSError *error) {
         NSLog(@"authCookie: %@\nauthToken: %@", authCookie, authToken);
         
@@ -95,7 +93,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSLog(@"request: %@", request);
         NSLog(@"form string: '%@'", formValueString);
         
-        NSURLSessionDataTask *task = [weakSelf.urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
             NSError *reportError = error;
@@ -107,7 +105,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             
             }
             
-            [self updateSessionCookieWithHost:components.host cookieHeader:httpResponse.allHeaderFields[@"Set-Cookie"]];
+            if (!reportError) {
+                [self updateSessionCookieWithHost:components.host cookieHeader:httpResponse.allHeaderFields[@"Set-Cookie"]];
+            }
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion(reportError);
@@ -126,7 +126,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:components.URL];
     request.HTTPShouldHandleCookies = NO;
     
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
         NSError *errorToReport = error;
@@ -938,6 +938,17 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }
     
     completionHandler(request);
+}
+
+- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
+    
+    [self authenticateCredentialsWithURL:self.baseURL username:[OZLSingleton sharedInstance].redmineUserName password:[OZLSingleton sharedInstance].redminePassword completion:^(NSError *error) {
+        if (error) {
+            completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+        } else {
+            completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+        }
+    }];
 }
 
 @end

@@ -158,11 +158,7 @@ NSString * const USER_DEFAULTS_REDMINE_PASSWORD = @"USER_DEFAULTS_REDMINE_PASSWO
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     if (self.isUserLoggedIn) {
-        [[OZLNetwork sharedInstance] authenticateCredentialsWithURL:[NSURL URLWithString:self.redmineHomeURL] username:self.redmineUserName password:self.redminePassword completion:^(NSError *error) {
-            if (!error) {
-                 [self.serverSync startSyncCompletion:nil];
-            }
-        }];
+        [self.serverSync startSyncCompletion:nil];
     }
 }
 

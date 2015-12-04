@@ -74,24 +74,24 @@ class OZLJournalCell: OZLTableViewCell {
             self.isFirstLayout = false
         }
         
-        self.profileImageView.frame = CGRectMake(self.contentPadding,
-            self.contentPadding / 2.0,
+        self.profileImageView.frame = CGRectMake(ceil(self.contentPadding),
+            ceil(self.contentPadding / 2.0),
             OZLJournalCell.profileSideLen,
             OZLJournalCell.profileSideLen)
         
         self.usernameLabel.sizeToFit()
         self.dateLabel.sizeToFit()
         
-        self.usernameLabel.frame.origin.x = self.profileImageView.right + 6.0
-        self.usernameLabel.frame.origin.y = self.profileImageView.top
+        self.usernameLabel.frame.origin.x = ceil(self.profileImageView.right + 6.0)
+        self.usernameLabel.frame.origin.y = ceil(self.profileImageView.top)
         
         self.dateLabel.frame.origin.x = self.usernameLabel.left
-        self.dateLabel.frame.origin.y = self.usernameLabel.bottom + 2.0
+        self.dateLabel.frame.origin.y = ceil(self.usernameLabel.bottom + 2.0)
         
         self.commentLabel.frame.size.width = self.frame.size.width - self.profileImageView.right - self.contentPadding - 6.0
         self.commentLabel.sizeToFit()
         self.commentLabel.frame.origin.x = dateLabel.left
-        self.commentLabel.frame.origin.y = dateLabel.bottom + 6.0
+        self.commentLabel.frame.origin.y = ceil(dateLabel.bottom + 6.0)
     }
     
     private func applyJournalModel(journal: OZLModelJournal) {
@@ -134,10 +134,18 @@ class OZLJournalCell: OZLTableViewCell {
                 }
                 
             } else if let name = detail.displayName, let new = detail.displayNewValue {
-                detailString  = "Set \(name.lowercaseString) to \(new)"
+                if detail.type == .Attachment {
+                    detailString  = "Added attachment (\(new))"
+                } else {
+                    detailString  = "Set \(name.lowercaseString) to \(new)"
+                }
                 
-            } else if detail.oldValue != nil, let name = detail.displayName {
-                detailString  = "Removed \(name.lowercaseString)"
+            } else if let oldValue = detail.oldValue, let name = detail.displayName {
+                if detail.type == .Attachment {
+                    detailString = "Removed attachment (\(oldValue))"
+                } else {
+                    detailString  = "Removed \(name.lowercaseString)"
+                }
             }
             
             str.appendAttributedString(NSAttributedString(string: detailString, attributes:  detailAttributes))

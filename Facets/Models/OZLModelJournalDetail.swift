@@ -12,6 +12,7 @@ import UIKit
     case Unknown
     case Attribute
     case CustomField
+    case Attachment
 }
 
 @objc class OZLModelJournalDetail: NSObject {
@@ -69,6 +70,8 @@ import UIKit
                 self.type = .Attribute
             } else if type == "cf" {
                 self.type = .CustomField
+            } else if type == "attachment" {
+                self.type = .Attachment
             } else {
                 self.type = .Unknown
             }
@@ -134,6 +137,18 @@ import UIKit
                     // WARNING: Handle the rest of the custom field types! (just users, I think)
                     if field.type == .Version {
                         return OZLModelVersion(forPrimaryKey: attributeId)?.name ?? attributeValue
+                        
+                    } else if field.type == .Boolean {
+                        if attributeValue == "0" {
+                            return "No"
+                        } else if attributeValue == "1" {
+                            return "Yes"
+                        } else {
+                            return attributeValue
+                        }
+                        
+                    } else if field.type == .User {
+                        return OZLModelUser(forPrimaryKey: attributeId)?.name ?? attributeValue
                     }
                 }
             }

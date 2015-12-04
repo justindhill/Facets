@@ -76,7 +76,11 @@ NSString * const OZLIssueSectionRecentActivity = @"OZLIssueSectionRecentActivity
 
 #pragma mark - Behavior
 - (void)updateSectionNames {
-    NSMutableArray *names = [NSMutableArray arrayWithObjects:OZLIssueSectionDetail, OZLIssueSectionDescription, nil];
+    NSMutableArray *names = [NSMutableArray arrayWithObjects:OZLIssueSectionDetail, nil];
+    
+    if (self.issueModel.description.length > 0) {
+        [names addObject:OZLIssueSectionDescription];
+    }
     
     if (self.issueModel.attachments.count > 0) {
         [names addObject:OZLIssueSectionAttachments];

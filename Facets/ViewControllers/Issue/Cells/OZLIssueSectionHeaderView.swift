@@ -22,8 +22,8 @@ import UIKit
         
         self.sectionTitleLabel.sizeToFit()
         
-        self.sectionTitleLabel.frame.origin.x = self.contentPadding
-        self.sectionTitleLabel.frame.origin.y = self.frame.size.height - self.sectionTitleLabel.frame.size.height
+        self.sectionTitleLabel.frame.origin.x = ceil(self.contentPadding)
+        self.sectionTitleLabel.frame.origin.y = ceil(self.frame.size.height - self.sectionTitleLabel.frame.size.height)
     }
 
 }

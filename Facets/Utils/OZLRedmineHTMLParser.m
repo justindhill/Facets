@@ -101,8 +101,22 @@
         return OZLModelCustomFieldTypeInteger;
     } else if ([fieldTypeString containsString:@"bool_cf"]) {
         return OZLModelCustomFieldTypeBoolean;
+    } else if ([fieldTypeString containsString:@"string_cf"]) {
+        return OZLModelCustomFieldTypeText;
+    } else if ([fieldTypeString containsString:@"text_cf"]) {
+        return OZLModelCustomFieldTypeLongText;
+    } else if ([fieldTypeString containsString:@"user_cf"]) {
+        return OZLModelCustomFieldTypeUser;
+    } else if ([fieldTypeString containsString:@"link_cf"]) {
+        return OZLModelCustomFieldTypeLink;
+    } else if ([fieldTypeString containsString:@"float_cf"]) {
+        return OZLModelCustomFieldTypeFloat;
+    } else if ([fieldTypeString containsString:@"date_cf"]) {
+        return OZLModelCustomFieldTypeDate;
+        
     } else {
-        NSLog(@"%@ not implemented!", fieldTypeString);
+        NSAssert(fieldTypeString, @"Found a field type that isn't implemented!");
+        NSLog(@"Found a field type that isn't implemented!");
         return OZLModelCustomFieldTypeInvalid;
     }
 }
@@ -116,6 +130,10 @@
     
     if (!valueContainer) {
         valueContainer = [p child:@"span"];
+    }
+    
+    if (!valueContainer) {
+        valueContainer = [p child:@"textarea"];
     }
     
     return valueContainer;

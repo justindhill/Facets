@@ -68,8 +68,8 @@
         finalSize.height = self.frame.size.height - (2 * padding);
     }
     
-    CGFloat xOffset = (self.contentView.frame.size.width - finalSize.width) / 2.;
-    CGFloat yOffset = (self.contentView.frame.size.height - finalSize.height) / 2.;
+    CGFloat xOffset = ceilf((self.contentView.frame.size.width - finalSize.width) / 2.);
+    CGFloat yOffset = ceilf((self.contentView.frame.size.height - finalSize.height) / 2.);
     
     self.typeLabel.frame = (CGRect){{xOffset, yOffset}, finalSize};
     self.thumbnailImageView.frame = self.contentView.bounds;

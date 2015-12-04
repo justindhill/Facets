@@ -65,7 +65,7 @@
     self.descriptionPreviewLabel.frame = (CGRect){{self.contentPadding, 6.}, descSize};
     
     [self.showMoreButton sizeToFit];
-    self.showMoreButton.frame = (CGRect){{self.contentPadding, self.descriptionPreviewLabel.bottom + 10}, self.showMoreButton.frame.size};
+    self.showMoreButton.frame = (CGRect){{ceilf(self.contentPadding), ceilf(self.descriptionPreviewLabel.bottom + 10)}, self.showMoreButton.frame.size};
     
     self.isFirstLayout = NO;
 }
