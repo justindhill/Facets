@@ -11,7 +11,6 @@
 @interface OZLSingleton ()
 
 @property (strong) OZLServerSync *serverSync;
-@property (strong) NSURLSession *urlSession;
 
 @end
 

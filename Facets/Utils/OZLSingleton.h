@@ -18,8 +18,6 @@
 
 @property (readonly) OZLServerSync *serverSync;
 
-@property (nonatomic, readonly) NSURLSession *urlSession;
-
 //network
 #warning Wowwww... move this sensitive information to the keychain.
 @property (nonatomic, strong) NSString *redmineHomeURL;
