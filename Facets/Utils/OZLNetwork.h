@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 
 // Authorization
 - (void)authenticateCredentialsWithURL:(NSURL *)url username:(NSString *)username password:(NSString *)password completion:(void(^)(NSError *error))completion;
+- (void)updateSessionCookieWithHost:(NSString *)host cookieHeader:(NSString *)cookieHeader;
 
 // project 
 - (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;

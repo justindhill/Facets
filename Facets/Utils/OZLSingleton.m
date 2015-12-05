@@ -21,6 +21,7 @@ NSString * const USER_DEFAULTS_REDMINE_USER_KEY = @"USER_DEFAULTS_REDMINE_USER_K
 NSString * const USER_DEFAULTS_LAST_PROJECT_ID = @"USER_DEFAULTS_LAST_PROJECT_ID";
 NSString * const USER_DEFAULTS_REDMINE_USER_NAME = @"USER_DEFAULTS_REDMINE_USER_NAME";
 NSString * const USER_DEFAULTS_REDMINE_PASSWORD = @"USER_DEFAULTS_REDMINE_PASSWORD";
+NSString * const USER_DEFAULTS_REDMINE_COOKIE = @"USER_DEFAULTS_REDMINE_COOKIE";
 
 + (OZLSingleton *)sharedInstance {
     static OZLSingleton * _sharedInstance = nil;
@@ -51,6 +52,11 @@ NSString * const USER_DEFAULTS_REDMINE_PASSWORD = @"USER_DEFAULTS_REDMINE_PASSWO
         [OZLNetwork sharedInstance].baseURL = [NSURL URLWithString:self.redmineHomeURL];
         [self updateAuthHeader];
         
+        if (self.isUserLoggedIn) {
+            [[OZLNetwork sharedInstance] updateSessionCookieWithHost:self.redmineHomeURL
+                                                        cookieHeader:self.redmineCookie];
+        }
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     
@@ -58,7 +64,7 @@ NSString * const USER_DEFAULTS_REDMINE_PASSWORD = @"USER_DEFAULTS_REDMINE_PASSWO
 }
 
 - (BOOL)isUserLoggedIn {
-    return (self.redmineUserName.length > 0);
+    return (self.redmineUserName.length > 0 && self.redminePassword.length > 0 && self.redmineCookie.length > 0);
 }
 
 #pragma mark - Accessors
@@ -124,6 +130,19 @@ NSString * const USER_DEFAULTS_REDMINE_PASSWORD = @"USER_DEFAULTS_REDMINE_PASSWO
 - (void)setRedminePassword:(NSString *)redminePassword {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     [userdefaults setObject:redminePassword forKey:USER_DEFAULTS_REDMINE_PASSWORD];
+    [userdefaults synchronize];
+    [self updateAuthHeader];
+}
+
+- (NSString *)redmineCookie {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    
+    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_COOKIE];
+}
+
+- (void)setRedmineCookie:(NSString *)redmineCookie {
+    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
+    [userdefaults setObject:redmineCookie forKey:USER_DEFAULTS_REDMINE_COOKIE];
     [userdefaults synchronize];
     [self updateAuthHeader];
 }

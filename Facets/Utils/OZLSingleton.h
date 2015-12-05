@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSString *redmineUserKey;
 @property (nonatomic, strong) NSString *redmineUserName;
 @property (nonatomic, strong) NSString *redminePassword;
+@property (nonatomic, strong) NSString *redmineCookie;
 
 //app status
 @property (nonatomic) NSInteger currentProjectID;// last viewed project id
