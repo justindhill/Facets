@@ -58,6 +58,17 @@
             _category = [[OZLModelIssueCategory alloc] initWithAttributeDictionary:category];
         }
         
+        NSMutableArray *customFieldModels = [NSMutableArray array];
+        id customFieldDicts = [dic objectForKey:@"custom_fields"];
+        
+        if ([customFieldDicts isKindOfClass:[NSArray class]]) {
+            for (NSDictionary *customFieldDict in customFieldDicts) {
+                [customFieldModels addObject:[[OZLModelCustomField alloc] initWithAttributeDictionary:customFieldDict]];
+            }
+        }
+        
+        self.customFields = customFieldModels;
+        
         _subject = [dic objectForKey:@"subject"];
         _description = [dic objectForKey:@"description"];
         _startDate = [dic objectForKey:@"start_date"];

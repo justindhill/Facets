@@ -12,6 +12,7 @@
 #import "OZLModelIssueCategory.h"
 #import "OZLModelIssueTargetVersion.h"
 #import "OZLModelAttachment.h"
+#import "OZLModelCustomField.h"
 
 @class OZLModelJournal;
 
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) OZLModelIssuePriority *priority;
 @property (nonatomic, strong) OZLModelIssueStatus *status;
 @property (nonatomic, strong) OZLModelIssueCategory *category;
+@property (nonatomic, strong) NSArray<OZLModelCustomField *> *customFields;
 @property (nonatomic, strong) NSString *subject;
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, strong) NSString *startDate;

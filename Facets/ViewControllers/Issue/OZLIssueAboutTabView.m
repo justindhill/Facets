@@ -71,6 +71,10 @@
         [labels addObject:[self labelForFieldName:@"Author" value:issueModel.author.name]];
     }
     
+    for (OZLModelCustomField *field in issueModel.customFields) {
+        [labels addObject:[self labelForFieldName:field.name value:field.value]];
+    }
+    
     self.labels = labels;
     
     [self setNeedsLayout];

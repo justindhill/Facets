@@ -8,6 +8,12 @@
 
 #import "OZLModelCustomField.h"
 
+@interface OZLModelCustomField () {
+    NSString *_value;
+}
+
+@end
+
 @implementation OZLModelCustomField
 
 + (NSString *)primaryKey {
@@ -25,6 +31,8 @@
 - (void)applyAttributeDictionary:(NSDictionary *)attributes {
     self.fieldId = [attributes[@"id"] integerValue];
     self.name = attributes[@"name"];
+    
+    _value = attributes[@"value"];
 }
 
 @end
