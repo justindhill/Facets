@@ -32,7 +32,11 @@
     self.fieldId = [attributes[@"id"] integerValue];
     self.name = attributes[@"name"];
     
-    _value = attributes[@"value"];
+    NSString *valueString = attributes[@"value"];
+    
+    if (valueString.length > 0) {
+        _value = attributes[@"value"];
+    }
 }
 
 @end

@@ -51,28 +51,30 @@
     
     NSMutableArray *labels = [NSMutableArray array];
     
-    if (issueModel.status) {
+    if (issueModel.status.name) {
         [labels addObject:[self labelForFieldName:@"Status" value:issueModel.status.name]];
     }
     
-    if (issueModel.priority) {
+    if (issueModel.priority.name) {
         [labels addObject:[self labelForFieldName:@"Priority" value:issueModel.priority.name]];
     }
     
-    if (issueModel.category) {
+    if (issueModel.category.name) {
         [labels addObject:[self labelForFieldName:@"Category" value:issueModel.category.name]];
     }
     
-    if (issueModel.targetVersion) {
+    if (issueModel.targetVersion.name) {
         [labels addObject:[self labelForFieldName:@"Target version" value:issueModel.targetVersion.name]];
     }
     
-    if (issueModel.author) {
+    if (issueModel.author.name) {
         [labels addObject:[self labelForFieldName:@"Author" value:issueModel.author.name]];
     }
     
     for (OZLModelCustomField *field in issueModel.customFields) {
-        [labels addObject:[self labelForFieldName:field.name value:field.value]];
+        if (field.value) {
+            [labels addObject:[self labelForFieldName:field.name value:field.value]];
+        }
     }
     
     self.labels = labels;
