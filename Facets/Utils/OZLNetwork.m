@@ -69,7 +69,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSLog(@"authCookie: %@\nauthToken: %@", authCookie, authToken);
         
         if (error) {
-            
             if (completion) {
                 completion(error);
             }
@@ -204,8 +203,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSError *jsonError;
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && block) {
-            block(nil, jsonError);
+        if (jsonError) {
+            if (block) {
+                block(nil, jsonError);
+            }
+            
+            return;
         }
         
         NSArray *projectsDic = [responseObject objectForKey:@"projects"];
@@ -227,8 +230,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSString *path = [NSString stringWithFormat:@"/projects/%ld/issues/new", (long)project];
     
     [self GET:path params:nil completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
-        if (error && completion) {
-            completion(nil, error);
+        if (error) {
+            if (completion) {
+                completion(nil, error);
+            }
+            
             return;
         }
         
@@ -240,11 +246,16 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSAssert(!parseError, @"There was an error parsing the custom fields from the HTML");
         
         if (parseError) {
-            completion(nil, parseError);
+            if (completion) {
+                completion(nil, parseError);
+            }
+            
             return;
         }
         
-        completion(fields, nil);
+        if (completion) {
+            completion(fields, nil);
+        }
     }];
 }
 
@@ -253,8 +264,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSString *path = [NSString stringWithFormat:@"/projects/%ld/versions.json", (long)project];
     
     [self GET:path params:nil completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
-        if (error && completion) {
-            completion(nil, error);
+        if (error) {
+            if (completion) {
+                completion(nil, error);
+            }
+            
             return;
         }
         
@@ -264,13 +278,19 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSAssert(!parseError, @"There was an error deserializing the response.");
         
         if (parseError) {
-            completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"There was an error deserializing the response."}]);
+            if (completion) {
+                completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"There was an error deserializing the response."}]);
+            }
+            
             return;
         }
         
         NSAssert([versionDicts isKindOfClass:[NSArray class]], @"The response was of an unexpected type.");
         if (![versionDicts isKindOfClass:[NSArray class]]) {
-            completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"The response was of an unexpected type."}]);
+            if (completion) {
+                completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"The response was of an unexpected type."}]);
+            }
+            
             return;
         }
         
@@ -280,7 +300,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             [versions addObject:[[OZLModelVersion alloc] initWithAttributeDictionary:versionDict]];
         }
         
-        completion(versions, nil);
+        if (completion) {
+            completion(versions, nil);
+        }
     }];
 }
 
@@ -298,8 +320,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }
     
     [self GET:path params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
-        if (error && completion) {
-            completion(nil, 0, error);
+        if (error) {
+            if (completion) {
+                completion(nil, 0, error);
+            }
+            
             return;
         }
         
@@ -310,13 +335,19 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSAssert(!parseError, @"There was an error deserializing the response.");
         
         if (parseError) {
-            completion(nil, 0, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"There was an error deserializing the response."}]);
+            if (completion) {
+                completion(nil, 0, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"There was an error deserializing the response."}]);
+            }
+            
             return;
         }
         
         NSAssert([membershipDicts isKindOfClass:[NSArray class]], @"The response was of an unexpected type.");
         if (![membershipDicts isKindOfClass:[NSArray class]]) {
-            completion(nil, 0, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"The response was of an unexpected type."}]);
+            if (completion) {
+                completion(nil, 0, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidResponse userInfo:@{NSLocalizedDescriptionKey: @"The response was of an unexpected type."}]);
+            }
+            
             return;
         }
         
@@ -326,9 +357,10 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             [memberships addObject:[[OZLModelMembership alloc] initWithAttributeDictionary:membershipDict]];
         }
         
-        completion(memberships, totalCount, nil);
+        if (completion) {
+            completion(memberships, totalCount, nil);
+        }
     }];
-    
 }
 
 - (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
@@ -336,6 +368,15 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSString *path = [NSString stringWithFormat:@"/projects/%ld.json", (long)projectid];
     
     [self DELETE:path completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        
+        if (error) {
+            if (block) {
+                block(NO, error);
+            }
+            
+            return;
+        }
+        
         if (block) {
             BOOL success = (response.statusCode == 201 && !error);
             
@@ -361,16 +402,22 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     [self GET:@"/issues.json" params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
-        if (error && block) {
-            block(nil, 0, error);
+        if (error) {
+            if (block) {
+                block(nil, 0, error);
+            }
+            
             return;
         }
         
         NSError *jsonError;
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && block) {
-            block(nil, 0, jsonError);
+        if (jsonError) {
+            if (block) {
+                block(nil, 0, jsonError);
+            }
+            
             return;
         }
 
@@ -406,15 +453,23 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     [self GET:@"/issues.json" params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
-        if (error && block) {
-            block(nil, 0, error);
+        if (error) {
+            if (block) {
+                block(nil, 0, error);
+            }
+            
+            return;
         }
         
         NSError *jsonError;
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && block) {
-            block(nil, 0, jsonError);
+        if (jsonError) {
+            if (block) {
+                block(nil, 0, jsonError);
+            }
+            
+            return;
         }
         
         if (block) {
@@ -439,15 +494,23 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
     [self GET:path params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
-        if (error && block) {
-            block(nil, error);
+        if (error) {
+            if (block) {
+                block(nil, error);
+            }
+            
+            return;
         }
         
         NSError *jsonError;
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && block) {
-            block(nil, jsonError);
+        if (jsonError) {
+            if (block) {
+                block(nil, jsonError);
+            }
+            
+            return;
         }
 
         if (block) {
@@ -468,7 +531,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     if (jsonError) {
         NSAssert(NO, @"Error serializing payload");
-        block(NO, jsonError);
+        
+        if (block) {
+            block(NO, jsonError);
+        }
+        
         return;
     }
 
@@ -477,7 +544,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         BOOL success = (response.statusCode == 201 && !error);
 
         if (block) {
-            block(success, nil);
+            block(success, error);
         }
     }];
 }
@@ -494,7 +561,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     if (jsonError) {
         NSAssert(NO, @"Error serializing payload");
-        block(NO, jsonError);
+        
+        if (block) {
+            block(NO, jsonError);
+        }
+        
         return;
     }
 
@@ -502,7 +573,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         if (block) {
             BOOL success = (response.statusCode == 201 && !error);
             
-            block(success, nil);
+            block(success, error);
         }
     }];
 }
@@ -534,13 +605,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSString *path = @"/enumerations/issue_priorities.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
 
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [self GET:path params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
             if (block) {
@@ -551,10 +617,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         }
         
         NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && block) {
-            block(nil, jsonError);
+        if (jsonError) {
+            if (block) {
+                block(nil, jsonError);
+            }
+            
+            return;
         }
 
         if (block) {
@@ -569,50 +639,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             block(priorities, nil);
         }
     }];
-    
-    [task resume];
-}
-
-#pragma mark -
-#pragma mark user api
-// user
-- (void)getUserListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
-    
-    NSString *path = @"/users.json";
-    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
-
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        if (error && block) {
-            block(nil, error);
-        }
-        
-        NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-        
-        if (jsonError && block) {
-            block(nil, jsonError);
-        }
-
-        if (block) {
-            NSMutableArray *priorities = [[NSMutableArray alloc] init];
-
-            NSArray *dic = [responseObject objectForKey:@"users"];
-            
-            for (NSDictionary *p in dic) {
-                [priorities addObject:[[OZLModelUser alloc] initWithAttributeDictionary:p]];
-            }
-            
-            block(priorities, nil);
-        }
-    }];
-    
-    [task resume];
 }
 
 #pragma mark -
@@ -622,13 +648,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSString *path = @"/issue_statuses.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
 
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [self GET:path params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
             if (block) {
@@ -639,10 +660,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         }
         
         NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && block) {
-            block(nil, jsonError);
+        if (jsonError) {
+            if (block) {
+                block(nil, jsonError);
+            }
+            
+            return;
         }
 
         if (block) {
@@ -657,8 +682,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             block(priorities, nil);
         }
     }];
-    
-    [task resume];
 }
 
 #pragma mark -
@@ -678,8 +701,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSError *jsonError;
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && block) {
-            block(nil, jsonError);
+        if (jsonError) {
+            if (block) {
+                block(nil, jsonError);
+            }
+            
+            return;
         }
 
         if (block) {
@@ -702,15 +729,23 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     [self GET:@"/queries.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
-        if (error && completion) {
-            completion(nil, error);
+        if (error) {
+            if (completion) {
+                completion(nil, error);
+            }
+            
+            return;
         }
         
         NSError *jsonError;
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && completion) {
-            completion(nil, jsonError);
+        if (jsonError) {
+            if (completion) {
+                completion(nil, jsonError);
+            }
+            
+            return;
         }
         
         if (completion) {
@@ -735,23 +770,26 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSString *path = @"/time_entries.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
 
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [self GET:path params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
-        if (error && block) {
-            block(nil, error);
+        if (error) {
+            if (block) {
+                block(nil, error);
+            }
+            
+            return;
         }
         
         NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && block) {
-            block(nil, jsonError);
+        if (jsonError) {
+            if (block) {
+                block(nil, jsonError);
+            }
+            
+            return;
         }
 
         if (block) {
@@ -766,8 +804,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             block(priorities, nil);
         }
     }];
-    
-    [task resume];
 }
 
 - (void)getTimeEntriesForIssueId:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
@@ -786,23 +822,26 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSString *path = @"/enumerations/time_entry_activities.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
-    NSString *accessKey = [[OZLSingleton sharedInstance] redmineUserKey];
-    
-    if (accessKey.length > 0) {
-        [paramsDic setObject:accessKey forKey:@"key"];
-    }
 
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithURL:[self urlWithRelativePath:path] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [self GET:path params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
-        if (error && block) {
-            block(nil, error);
+        if (error) {
+            if (block) {
+                block(nil, error);
+            }
+            
+            return;
         }
         
         NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
-        if (jsonError && block) {
-            block(nil, jsonError);
+        if (jsonError) {
+            if (error) {
+                block(nil, jsonError);
+            }
+            
+            return;
         }
 
         if (block) {
@@ -817,8 +856,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             block(activities, nil);
         }
     }];
-    
-    [task resume];
 }
 
 - (void)createTimeEntry:(OZLModelTimeEntries *)timeEntry withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
