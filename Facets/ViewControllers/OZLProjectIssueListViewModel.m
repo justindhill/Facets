@@ -34,6 +34,10 @@
     return self;
 }
 
+- (BOOL)shouldShowComposeButton {
+    return YES;
+}
+
 - (BOOL)shouldShowProjectSelector {
     return YES;
 }

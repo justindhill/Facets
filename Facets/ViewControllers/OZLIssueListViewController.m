@@ -14,6 +14,8 @@
 
 #import "Facets-Swift.h"
 
+const CGFloat OZLIssueListComposeButtonHeight = 48.;
+
 @interface OZLIssueListViewController () <UIViewControllerPreviewingDelegate> {
 
     float _sideviewOffset;
@@ -24,6 +26,7 @@
 
 @property BOOL isFirstAppearance;
 @property CAPSOptionsMenu *optionsMenu;
+@property UIButton *composeButton;
 
 @end
 
@@ -33,9 +36,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         self.isFirstAppearance = YES;
-        
-        self.refreshControl = [[UIRefreshControl alloc] init];
-        [self.refreshControl addTarget:self action:@selector(refreshAction:) forControlEvents:UIControlEventValueChanged];
     }
     
     return self;
@@ -43,6 +43,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
 
     _doneBtn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(editIssueListDone:)];
 
@@ -76,6 +79,29 @@
         [self showFooterActivityIndicator];
         [self reloadData];
     }
+    
+    if (self.viewModel.shouldShowComposeButton && !self.composeButton.superview) {
+        self.composeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        self.composeButton.backgroundColor = self.view.tintColor;
+        self.composeButton.tintColor = [UIColor whiteColor];
+        [self.composeButton setImage:[UIImage ozl_templateImageNamed:@"icon-plus"] forState:UIControlStateNormal];
+        [self.composeButton.titleLabel setFont:[UIFont systemFontOfSize:28]];
+        self.composeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        self.composeButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        
+        self.composeButton.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.composeButton.layer.shadowOpacity = .2;
+        self.composeButton.layer.shadowOffset = CGSizeMake(0, 2.);
+        
+        self.composeButton.frame = CGRectMake(0, 0, OZLIssueListComposeButtonHeight, OZLIssueListComposeButtonHeight);
+        self.composeButton.layer.cornerRadius = 24.;
+        [self.composeButton addTarget:self action:@selector(composeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:self.composeButton];
+        
+    } else if (!self.viewModel.shouldShowComposeButton && self.composeButton.superview) {
+        [self.composeButton removeFromSuperview];
+        self.composeButton = nil;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -100,6 +126,15 @@
     
     for (NSIndexPath *indexPath in self.tableView.indexPathsForSelectedRows) {
         [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
+}
+
+- (void)viewWillLayoutSubviews {
+    if (self.composeButton) {
+        CGPoint newOrigin = CGPointMake(self.view.frame.size.width - OZLContentPadding - self.composeButton.frame.size.width,
+                                        self.view.frame.size.height - OZLContentPadding - self.composeButton.frame.size.height - self.bottomLayoutGuide.length);
+        
+        self.composeButton.frame = (CGRect){newOrigin, self.composeButton.frame.size};
     }
 }
 
@@ -141,7 +176,6 @@
     __weak OZLIssueListViewController *weakSelf = self;
     [self.viewModel loadIssuesSortedBy:nil ascending:NO completion:^(NSError *error) {
         [weakSelf.tableView reloadData];
-        [weakSelf.refreshControl endRefreshing];
     }];
 }
 
@@ -152,6 +186,19 @@
 #pragma mark - Actions
 - (void)refreshAction:(UIRefreshControl *)refreshControl {
     [self reloadData];
+}
+
+- (void)composeButtonAction:(UIButton *)button {
+    OZLIssueComposerViewController *composer = [[OZLIssueComposerViewController alloc] init];
+    composer.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissComposerAction:)];
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composer];
+    
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)dismissComposerAction:(UIButton *)button {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Project selector
@@ -259,7 +306,9 @@
         return;
     }
     
-    OZLLoadingView *loadingView = [[OZLLoadingView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    CGFloat height = (OZLContentPadding * 2) + OZLIssueListComposeButtonHeight;
+    
+    OZLLoadingView *loadingView = [[OZLLoadingView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     [loadingView.loadingSpinner startAnimating];
     self.tableView.tableFooterView = loadingView;
 }

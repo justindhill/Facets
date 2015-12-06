@@ -22,6 +22,10 @@
 @synthesize title;
 @synthesize issues;
 
+- (BOOL)shouldShowComposeButton {
+    return NO;
+}
+
 - (BOOL)shouldShowProjectSelector {
     return NO;
 }

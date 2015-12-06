@@ -14,6 +14,7 @@
 @property NSString *title;
 @property (readonly) NSArray *issues;
 @property (readonly) BOOL shouldShowProjectSelector;
+@property (readonly) BOOL shouldShowComposeButton;
 @property (readonly) BOOL moreIssuesAvailable;
 @property (readonly) BOOL isLoading;
 

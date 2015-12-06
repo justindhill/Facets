@@ -134,7 +134,6 @@ import UIKit
             } else if self.type == .CustomField {
                 if let field = self.customField {
                     
-                    // WARNING: Handle the rest of the custom field types! (just users, I think)
                     if field.type == .Version {
                         return OZLModelVersion(forPrimaryKey: attributeId)?.name ?? attributeValue
                         

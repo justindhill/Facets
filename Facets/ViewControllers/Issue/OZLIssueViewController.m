@@ -22,8 +22,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <URBMediaFocusViewController/URBMediaFocusViewController.h>
 
-const CGFloat contentPadding = 16;
-
 const NSInteger OZLDetailSectionIndex = 0;
 const NSInteger OZLDescriptionSectionIndex = 1;
 
@@ -61,7 +59,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     self.focusView.delegate = self;
     
     self.issueHeader = [[OZLIssueHeaderView alloc] init];
-    self.issueHeader.contentPadding = contentPadding;
+    self.issueHeader.contentPadding = OZLContentPadding;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OZLDetailReuseIdentifier];
@@ -88,7 +86,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         
         self.aboutTabView = [[OZLIssueAboutTabView alloc] init];
         self.aboutTabView.backgroundColor = [UIColor OZLVeryLightGrayColor];
-        self.aboutTabView.contentPadding = contentPadding;
+        self.aboutTabView.contentPadding = OZLContentPadding;
         [self.detailView addPage:self.aboutTabView withTitle:@"ABOUT"];
         
         OZLTabTestView *scheduleView = [[OZLTabTestView alloc] init];
@@ -110,6 +108,10 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 }
 
 #pragma mark - Accessors
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
 - (void)setViewModel:(OZLIssueViewModel *)viewModel {
     
     _viewModel = viewModel;
@@ -160,7 +162,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 - (void)descriptionShowMoreAction:(UIButton *)button {
     OZLIssueFullDescriptionViewController *descriptionVC = [[OZLIssueFullDescriptionViewController alloc] init];
     descriptionVC.descriptionLabel.text = self.viewModel.issueModel.description;
-    descriptionVC.contentPadding = contentPadding;
+    descriptionVC.contentPadding = OZLContentPadding;
     
     [self.navigationController pushViewController:descriptionVC animated:YES];
 }
@@ -210,7 +212,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         OZLJournalCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLRecentActivityReuseIdentifier forIndexPath:indexPath];
         
         OZLModelJournal *journal = [self.viewModel recentActivityAtIndex:indexPath.row];
-        cell.contentPadding = contentPadding;
+        cell.contentPadding = OZLContentPadding;
         cell.journal = journal;
         
         return cell;
@@ -232,7 +234,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     } else if ([sectionName isEqualToString:OZLIssueSectionDescription]) {
         return [OZLIssueDescriptionCell heightWithWidth:tableView.frame.size.width
                                            description:self.viewModel.issueModel.description
-                                        contentPadding:contentPadding];
+                                        contentPadding:OZLContentPadding];
         
     } else if ([sectionName isEqualToString:OZLIssueSectionAttachments]) {
         return 110.;
@@ -240,7 +242,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     } else if ([sectionName isEqualToString:OZLIssueSectionRecentActivity]) {
         OZLModelJournal *journal = [self.viewModel recentActivityAtIndex:indexPath.row];
         
-        return [OZLJournalCell heightWithWidth:self.view.frame.size.width contentPadding:contentPadding journalModel:journal];
+        return [OZLJournalCell heightWithWidth:self.view.frame.size.width contentPadding:OZLContentPadding journalModel:journal];
     }
     
     return 44.;
@@ -264,7 +266,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     NSString *sectionName = self.viewModel.currentSectionNames[section];
     
     OZLIssueSectionHeaderView *header = [[OZLIssueSectionHeaderView alloc] init];
-    header.contentPadding = contentPadding;
+    header.contentPadding = OZLContentPadding;
     header.sectionTitleLabel.text = [self.viewModel displayNameForSectionName:sectionName];
     
     return header;

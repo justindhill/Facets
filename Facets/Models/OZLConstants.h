@@ -8,6 +8,4 @@
 
 extern NSString * NOTIFICATION_REDMINE_ACCOUNT_CHANGED;
 
-@interface OZLConstants : NSObject
-
-@end
+extern const CGFloat OZLContentPadding;
