@@ -38,42 +38,39 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 - (void)updateSessionCookieWithHost:(NSString *)host cookieHeader:(NSString *)cookieHeader;
 
 // project 
-- (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
+- (void)getProjectListWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion;
 - (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelCustomField *> *fields, NSError *error))completion;
 - (void)getVersionsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelVersion *> *versions, NSError *error))completion;
 - (void)getMembershipsForProject:(NSInteger)project offset:(NSInteger)offset limit:(NSInteger)limit completion:(void (^)(NSArray<OZLModelMembership *> *memberships, NSInteger totalCount, NSError *error))completion;
-- (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
+- (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion;
 
 
 // issue
 
-- (void)getIssueListForProject:(NSInteger)projectid offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))block;
-- (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))block;
-- (void)getDetailForIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block;
-- (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
-- (void)updateIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
-- (void)deleteIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
+- (void)getIssueListForProject:(NSInteger)projectid offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params completion:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))completion;
+- (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params completion:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))completion;
+- (void)getDetailForIssue:(NSInteger)issueid withParams:(NSDictionary *)params completion:(void (^)(OZLModelIssue *result, NSError *error))completion;
+- (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion;
+- (void)updateIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion;
+- (void)deleteIssue:(NSInteger)issueid withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion;
 
 // priority
-- (void)getPriorityListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
-
-// user
-- (void)getUserListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
+- (void)getPriorityListWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion;
 
 // issue status
-- (void)getIssueStatusListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
+- (void)getIssueStatusListWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion;
 
 // tracker
-- (void)getTrackerListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
+- (void)getTrackerListWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion;
 
 // query list
 - (void)getQueryListForProject:(NSInteger)project params:(NSDictionary *)params completion:(void(^)(NSArray *result, NSError *error))completion;
 
 // time entries
-- (void)getTimeEntriesWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
-- (void)getTimeEntriesForIssueId:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
-- (void)getTimeEntriesForProjectId:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
-- (void)getTimeEntryListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block;
-- (void)createTimeEntry:(OZLModelTimeEntries *)timeEntry withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block;
+- (void)getTimeEntriesWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion;
+- (void)getTimeEntriesForIssueId:(NSInteger)issueid withParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion;
+- (void)getTimeEntriesForProjectId:(NSInteger)projectid withParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion;
+- (void)getTimeEntryListWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion;
+- (void)createTimeEntry:(OZLModelTimeEntries *)timeEntry withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion;
 
 @end

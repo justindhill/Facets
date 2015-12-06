@@ -188,13 +188,13 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 #pragma mark-
 #pragma mark project api
-- (void)getProjectListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+- (void)getProjectListWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion {
 
     [self GET:@"/projects.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(nil, error);
+            if (completion) {
+                completion(nil, error);
             }
             
             return;
@@ -204,8 +204,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError) {
-            if (block) {
-                block(nil, jsonError);
+            if (completion) {
+                completion(nil, jsonError);
             }
             
             return;
@@ -219,8 +219,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             [projectModels addObject:project];
         }
         
-        if (block) {
-            block(projectModels, nil);
+        if (completion) {
+            completion(projectModels, nil);
         }
     }];
 }
@@ -363,31 +363,31 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
-- (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+- (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion {
     
     NSString *path = [NSString stringWithFormat:@"/projects/%ld.json", (long)projectid];
     
     [self DELETE:path completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(NO, error);
+            if (completion) {
+                completion(NO, error);
             }
             
             return;
         }
         
-        if (block) {
+        if (completion) {
             BOOL success = (response.statusCode == 201 && !error);
             
-            block(success, nil);
+            completion(success, nil);
         }
     }];
 }
 
 #pragma mark -
 #pragma mark issue api
-- (void)getIssueListForProject:(NSInteger)projectid offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))block {
+- (void)getIssueListForProject:(NSInteger)projectid offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params completion:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))completion {
     
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     [paramsDic setObject:[NSNumber numberWithInteger:projectid] forKey:@"project_id"];
@@ -403,8 +403,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [self GET:@"/issues.json" params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(nil, 0, error);
+            if (completion) {
+                completion(nil, 0, error);
             }
             
             return;
@@ -414,14 +414,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError) {
-            if (block) {
-                block(nil, 0, jsonError);
+            if (completion) {
+                completion(nil, 0, jsonError);
             }
             
             return;
         }
 
-        if (block) {
+        if (completion) {
 
             NSMutableArray *issues = [[NSMutableArray alloc] init];
 
@@ -432,12 +432,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
                 [issues addObject:[[OZLModelIssue alloc] initWithDictionary:p]];
             }
             
-            block(issues, totalCount, nil);
+            completion(issues, totalCount, nil);
         }
     }];
 }
 
-- (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))block {
+- (void)getIssueListForQueryId:(NSInteger)queryId projectId:(NSInteger)projectId offset:(NSInteger)offset limit:(NSInteger)limit params:(NSDictionary *)params completion:(void (^)(NSArray *result, NSInteger totalCount, NSError *error))completion {
     
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     paramsDic[@"project_id"] = @(projectId);
@@ -454,8 +454,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [self GET:@"/issues.json" params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(nil, 0, error);
+            if (completion) {
+                completion(nil, 0, error);
             }
             
             return;
@@ -465,14 +465,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError) {
-            if (block) {
-                block(nil, 0, jsonError);
+            if (completion) {
+                completion(nil, 0, jsonError);
             }
             
             return;
         }
         
-        if (block) {
+        if (completion) {
             
             NSMutableArray *issues = [[NSMutableArray alloc] init];
             
@@ -483,20 +483,20 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
                 [issues addObject:[[OZLModelIssue alloc] initWithDictionary:p]];
             }
             
-            block(issues, totalCount, nil);
+            completion(issues, totalCount, nil);
         }
     }];
 }
 
-- (void)getDetailForIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(OZLModelIssue *result, NSError *error))block {
+- (void)getDetailForIssue:(NSInteger)issueid withParams:(NSDictionary *)params completion:(void (^)(OZLModelIssue *result, NSError *error))completion {
     
     NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueid];
 
     [self GET:path params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(nil, error);
+            if (completion) {
+                completion(nil, error);
             }
             
             return;
@@ -506,24 +506,24 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError) {
-            if (block) {
-                block(nil, jsonError);
+            if (completion) {
+                completion(nil, jsonError);
             }
             
             return;
         }
 
-        if (block) {
+        if (completion) {
 
             NSDictionary *projectDic = [responseObject objectForKey:@"issue"];
             OZLModelIssue *issue = [[OZLModelIssue alloc] initWithDictionary:projectDic];
 
-            block(issue, nil);
+            completion(issue, nil);
         }
     }];
 }
 
-- (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+- (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion {
     NSDictionary *issueDict = [issueData toParametersDic];
     
     NSError *jsonError;
@@ -532,8 +532,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     if (jsonError) {
         NSAssert(NO, @"Error serializing payload");
         
-        if (block) {
-            block(NO, jsonError);
+        if (completion) {
+            completion(NO, jsonError);
         }
         
         return;
@@ -543,13 +543,13 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
         BOOL success = (response.statusCode == 201 && !error);
 
-        if (block) {
-            block(success, error);
+        if (completion) {
+            completion(success, error);
         }
     }];
 }
 
-- (void)updateIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+- (void)updateIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion {
     
     NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueData.index];
 
@@ -562,23 +562,23 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     if (jsonError) {
         NSAssert(NO, @"Error serializing payload");
         
-        if (block) {
-            block(NO, jsonError);
+        if (completion) {
+            completion(NO, jsonError);
         }
         
         return;
     }
 
     [self PUT:path bodyData:bodyData completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
-        if (block) {
+        if (completion) {
             BOOL success = (response.statusCode == 201 && !error);
             
-            block(success, error);
+            completion(success, error);
         }
     }];
 }
 
-- (void)deleteIssue:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+- (void)deleteIssue:(NSInteger)issueid withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion {
     
     NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueid];
 
@@ -590,10 +590,10 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }
     
     [self DELETE:path completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
-        if (block) {
+        if (completion) {
             BOOL success = (response.statusCode == 201 && !error);
             
-            block(success, nil);
+            completion(success, nil);
         }
     }];
 }
@@ -601,7 +601,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 #pragma mark -
 #pragma mark priority api
 // priority
-- (void)getPriorityListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+- (void)getPriorityListWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion {
     
     NSString *path = @"/enumerations/issue_priorities.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -609,8 +609,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [self GET:path params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(nil, error);
+            if (completion) {
+                completion(nil, error);
             }
             
             return;
@@ -620,14 +620,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError) {
-            if (block) {
-                block(nil, jsonError);
+            if (completion) {
+                completion(nil, jsonError);
             }
             
             return;
         }
 
-        if (block) {
+        if (completion) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
 
             NSArray *dic = [responseObject objectForKey:@"issue_priorities"];
@@ -636,7 +636,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
                 [priorities addObject:[[OZLModelIssuePriority alloc] initWithAttributeDictionary:p]];
             }
             
-            block(priorities, nil);
+            completion(priorities, nil);
         }
     }];
 }
@@ -644,7 +644,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 #pragma mark -
 #pragma mark issue status api
 // issue status
-- (void)getIssueStatusListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+- (void)getIssueStatusListWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion {
     
     NSString *path = @"/issue_statuses.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -652,8 +652,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [self GET:path params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(nil, error);
+            if (completion) {
+                completion(nil, error);
             }
             
             return;
@@ -663,14 +663,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError) {
-            if (block) {
-                block(nil, jsonError);
+            if (completion) {
+                completion(nil, jsonError);
             }
             
             return;
         }
 
-        if (block) {
+        if (completion) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
 
             NSArray *dic = [responseObject objectForKey:@"issue_statuses"];
@@ -679,20 +679,20 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
                 [priorities addObject:[[OZLModelIssueStatus alloc] initWithAttributeDictionary:p]];
             }
             
-            block(priorities, nil);
+            completion(priorities, nil);
         }
     }];
 }
 
 #pragma mark -
 #pragma mark tracker api
-- (void)getTrackerListWithParams:(NSDictionary *)params andBlock:(void(^)(NSArray *result, NSError *error))block {
+- (void)getTrackerListWithParams:(NSDictionary *)params completion:(void(^)(NSArray *result, NSError *error))completion {
     
     [self GET:@"/trackers.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(nil, error);
+            if (completion) {
+                completion(nil, error);
             }
             
             return;
@@ -702,14 +702,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError) {
-            if (block) {
-                block(nil, jsonError);
+            if (completion) {
+                completion(nil, jsonError);
             }
             
             return;
         }
 
-        if (block) {
+        if (completion) {
             NSMutableArray *trackers = [[NSMutableArray alloc] init];
 
             NSArray *dic = [responseObject objectForKey:@"trackers"];
@@ -719,7 +719,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
                 [trackers addObject:tracker];
             }
             
-            block(trackers, nil);
+            completion(trackers, nil);
         }
     }];
 }
@@ -766,7 +766,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 #pragma mark -
 #pragma mark time entries
 // time entries
-- (void)getTimeEntriesWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+- (void)getTimeEntriesWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion {
     
     NSString *path = @"/time_entries.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -774,8 +774,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [self GET:path params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(nil, error);
+            if (completion) {
+                completion(nil, error);
             }
             
             return;
@@ -785,14 +785,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
         
         if (jsonError) {
-            if (block) {
-                block(nil, jsonError);
+            if (completion) {
+                completion(nil, jsonError);
             }
             
             return;
         }
 
-        if (block) {
+        if (completion) {
             NSMutableArray *priorities = [[NSMutableArray alloc] init];
 
             NSArray *dic = [responseObject objectForKey:@"time_entries"];
@@ -801,24 +801,24 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
                 [priorities addObject:[[OZLModelTimeEntries alloc] initWithDictionary:p]];
             }
             
-            block(priorities, nil);
+            completion(priorities, nil);
         }
     }];
 }
 
-- (void)getTimeEntriesForIssueId:(NSInteger)issueid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+- (void)getTimeEntriesForIssueId:(NSInteger)issueid withParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion {
     
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:issueid], @"issue_id", nil];
-    [[OZLNetwork sharedInstance] getTimeEntriesWithParams:param andBlock:block];
+    [[OZLNetwork sharedInstance] getTimeEntriesWithParams:param completion:completion];
 }
 
-- (void)getTimeEntriesForProjectId:(NSInteger)projectid withParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+- (void)getTimeEntriesForProjectId:(NSInteger)projectid withParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion {
 
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:projectid], @"project_id", nil];
-    [[OZLNetwork sharedInstance] getTimeEntriesWithParams:param andBlock:block];
+    [[OZLNetwork sharedInstance] getTimeEntriesWithParams:param completion:completion];
 }
 
-- (void)getTimeEntryListWithParams:(NSDictionary *)params andBlock:(void (^)(NSArray *result, NSError *error))block {
+- (void)getTimeEntryListWithParams:(NSDictionary *)params completion:(void (^)(NSArray *result, NSError *error))completion {
     
     NSString *path = @"/enumerations/time_entry_activities.json";
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
@@ -826,8 +826,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [self GET:path params:paramsDic completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
-            if (block) {
-                block(nil, error);
+            if (completion) {
+                completion(nil, error);
             }
             
             return;
@@ -838,13 +838,13 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
         if (jsonError) {
             if (error) {
-                block(nil, jsonError);
+                completion(nil, jsonError);
             }
             
             return;
         }
 
-        if (block) {
+        if (completion) {
             NSMutableArray *activities = [[NSMutableArray alloc] init];
 
             NSArray *dic = [responseObject objectForKey:@"time_entry_activities"];
@@ -853,12 +853,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
                 [activities addObject:[[OZLModelTimeEntryActivity alloc] initWithDictionary:p]];
             }
             
-            block(activities, nil);
+            completion(activities, nil);
         }
     }];
 }
 
-- (void)createTimeEntry:(OZLModelTimeEntries *)timeEntry withParams:(NSDictionary *)params andBlock:(void (^)(BOOL success, NSError *error))block {
+- (void)createTimeEntry:(OZLModelTimeEntries *)timeEntry withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion {
     
     NSString *path = [NSString stringWithFormat:@"/time_entries.json"];
 
@@ -870,16 +870,16 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     if (jsonError) {
         NSAssert(NO, @"Error serializing payload");
-        block(NO, jsonError);
+        completion(NO, jsonError);
         return;
     }
 
     [self POST:path bodyData:bodyData completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
-        if (block) {
+        if (completion) {
             BOOL success = (response.statusCode == 201 && !error);
             
-            block(success, nil);
+            completion(success, nil);
         }
     }];
 }

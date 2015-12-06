@@ -70,7 +70,7 @@
     self.isLoading = YES;
 
     // load issues
-    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:0 limit:25 params:nil andBlock:^(NSArray *result, NSInteger totalCount, NSError *error) {
+    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:0 limit:25 params:nil completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
         
         weakSelf.isLoading = NO;
         weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
@@ -96,7 +96,7 @@
     
     self.isLoading = YES;
     
-    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:self.issues.count limit:25 params:nil andBlock:^(NSArray *result, NSInteger totalCount, NSError *error) {
+    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:self.issues.count limit:25 params:nil completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
         
         weakSelf.isLoading = NO;
         weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
@@ -118,7 +118,7 @@
     OZLModelIssue *issue = self.issues[index];
     
     __weak OZLProjectIssueListViewModel *weakSelf = self;
-    [[OZLNetwork sharedInstance] deleteIssue:issue.index withParams:nil andBlock:^(BOOL success, NSError *error) {
+    [[OZLNetwork sharedInstance] deleteIssue:issue.index withParams:nil completion:^(BOOL success, NSError *error) {
         if (completion) {
             if (error) {
                 completion(error);

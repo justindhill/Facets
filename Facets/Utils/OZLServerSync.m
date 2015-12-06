@@ -36,7 +36,7 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
     
     NSDictionary *params = @{ @"include": @"trackers,issue_categories" };
     
-    [[OZLNetwork sharedInstance] getProjectListWithParams:params andBlock:^(NSArray<OZLModelProject *> *result, NSError *error) {
+    [[OZLNetwork sharedInstance] getProjectListWithParams:params completion:^(NSArray<OZLModelProject *> *result, NSError *error) {
         if (error) {
             [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidFailNotification object:nil];
             
@@ -80,7 +80,7 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
     }];
     
     self.activeCount += 1;
-    [[OZLNetwork sharedInstance] getTrackerListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
+    [[OZLNetwork sharedInstance] getTrackerListWithParams:nil completion:^(NSArray *result, NSError *error) {
         if (!error) {
             [[RLMRealm defaultRealm] beginWriteTransaction];
             [[RLMRealm defaultRealm] deleteObjects:[OZLModelTracker allObjects]];
@@ -93,7 +93,7 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
     }];
     
     self.activeCount += 1;
-    [[OZLNetwork sharedInstance] getIssueStatusListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
+    [[OZLNetwork sharedInstance] getIssueStatusListWithParams:nil completion:^(NSArray *result, NSError *error) {
         if (!error) {
             [[RLMRealm defaultRealm] beginWriteTransaction];
             
@@ -109,7 +109,7 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
     }];
     
     self.activeCount += 1;
-    [[OZLNetwork sharedInstance] getPriorityListWithParams:nil andBlock:^(NSArray *result, NSError *error) {
+    [[OZLNetwork sharedInstance] getPriorityListWithParams:nil completion:^(NSArray *result, NSError *error) {
         if (!error) {
             [[RLMRealm defaultRealm] beginWriteTransaction];
             

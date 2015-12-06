@@ -109,7 +109,7 @@ NSString * const OZLIssueSectionRecentActivity = @"OZLIssueSectionRecentActivity
     NSDictionary *params = @{ @"include": @"attachments,journals" };
     __weak OZLIssueViewModel *weakSelf = self;
     
-    [[OZLNetwork sharedInstance] getDetailForIssue:self.issueModel.index withParams:params andBlock:^(OZLModelIssue *result, NSError *error) {
+    [[OZLNetwork sharedInstance] getDetailForIssue:self.issueModel.index withParams:params completion:^(OZLModelIssue *result, NSError *error) {
         
         if (result) {
             weakSelf.successfullyFetchedIssue = YES;
