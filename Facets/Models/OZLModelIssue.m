@@ -5,6 +5,7 @@
 //  Created by lizhijie on 7/15/13.
 
 #import "OZLModelIssue.h"
+#import "OZLModelProject.h"
 
 @implementation OZLModelIssue
 
@@ -178,6 +179,46 @@
     }
 
     return [[NSMutableDictionary alloc] initWithObjectsAndKeys:issueData, @"issue", nil];
+}
+
++ (nullable NSString *)displayValueForAttributeName:(NSString *)name attributeId:(NSInteger)attributeId {
+    if ([name isEqualToString:@"project_id"]) {
+        return [[OZLModelProject objectForPrimaryKey:@(attributeId)] name];
+    } else if ([name isEqualToString:@"tracker_id"]) {
+        return [[OZLModelTracker objectForPrimaryKey:@(attributeId)] name];
+    } else if ([name isEqualToString:@"fixed_version_id"]) {
+        return [[OZLModelVersion objectForPrimaryKey:@(attributeId)] name];
+    } else if ([name isEqualToString:@"status_id"]) {
+        return [[OZLModelIssueStatus objectForPrimaryKey:@(attributeId)] name];
+    } else if ([name isEqualToString:@"assigned_to_id"]) {
+        return [[OZLModelUser objectForPrimaryKey:@(attributeId)] name];
+    } else if ([name isEqualToString:@"category_id"]) {
+        return [[OZLModelIssueCategory objectForPrimaryKey:@(attributeId)] name];
+    } else if ([name isEqualToString:@"priority_id"]) {
+        return [[OZLModelIssuePriority objectForPrimaryKey:@(attributeId)] name];
+    }
+    
+    return nil;
+}
+
++ (nonnull NSString *)displayNameForAttributeName:(nonnull NSString *)attributeName {
+    if ([attributeName isEqualToString:@"project_id"]) {
+        return @"Project";
+    } else if ([attributeName isEqualToString:@"tracker_id"]) {
+        return @"Tracker";
+    } else if ([attributeName isEqualToString:@"fixed_version_id"]) {
+        return @"Target version";
+    } else if ([attributeName isEqualToString:@"status_id"]) {
+        return @"Status";
+    } else if ([attributeName isEqualToString:@"assigned_to_id"]) {
+        return @"Assignee";
+    } else if ([attributeName isEqualToString:@"category_id"]) {
+        return @"Category";
+    } else if ([attributeName isEqualToString:@"priority_id"]) {
+        return @"Priority";
+    }
+        
+    return attributeName;
 }
 
 @end

@@ -37,7 +37,7 @@ import UIKit
             if self.type == .CustomField, let customField = self.customField {
                 return customField.name
             } else if self.type == .Attribute, let name = self.name {
-                return self.displayNameForAttributeName(name)
+                return OZLModelIssue.displayNameForAttributeName(name)
             }
             
             return self.name
@@ -92,63 +92,14 @@ import UIKit
         }
     }
     
-    private func displayNameForAttributeName(attributeName: String) -> String {
-        if attributeName == "project_id" {
-            return "Project"
-        } else if attributeName == "tracker_id" {
-            return "Tracker"
-        } else if attributeName == "fixed_version_id" {
-            return "Target version"
-        } else if attributeName == "status_id" {
-            return "Status"
-        } else if attributeName == "assigned_to_id" {
-            return "Assignee"
-        } else if attributeName == "category_id" {
-            return "Category"
-        } else if attributeName == "priority_id" {
-            return "Priority"
-        }
-        
-        return attributeName
-    }
-    
     private func displayValueForAttributeValue(attributeValue: String) -> String {
         if let attributeId = Int(attributeValue) {
             if self.type == .Attribute {
-                if self.name == "project_id" {
-                    return OZLModelProject(forPrimaryKey: attributeId)?.name ?? attributeValue
-                } else if self.name == "tracker_id" {
-                    return OZLModelTracker(forPrimaryKey: attributeId)?.name ?? attributeValue
-                } else if self.name == "fixed_version_id" {
-                    return OZLModelVersion(forPrimaryKey: attributeId)?.name ?? attributeValue
-                } else if self.name == "status_id" {
-                    return OZLModelIssueStatus(forPrimaryKey: attributeId)?.name ?? attributeValue
-                } else if self.name == "assigned_to_id" {
-                    return OZLModelUser(forPrimaryKey: attributeId)?.name ?? attributeValue
-                } else if self.name == "category_id" {
-                    return OZLModelIssueCategory(forPrimaryKey: attributeId)?.name ?? attributeValue
-                } else if self.name == "priority_id" {
-                    return OZLModelIssuePriority(forPrimaryKey: attributeId)?.name ?? attributeValue
-                }
+                return OZLModelIssue.displayValueForAttributeName(self.name, attributeId: attributeId) ?? attributeValue
                 
             } else if self.type == .CustomField {
                 if let field = self.customField {
-                    
-                    if field.type == .Version {
-                        return OZLModelVersion(forPrimaryKey: attributeId)?.name ?? attributeValue
-                        
-                    } else if field.type == .Boolean {
-                        if attributeValue == "0" {
-                            return "No"
-                        } else if attributeValue == "1" {
-                            return "Yes"
-                        } else {
-                            return attributeValue
-                        }
-                        
-                    } else if field.type == .User {
-                        return OZLModelUser(forPrimaryKey: attributeId)?.name ?? attributeValue
-                    }
+                    OZLModelCustomField.displayValueForCustomFieldType(field.type, attributeId: attributeId, attributeValue: attributeValue)
                 }
             }
         }

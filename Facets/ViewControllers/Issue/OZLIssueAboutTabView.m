@@ -72,8 +72,11 @@
     }
     
     for (OZLModelCustomField *field in issueModel.customFields) {
-        if (field.value) {
-            [labels addObject:[self labelForFieldName:field.name value:field.value]];
+        OZLModelCustomField *cachedField = [OZLModelCustomField objectForPrimaryKey:@(field.fieldId)];
+        
+        if (field.value || cachedField.type == OZLModelCustomFieldTypeUser || cachedField.type == OZLModelCustomFieldTypeVersion) {
+            NSString *displayValue = [OZLModelCustomField displayValueForCustomFieldType:cachedField.type attributeId:cachedField.fieldId attributeValue:field.value];
+            [labels addObject:[self labelForFieldName:field.name value:displayValue]];
         }
     }
     
