@@ -20,7 +20,7 @@
 
 #import <AVKit/AVKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import <URBMediaFocusViewController/URBMediaFocusViewController.h>
+#import <JTSImageViewController/JTSImageViewController.h>
 
 const NSInteger OZLDetailSectionIndex = 0;
 const NSInteger OZLDescriptionSectionIndex = 1;
@@ -30,12 +30,11 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier";
 NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIdentifier";
 
-@interface OZLIssueViewController () <OZLIssueViewModelDelegate, DRPSlidingTabViewDelegate, OZLIssueAttachmentGalleryCellDelegate, AVAssetResourceLoaderDelegate, URBMediaFocusViewControllerDelegate>
+@interface OZLIssueViewController () <OZLIssueViewModelDelegate, DRPSlidingTabViewDelegate, OZLIssueAttachmentGalleryCellDelegate, AVAssetResourceLoaderDelegate>
 
 @property (strong) OZLIssueHeaderView *issueHeader;
 @property (strong) DRPSlidingTabView *detailView;
 @property (strong) OZLIssueAboutTabView *aboutTabView;
-@property (strong) URBMediaFocusViewController *focusView;
 
 @property BOOL isFirstAppearance;
 
@@ -54,9 +53,6 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.focusView = [[URBMediaFocusViewController alloc] init];
-    self.focusView.delegate = self;
     
     self.issueHeader = [[OZLIssueHeaderView alloc] init];
     self.issueHeader.contentPadding = OZLContentPadding;
@@ -296,7 +292,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 }
 
 #pragma mark - OZLIssueAttachmentGalleryCellDelegate
-- (void)galleryCell:(OZLIssueAttachmentGalleryCell *)galleryCell didSelectAttachment:(OZLModelAttachment *)attachment withCellRelativeFrame:(CGRect)frame {
+- (void)galleryCell:(OZLIssueAttachmentGalleryCell *)galleryCell didSelectAttachment:(OZLModelAttachment *)attachment withCellRelativeFrame:(CGRect)frame thumbnailImage:(UIImage *)thumbnailImage {
     
     if ([attachment.contentType hasPrefix:@"video"] || [attachment.contentType containsString:@"mp4"]) {
         
@@ -307,9 +303,14 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         [self presentViewController:playerVC animated:YES completion:nil];
         
     } else if ([attachment.contentType hasPrefix:@"image"]) {
-        CGRect rect = [galleryCell convertRect:frame toView:self.view];
+        JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+        imageInfo.placeholderImage = thumbnailImage;
+        imageInfo.imageURL = [NSURL URLWithString:attachment.contentURL];
         
-        [self.focusView showImageFromURL:[NSURL URLWithString:attachment.contentURL] fromRect:rect];
+        JTSImageViewController *imageController = [[JTSImageViewController alloc] initWithImageInfo:imageInfo
+                                                                                               mode:JTSImageViewControllerMode_Image backgroundStyle:JTSImageViewControllerBackgroundOption_None];
+        
+        [imageController showFromViewController:self transition:JTSImageViewControllerTransition_FromOffscreen];
         
     } else if ([attachment.contentType isEqualToString:@"text/plain"]) {
         OZLWebViewController *textVC = [[OZLWebViewController alloc] init];
@@ -318,15 +319,6 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         [self.navigationController pushViewController:textVC animated:YES];
     }
     NSLog(@"Attachment selected: %@", attachment);
-}
-
-#pragma mark - URBFocusViewControllerDelegate
-- (void)mediaFocusViewController:(URBMediaFocusViewController *)mediaFocusViewController didFailLoadingImageWithError:(NSError *)error {
-    NSLog(@"%@", error);
-}
-
-- (void)mediaFocusViewController:(URBMediaFocusViewController *)mediaFocusViewController didFinishLoadingImage:(UIImage *)image {
-    NSLog(@"");
 }
 
 @end

@@ -70,7 +70,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
         if (error) {
             if (completion) {
-                completion(error);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(error);
+                });
             }
             
             return;
@@ -178,7 +180,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:@{NSHTTPCookieName: cookieName,
                                                                 NSHTTPCookieValue: cookieString,
                                                                 NSHTTPCookiePath: @"/",
-                                                                NSHTTPCookieDomain: host}];
+                                                                NSHTTPCookieDomain: host,
+                                                                NSHTTPCookieExpires: [NSDate distantFuture]}];
     
     NSAssert(cookie, @"Couldn't create cookie");
     
@@ -727,7 +730,19 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 #pragma mark - Queries
 - (void)getQueryListForProject:(NSInteger)project params:(NSDictionary *)params completion:(void(^)(NSArray *result, NSError *error))completion {
     
-    [self GET:@"/queries.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+    NSMutableDictionary *mutableParams;
+    
+    if (params) {
+        mutableParams = [params mutableCopy];
+    } else {
+        mutableParams = [NSMutableDictionary dictionary];
+    }
+    
+    if (!mutableParams[@"limit"]) {
+        mutableParams[@"limit"] = @(100);
+    }
+    
+    [self GET:@"/queries.json" params:mutableParams completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         
         if (error) {
             if (completion) {

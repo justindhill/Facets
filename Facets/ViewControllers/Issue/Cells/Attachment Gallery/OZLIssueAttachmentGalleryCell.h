@@ -12,7 +12,7 @@
 @class OZLIssueAttachmentGalleryCell;
 @protocol OZLIssueAttachmentGalleryCellDelegate <NSObject>
 
-- (void)galleryCell:(OZLIssueAttachmentGalleryCell *)galleryCell didSelectAttachment:(OZLModelAttachment *)attachment withCellRelativeFrame:(CGRect)frame;
+- (void)galleryCell:(OZLIssueAttachmentGalleryCell *)galleryCell didSelectAttachment:(OZLModelAttachment *)attachment withCellRelativeFrame:(CGRect)frame thumbnailImage:(UIImage *)thumbnailImage;
 
 @end
 

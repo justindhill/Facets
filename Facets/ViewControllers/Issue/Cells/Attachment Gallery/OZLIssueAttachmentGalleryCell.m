@@ -42,6 +42,10 @@ NSString * const OZLAttachmentCellReuseIdentifier = @"OZLAttachmentCellReuseIden
 }
 
 - (void)setAttachments:(NSArray<OZLModelAttachment *> *)attachments {
+    if (attachments == _attachments) {
+        return;
+    }
+    
     _attachments = attachments;
     [self.galleryView reloadData];
 }
@@ -87,11 +91,11 @@ NSString * const OZLAttachmentCellReuseIdentifier = @"OZLAttachmentCellReuseIden
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.delegate respondsToSelector:@selector(galleryCell:didSelectAttachment:withCellRelativeFrame:)]) {
-        UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    if ([self.delegate respondsToSelector:@selector(galleryCell:didSelectAttachment:withCellRelativeFrame:thumbnailImage:)]) {
+        OZLIssueAttachmentGalleryItemCell *cell = (OZLIssueAttachmentGalleryItemCell *)[collectionView cellForItemAtIndexPath:indexPath];
         CGRect cellFrame = [cell convertRect:cell.frame toView:self];
         
-        [self.delegate galleryCell:self didSelectAttachment:self.attachments[indexPath.row] withCellRelativeFrame:cellFrame];
+        [self.delegate galleryCell:self didSelectAttachment:self.attachments[indexPath.row] withCellRelativeFrame:cellFrame thumbnailImage:cell.thumbnailImageView.image];
     }
 }
 

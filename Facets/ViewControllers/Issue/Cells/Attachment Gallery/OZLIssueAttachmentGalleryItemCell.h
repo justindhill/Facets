@@ -12,5 +12,6 @@
 @interface OZLIssueAttachmentGalleryItemCell : UICollectionViewCell
 
 @property (nonatomic, strong) OZLModelAttachment *attachment;
+@property (readonly) OZLAsyncImageView *thumbnailImageView;
 
 @end

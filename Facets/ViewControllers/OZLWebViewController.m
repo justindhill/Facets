@@ -14,7 +14,7 @@
 
 @property (strong) WKWebView *webView;
 @property BOOL isFirstAppearance;
-@property NSData *documentData;
+@property NSString *documentString;
 
 @end
 
@@ -58,8 +58,9 @@
     NSURLSessionDataTask *task = [session dataTaskWithURL:self.sourceURL completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (!error && httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
-            weakSelf.documentData = data;
-            [weakSelf.webView loadData:weakSelf.documentData MIMEType:@"text/html" characterEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@""]];
+            weakSelf.documentString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            
+            [weakSelf.webView loadHTMLString:weakSelf.documentString baseURL:nil];
             
         } else {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"Sorry, we had issues loading this text." preferredStyle:UIAlertControllerStyleAlert];
