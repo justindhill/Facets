@@ -185,7 +185,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSAssert(cookie, @"Couldn't create cookie");
     
-    NSLog(@"set cookie: %@", cookie);
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
 }
 

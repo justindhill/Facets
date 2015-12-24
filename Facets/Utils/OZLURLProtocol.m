@@ -52,13 +52,9 @@ NSString * const OZLURLProtocolBypassKey = @"OZLURLProtocolBypassKey";
         NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:newRequest.URL];
         NSHTTPCookie *cookie = [[cookies filteredArrayUsingPredicate:predicate] firstObject];
         
-        NSLog(@"cookie: %@", cookie);
-
         if (cookie) {
             NSString *cookieString = [NSString stringWithFormat:@"_redmine_session=%@", cookie.value];
             [newRequest setValue:cookieString forHTTPHeaderField:@"Cookie"];
-            
-            NSLog(@"set cookie: %@", cookieString);
         }
     }
     
