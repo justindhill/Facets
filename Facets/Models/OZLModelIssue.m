@@ -6,6 +6,13 @@
 
 #import "OZLModelIssue.h"
 #import "OZLModelProject.h"
+#import "OZLModelVersion.h"
+
+@interface OZLModelIssue ()
+
+@property (nullable, strong) NSMutableDictionary *mutableChangeDictionary;
+
+@end
 
 @implementation OZLModelIssue
 
@@ -13,6 +20,8 @@
 
 - (id)initWithDictionary:(NSDictionary *)dic {
     if (self = [super init]) {
+        self.modelDiffingEnabled = NO;
+        
         _index = [[dic objectForKey:@"id"] integerValue];
         _projectId = [[[dic objectForKey:@"project"] objectForKey:@"id"] integerValue];
         id parent = [dic objectForKey:@"parent"];
@@ -72,16 +81,16 @@
         
         _subject = [dic objectForKey:@"subject"];
         _description = [dic objectForKey:@"description"];
-        _startDate = [dic objectForKey:@"start_date"];
-        _dueDate = [dic objectForKey:@"due_date"];
-        _createdOn = [dic objectForKey:@"created_on"];
-        _updatedOn = [dic objectForKey:@"updated_on"];
+        _startDate = [NSDate dateWithISO8601String:[dic objectForKey:@"start_date"]];
+        _dueDate = [NSDate dateWithISO8601String:[dic objectForKey:@"due_date"]];
+        _createdOn = [NSDate dateWithISO8601String:[dic objectForKey:@"created_on"]];
+        _updatedOn = [NSDate dateWithISO8601String:[dic objectForKey:@"updated_on"]];
         _doneRatio = [[dic objectForKey:@"done_ratio"] floatValue];
         
         id targetVersion = dic[@"fixed_version"];
         
         if (targetVersion) {
-            _targetVersion = [[OZLModelIssueTargetVersion alloc] initWithDictionary:targetVersion];
+            _targetVersion = [[OZLModelVersion alloc] initWithAttributeDictionary:targetVersion];
         }
         
         id spentHours = [dic objectForKey:@"spent_hours"];
@@ -130,57 +139,6 @@
     return self;
 }
 
-- (NSMutableDictionary *)toParametersDic {
-    
-    NSMutableDictionary *issueData = [[NSMutableDictionary alloc] init];
-    
-    if (_projectId > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_projectId] forKey:@"project_id"];
-    }
-    
-    if (_tracker && _tracker.trackerId > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_tracker.trackerId] forKey:@"tracker_id"];
-    }
-    
-    if (_status && _status.statusId > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_status.statusId] forKey:@"status_id"];
-    }
-    
-    if (_priority && _priority.init > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_priority.priorityId] forKey:@"priority_id"];
-    }
-    
-    if (_subject.length > 0) {
-        [issueData setObject:_subject forKey:@"subject"];
-    }
-    
-    if (_description.length > 0) {
-        [issueData setObject:_description forKey:@"description"];
-    }
-    
-    if (_category) {
-        [issueData setObject:[NSNumber numberWithInteger:_category.categoryId] forKey:@"category_id"];
-    }
-    
-    if (_assignedTo && _assignedTo.userId > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_assignedTo.userId] forKey:@"assigned_to_id"];
-    }
-    
-    if (_parentIssueId > 0) {
-        [issueData setObject:[NSNumber numberWithInteger:_parentIssueId] forKey:@"parent_issue_id"];
-    }
-    
-    if (_spentHours > 0) {
-        [issueData setObject:[NSNumber numberWithFloat:_spentHours] forKey:@"spent_hours"];
-    }
-    
-    if (_estimatedHours > 0) {
-        [issueData setObject:[NSNumber numberWithFloat:_estimatedHours] forKey:@"estimated_hours"];
-    }
-
-    return [[NSMutableDictionary alloc] initWithObjectsAndKeys:issueData, @"issue", nil];
-}
-
 + (nullable NSString *)displayValueForAttributeName:(NSString *)name attributeId:(NSInteger)attributeId {
     if ([name isEqualToString:@"project_id"]) {
         return [[OZLModelProject objectForPrimaryKey:@(attributeId)] name];
@@ -219,6 +177,167 @@
     }
         
     return attributeName;
+}
+
+- (NSDictionary *)changeDictionary {
+    return self.mutableChangeDictionary;
+}
+
+#pragma mark - Setters
+- (void)setModelDiffingEnabled:(BOOL)modelDiffingEnabled {
+    if (modelDiffingEnabled != _modelDiffingEnabled) {
+        _modelDiffingEnabled = modelDiffingEnabled;
+        
+        if (modelDiffingEnabled) {
+            self.mutableChangeDictionary = [NSMutableDictionary dictionary];
+        } else {
+            self.mutableChangeDictionary = nil;
+        }
+    }
+}
+
+- (void)setProjectId:(NSInteger)projectId {
+    _projectId = projectId;
+    
+    if (self.modelDiffingEnabled && projectId) {
+        self.mutableChangeDictionary[@"project_id"] = @(projectId);
+    }
+}
+
+- (void)setParentIssueId:(NSInteger)parentIssueId {
+    _parentIssueId = parentIssueId;
+    
+    if (self.modelDiffingEnabled && parentIssueId) {
+        self.mutableChangeDictionary[@"parent_issue_id"] = @(parentIssueId);
+    }
+}
+
+- (void)setTracker:(OZLModelTracker *)tracker {
+    _tracker = tracker;
+    
+    if (self.modelDiffingEnabled && tracker) {
+        self.mutableChangeDictionary[@"tracker_id"] = @(tracker.trackerId);
+    }
+}
+
+- (void)setAssignedTo:(OZLModelUser *)assignedTo {
+    _assignedTo = assignedTo;
+    
+    if (self.modelDiffingEnabled && assignedTo) {
+        self.mutableChangeDictionary[@"assigned_to_id"] = @(assignedTo.userId);
+    }
+}
+
+- (void)setPriority:(OZLModelIssuePriority *)priority {
+    _priority = priority;
+    
+    if (self.modelDiffingEnabled && priority) {
+        self.mutableChangeDictionary[@"priority_id"] = @(priority.priorityId);
+    }
+}
+
+- (void)setStatus:(OZLModelIssueStatus *)status {
+    _status = status;
+    
+    if (self.modelDiffingEnabled && status) {
+        self.mutableChangeDictionary[@"status_id"] = @(status.statusId);
+    }
+}
+
+- (void)setTargetVersion:(OZLModelVersion *)targetVersion {
+    _targetVersion = targetVersion;
+    
+    if (self.modelDiffingEnabled && targetVersion) {
+        self.mutableChangeDictionary[@"target_version_id"] = @(targetVersion.versionId);
+    }
+}
+
+- (void)setCategory:(OZLModelIssueCategory *)category {
+    _category = category;
+    
+    if (self.modelDiffingEnabled && category) {
+        self.mutableChangeDictionary[@"category_id"] = @(category.categoryId);
+    }
+}
+
+- (void)setSubject:(NSString *)subject {
+    _subject = subject;
+    
+    if (self.modelDiffingEnabled && subject) {
+        self.mutableChangeDictionary[@"subject"] = subject;
+    }
+}
+
+- (void)setDescription:(NSString *)description {
+    _description = description;
+    
+    if (self.modelDiffingEnabled && description) {
+        self.mutableChangeDictionary[@"description"] = description;
+    }
+}
+
+- (void)setStartDate:(NSDate *)startDate {
+    _startDate = startDate;
+    
+    if (self.modelDiffingEnabled && startDate) {
+        self.mutableChangeDictionary[@"start_date"] = [startDate ISO8601String];
+    }
+}
+
+- (void)setDueDate:(NSDate *)dueDate {
+    _dueDate = dueDate;
+    
+    if (self.modelDiffingEnabled && dueDate) {
+        self.mutableChangeDictionary[@"due_date"] = [dueDate ISO8601String];
+    }
+}
+
+- (void)setCreatedOn:(NSDate *)createdOn {
+    _createdOn = createdOn;
+    
+    if (self.modelDiffingEnabled && createdOn) {
+        self.mutableChangeDictionary[@"created_on"] = [createdOn ISO8601String];
+    }
+}
+
+- (void)setUpdatedOn:(NSDate *)updatedOn {
+    _updatedOn = updatedOn;
+    
+    if (self.modelDiffingEnabled && updatedOn) {
+        self.mutableChangeDictionary[@"updated_on"] = [updatedOn ISO8601String];
+    }
+}
+
+- (void)setDoneRatio:(float)doneRatio {
+    _doneRatio = doneRatio;
+    
+    if (self.modelDiffingEnabled) {
+        self.mutableChangeDictionary[@"done_ratio"] = @(doneRatio);
+    }
+}
+
+- (void)setSpentHours:(float)spentHours {
+    _spentHours = spentHours;
+    
+    if (self.modelDiffingEnabled) {
+        self.mutableChangeDictionary[@"spent_hours"] = @(spentHours);
+    }
+}
+
+- (void)setEstimatedHours:(float)estimatedHours {
+    _estimatedHours = estimatedHours;
+    
+    if (self.modelDiffingEnabled) {
+        self.mutableChangeDictionary[@"estimated_hours"] = @(estimatedHours);
+    }
+}
+
+- (void)setNotes:(NSString *)notes {
+    _notes = notes;
+    
+    if (self.modelDiffingEnabled && notes) {
+        self.mutableChangeDictionary[@"notes"] = notes;
+    }
 }
 
 @end

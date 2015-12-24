@@ -527,7 +527,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 }
 
 - (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion {
-    NSDictionary *issueDict = [issueData toParametersDic];
+    NSDictionary *issueDict = issueData.changeDictionary;
     
     NSError *jsonError;
     NSData *bodyData = [NSJSONSerialization dataWithJSONObject:issueDict options:0 error:&jsonError];
@@ -555,9 +555,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 - (void)updateIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion {
     
     NSString *path = [NSString stringWithFormat:@"/issues/%ld.json", (long)issueData.index];
+    
+    if (!issueData.changeDictionary) {
+        completion(NO, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidRequestBody userInfo:@{NSLocalizedDescriptionKey: @"The issue model passed didn't contain a change dictionary."}]);
+        return;
+    }
 
     //project info
-    NSDictionary *issueDict = [issueData toParametersDic];
+    NSDictionary *issueDict = @{ @"issue": issueData.changeDictionary };
     
     NSError *jsonError;
     NSData *bodyData = [NSJSONSerialization dataWithJSONObject:issueDict options:0 error:&jsonError];
@@ -574,7 +579,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
     [self PUT:path bodyData:bodyData completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         if (completion) {
-            BOOL success = (response.statusCode == 201 && !error);
+            BOOL success = (response.statusCode == 200 && !error);
             
             completion(success, error);
         }
@@ -965,6 +970,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"PUT";
     request.HTTPBody = bodyData;
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         

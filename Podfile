@@ -9,6 +9,7 @@ pod 'SDWebImage'
 pod 'ISO8601'
 pod 'GTMNSStringHTMLAdditions'
 pod 'Realm'
+pod 'JVFloatLabeledTextField'
 
 pod 'Reveal-iOS-SDK', :configuration => ['Debug']
 

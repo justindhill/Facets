@@ -15,6 +15,7 @@
 @property (strong) UILabel *assigneeDisplayNameLabel;
 @property (strong) UIImageView *assigneeProfileImageView;
 @property (assign) CGFloat contentPadding;
+@property (strong) UIButton *assignButton;
 
 - (void)applyIssueModel:(OZLModelIssue *)issue;
 

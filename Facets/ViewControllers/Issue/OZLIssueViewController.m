@@ -30,7 +30,7 @@ NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier
 NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier";
 NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIdentifier";
 
-@interface OZLIssueViewController () <OZLIssueViewModelDelegate, DRPSlidingTabViewDelegate, OZLIssueAttachmentGalleryCellDelegate, AVAssetResourceLoaderDelegate>
+@interface OZLIssueViewController () <OZLIssueViewModelDelegate, DRPSlidingTabViewDelegate, OZLIssueAttachmentGalleryCellDelegate, AVAssetResourceLoaderDelegate, UIViewControllerTransitioningDelegate>
 
 @property (strong) OZLIssueHeaderView *issueHeader;
 @property (strong) DRPSlidingTabView *detailView;
@@ -56,6 +56,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     
     self.issueHeader = [[OZLIssueHeaderView alloc] init];
     self.issueHeader.contentPadding = OZLContentPadding;
+    [self.issueHeader.assignButton addTarget:self action:@selector(quickAssignAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OZLDetailReuseIdentifier];
@@ -154,6 +155,20 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     }
 }
 
+- (NSArray<id<UIPreviewActionItem>> *)previewActionItems {
+    NSMutableArray *items = [NSMutableArray array];
+    
+    [items addObject:[UIPreviewAction actionWithTitle:@"Quick Assign" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        UIViewController *vc = [[OZLQuickAssignViewController alloc] initWithIssueModel:self.viewModel.issueModel];
+        vc.transitioningDelegate = self;
+        vc.modalPresentationStyle = UIModalPresentationCustom;
+        
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:vc animated:YES completion:nil];
+    }]];
+    
+    return items;
+}
+
 #pragma mark - Button actions
 - (void)descriptionShowMoreAction:(UIButton *)button {
     OZLIssueFullDescriptionViewController *descriptionVC = [[OZLIssueFullDescriptionViewController alloc] init];
@@ -161,6 +176,15 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     descriptionVC.contentPadding = OZLContentPadding;
     
     [self.navigationController pushViewController:descriptionVC animated:YES];
+}
+
+- (void)quickAssignAction:(UIButton *)button {
+    
+    OZLQuickAssignViewController *vc = [[OZLQuickAssignViewController alloc] initWithIssueModel:self.viewModel.issueModel];
+    vc.modalPresentationStyle = UIModalPresentationCustom;
+    vc.transitioningDelegate = self;
+    
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -319,6 +343,11 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         [self.navigationController pushViewController:textVC animated:YES];
     }
     NSLog(@"Attachment selected: %@", attachment);
+}
+
+#pragma mark - Transitioning
+- (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source {
+    return [[OZLSheetPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
 }
 
 @end

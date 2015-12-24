@@ -29,6 +29,9 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    self.tabBar.translucent = NO;
+    self.tabBar.barTintColor = [UIColor whiteColor];
+    
     self.projectIssuesVC = [[OZLIssueListViewController alloc] initWithNibName:@"OZLIssueListViewController" bundle:nil];
     self.projectIssuesVC.viewModel = [[OZLProjectIssueListViewModel alloc] init];
     
@@ -38,12 +41,18 @@
     self.settingsVC.delegate = self;
     
     UINavigationController *projectNav = [[UINavigationController alloc] initWithRootViewController:self.projectIssuesVC];
+    projectNav.navigationBar.translucent = NO;
+    projectNav.navigationBar.barTintColor = [UIColor whiteColor];
     projectNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Issues" image:nil tag:0];
     
     UINavigationController *queryListNav = [[UINavigationController alloc] initWithRootViewController:self.queryListVC];
+    queryListNav.navigationBar.translucent = NO;
+    queryListNav.navigationBar.barTintColor = [UIColor whiteColor];
     queryListNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Queries" image:nil tag:0];
     
     UINavigationController *settingsNav = [[UINavigationController alloc] initWithRootViewController:self.settingsVC];
+    settingsNav.navigationBar.translucent = NO;
+    queryListNav.navigationBar.barTintColor = [UIColor whiteColor];
     settingsNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:nil tag:0];
     
     self.viewControllers = @[ projectNav, queryListNav, settingsNav ];

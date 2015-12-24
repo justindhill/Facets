@@ -15,6 +15,7 @@
 #import "OZLModelTimeEntryActivity.h"
 #import "OZLModelCustomField.h"
 #import "OZLModelVersion.h"
+#import "OZLModelMembership.h"
 
 extern NSString * const OZLNetworkErrorDomain;
 
@@ -22,7 +23,8 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
     OZLNetworkErrorInvalidCredentials,
     OZLNetworkErrorCouldntParseTokens,
     OZLNetworkErrorUnacceptableStatusCode,
-    OZLNetworkErrorInvalidResponse
+    OZLNetworkErrorInvalidResponse,
+    OZLNetworkErrorInvalidRequestBody
 };
 
 @interface OZLNetwork : NSObject

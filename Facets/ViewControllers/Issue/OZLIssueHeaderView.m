@@ -43,6 +43,8 @@ const CGFloat assigneeTextSize = 14.;
         self.assigneeDisplayNameLabel = [[UILabel alloc] init];
         self.assigneeDisplayNameLabel.font = [UIFont systemFontOfSize:assigneeTextSize];
         
+        self.assignButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
         self.isFirstLayout = YES;
     }
     
@@ -56,6 +58,7 @@ const CGFloat assigneeTextSize = 14.;
         [self addSubview:self.assigneeProfileImageView];
         [self addSubview:self.assigneeTextLabel];
         [self addSubview:self.assigneeDisplayNameLabel];
+        [self addSubview:self.assignButton];
     }
     
     self.titleLabel.preferredMaxLayoutWidth = self.frame.size.width - (2 * self.contentPadding);
@@ -69,6 +72,12 @@ const CGFloat assigneeTextSize = 14.;
     
     [self.assigneeDisplayNameLabel sizeToFit];
     self.assigneeDisplayNameLabel.frame = (CGRect){{self.assigneeProfileImageView.right + 5, self.assigneeTextLabel.bottom + 3}, self.assigneeDisplayNameLabel.frame.size};
+    
+    CGRect newAssignFrame = CGRectZero;
+    newAssignFrame.origin = self.assigneeProfileImageView.frame.origin;
+    newAssignFrame.size.width = MAX(self.assigneeTextLabel.right, self.assigneeDisplayNameLabel.right) - self.assigneeProfileImageView.left;
+    newAssignFrame.size.height = self.assigneeDisplayNameLabel.bottom - self.assigneeTextLabel.top;
+    self.assignButton.frame = newAssignFrame;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -89,7 +98,7 @@ const CGFloat assigneeTextSize = 14.;
         
     } else {
         self.assigneeDisplayNameLabel.font = [UIFont italicSystemFontOfSize:assigneeTextSize];
-        self.assigneeDisplayNameLabel.text = @"Unassigned";
+        self.assigneeDisplayNameLabel.text = @"Tap to assign";
         self.assigneeDisplayNameLabel.textColor = [UIColor grayColor];
     }
 }
