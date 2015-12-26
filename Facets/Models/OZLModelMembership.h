@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "OZLModelUser.h"
 
-@interface OZLModelMembership : NSObject
+@interface OZLModelMembership : RLMObject
 
+@property NSInteger membershipId;
+@property NSInteger projectId;
 @property (strong) OZLModelUser *user;
 
 - (instancetype)initWithAttributeDictionary:(NSDictionary *)attributes;

@@ -178,9 +178,12 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         
         [[RLMRealm defaultRealm] beginWriteTransaction];
         
+        RLMResults *projectMemberships = [OZLModelMembership objectsWhere:@"%K = %ld", @"projectId", project];
+        [[RLMRealm defaultRealm] deleteObjects:projectMemberships];
+        
         for (OZLModelMembership *membership in memberships) {
-            if (membership.user) {
-                [OZLModelUser createOrUpdateInDefaultRealmWithValue:membership.user];
+            if (membership.projectId > 0 && membership.user) {
+                [OZLModelMembership createOrUpdateInDefaultRealmWithValue:membership];
             }
         }
         

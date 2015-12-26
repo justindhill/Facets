@@ -15,8 +15,8 @@ import UIKit
 @objc class OZLQuickAssignViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     let CellReuseIdentifier = "reuseIdentifier"
-    var canonicalUsers: RLMResults?
-    var filteredUsers: RLMResults?
+    var canonicalMemberships: RLMResults?
+    var filteredMemberships: RLMResults?
     var issueModel: OZLModelIssue?
     weak var delegate: OZLQuickAssignDelegate?
     
@@ -57,8 +57,13 @@ import UIKit
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowOrHide:", name: UIKeyboardWillShowNotification, object: nil)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowOrHide:", name: UIKeyboardWillHideNotification, object: nil)
     
-            self.canonicalUsers = OZLModelUser.allObjects()
-            self.filteredUsers = self.canonicalUsers
+            guard let issueModel = self.issueModel else {
+                assertionFailure("Issue model wasn't set on OZLQuickAssignViewController before its view was loaded.");
+                return
+            }
+            
+            self.canonicalMemberships = OZLModelMembership.objectsWithPredicate(NSPredicate(format: "%K = %ld", "projectId", issueModel.projectId))
+            self.filteredMemberships = self.canonicalMemberships
         }
     }
     
@@ -84,8 +89,8 @@ import UIKit
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let users = self.filteredUsers {
-            return Int(users.count)
+        if let memberships = self.filteredMemberships {
+            return Int(memberships.count)
         }
         
         return 0
@@ -93,8 +98,8 @@ import UIKit
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseIdentifier, forIndexPath: indexPath)
-        if let user = self.filteredUsers?[UInt(indexPath.row)] {
-            cell.textLabel?.text = user.name
+        if let membership = self.filteredMemberships?[UInt(indexPath.row)] as? OZLModelMembership {
+            cell.textLabel?.text = membership.user.name
         }
         
         return cell
@@ -102,9 +107,9 @@ import UIKit
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let view = self.view as? OZLQuickAssignView, let issueModel = self.issueModel {
-            if let newAssignee = self.filteredUsers?.objectAtIndex(UInt(indexPath.row)) as? OZLModelUser {
+            if let newAssignee = self.filteredMemberships?.objectAtIndex(UInt(indexPath.row)) as? OZLModelMembership {
                 let oldAssignee = issueModel.assignedTo
-                issueModel.assignedTo = newAssignee
+                issueModel.assignedTo = newAssignee.user
                 view.showLoadingOverlay()
                 
                 weak var weakSelf = self
@@ -114,7 +119,7 @@ import UIKit
                     
                     if let weakSelf = weakSelf where error == nil {
                         weakSelf.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-                        weakSelf.delegate?.quickAssignController(weakSelf, didChangeAssigneeInIssue: issueModel, from: oldAssignee, to: newAssignee)
+                        weakSelf.delegate?.quickAssignController(weakSelf, didChangeAssigneeInIssue: issueModel, from: oldAssignee, to: newAssignee.user)
                         
                     } else {
                         let alert = UIAlertController(title: "Error", message: "Couldn't set assignee.", preferredStyle: .Alert)
@@ -136,7 +141,7 @@ import UIKit
         } else if let view = self.view as? OZLQuickAssignView,
             let resultString = (textField.text as NSString?)?.stringByReplacingCharactersInRange(range, withString: string) {
                 
-            self.filteredUsers = self.canonicalUsers?.objectsWithPredicate(NSPredicate(format: "%K CONTAINS[c] %@", "name", resultString))
+            self.filteredMemberships = self.filteredMemberships?.objectsWithPredicate(NSPredicate(format: "%K CONTAINS[c] %@", "user.name", resultString))
             view.tableView.reloadData()
         }
         
@@ -145,7 +150,7 @@ import UIKit
     
     func textFieldShouldClear(textField: UITextField) -> Bool {
         if let view = self.view as? OZLQuickAssignView {
-            self.filteredUsers = self.canonicalUsers
+            self.filteredMemberships = self.canonicalMemberships
             view.tableView.reloadData()
         }
         
