@@ -16,6 +16,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 @property (strong) NSURLSession *urlSession;
 @property NSOperationQueue *taskCallbackQueue;
+@property (nonatomic, assign) NSInteger activeRequestCount;
+@property NSObject *requestCountSyncToken;
 
 @end
 
@@ -46,9 +48,17 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
         self.taskCallbackQueue = [[NSOperationQueue alloc] init];
         self.urlSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:self.taskCallbackQueue];
+        self.requestCountSyncToken = [[NSObject alloc] init];
     }
     
     return self;
+}
+
+- (void)setActiveRequestCount:(NSInteger)activeRequestCount {
+    @synchronized(self.requestCountSyncToken) {
+        _activeRequestCount = activeRequestCount;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = (activeRequestCount > 0);
+    }
 }
 
 - (NSURL *)urlWithRelativePath:(NSString *)path {
@@ -928,7 +938,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:components.URL];
     request.HTTPMethod = @"GET";
     
+    self.activeRequestCount += 1;
+    
+    __weak OZLNetwork *weakSelf = self;
     NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        weakSelf.activeRequestCount -= 1;
         
         if (completion) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -949,7 +963,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     request.HTTPMethod = @"POST";
     request.HTTPBody = bodyData;
     
+    self.activeRequestCount += 1;
+    
+    __weak OZLNetwork *weakSelf = self;
     NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        weakSelf.activeRequestCount -= 1;
         
         if (completion) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -971,7 +989,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     request.HTTPBody = bodyData;
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
+    self.activeRequestCount += 1;
+    
+    __weak OZLNetwork *weakSelf = self;
     NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        weakSelf.activeRequestCount -= 1;
         
         if (completion) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -991,7 +1013,11 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"DELETE";
     
+    self.activeRequestCount += 1;
+    
+    __weak OZLNetwork *weakSelf = self;
     NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        weakSelf.activeRequestCount -= 1;
         
         if (completion) {
             dispatch_async(dispatch_get_main_queue(), ^{
