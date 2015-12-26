@@ -16,11 +16,11 @@ import UIKit
 }
 
 @objc class OZLModelJournalDetail: NSObject {
-    private(set) var type: OZLModelJournalDetailType? = nil
-    private(set) var oldValue: String? = nil
-    private(set) var newValue: String? = nil
+    var type: OZLModelJournalDetailType = .Unknown
+    var oldValue: String? = nil
+    var newValue: String? = nil
     
-    private(set) var name: String? = nil
+    var name: String? = nil
     
     private lazy var customField: OZLModelCustomField? = {
         if let id = self.name {
@@ -64,7 +64,13 @@ import UIKit
         }
     }
     
-    init(attributes: Dictionary<String, AnyObject>) {
+    override init() {
+        super.init()
+    }
+    
+    convenience init(attributes: Dictionary<String, AnyObject>) {
+        self.init()
+        
         if let type = attributes["property"] as? String {
             if type == "attr" {
                 self.type = .Attribute

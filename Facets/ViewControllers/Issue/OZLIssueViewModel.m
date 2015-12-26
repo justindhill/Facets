@@ -122,4 +122,24 @@ NSString * const OZLIssueSectionRecentActivity = @"OZLIssueSectionRecentActivity
     }];
 }
 
+- (void)quickAssignController:(OZLQuickAssignViewController *)quickAssign didChangeAssigneeInIssue:(OZLModelIssue *)issue from:(OZLModelUser * _Nullable)from to:(OZLModelUser * _Nullable)to {
+    self.issueModel = issue;
+    
+    OZLModelJournal *journal = [[OZLModelJournal alloc] init];
+    journal.creationDate = [NSDate date];
+    
+    OZLModelJournalDetail *detail = [[OZLModelJournalDetail alloc] init];
+    detail.type = OZLModelJournalDetailTypeAttribute;
+    detail.oldValue = [NSString stringWithFormat:@"%ld", from.userId];
+    detail.newValue = [NSString stringWithFormat:@"%ld", to.userId];
+    detail.name = @"assigned_to_id";
+    
+    journal.details = @[ detail ];
+    issue.journals = [issue.journals arrayByAddingObject:journal];
+    
+    if ([self.delegate respondsToSelector:@selector(viewModelIssueContentDidChange:)]) {
+        [self.delegate viewModelIssueContentDidChange:self];
+    }
+}
+
 @end

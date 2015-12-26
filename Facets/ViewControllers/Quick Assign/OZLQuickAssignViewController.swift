@@ -8,12 +8,17 @@
 
 import UIKit
 
+@objc protocol OZLQuickAssignDelegate {
+    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?)
+}
+
 @objc class OZLQuickAssignViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     let CellReuseIdentifier = "reuseIdentifier"
     var canonicalUsers: RLMResults?
     var filteredUsers: RLMResults?
     var issueModel: OZLModelIssue?
+    weak var delegate: OZLQuickAssignDelegate?
     
     convenience init(issueModel: OZLModelIssue) {
         self.init(nibName: nil, bundle: nil)
@@ -98,6 +103,7 @@ import UIKit
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let view = self.view as? OZLQuickAssignView, let issueModel = self.issueModel {
             if let newAssignee = self.filteredUsers?.objectAtIndex(UInt(indexPath.row)) as? OZLModelUser {
+                let oldAssignee = issueModel.assignedTo
                 issueModel.assignedTo = newAssignee
                 view.showLoadingOverlay()
                 
@@ -106,8 +112,9 @@ import UIKit
                 OZLNetwork.sharedInstance().updateIssue(issueModel, withParams: nil, completion: { (success, error) -> Void in
                     view.hideLoadingOverlay()
                     
-                    if error == nil {
-                        weakSelf?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                    if let weakSelf = weakSelf where error == nil {
+                        weakSelf.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                        weakSelf.delegate?.quickAssignController(weakSelf, didChangeAssigneeInIssue: issueModel, from: oldAssignee, to: newAssignee)
                         
                     } else {
                         let alert = UIAlertController(title: "Error", message: "Couldn't set assignee.", preferredStyle: .Alert)

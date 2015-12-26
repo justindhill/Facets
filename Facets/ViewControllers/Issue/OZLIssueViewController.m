@@ -21,6 +21,7 @@
 #import <AVKit/AVKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <JTSImageViewController/JTSImageViewController.h>
+#import "OZLNavigationChildChangeListener.h"
 
 const NSInteger OZLDetailSectionIndex = 0;
 const NSInteger OZLDescriptionSectionIndex = 1;
@@ -159,9 +160,10 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     NSMutableArray *items = [NSMutableArray array];
     
     [items addObject:[UIPreviewAction actionWithTitle:@"Quick Assign" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
-        UIViewController *vc = [[OZLQuickAssignViewController alloc] initWithIssueModel:self.viewModel.issueModel];
+        OZLQuickAssignViewController *vc = [[OZLQuickAssignViewController alloc] initWithIssueModel:[self.viewModel.issueModel copy]];
         vc.transitioningDelegate = self;
         vc.modalPresentationStyle = UIModalPresentationCustom;
+        vc.delegate = self.previewQuickAssignDelegate;
         
         [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:vc animated:YES completion:nil];
     }]];
@@ -180,9 +182,10 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 
 - (void)quickAssignAction:(UIButton *)button {
     
-    OZLQuickAssignViewController *vc = [[OZLQuickAssignViewController alloc] initWithIssueModel:self.viewModel.issueModel];
+    OZLQuickAssignViewController *vc = [[OZLQuickAssignViewController alloc] initWithIssueModel:[self.viewModel.issueModel copy]];
     vc.modalPresentationStyle = UIModalPresentationCustom;
     vc.transitioningDelegate = self;
+    vc.delegate = self.viewModel;
     
     [self presentViewController:vc animated:YES completion:nil];
 }
@@ -312,7 +315,31 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 #pragma mark - OZLIssueViewModelDelegate
 - (void)viewModel:(OZLIssueViewModel *)viewModel didFinishLoadingIssueWithError:(NSError *)error {
     [self hideLoadingSpinner];
+    [self applyIssueModel:self.viewModel.issueModel];
     [self.tableView reloadData];
+    [self informAncestorsIssueChanged];
+}
+
+- (void)viewModelIssueContentDidChange:(OZLIssueViewModel *)viewModel {
+    [self applyIssueModel:self.viewModel.issueModel];
+    [self.tableView reloadData];
+    [self informAncestorsIssueChanged];
+}
+
+- (void)informAncestorsIssueChanged {
+    __weak OZLIssueViewController *weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (UIViewController *vc in weakSelf.navigationController.viewControllers) {
+            if (vc == weakSelf) {
+                continue;
+            }
+            
+            if ([vc conformsToProtocol:@protocol(OZLNavigationChildChangeListener)]) {
+                id<OZLNavigationChildChangeListener> listener = (id<OZLNavigationChildChangeListener>)vc;
+                [listener navigationChild:weakSelf didModifyIssue:weakSelf.viewModel.issueModel];
+            }
+        }
+    });
 }
 
 #pragma mark - OZLIssueAttachmentGalleryCellDelegate

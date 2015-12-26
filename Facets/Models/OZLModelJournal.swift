@@ -10,13 +10,19 @@ import UIKit
 
 class OZLModelJournal: NSObject {
     
-    private(set) var author: OZLModelUser? = nil
-    private(set) var notes: String? = nil
-    private(set) var journalId: Int? = nil
-    private(set) var creationDate: NSDate? = nil
-    private(set) var details: Array<OZLModelJournalDetail> = []
+    var author: OZLModelUser? = nil
+    var notes: String? = nil
+    var journalId: Int? = nil
+    var creationDate: NSDate? = nil
+    var details: Array<OZLModelJournalDetail> = []
     
-    init(attributes: Dictionary<String, AnyObject>) {
+    override init() {
+        super.init()
+    }
+    
+    convenience init(attributes: Dictionary<String, AnyObject>) {
+        self.init()
+        
         if let authorDict = attributes["user"] as? Dictionary<String, AnyObject> {
             self.author = OZLModelUser(attributeDictionary: authorDict)
         }
@@ -36,8 +42,6 @@ class OZLModelJournal: NSObject {
             
             self.details = detailModels
         }
-        
-        super.init()
     }
     
     override var description: String {

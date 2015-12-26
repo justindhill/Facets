@@ -11,12 +11,14 @@
 #import "OZLIssueViewController.h"
 #import "OZLSingleton.h"
 #import "OZLLoadingView.h"
+#import "OZLNavigationChildChangeListener.h"
 
 #import "Facets-Swift.h"
 
 const CGFloat OZLIssueListComposeButtonHeight = 48.;
+const NSInteger OZLZeroHeightFooterTag = -1;
 
-@interface OZLIssueListViewController () <UIViewControllerPreviewingDelegate> {
+@interface OZLIssueListViewController () <UIViewControllerPreviewingDelegate, OZLNavigationChildChangeListener> {
 
     float _sideviewOffset;
     MBProgressHUD  *_HUD;
@@ -77,7 +79,7 @@ const CGFloat OZLIssueListComposeButtonHeight = 48.;
         [self refreshProjectSelector];
         
         [self showFooterActivityIndicator];
-        [self reloadData];
+        [self reloadProjectData];
     }
     
     if (self.viewModel.shouldShowComposeButton && !self.composeButton.superview) {
@@ -138,6 +140,11 @@ const CGFloat OZLIssueListComposeButtonHeight = 48.;
     }
 }
 
+- (void)setViewModel:(id<OZLIssueListViewModel>)viewModel {
+    _viewModel = viewModel;
+    viewModel.delegate = self;
+}
+
 #pragma mark - Behavior
 - (void)refreshProjectSelector {
     if (self.viewModel.shouldShowProjectSelector) {
@@ -171,11 +178,24 @@ const CGFloat OZLIssueListComposeButtonHeight = 48.;
     }
 }
 
-- (void)reloadData {
+- (void)reloadProjectData {
 
     __weak OZLIssueListViewController *weakSelf = self;
     [self.viewModel loadIssuesSortedBy:nil ascending:NO completion:^(NSError *error) {
-        [weakSelf.tableView reloadData];
+        
+        if (error) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Couldn't load issue list" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            
+            [weakSelf presentViewController:alert animated:NO completion:nil];
+            
+        } else {
+            [weakSelf.tableView reloadData];
+            
+            if (!weakSelf.viewModel.moreIssuesAvailable) {
+                [weakSelf hideFooterActivityIndicator];
+            }
+        }
     }];
 }
 
@@ -185,7 +205,7 @@ const CGFloat OZLIssueListComposeButtonHeight = 48.;
 
 #pragma mark - Actions
 - (void)refreshAction:(UIRefreshControl *)refreshControl {
-    [self reloadData];
+    [self reloadProjectData];
 }
 
 - (void)composeButtonAction:(UIButton *)button {
@@ -212,31 +232,20 @@ const CGFloat OZLIssueListComposeButtonHeight = 48.;
     [self showFooterActivityIndicator];
     self.viewModel.projectId = project.projectId;
     [self.tableView reloadData];
-    
-    __weak OZLIssueListViewController *weakSelf = self;
-    [self.viewModel loadIssuesSortedBy:nil ascending:NO completion:^(NSError *error) {
-        
-        if (error) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Couldn't load issue list" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-            
-            [weakSelf presentViewController:alert animated:NO completion:nil];
-            
-        } else {
-            [weakSelf.tableView reloadData];
-        }
-    }];
+    [self reloadProjectData];
 }
 
 #pragma mark - Previewing
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    CGPoint translatedLocation = CGPointMake(location.x, self.tableView.contentOffset.y + location.y);
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:translatedLocation];
     
     OZLModelIssue *issueModel = self.viewModel.issues[indexPath.row];
     OZLIssueViewModel *viewModel = [[OZLIssueViewModel alloc] initWithIssueModel:issueModel];
     
     OZLIssueViewController *issueVC = [[OZLIssueViewController alloc] init];
     issueVC.viewModel = viewModel;
+    issueVC.previewQuickAssignDelegate = self.viewModel;
     
     return issueVC;
 }
@@ -268,7 +277,7 @@ const CGFloat OZLIssueListComposeButtonHeight = 48.;
     
     OZLModelIssue *issue = self.viewModel.issues[indexPath.row];
     cell.textLabel.text = issue.subject;
-    cell.detailTextLabel.text = issue.description;
+    cell.detailTextLabel.text = issue.assignedTo.name;
     
     return cell;
 }
@@ -302,7 +311,7 @@ const CGFloat OZLIssueListComposeButtonHeight = 48.;
 }
 
 - (void)showFooterActivityIndicator {
-    if (self.tableView.tableFooterView) {
+    if (self.tableView.tableFooterView && self.tableView.tableFooterView.tag != OZLZeroHeightFooterTag) {
         return;
     }
     
@@ -314,7 +323,8 @@ const CGFloat OZLIssueListComposeButtonHeight = 48.;
 }
 
 - (void)hideFooterActivityIndicator {
-    self.tableView.tableFooterView = nil;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
+    self.tableView.tableFooterView.tag = OZLZeroHeightFooterTag;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -369,6 +379,16 @@ const CGFloat OZLIssueListComposeButtonHeight = 48.;
 - (void)editIssueListDone:(id)sender {
     [self.tableView setEditing:NO animated:YES];
     self.navigationItem.rightBarButtonItem = self.optionsMenu.barItem;
+}
+
+#pragma mark - View model delegate
+- (void)viewModelIssueListContentDidChange:(id<OZLIssueListViewModel>)viewModel {
+    [self.tableView reloadData];
+}
+
+#pragma mark - OZLNavigationChildChangeListener
+- (void)navigationChild:(UIViewController *)navigationChild didModifyIssue:(OZLModelIssue *)issue {
+    [self.viewModel processUpdatedIssue:issue];
 }
 
 @end

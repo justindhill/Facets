@@ -9,6 +9,7 @@
 #import "OZLModelIssue.h"
 #import "OZLModelIssueStatus.h"
 #import "OZLModelVersion.h"
+#import "OZLModelIssue.h"
 #import "OZLModelIssueCategory.h"
 #import "OZLModelIssuePriority.h"
 #import "OZLModelUser.h"

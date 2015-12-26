@@ -13,5 +13,6 @@
 @interface OZLIssueViewController : UITableViewController
 
 @property (nonatomic, strong) OZLIssueViewModel *viewModel;
+@property (weak) id<OZLQuickAssignDelegate> previewQuickAssignDelegate;
 
 @end

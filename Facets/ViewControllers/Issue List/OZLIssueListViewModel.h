@@ -8,8 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol OZLIssueListViewModel
+@protocol OZLIssueListViewModel;
+@protocol OZLIssueListViewModelDelegate <NSObject>
 
+- (void)viewModelIssueListContentDidChange:(id<OZLIssueListViewModel>)viewModel;
+
+@end
+
+@protocol OZLIssueListViewModel <OZLQuickAssignDelegate>
+
+@property (weak) id<OZLIssueListViewModelDelegate> delegate;
 @property NSInteger projectId;
 @property NSString *title;
 @property (readonly) NSArray *issues;
@@ -21,6 +29,7 @@
 - (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void(^)(NSError *error))completion;
 - (void)loadMoreIssuesCompletion:(void(^)(NSError *error))completion;
 - (void)deleteIssueAtIndex:(NSInteger)index completion:(void(^)(NSError *error))completion;
+- (void)processUpdatedIssue:(OZLModelIssue *)issue;
 
 @optional
 @property (readonly) RLMResults *projects;

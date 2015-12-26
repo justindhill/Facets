@@ -16,7 +16,7 @@
 
 @class OZLModelJournal;
 
-@interface OZLModelIssue : NSObject
+@interface OZLModelIssue : NSObject <NSCopying>
 
 /**
  *  @brief Whether or not changes to the model's properties affect the diff dictionary

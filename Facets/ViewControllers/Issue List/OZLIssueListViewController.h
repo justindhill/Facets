@@ -30,10 +30,10 @@
 #import "OZLModelProject.h"
 #import "OZLIssueListViewModel.h"
 
-@interface OZLIssueListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface OZLIssueListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, OZLIssueListViewModelDelegate>
 
 @property (weak) IBOutlet UITableView *tableView;
-@property (strong) id<OZLIssueListViewModel> viewModel;
+@property (nonatomic, strong) id<OZLIssueListViewModel> viewModel;
 
 @property (nonatomic, strong) OZLModelProject *projectData;
 

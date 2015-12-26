@@ -340,4 +340,33 @@
     }
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    OZLModelIssue *copy = [[OZLModelIssue alloc] init];
+    copy.index = self.index;
+    copy.projectId = self.projectId;
+    copy.parentIssueId = self.parentIssueId;
+    copy.tracker = self.tracker;
+    copy.author = self.author;
+    copy.assignedTo = self.assignedTo;
+    copy.priority = self.priority;
+    copy.status = self.status;
+    copy.category = self.category;
+    copy.targetVersion = self.targetVersion;
+    copy.customFields = self.customFields;
+    copy.subject = self.subject;
+    copy.description = self.description;
+    copy.startDate = self.startDate;
+    copy.dueDate = self.dueDate;
+    copy.createdOn = self.createdOn;
+    copy.updatedOn = self.updatedOn;
+    copy.doneRatio = self.doneRatio;
+    copy.spentHours = self.spentHours;
+    copy.estimatedHours = self.estimatedHours;
+    copy.notes = self.notes;
+    copy.attachments = self.attachments;
+    copy.journals = self.journals;
+    
+    return copy;
+}
+
 @end

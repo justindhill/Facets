@@ -24,16 +24,16 @@ typedef NS_ENUM(NSInteger, OZLIssueCompleteness) {
 @protocol OZLIssueViewModelDelegate <NSObject>
 
 - (void)viewModel:(OZLIssueViewModel *)viewModel didFinishLoadingIssueWithError:(NSError *)error;
+- (void)viewModelIssueContentDidChange:(OZLIssueViewModel *)viewModel;
 
 @end
 
-@interface OZLIssueViewModel : NSObject
+@interface OZLIssueViewModel : NSObject <OZLQuickAssignDelegate>
 
 - (instancetype)initWithIssueModel:(OZLModelIssue *)issueModel NS_DESIGNATED_INITIALIZER;
 - (void)loadIssueData;
 - (OZLModelJournal *)recentActivityAtIndex:(NSInteger)index;
 - (NSString *)displayNameForSectionName:(NSString *)sectionName;
-
 
 @property (weak) id<OZLIssueViewModelDelegate> delegate;
 @property (nonatomic, strong) OZLModelIssue *issueModel;

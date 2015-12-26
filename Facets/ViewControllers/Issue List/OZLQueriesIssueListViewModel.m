@@ -19,6 +19,7 @@
 
 @implementation OZLQueriesIssueListViewModel
 
+@synthesize delegate;
 @synthesize title;
 @synthesize issues;
 
@@ -91,6 +92,22 @@
             }
         }
     }];
+}
+
+- (void)processUpdatedIssue:(OZLModelIssue *)issue {
+    NSInteger issueIndex = [self.issues indexOfObjectPassingTest:^BOOL(OZLModelIssue * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        return (issue.index == obj.index);
+    }];
+    
+    if (issueIndex != NSNotFound) {
+        [self.issues replaceObjectAtIndex:issueIndex withObject:issue];
+        [self.delegate viewModelIssueListContentDidChange:self];
+    }
+}
+
+#pragma mark - OZLQuickAssignDelegate
+- (void)quickAssignController:(OZLQuickAssignViewController *)quickAssign didChangeAssigneeInIssue:(OZLModelIssue *)issue from:(OZLModelUser *)from to:(OZLModelUser *)to {
+    [self processUpdatedIssue:issue];
 }
 
 @end

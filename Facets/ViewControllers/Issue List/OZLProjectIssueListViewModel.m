@@ -21,6 +21,7 @@
 
 @implementation OZLProjectIssueListViewModel
 
+@synthesize delegate;
 @synthesize projectId = _projectId;
 @synthesize title;
 @synthesize issues;
@@ -77,7 +78,6 @@
     [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:0 limit:25 params:nil completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
         
         weakSelf.isLoading = NO;
-        weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
         
         if (error) {
             NSLog(@"error getIssueListForProject: %@", error.description);
@@ -85,6 +85,7 @@
             
         } else {
             weakSelf.issues = [result mutableCopy];
+            weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
             completion(nil);
         }
     }];
@@ -103,14 +104,14 @@
     [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:self.issues.count limit:25 params:nil completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
         
         weakSelf.isLoading = NO;
-        weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
         
         if (error) {
             NSLog(@"error getIssueListForProject: %@", error.description);
             completion(error);
             
         } else {
-            weakSelf.issues = [[weakSelf.issues arrayByAddingObjectsFromArray:result] mutableCopy];
+            [weakSelf.issues addObjectsFromArray:result];
+            weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
             completion(nil);
         }
     }];
@@ -132,6 +133,22 @@
             }
         }
     }];
+}
+
+- (void)processUpdatedIssue:(OZLModelIssue *)issue {
+    NSInteger issueIndex = [self.issues indexOfObjectPassingTest:^BOOL(OZLModelIssue * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        return (issue.index == obj.index);
+    }];
+    
+    if (issueIndex != NSNotFound) {
+        [self.issues replaceObjectAtIndex:issueIndex withObject:issue];
+        [self.delegate viewModelIssueListContentDidChange:self];
+    }
+}
+
+#pragma mark - OZLQuickAssignDelegate
+- (void)quickAssignController:(OZLQuickAssignViewController *)quickAssign didChangeAssigneeInIssue:(OZLModelIssue *)issue from:(OZLModelUser *)from to:(OZLModelUser *)to {
+    [self processUpdatedIssue:issue];
 }
 
 @end
