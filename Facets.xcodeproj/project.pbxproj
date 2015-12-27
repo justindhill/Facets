@@ -895,7 +895,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEFINES_MODULE = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
@@ -904,7 +904,7 @@
 				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = me.herpderp.facets;
+				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "d4ada11b-801a-4304-b3be-d88a6ea3a5c3";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
@@ -923,7 +923,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEFINES_MODULE = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
@@ -932,7 +932,7 @@
 				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = me.herpderp.facets;
+				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "2d7b6dd2-cf56-4850-9317-e0c5696f1d14";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
