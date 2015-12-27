@@ -76,6 +76,7 @@ NSString * const OZLQueryReuseIdentifier = @"query";
     
     OZLIssueListViewController *vc = [[OZLIssueListViewController alloc] initWithNibName:@"OZLIssueListViewController" bundle:nil];
     vc.viewModel = vm;
+    vc.view.tag = OZLSplitViewController.PrimaryPaneMember;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

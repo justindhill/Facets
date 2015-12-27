@@ -47,7 +47,7 @@ import UIKit
     }
     
     override func showViewController(vc: UIViewController, sender: AnyObject?) {
-        if self.traitCollection.horizontalSizeClass == .Compact {
+        if self.traitCollection.horizontalSizeClass == .Compact || vc.view.tag == OZLSplitViewController.PrimaryPaneMember {
             self.masterNavigationController.pushViewController(vc, animated: true)
         } else {
             self.detailNavigationController.viewControllers = [ vc ]

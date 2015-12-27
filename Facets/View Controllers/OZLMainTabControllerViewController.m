@@ -19,6 +19,7 @@
 @property OZLQueryListViewController *queryListVC;
 
 @property OZLSplitViewController *projectSplitView;
+@property OZLSplitViewController *queryListSplitView;
 
 @end
 
@@ -41,32 +42,20 @@
     self.settingsVC = [[OZLAccountViewController alloc] initWithNibName:@"OZLAccountViewController" bundle:nil];
     self.settingsVC.delegate = self;
     
-    OZLSplitViewController *projectSplitView = [[OZLSplitViewController alloc] init];
-    self.projectSplitView = projectSplitView;
-    projectSplitView.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-    projectSplitView.extendedLayoutIncludesOpaqueBars = YES;
-    projectSplitView.masterNavigationController.extendedLayoutIncludesOpaqueBars = YES;
-    projectSplitView.detailNavigationController.extendedLayoutIncludesOpaqueBars = YES;
-    projectSplitView.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Issues" image:nil tag:0];
+    self.projectSplitView = [self customizedSplitViewController];
+    self.projectSplitView.masterNavigationController.viewControllers = @[ self.projectIssuesVC ];
+    self.projectSplitView.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Issues" image:nil tag:0];
     
-    projectSplitView.masterNavigationController.navigationBar.translucent = NO;
-    projectSplitView.masterNavigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    projectSplitView.detailNavigationController.navigationBar.translucent = NO;
-    projectSplitView.detailNavigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    
-    projectSplitView.masterNavigationController.viewControllers = @[ self.projectIssuesVC ];
-    
-    UINavigationController *queryListNav = [[UINavigationController alloc] initWithRootViewController:self.queryListVC];
-    queryListNav.navigationBar.translucent = NO;
-    queryListNav.navigationBar.barTintColor = [UIColor whiteColor];
-    queryListNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Queries" image:nil tag:0];
+    self.queryListSplitView = [self customizedSplitViewController];
+    self.queryListSplitView.masterNavigationController.viewControllers = @[ self.queryListVC ];
+    self.queryListSplitView.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Queries" image:nil tag:0];
     
     UINavigationController *settingsNav = [[UINavigationController alloc] initWithRootViewController:self.settingsVC];
     settingsNav.navigationBar.translucent = NO;
-    queryListNav.navigationBar.barTintColor = [UIColor whiteColor];
+    settingsNav.navigationBar.barTintColor = [UIColor whiteColor];
     settingsNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:nil tag:0];
     
-    self.viewControllers = @[ projectSplitView, queryListNav, settingsNav ];
+    self.viewControllers = @[ self.projectSplitView, self.queryListSplitView, settingsNav ];
     
     if ([OZLSingleton sharedInstance].isUserLoggedIn && [OZLSingleton sharedInstance].currentProjectID != NSNotFound) {
         self.projectIssuesVC.viewModel.projectId = [OZLSingleton sharedInstance].currentProjectID;
@@ -75,6 +64,21 @@
         self.selectedViewController = self.settingsVC.navigationController;
         self.settingsVC.isFirstLogin = YES;
     }
+}
+
+- (OZLSplitViewController *)customizedSplitViewController {
+    OZLSplitViewController *svc = [[OZLSplitViewController alloc] init];
+    svc.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    svc.extendedLayoutIncludesOpaqueBars = YES;
+    svc.masterNavigationController.extendedLayoutIncludesOpaqueBars = YES;
+    svc.detailNavigationController.extendedLayoutIncludesOpaqueBars = YES;
+    
+    svc.masterNavigationController.navigationBar.translucent = NO;
+    svc.masterNavigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    svc.detailNavigationController.navigationBar.translucent = NO;
+    svc.detailNavigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    
+    return svc;
 }
 
 #pragma mark - Account view controller delegate
