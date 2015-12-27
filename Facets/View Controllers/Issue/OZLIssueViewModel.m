@@ -130,8 +130,8 @@ NSString * const OZLIssueSectionRecentActivity = @"OZLIssueSectionRecentActivity
     
     OZLModelJournalDetail *detail = [[OZLModelJournalDetail alloc] init];
     detail.type = OZLModelJournalDetailTypeAttribute;
-    detail.oldValue = [NSString stringWithFormat:@"%ld", from.userId];
-    detail.newValue = [NSString stringWithFormat:@"%ld", to.userId];
+    detail.oldValue = [NSString stringWithFormat:@"%ld", (long)from.userId];
+    detail.newValue = [NSString stringWithFormat:@"%ld", (long)to.userId];
     detail.name = @"assigned_to_id";
     
     journal.details = @[ detail ];
