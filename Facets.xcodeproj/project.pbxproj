@@ -80,8 +80,6 @@
 		D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805D1792F2BF0081662A /* CoreGraphics.framework */; };
 		D5DB80661792F2BF0081662A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80651792F2BF0081662A /* main.m */; };
 		D5DB806A1792F2BF0081662A /* OZLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80691792F2BF0081662A /* OZLAppDelegate.m */; };
-		D5DB80A61792F4DE0081662A /* OZLProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80A41792F4DE0081662A /* OZLProjectListViewController.m */; };
-		D5DB80A71792F4DE0081662A /* OZLProjectListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5DB80A51792F4DE0081662A /* OZLProjectListViewController.xib */; };
 		D5DB80AC1792F6980081662A /* OZLIssueListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80AA1792F6980081662A /* OZLIssueListViewController.m */; };
 		D5DB80AD1792F6980081662A /* OZLIssueListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5DB80AB1792F6980081662A /* OZLIssueListViewController.xib */; };
 		D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80B0179300B90081662A /* OZLNetwork.m */; };
@@ -123,10 +121,10 @@
 		D000B1D31BF7D9A300CA2845 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		D000B1D91BF816D400CA2845 /* OZLURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLURLProtocol.h; path = Utils/OZLURLProtocol.h; sourceTree = "<group>"; };
 		D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLURLProtocol.m; path = Utils/OZLURLProtocol.m; sourceTree = "<group>"; };
-		D000B1DC1BF96BBA00CA2845 /* OZLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLWebViewController.h; path = ViewControllers/OZLWebViewController.h; sourceTree = "<group>"; };
-		D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLWebViewController.m; path = ViewControllers/OZLWebViewController.m; sourceTree = "<group>"; };
+		D000B1DC1BF96BBA00CA2845 /* OZLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLWebViewController.h; sourceTree = "<group>"; };
+		D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLWebViewController.m; sourceTree = "<group>"; };
 		D000B1DF1BF96EC600CA2845 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		D01729FF1C2F3CC200406C0F /* OZLSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OZLSplitViewController.swift; path = ViewControllers/OZLSplitViewController.swift; sourceTree = "<group>"; };
+		D01729FF1C2F3CC200406C0F /* OZLSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSplitViewController.swift; sourceTree = "<group>"; };
 		D01F9B8D1BEB23FA005B2ED0 /* OZLServerSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLServerSync.h; path = Utils/OZLServerSync.h; sourceTree = "<group>"; };
 		D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLServerSync.m; path = Utils/OZLServerSync.m; sourceTree = "<group>"; };
 		D01F9B901BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLProjectIssueListViewModel.h; sourceTree = "<group>"; };
@@ -181,10 +179,10 @@
 		D04801411BD004E50047C5DE /* CAPSOptionsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenu.swift; sourceTree = "<group>"; };
 		D04801421BD004E50047C5DE /* CAPSOptionsMenuAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuAction.swift; sourceTree = "<group>"; };
 		D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuButton.swift; sourceTree = "<group>"; };
-		D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLMainTabControllerViewController.h; path = ViewControllers/OZLMainTabControllerViewController.h; sourceTree = "<group>"; };
-		D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLMainTabControllerViewController.m; path = ViewControllers/OZLMainTabControllerViewController.m; sourceTree = "<group>"; };
+		D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLMainTabControllerViewController.h; sourceTree = "<group>"; };
+		D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLMainTabControllerViewController.m; sourceTree = "<group>"; };
 		D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQuickAssignViewController.swift; sourceTree = "<group>"; };
-		D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OZLSheetPresentationController.swift; path = ViewControllers/OZLSheetPresentationController.swift; sourceTree = "<group>"; };
+		D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSheetPresentationController.swift; sourceTree = "<group>"; };
 		D05AF7851C2C6971007911EA /* OZLModelMembership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelMembership.h; sourceTree = "<group>"; };
 		D05AF7861C2C6971007911EA /* OZLModelMembership.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelMembership.m; sourceTree = "<group>"; };
 		D05E08061C1FB6F400509501 /* OZLQuickAssignView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQuickAssignView.swift; sourceTree = "<group>"; };
@@ -215,17 +213,14 @@
 		D5DB80671792F2BF0081662A /* Facets-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Facets-Prefix.pch"; sourceTree = "<group>"; };
 		D5DB80681792F2BF0081662A /* OZLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OZLAppDelegate.h; sourceTree = "<group>"; };
 		D5DB80691792F2BF0081662A /* OZLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OZLAppDelegate.m; sourceTree = "<group>"; };
-		D5DB80A31792F4DE0081662A /* OZLProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLProjectListViewController.h; path = ViewControllers/OZLProjectListViewController.h; sourceTree = "<group>"; };
-		D5DB80A41792F4DE0081662A /* OZLProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLProjectListViewController.m; path = ViewControllers/OZLProjectListViewController.m; sourceTree = "<group>"; };
-		D5DB80A51792F4DE0081662A /* OZLProjectListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OZLProjectListViewController.xib; path = ViewControllers/OZLProjectListViewController.xib; sourceTree = "<group>"; };
 		D5DB80A91792F6980081662A /* OZLIssueListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueListViewController.h; sourceTree = "<group>"; };
 		D5DB80AA1792F6980081662A /* OZLIssueListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueListViewController.m; sourceTree = "<group>"; };
 		D5DB80AB1792F6980081662A /* OZLIssueListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OZLIssueListViewController.xib; sourceTree = "<group>"; };
 		D5DB80AF179300B90081662A /* OZLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLNetwork.h; path = Utils/OZLNetwork.h; sourceTree = "<group>"; };
 		D5DB80B0179300B90081662A /* OZLNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLNetwork.m; path = Utils/OZLNetwork.m; sourceTree = "<group>"; };
-		D5DB80B21793016B0081662A /* OZLAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLAccountViewController.h; path = ViewControllers/OZLAccountViewController.h; sourceTree = "<group>"; };
-		D5DB80B31793016B0081662A /* OZLAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLAccountViewController.m; path = ViewControllers/OZLAccountViewController.m; sourceTree = "<group>"; };
-		D5DB80B41793016B0081662A /* OZLAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OZLAccountViewController.xib; path = ViewControllers/OZLAccountViewController.xib; sourceTree = "<group>"; };
+		D5DB80B21793016B0081662A /* OZLAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLAccountViewController.h; path = Account/OZLAccountViewController.h; sourceTree = "<group>"; };
+		D5DB80B31793016B0081662A /* OZLAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLAccountViewController.m; path = Account/OZLAccountViewController.m; sourceTree = "<group>"; };
+		D5DB80B41793016B0081662A /* OZLAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OZLAccountViewController.xib; path = Account/OZLAccountViewController.xib; sourceTree = "<group>"; };
 		D5DB80BB17930ECD0081662A /* OZLSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLSingleton.h; path = Utils/OZLSingleton.h; sourceTree = "<group>"; };
 		D5DB80BC17930ECD0081662A /* OZLSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLSingleton.m; path = Utils/OZLSingleton.m; sourceTree = "<group>"; };
 		D5DB80C017931C8B0081662A /* OZLModelProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelProject.h; sourceTree = "<group>"; };
@@ -263,16 +258,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		2BCF881A1793EF9F006FC859 /* Project */ = {
+		2BCF881A1793EF9F006FC859 /* Web View */ = {
 			isa = PBXGroup;
 			children = (
 				D000B1DC1BF96BBA00CA2845 /* OZLWebViewController.h */,
 				D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */,
-				D5DB80A31792F4DE0081662A /* OZLProjectListViewController.h */,
-				D5DB80A41792F4DE0081662A /* OZLProjectListViewController.m */,
-				D5DB80A51792F4DE0081662A /* OZLProjectListViewController.xib */,
 			);
-			name = Project;
+			path = "Web View";
 			sourceTree = "<group>";
 		};
 		966038A2B746359B7E36B81D /* Pods */ = {
@@ -340,8 +332,7 @@
 				D01F9C181BEED9BE005B2ED0 /* OZLIssueAboutTabView.h */,
 				D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */,
 			);
-			name = Issue;
-			path = ViewControllers/Issue;
+			path = Issue;
 			sourceTree = "<group>";
 		};
 		D01F9C0E1BED9AC6005B2ED0 /* Cells */ = {
@@ -374,8 +365,7 @@
 				D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */,
 				D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */,
 			);
-			name = "Query List";
-			path = "ViewControllers/Query List";
+			path = "Query List";
 			sourceTree = "<group>";
 		};
 		D04801401BD004E50047C5DE /* OptionsMenu */ = {
@@ -395,8 +385,7 @@
 				D05E08061C1FB6F400509501 /* OZLQuickAssignView.swift */,
 				D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */,
 			);
-			name = "Quick Assign";
-			path = "ViewControllers/Quick Assign";
+			path = "Quick Assign";
 			sourceTree = "<group>";
 		};
 		D0987AB71C0772BA00D55DEB /* Supporting */ = {
@@ -424,8 +413,7 @@
 				D01F9B961BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.h */,
 				D01F9B971BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m */,
 			);
-			name = "Issue List";
-			path = "ViewControllers/Issue List";
+			path = "Issue List";
 			sourceTree = "<group>";
 		};
 		D0BCD0DF1C14C30E00B0DC6D /* Issue Composer */ = {
@@ -433,8 +421,7 @@
 			children = (
 				D0BCD0E01C14C33E00B0DC6D /* OZLIssueComposerViewController.swift */,
 			);
-			name = "Issue Composer";
-			path = "ViewControllers/Issue Composer";
+			path = "Issue Composer";
 			sourceTree = "<group>";
 		};
 		D0BCD0E21C14C6DA00B0DC6D /* Resources */ = {
@@ -453,6 +440,24 @@
 				D0BCD0E61C14C6DA00B0DC6D /* icon-plus@3x.png */,
 			);
 			path = Icons;
+			sourceTree = "<group>";
+		};
+		D0C9F0481C30585100976B06 /* Presentation Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */,
+			);
+			path = "Presentation Controllers";
+			sourceTree = "<group>";
+		};
+		D0C9F0491C30593300976B06 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				D5DB80B21793016B0081662A /* OZLAccountViewController.h */,
+				D5DB80B31793016B0081662A /* OZLAccountViewController.m */,
+				D5DB80B41793016B0081662A /* OZLAccountViewController.xib */,
+			);
+			name = Account;
 			sourceTree = "<group>";
 		};
 		D5DB804D1792F2BF0081662A = {
@@ -502,7 +507,8 @@
 				2BCB50FD1796370F006845AC /* Views */,
 				D5DB80BF17931C580081662A /* Models */,
 				D5DB80AE1793008F0081662A /* Utils */,
-				D5DB80A81792F4E40081662A /* ViewControllers */,
+				D0C9F0481C30585100976B06 /* Presentation Controllers */,
+				D5DB80A81792F4E40081662A /* View Controllers */,
 				D5DB80681792F2BF0081662A /* OZLAppDelegate.h */,
 				D5DB80691792F2BF0081662A /* OZLAppDelegate.m */,
 			);
@@ -518,24 +524,21 @@
 			path = Libs;
 			sourceTree = "<group>";
 		};
-		D5DB80A81792F4E40081662A /* ViewControllers */ = {
+		D5DB80A81792F4E40081662A /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D0C9F0491C30593300976B06 /* Account */,
 				D03D6C431BD0194B00A47E24 /* Query List */,
 				D0B293851BE59D1800F71A55 /* Issue List */,
 				D0BCD0DF1C14C30E00B0DC6D /* Issue Composer */,
 				D01F9BD51BEC8265005B2ED0 /* Issue */,
 				D05E08031C1FB6B400509501 /* Quick Assign */,
-				2BCF881A1793EF9F006FC859 /* Project */,
-				D5DB80B21793016B0081662A /* OZLAccountViewController.h */,
-				D5DB80B31793016B0081662A /* OZLAccountViewController.m */,
-				D5DB80B41793016B0081662A /* OZLAccountViewController.xib */,
+				2BCF881A1793EF9F006FC859 /* Web View */,
 				D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */,
 				D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */,
-				D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */,
 				D01729FF1C2F3CC200406C0F /* OZLSplitViewController.swift */,
 			);
-			name = ViewControllers;
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		D5DB80AE1793008F0081662A /* Utils */ = {
@@ -662,7 +665,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5DB80A71792F4DE0081662A /* OZLProjectListViewController.xib in Resources */,
 				D5DB80AD1792F6980081662A /* OZLIssueListViewController.xib in Resources */,
 				D0BCD0E71C14C6DA00B0DC6D /* icon-plus.png in Resources */,
 				D5DB80B61793016B0081662A /* OZLAccountViewController.xib in Resources */,
@@ -761,7 +763,6 @@
 				D02BD4FF1C0FD85600753EFF /* OZLModelVersion.m in Sources */,
 				D5DB80661792F2BF0081662A /* main.m in Sources */,
 				D5DB806A1792F2BF0081662A /* OZLAppDelegate.m in Sources */,
-				D5DB80A61792F4DE0081662A /* OZLProjectListViewController.m in Sources */,
 				D04C9FB01BCEB245000366A7 /* OZLMainTabControllerViewController.m in Sources */,
 				D0987AD71C09488200D55DEB /* OZLJournalCell.swift in Sources */,
 				D5DB80AC1792F6980081662A /* OZLIssueListViewController.m in Sources */,
@@ -891,7 +892,6 @@
 			baseConfigurationReference = 267E239DD59CF16F78B49079 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Images";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -919,7 +919,6 @@
 			baseConfigurationReference = 0ECA4D90281C24BB02A19D03 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Images";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";

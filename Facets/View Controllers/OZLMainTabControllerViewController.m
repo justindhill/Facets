@@ -8,7 +8,6 @@
 
 #import "OZLMainTabControllerViewController.h"
 #import "OZLAccountViewController.h"
-#import "OZLProjectListViewController.h"
 #import "OZLIssueListViewController.h"
 #import "OZLQueryListViewController.h"
 #import "OZLProjectIssueListViewModel.h"

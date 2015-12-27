@@ -5,7 +5,6 @@
 //  Created by Lee Zhijie on 7/14/13.
 
 #import "OZLIssueListViewController.h"
-#import "OZLProjectListViewController.h"
 #import "OZLNetwork.h"
 #import "MBProgressHUD.h"
 #import "OZLIssueViewController.h"
