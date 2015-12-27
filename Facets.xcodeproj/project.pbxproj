@@ -26,6 +26,7 @@
 		D000B1DB1BF816D400CA2845 /* OZLURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */; };
 		D000B1DE1BF96BBA00CA2845 /* OZLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */; };
 		D000B1E01BF96EC600CA2845 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D000B1DF1BF96EC600CA2845 /* WebKit.framework */; };
+		D0172A001C2F3CC200406C0F /* OZLSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01729FF1C2F3CC200406C0F /* OZLSplitViewController.swift */; };
 		D01F9B8F1BEB23FA005B2ED0 /* OZLServerSync.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */; };
 		D01F9B921BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B911BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.m */; };
 		D01F9B981BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B971BEB3479005B2ED0 /* OZLQueriesIssueListViewModel.m */; };
@@ -125,6 +126,7 @@
 		D000B1DC1BF96BBA00CA2845 /* OZLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLWebViewController.h; path = ViewControllers/OZLWebViewController.h; sourceTree = "<group>"; };
 		D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLWebViewController.m; path = ViewControllers/OZLWebViewController.m; sourceTree = "<group>"; };
 		D000B1DF1BF96EC600CA2845 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D01729FF1C2F3CC200406C0F /* OZLSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OZLSplitViewController.swift; path = ViewControllers/OZLSplitViewController.swift; sourceTree = "<group>"; };
 		D01F9B8D1BEB23FA005B2ED0 /* OZLServerSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLServerSync.h; path = Utils/OZLServerSync.h; sourceTree = "<group>"; };
 		D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLServerSync.m; path = Utils/OZLServerSync.m; sourceTree = "<group>"; };
 		D01F9B901BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLProjectIssueListViewModel.h; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 				D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */,
 				D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */,
 				D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */,
+				D01729FF1C2F3CC200406C0F /* OZLSplitViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -791,6 +794,7 @@
 				D01F9BAE1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m in Sources */,
 				D01F9B921BEB2B24005B2ED0 /* OZLProjectIssueListViewModel.m in Sources */,
 				2BCF88301793F5CE006FC859 /* OZLModelUser.m in Sources */,
+				D0172A001C2F3CC200406C0F /* OZLSplitViewController.swift in Sources */,
 				D04801441BD004E50047C5DE /* CAPSOptionsMenu.swift in Sources */,
 				2B9968AB1794F71B0086F115 /* OZLModelIssueCategory.m in Sources */,
 				D05E08071C1FB6F400509501 /* OZLQuickAssignView.swift in Sources */,
@@ -886,7 +890,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 267E239DD59CF16F78B49079 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Images";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -914,7 +918,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0ECA4D90281C24BB02A19D03 /* Pods.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Launch Images";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";

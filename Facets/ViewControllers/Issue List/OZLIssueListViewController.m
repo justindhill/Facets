@@ -62,21 +62,24 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     self.viewModel.projectId = [OZLSingleton sharedInstance].currentProjectID;
     
     if (self.isFirstAppearance) {
-        self.optionsMenu = [[CAPSOptionsMenu alloc] initWithViewController:self barButtonSystemItem:UIBarButtonSystemItemAction keepBarButtonAtEdge:NO];
-    
-        __weak OZLIssueListViewController *weakSelf = self;
-        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Edit" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
-            [weakSelf editIssueList:nil];
-        }]];
+        if (self.navigationController) {
+            self.optionsMenu = [[CAPSOptionsMenu alloc] initWithViewController:self barButtonSystemItem:UIBarButtonSystemItemAction keepBarButtonAtEdge:NO];
         
-        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Sort" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
-        }]];
-        
-        [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Copy Link" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
-        }]];
+            __weak OZLIssueListViewController *weakSelf = self;
+            [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Edit" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
+                [weakSelf editIssueList:nil];
+            }]];
+            
+            [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Sort" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
+            }]];
+            
+            [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Copy Link" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
+            }]];
+            
+            [self refreshProjectSelector];
+        }
         
         self.view.tintColor = self.parentViewController.view.tintColor;
-        [self refreshProjectSelector];
         
         [self showFooterActivityIndicator];
         [self reloadProjectData];
@@ -132,6 +135,8 @@ const NSInteger OZLZeroHeightFooterTag = -1;
 }
 
 - (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
     if (self.composeButton) {
         CGPoint newOrigin = CGPointMake(self.view.frame.size.width - OZLContentPadding - self.composeButton.frame.size.width,
                                         self.view.frame.size.height - OZLContentPadding - self.composeButton.frame.size.height - self.bottomLayoutGuide.length);
@@ -159,9 +164,13 @@ const NSInteger OZLZeroHeightFooterTag = -1;
         
         // BTNavigationDropdownMenu must be initialized with its items, so we have to re-initialize it every time we want to
         // change the items. Blech.
-        BTNavigationDropdownMenu *dropdown = [[BTNavigationDropdownMenu alloc] initWithTitle:self.viewModel.title items:titlesArray];
+        BTNavigationDropdownMenu *dropdown = [[BTNavigationDropdownMenu alloc] initWithNavigationController:self.navigationController title:self.viewModel.title items:titlesArray];
         dropdown.cellTextLabelFont = [UIFont OZLMediumSystemFontOfSize:17];
-        dropdown.tintColor = self.view.tintColor;
+        
+        // use the parent view controller's tint color. BTNavigationDropdownMenu doesn't properly
+        // respond to tintColorDidChange, so using this view's tint color won't do any good, as
+        // we're not added to the window yet.
+        dropdown.tintColor = self.parentViewController.view.tintColor;
         dropdown.cellBackgroundColor = [UIColor colorWithRed:(249. / 255.) green:(249. / 255.) blue:(249. / 255.) alpha:1.];
         dropdown.cellSeparatorColor = [UIColor lightGrayColor];
         dropdown.cellTextLabelColor = [UIColor darkGrayColor];
@@ -359,7 +368,7 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     OZLIssueViewController *issueVC = [[OZLIssueViewController alloc] init];
     issueVC.viewModel = viewModel;
     
-    [self.navigationController pushViewController:issueVC animated:YES];
+    [self.splitViewController showViewController:issueVC sender:self];
 }
 
 - (void)editIssueList:(id)sender {

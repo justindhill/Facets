@@ -105,6 +105,16 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     self.isFirstAppearance = NO;
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        [self.tableView beginUpdates];
+        [self refreshHeaderSizeForWidth:size.width];
+        [self.tableView endUpdates];
+    } completion:nil];
+}
+
 #pragma mark - Accessors
 - (BOOL)canBecomeFirstResponder {
     return YES;
@@ -125,7 +135,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"#%ld", (long)issue.index] style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.issueHeader applyIssueModel:issue];
     [self.aboutTabView applyIssueModel:issue];
-    [self refreshHeaderSize];
+    [self refreshHeaderSizeForWidth:self.view.frame.size.width];
     
     if (self.viewModel.completeness == OZLIssueCompletenessSome) {
         [self showLoadingSpinner];
@@ -135,8 +145,8 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     [self.tableView reloadData];
 }
 
-- (void)refreshHeaderSize {
-    CGSize newSize = [self.issueHeader sizeThatFits:CGSizeMake(self.view.frame.size.width, UIViewNoIntrinsicMetric)];
+- (void)refreshHeaderSizeForWidth:(CGFloat)width {
+    CGSize newSize = [self.issueHeader sizeThatFits:CGSizeMake(width, UIViewNoIntrinsicMetric)];
     self.issueHeader.frame = (CGRect){CGPointZero, newSize};
     self.tableView.tableHeaderView = self.issueHeader;
 }
@@ -207,10 +217,15 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     if ([sectionName isEqualToString:OZLIssueSectionDetail]) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLDetailReuseIdentifier forIndexPath:indexPath];
         cell.clipsToBounds = YES;
-        self.detailView.frame = cell.contentView.bounds;
         
         if (!self.detailView.superview) {
             [cell.contentView addSubview:self.detailView];
+            
+            self.detailView.translatesAutoresizingMaskIntoConstraints = NO;
+            [cell.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.detailView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0]];
+            [cell.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.detailView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeRight multiplier:1 constant:0]];
+            [cell.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.detailView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+            [cell.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.detailView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:cell.contentView attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
         }
         
         return cell;
