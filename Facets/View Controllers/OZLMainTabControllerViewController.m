@@ -34,6 +34,7 @@
     
     self.projectIssuesVC = [[OZLIssueListViewController alloc] initWithNibName:@"OZLIssueListViewController" bundle:nil];
     self.projectIssuesVC.viewModel = [[OZLProjectIssueListViewModel alloc] init];
+    self.projectIssuesVC.view.tag = OZLSplitViewController.PrimaryPaneMember;
     
     self.queryListVC = [[OZLQueryListViewController alloc] initWithNibName:@"OZLQueryListViewController" bundle:nil];
     
