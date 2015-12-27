@@ -91,8 +91,6 @@
     CGFloat colWidth = usableWidth / colCount;
     NSInteger itemsPerColumn = ceilf(self.labels.count / colCount);
     
-//    NSLog(@"usableWidth: %f, colCount: %f, colWidth: %f, itemsPerCol: %ld, labels: %ld", usableWidth, colCount, colWidth, itemsPerColumn, self.labels.count);
-    
     self.currentLayoutItemsPerColumn = itemsPerColumn;
     
     UILabel *previousLabel;
@@ -115,7 +113,6 @@
             yOffset = ceilf(previousLabel.bottom + (self.contentPadding / 3));
         }
         
-//        NSLog(@"index: %ld, x: %f, y: %f", i, xOffset, yOffset);
         label.frame = (CGRect){{xOffset, yOffset}, label.frame.size};
         previousLabel = label;
     }

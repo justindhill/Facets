@@ -105,7 +105,7 @@ import UIKit
                 
             } else if self.type == .CustomField {
                 if let field = self.customField {
-                    OZLModelCustomField.displayValueForCustomFieldType(field.type, attributeId: attributeId, attributeValue: attributeValue)
+                    return OZLModelCustomField.displayValueForCustomFieldType(field.type, attributeId: attributeId, attributeValue: attributeValue)
                 }
             }
         }
