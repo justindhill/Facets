@@ -87,7 +87,8 @@
 }
 
 - (NSString *)transformStringForDisplay:(NSString *)string {
-    return [string stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+    
+    return [[string componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
 }
 
 - (void)prepareForReuse {

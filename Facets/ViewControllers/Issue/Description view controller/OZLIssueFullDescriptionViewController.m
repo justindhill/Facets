@@ -52,12 +52,6 @@
     if (self.isFirstAppearance) {
         [self.view addSubview:self.descriptionLabel];
     }
-    
-    NSString *text = self.descriptionLabel.text;
-    
-    if (text.length > 0) {
-        [self sizeAndLayoutText];
-    }
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
@@ -70,6 +64,16 @@
     [super viewDidAppear:animated];
     
     self.isFirstAppearance = NO;
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    NSString *text = self.descriptionLabel.text;
+    
+    if (text.length > 0) {
+        [self sizeAndLayoutText];
+    }
 }
 
 - (void)sizeAndLayoutText {

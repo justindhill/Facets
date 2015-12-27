@@ -222,6 +222,7 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     composer.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissComposerAction:)];
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:composer];
+    nav.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentViewController:nav animated:YES completion:nil];
 }
