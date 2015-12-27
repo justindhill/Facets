@@ -141,7 +141,7 @@ import UIKit
         } else if let view = self.view as? OZLQuickAssignView,
             let resultString = (textField.text as NSString?)?.stringByReplacingCharactersInRange(range, withString: string) {
                 
-            self.filteredMemberships = self.filteredMemberships?.objectsWithPredicate(NSPredicate(format: "%K CONTAINS[c] %@", "user.name", resultString))
+            self.filteredMemberships = self.canonicalMemberships?.objectsWithPredicate(NSPredicate(format: "%K CONTAINS[c] %@", "user.name", resultString))
             view.tableView.reloadData()
         }
         
