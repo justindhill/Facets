@@ -22,6 +22,7 @@
 @implementation OZLProjectIssueListViewModel
 
 @synthesize delegate;
+@synthesize sortAndFilterOptions = _sortAndFilterOptions;
 @synthesize projectId = _projectId;
 @synthesize title;
 @synthesize issues;
@@ -29,6 +30,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
+        self.sortAndFilterOptions = [[OZLSortAndFilterOptions alloc] init];
         self.moreIssuesAvailable = YES;
     }
     
@@ -64,7 +66,15 @@
     _projectId = projectId;
 }
 
-- (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void (^)(NSError *error))completion {
+- (void)setSortAndFilterOptions:(OZLSortAndFilterOptions *)sortAndFilterOptions {
+    if (![sortAndFilterOptions isEqual:self.sortAndFilterOptions]) {
+        self.issues = [NSMutableArray array];
+    }
+    
+    _sortAndFilterOptions = sortAndFilterOptions;
+}
+
+- (void)loadIssuesCompletion:(void (^)(NSError *error))completion {
     
     __weak OZLProjectIssueListViewModel *weakSelf = self;
     
@@ -73,9 +83,11 @@
     }
     
     self.isLoading = YES;
+    
+    NSDictionary *params = [self.sortAndFilterOptions requestParameters];
 
     // load issues
-    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:0 limit:25 params:nil completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
+    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:0 limit:25 params:params completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
         
         weakSelf.isLoading = NO;
         
@@ -101,7 +113,9 @@
     
     self.isLoading = YES;
     
-    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:self.issues.count limit:25 params:nil completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
+    NSDictionary *params = [self.sortAndFilterOptions requestParameters];
+    
+    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:self.issues.count limit:25 params:params completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
         
         weakSelf.isLoading = NO;
         

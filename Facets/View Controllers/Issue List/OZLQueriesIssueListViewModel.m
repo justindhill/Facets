@@ -19,9 +19,18 @@
 
 @implementation OZLQueriesIssueListViewModel
 
+@synthesize sortAndFilterOptions = _sortAndFilterOptions;
 @synthesize delegate;
 @synthesize title;
 @synthesize issues;
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.sortAndFilterOptions = [[OZLSortAndFilterOptions alloc] init];
+    }
+    
+    return self;
+}
 
 - (BOOL)shouldShowComposeButton {
     return NO;
@@ -31,7 +40,7 @@
     return NO;
 }
 
-- (void)loadIssuesSortedBy:(NSString *)sortField ascending:(BOOL)ascending completion:(void (^)(NSError *))completion {
+- (void)loadIssuesCompletion:(void (^)(NSError *))completion {
     __weak OZLQueriesIssueListViewModel *weakSelf = self;
     
     if (self.isLoading) {
@@ -40,7 +49,9 @@
     
     self.isLoading = YES;
     
-    [[OZLNetwork sharedInstance] getIssueListForQueryId:self.queryId projectId:self.projectId offset:0 limit:25 params:nil completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
+    NSDictionary *params = [self.sortAndFilterOptions requestParameters];
+    
+    [[OZLNetwork sharedInstance] getIssueListForQueryId:self.queryId projectId:self.projectId offset:0 limit:25 params:params completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
         
         weakSelf.isLoading = NO;
         weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
@@ -60,7 +71,9 @@
     
     self.isLoading = YES;
     
-    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:self.issues.count limit:25 params:nil completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
+    NSDictionary *params = [self.sortAndFilterOptions requestParameters];
+    
+    [[OZLNetwork sharedInstance] getIssueListForProject:weakSelf.projectId offset:self.issues.count limit:25 params:params completion:^(NSArray *result, NSInteger totalCount, NSError *error) {
         
         weakSelf.isLoading = NO;
         weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
@@ -103,6 +116,14 @@
         [self.issues replaceObjectAtIndex:issueIndex withObject:issue];
         [self.delegate viewModelIssueListContentDidChange:self];
     }
+}
+
+- (void)setSortAndFilterOptions:(OZLSortAndFilterOptions *)sortAndFilterOptions {
+    if (![sortAndFilterOptions isEqual:self.sortAndFilterOptions]) {
+        self.issues = [NSMutableArray array];
+    }
+    
+    _sortAndFilterOptions = sortAndFilterOptions;
 }
 
 #pragma mark - OZLQuickAssignDelegate

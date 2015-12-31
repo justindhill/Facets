@@ -17,7 +17,7 @@
 const CGFloat OZLIssueListComposeButtonHeight = 48.;
 const NSInteger OZLZeroHeightFooterTag = -1;
 
-@interface OZLIssueListViewController () <UIViewControllerPreviewingDelegate, OZLNavigationChildChangeListener> {
+@interface OZLIssueListViewController () <UIViewControllerPreviewingDelegate, OZLNavigationChildChangeListener, OZLSortAndFilterViewControllerDelegate> {
 
     float _sideviewOffset;
     MBProgressHUD  *_HUD;
@@ -26,7 +26,6 @@ const NSInteger OZLZeroHeightFooterTag = -1;
 }
 
 @property BOOL isFirstAppearance;
-@property CAPSOptionsMenu *optionsMenu;
 @property UIButton *composeButton;
 
 @end
@@ -61,24 +60,10 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     self.viewModel.projectId = [OZLSingleton sharedInstance].currentProjectID;
     
     if (self.isFirstAppearance) {
-        if (self.navigationController) {
-            self.optionsMenu = [[CAPSOptionsMenu alloc] initWithViewController:self barButtonSystemItem:UIBarButtonSystemItemAction keepBarButtonAtEdge:NO];
-        
-            __weak OZLIssueListViewController *weakSelf = self;
-            [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Edit" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
-                [weakSelf editIssueList:nil];
-            }]];
-            
-            [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Sort" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
-            }]];
-            
-            [self.optionsMenu addAction:[[CAPSOptionsMenuAction alloc] initWithTitle:@"Copy Link" handler:^(CAPSOptionsMenuAction *_Nonnull action) {
-            }]];
-            
-            [self refreshProjectSelector];
-        }
-        
+        [self refreshProjectSelector];
         self.view.tintColor = self.parentViewController.view.tintColor;
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-filter"] style:UIBarButtonItemStyleDone target:self action:@selector(filterAction:)];
         
         [self showFooterActivityIndicator];
         [self reloadProjectData];
@@ -189,7 +174,7 @@ const NSInteger OZLZeroHeightFooterTag = -1;
 - (void)reloadProjectData {
 
     __weak OZLIssueListViewController *weakSelf = self;
-    [self.viewModel loadIssuesSortedBy:nil ascending:NO completion:^(NSError *error) {
+    [self.viewModel loadIssuesCompletion:^(NSError *error) {
         
         if (error) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Couldn't load issue list" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
@@ -214,6 +199,16 @@ const NSInteger OZLZeroHeightFooterTag = -1;
 #pragma mark - Actions
 - (void)refreshAction:(UIRefreshControl *)refreshControl {
     [self reloadProjectData];
+}
+
+- (void)filterAction:(UIButton *)button {
+    OZLSortAndFilterViewController *sortAndFilter = [[OZLSortAndFilterViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    sortAndFilter.delegate = self;
+    sortAndFilter.options = self.viewModel.sortAndFilterOptions;
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sortAndFilter];
+    nav.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)composeButtonAction:(UIButton *)button {
@@ -242,6 +237,18 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     self.viewModel.projectId = project.projectId;
     [self.tableView reloadData];
     [self reloadProjectData];
+}
+
+#pragma mark - OZLSortAndFilterViewControllerDelegate
+- (void)sortAndFilter:(OZLSortAndFilterViewController *)sortAndFilter shouldDismissWithNewOptions:(OZLSortAndFilterOptions *)newOptions {
+    if (newOptions && ![newOptions isEqual:self.viewModel.sortAndFilterOptions]) {
+        self.viewModel.sortAndFilterOptions = newOptions;
+        [self.tableView reloadData];
+        [self showFooterActivityIndicator];
+        [self reloadProjectData];
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Previewing
@@ -382,12 +389,6 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     }
     [self.tableView setEditing:YES animated:YES];
     self.navigationItem.rightBarButtonItem = _doneBtn;
-
-}
-
-- (void)editIssueListDone:(id)sender {
-    [self.tableView setEditing:NO animated:YES];
-    self.navigationItem.rightBarButtonItem = self.optionsMenu.barItem;
 }
 
 #pragma mark - View model delegate

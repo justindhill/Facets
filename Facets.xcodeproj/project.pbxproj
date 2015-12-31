@@ -67,9 +67,6 @@
 		D0987AD51C0904C200D55DEB /* OZLIssueSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD41C0904C200D55DEB /* OZLIssueSectionHeaderView.swift */; };
 		D0987AD71C09488200D55DEB /* OZLJournalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD61C09488200D55DEB /* OZLJournalCell.swift */; };
 		D0BCD0E11C14C33E00B0DC6D /* OZLIssueComposerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BCD0E01C14C33E00B0DC6D /* OZLIssueComposerViewController.swift */; };
-		D0BCD0E71C14C6DA00B0DC6D /* icon-plus.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BCD0E41C14C6DA00B0DC6D /* icon-plus.png */; };
-		D0BCD0E81C14C6DA00B0DC6D /* icon-plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BCD0E51C14C6DA00B0DC6D /* icon-plus@2x.png */; };
-		D0BCD0E91C14C6DA00B0DC6D /* icon-plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BCD0E61C14C6DA00B0DC6D /* icon-plus@3x.png */; };
 		D0BCD0EC1C14C70F00B0DC6D /* UIImage+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BCD0EB1C14C70F00B0DC6D /* UIImage+OZLExtensions.m */; };
 		D0C9F04C1C30726E00976B06 /* OZLSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C9F04B1C30726E00976B06 /* OZLSplitViewController.swift */; };
 		D0C9F0531C30742400976B06 /* OZLSplitViewPlaceholderPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C9F0511C30742400976B06 /* OZLSplitViewPlaceholderPane.swift */; };
@@ -77,6 +74,8 @@
 		D0CD7C8A1BF791FA0043C94B /* OZLModelAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C891BF791FA0043C94B /* OZLModelAttachment.m */; };
 		D0CD7C901BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C8F1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m */; };
 		D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */; };
+		D0F10F321C358BE500A0AE94 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0F10F311C358BE500A0AE94 /* Icons.xcassets */; };
+		D0F10F381C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */; };
 		D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB80591792F2BF0081662A /* UIKit.framework */; };
 		D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805B1792F2BF0081662A /* Foundation.framework */; };
 		D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805D1792F2BF0081662A /* CoreGraphics.framework */; };
@@ -180,8 +179,8 @@
 		D04801411BD004E50047C5DE /* CAPSOptionsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenu.swift; sourceTree = "<group>"; };
 		D04801421BD004E50047C5DE /* CAPSOptionsMenuAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuAction.swift; sourceTree = "<group>"; };
 		D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuButton.swift; sourceTree = "<group>"; };
-		D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLMainTabControllerViewController.h; sourceTree = "<group>"; };
-		D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLMainTabControllerViewController.m; sourceTree = "<group>"; };
+		D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLMainTabControllerViewController.h; path = "View Controllers/OZLMainTabControllerViewController.h"; sourceTree = "<group>"; };
+		D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLMainTabControllerViewController.m; path = "View Controllers/OZLMainTabControllerViewController.m"; sourceTree = "<group>"; };
 		D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQuickAssignViewController.swift; sourceTree = "<group>"; };
 		D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSheetPresentationController.swift; sourceTree = "<group>"; };
 		D05AF7851C2C6971007911EA /* OZLModelMembership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelMembership.h; sourceTree = "<group>"; };
@@ -195,9 +194,6 @@
 		D0987AD41C0904C200D55DEB /* OZLIssueSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueSectionHeaderView.swift; sourceTree = "<group>"; };
 		D0987AD61C09488200D55DEB /* OZLJournalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLJournalCell.swift; sourceTree = "<group>"; };
 		D0BCD0E01C14C33E00B0DC6D /* OZLIssueComposerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueComposerViewController.swift; sourceTree = "<group>"; };
-		D0BCD0E41C14C6DA00B0DC6D /* icon-plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus.png"; sourceTree = "<group>"; };
-		D0BCD0E51C14C6DA00B0DC6D /* icon-plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus@2x.png"; sourceTree = "<group>"; };
-		D0BCD0E61C14C6DA00B0DC6D /* icon-plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus@3x.png"; sourceTree = "<group>"; };
 		D0BCD0EA1C14C70F00B0DC6D /* UIImage+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+OZLExtensions.h"; sourceTree = "<group>"; };
 		D0BCD0EB1C14C70F00B0DC6D /* UIImage+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+OZLExtensions.m"; sourceTree = "<group>"; };
 		D0C9F04B1C30726E00976B06 /* OZLSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSplitViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +204,8 @@
 		D0CD7C8E1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueAttachmentGalleryCell.h; sourceTree = "<group>"; };
 		D0CD7C8F1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueAttachmentGalleryCell.m; sourceTree = "<group>"; };
 		D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		D0F10F311C358BE500A0AE94 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSortAndFilterViewController.swift; sourceTree = "<group>"; };
 		D5DB80561792F2BF0081662A /* Facets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Facets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5DB80591792F2BF0081662A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5DB805B1792F2BF0081662A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -431,19 +429,9 @@
 		D0BCD0E21C14C6DA00B0DC6D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D0BCD0E31C14C6DA00B0DC6D /* Icons */,
+				D0F10F311C358BE500A0AE94 /* Icons.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		D0BCD0E31C14C6DA00B0DC6D /* Icons */ = {
-			isa = PBXGroup;
-			children = (
-				D0BCD0E41C14C6DA00B0DC6D /* icon-plus.png */,
-				D0BCD0E51C14C6DA00B0DC6D /* icon-plus@2x.png */,
-				D0BCD0E61C14C6DA00B0DC6D /* icon-plus@3x.png */,
-			);
-			path = Icons;
 			sourceTree = "<group>";
 		};
 		D0C9F0481C30585100976B06 /* Presentation Controllers */ = {
@@ -472,6 +460,14 @@
 				D0C9F0521C30742400976B06 /* OZLSplitViewPlaceholderPane.xib */,
 			);
 			path = "Split View";
+			sourceTree = "<group>";
+		};
+		D0F10F331C35AE9600A0AE94 /* Sort and Filter */ = {
+			isa = PBXGroup;
+			children = (
+				D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */,
+			);
+			path = "Sort and Filter";
 			sourceTree = "<group>";
 		};
 		D5DB804D1792F2BF0081662A = {
@@ -523,6 +519,8 @@
 				D5DB80AE1793008F0081662A /* Utils */,
 				D0C9F0481C30585100976B06 /* Presentation Controllers */,
 				D5DB80A81792F4E40081662A /* View Controllers */,
+				D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */,
+				D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */,
 				D5DB80681792F2BF0081662A /* OZLAppDelegate.h */,
 				D5DB80691792F2BF0081662A /* OZLAppDelegate.m */,
 			);
@@ -547,10 +545,9 @@
 				D0B293851BE59D1800F71A55 /* Issue List */,
 				D03D6C431BD0194B00A47E24 /* Query List */,
 				D05E08031C1FB6B400509501 /* Quick Assign */,
+				D0F10F331C35AE9600A0AE94 /* Sort and Filter */,
 				D0C9F04A1C30726E00976B06 /* Split View */,
 				2BCF881A1793EF9F006FC859 /* Web View */,
-				D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */,
-				D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -680,15 +677,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5DB80AD1792F6980081662A /* OZLIssueListViewController.xib in Resources */,
-				D0BCD0E71C14C6DA00B0DC6D /* icon-plus.png in Resources */,
 				D0C9F0541C30742400976B06 /* OZLSplitViewPlaceholderPane.xib in Resources */,
 				D5DB80B61793016B0081662A /* OZLAccountViewController.xib in Resources */,
 				D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */,
 				D01F9B9C1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle in Resources */,
-				D0BCD0E81C14C6DA00B0DC6D /* icon-plus@2x.png in Resources */,
 				D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */,
-				D0BCD0E91C14C6DA00B0DC6D /* icon-plus@3x.png in Resources */,
 				D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */,
+				D0F10F321C358BE500A0AE94 /* Icons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,6 +816,7 @@
 				D01F9B9D1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift in Sources */,
 				D0987AD51C0904C200D55DEB /* OZLIssueSectionHeaderView.swift in Sources */,
 				D01F9BE01BEC84A3005B2ED0 /* OZLIssueHeaderView.m in Sources */,
+				D0F10F381C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift in Sources */,
 				D035A4AD1C0A04BD0057AA48 /* OZLModelJournalDetail.swift in Sources */,
 				D0292D621BF2D9CD00F717F2 /* OZLView.m in Sources */,
 				D035A4BF1C0A98D80057AA48 /* OZLModelCustomField.m in Sources */,
