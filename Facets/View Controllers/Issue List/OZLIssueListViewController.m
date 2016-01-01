@@ -58,6 +58,7 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     [super viewWillAppear:animated];
     
     self.viewModel.projectId = [OZLSingleton sharedInstance].currentProjectID;
+    self.title = self.viewModel.title;
     
     if (self.isFirstAppearance) {
         [self refreshProjectSelector];
@@ -129,7 +130,7 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     }
 }
 
-- (void)setViewModel:(id<OZLIssueListViewModel>)viewModel {
+- (void)setViewModel:(OZLIssueListViewModel *)viewModel {
     _viewModel = viewModel;
     viewModel.delegate = self;
 }
@@ -137,8 +138,6 @@ const NSInteger OZLZeroHeightFooterTag = -1;
 #pragma mark - Behavior
 - (void)refreshProjectSelector {
     if (self.viewModel.shouldShowProjectSelector) {
-        //        NSAssert([self.viewModel respondsToSelector:@selector(refreshProjectList)], @"View model states we should show project selector, but refreshProjectList isn't implemented");
-        [self.viewModel refreshProjectList];
         
         NSMutableArray *titlesArray = [NSMutableArray arrayWithCapacity:self.viewModel.projects.count];
         
@@ -234,6 +233,7 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     }
     
     [self showFooterActivityIndicator];
+    [OZLSingleton sharedInstance].currentProjectID = project.projectId;
     self.viewModel.projectId = project.projectId;
     [self.tableView reloadData];
     [self reloadProjectData];
@@ -302,29 +302,29 @@ const NSInteger OZLZeroHeightFooterTag = -1;
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-
-        _HUD.labelText = @"Deleting Issue...";
-        _HUD.detailsLabelText = @"";
-        _HUD.mode = MBProgressHUDModeIndeterminate;
-        [_HUD show:YES];
-        [self.viewModel deleteIssueAtIndex:indexPath.row completion:^(NSError *error) {
-            if (error) {
-                NSLog(@"failed to delete issue");
-                _HUD.mode = MBProgressHUDModeText;
-                _HUD.labelText = @"Connection Failed";
-                _HUD.detailsLabelText = @" Please check network connection or your account setting.";
-                [_HUD hide:YES afterDelay:3];
-                
-            } else {
-                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                [_HUD hide:YES];
-            }
-        }];
-    }
-}
+//
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//
+//        _HUD.labelText = @"Deleting Issue...";
+//        _HUD.detailsLabelText = @"";
+//        _HUD.mode = MBProgressHUDModeIndeterminate;
+//        [_HUD show:YES];
+//        [self.viewModel deleteIssueAtIndex:indexPath.row completion:^(NSError *error) {
+//            if (error) {
+//                NSLog(@"failed to delete issue");
+//                _HUD.mode = MBProgressHUDModeText;
+//                _HUD.labelText = @"Connection Failed";
+//                _HUD.detailsLabelText = @" Please check network connection or your account setting.";
+//                [_HUD hide:YES afterDelay:3];
+//                
+//            } else {
+//                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//                [_HUD hide:YES];
+//            }
+//        }];
+//    }
+//}
 
 - (void)showFooterActivityIndicator {
     if (self.tableView.tableFooterView && self.tableView.tableFooterView.tag != OZLZeroHeightFooterTag) {
@@ -392,7 +392,7 @@ const NSInteger OZLZeroHeightFooterTag = -1;
 }
 
 #pragma mark - View model delegate
-- (void)viewModelIssueListContentDidChange:(id<OZLIssueListViewModel>)viewModel {
+- (void)viewModelIssueListContentDidChange:(OZLIssueListViewModel *)viewModel {
     [self.tableView reloadData];
 }
 

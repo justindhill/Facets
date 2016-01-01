@@ -19,7 +19,9 @@
 
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
-#import "OZLMainTabControllerViewController.h"
+#import "OZLIssueListViewController.h"
+#import "OZLQueryListViewController.h"
+#import "OZLAccountViewController.h"
 
 #import "UIFont+OZLExtensions.h"
 #import "UIView+OZLExtensions.h"

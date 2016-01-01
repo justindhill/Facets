@@ -8,7 +8,6 @@
 
 #import "OZLQueryListViewController.h"
 #import "OZLNetwork.h"
-#import "OZLQueriesIssueListViewModel.h"
 #import "OZLIssueListViewController.h"
 
 @interface OZLQueryListViewController ()
@@ -69,7 +68,7 @@ NSString * const OZLQueryReuseIdentifier = @"query";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OZLModelQuery *query = self.queries[indexPath.row];
     
-    OZLQueriesIssueListViewModel *vm = [[OZLQueriesIssueListViewModel alloc] init];
+    OZLIssueListViewModel *vm = [[OZLIssueListViewModel alloc] init];
     vm.title = query.name;
     vm.projectId = query.projectId;
     vm.queryId = query.queryId;

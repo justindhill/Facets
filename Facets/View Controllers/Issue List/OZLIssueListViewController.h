@@ -6,12 +6,13 @@
 
 #import <UIKit/UIKit.h>
 #import "OZLModelProject.h"
-#import "OZLIssueListViewModel.h"
 
+@class OZLIssueListViewModel;
+@protocol OZLIssueListViewModelDelegate;
 @interface OZLIssueListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, OZLIssueListViewModelDelegate>
 
 @property (weak) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) id<OZLIssueListViewModel> viewModel;
+@property (nonatomic, strong) OZLIssueListViewModel *viewModel;
 
 @property (nonatomic, strong) OZLModelProject *projectData;
 

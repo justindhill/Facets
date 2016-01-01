@@ -453,7 +453,10 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc] initWithDictionary:params];
     paramsDic[@"project_id"] = @(projectId);
-    paramsDic[@"query_id"] = @(queryId);
+    
+    if (queryId > 0) {
+        paramsDic[@"query_id"] = @(queryId);
+    }
     
     if (offset > 0) {
         paramsDic[@"offset"] = @(offset);
