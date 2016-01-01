@@ -3,4 +3,4 @@ osx_image: xcode7.2
 xcode_workspace: Facets.xcworkspace
 xcode_scheme: Facets
 
-script: xctool -workspace Facets.xcworkspace -scheme Facets build PROVISIONING_PROFILE=""
+script: xctool -workspace Facets.xcworkspace -scheme Facets build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO PROVISIONING_PROFILE=""
