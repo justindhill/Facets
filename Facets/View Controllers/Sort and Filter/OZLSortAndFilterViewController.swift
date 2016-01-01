@@ -13,34 +13,6 @@ import UIKit
     case Descending
 }
 
-@objc class OZLSortAndFilterField: NSObject {
-    var displayName: String
-    var serverName: String
-    var value: String?
-    
-    init(displayName: String, serverName: String, value: String?) {
-        self.displayName = displayName
-        self.serverName = serverName
-        self.value = value
-        
-        super.init()
-    }
-    
-    convenience init(displayName: String, serverName: String) {
-        self.init(displayName: displayName, serverName: serverName, value: nil)
-    }
-    
-    override func isEqual(object: AnyObject?) -> Bool {
-        if let object = object as? OZLSortAndFilterField {
-            return (object.displayName == self.displayName &&
-                    object.serverName == self.serverName &&
-                    (object.value == self.value || (object.value == nil && self.value == nil)))
-        }
-        
-        return false
-    }
-}
-
 @objc class OZLSortAndFilterOptions: NSObject, NSCopying {
     var sortOrder: OZLSortOrder = .Descending
     var sortField: OZLSortAndFilterField = OZLSortAndFilterField(displayName: "Last Updated", serverName: "updated_on")
@@ -99,21 +71,6 @@ class OZLSortAndFilterViewController: UITableViewController {
     private let SortOrderSection = 1
     private let FiltersSection = 2
     
-    private static let defaultFields = [
-        ("Project", "project"),
-        ("Tracker", "tracker"),
-        ("Status", "status"),
-        ("Priority", "priority"),
-        ("Author", "author"),
-        ("Category", "category"),
-        ("Start Date", "start_date"),
-        ("Due Date", "due_date"),
-        ("Percent Done", "done_ratio"),
-        ("Estimated Hours", "estimated_hours"),
-        ("Creation Date", "created_on"),
-        ("Last Updated", "last_updated")
-    ]
-    
     private let TextReuseIdentifier = "TextReuseIdentifier"
     
     // MARK: - Life cycle
@@ -162,6 +119,7 @@ class OZLSortAndFilterViewController: UITableViewController {
         
         if indexPath.section == SortFieldSection {
             cell?.textLabel?.text = self.options.sortField.displayName
+            cell?.accessoryType = .DisclosureIndicator
         } else if indexPath.section == SortOrderSection {
             if (indexPath.row == 0) {
                 cell?.textLabel?.text = "Ascending"
@@ -172,6 +130,7 @@ class OZLSortAndFilterViewController: UITableViewController {
             }
             
         } else if indexPath.section == FiltersSection {
+            cell?.accessoryType = .None
             cell?.textLabel?.textColor = self.view.tintColor
             cell?.textLabel?.text = "Add a filter"
         }
@@ -192,9 +151,21 @@ class OZLSortAndFilterViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        if indexPath.section == SortOrderSection {
+        if indexPath.section == SortFieldSection {
+            let fieldSelector = OZLFieldSelectorViewController()
+            
+            weak var weakSelf = self
+            fieldSelector.selectionChangeHandler = { (field: OZLSortAndFilterField) -> Void in
+                weakSelf?.options.sortField = field
+                weakSelf?.tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: .None)
+            }
+            
+            self.navigationController?.pushViewController(fieldSelector, animated: true)
+            
+        } else if indexPath.section == SortOrderSection {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            
             if indexPath.row == 0 {
                 self.options.sortOrder = .Ascending
             } else {
@@ -207,5 +178,6 @@ class OZLSortAndFilterViewController: UITableViewController {
             let descendingCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: SortOrderSection))
             descendingCell?.accessoryType = self.options.sortOrder == .Descending ? .Checkmark : .None
         }
+        
     }
 }

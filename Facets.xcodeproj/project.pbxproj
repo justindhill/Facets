@@ -76,6 +76,8 @@
 		D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */; };
 		D0F10F321C358BE500A0AE94 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0F10F311C358BE500A0AE94 /* Icons.xcassets */; };
 		D0F10F381C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */; };
+		D0F10F3A1C36FDE700A0AE94 /* OZLSortAndFilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F391C36FDE700A0AE94 /* OZLSortAndFilterField.swift */; };
+		D0F10F3C1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F3B1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift */; };
 		D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB80591792F2BF0081662A /* UIKit.framework */; };
 		D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805B1792F2BF0081662A /* Foundation.framework */; };
 		D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805D1792F2BF0081662A /* CoreGraphics.framework */; };
@@ -206,6 +208,8 @@
 		D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		D0F10F311C358BE500A0AE94 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSortAndFilterViewController.swift; sourceTree = "<group>"; };
+		D0F10F391C36FDE700A0AE94 /* OZLSortAndFilterField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSortAndFilterField.swift; sourceTree = "<group>"; };
+		D0F10F3B1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLFieldSelectorViewController.swift; sourceTree = "<group>"; };
 		D5DB80561792F2BF0081662A /* Facets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Facets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5DB80591792F2BF0081662A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5DB805B1792F2BF0081662A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -466,6 +470,8 @@
 			isa = PBXGroup;
 			children = (
 				D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */,
+				D0F10F391C36FDE700A0AE94 /* OZLSortAndFilterField.swift */,
+				D0F10F3B1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift */,
 			);
 			path = "Sort and Filter";
 			sourceTree = "<group>";
@@ -775,6 +781,7 @@
 				D5DB806A1792F2BF0081662A /* OZLAppDelegate.m in Sources */,
 				D04C9FB01BCEB245000366A7 /* OZLMainTabControllerViewController.m in Sources */,
 				D0987AD71C09488200D55DEB /* OZLJournalCell.swift in Sources */,
+				D0F10F3C1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift in Sources */,
 				D5DB80AC1792F6980081662A /* OZLIssueListViewController.m in Sources */,
 				D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */,
 				D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */,
@@ -797,6 +804,7 @@
 				D05AF7871C2C6971007911EA /* OZLModelMembership.m in Sources */,
 				D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */,
 				D02D4E4D1C0E11C60050B593 /* OZLRedmineHTMLParser.m in Sources */,
+				D0F10F3A1C36FDE700A0AE94 /* OZLSortAndFilterField.swift in Sources */,
 				D000B1DB1BF816D400CA2845 /* OZLURLProtocol.m in Sources */,
 				2BCF882A1793F4C9006FC859 /* OZLModelIssuePriority.m in Sources */,
 				D0CD7C8A1BF791FA0043C94B /* OZLModelAttachment.m in Sources */,
