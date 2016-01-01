@@ -78,11 +78,11 @@
 		D0F10F381C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */; };
 		D0F10F3A1C36FDE700A0AE94 /* OZLSortAndFilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F391C36FDE700A0AE94 /* OZLSortAndFilterField.swift */; };
 		D0F10F3C1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F3B1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift */; };
+		D0F10F3E1C370E0600A0AE94 /* OZLAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F3D1C370E0600A0AE94 /* OZLAppDelegate.swift */; };
 		D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB80591792F2BF0081662A /* UIKit.framework */; };
 		D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805B1792F2BF0081662A /* Foundation.framework */; };
 		D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805D1792F2BF0081662A /* CoreGraphics.framework */; };
 		D5DB80661792F2BF0081662A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80651792F2BF0081662A /* main.m */; };
-		D5DB806A1792F2BF0081662A /* OZLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80691792F2BF0081662A /* OZLAppDelegate.m */; };
 		D5DB80AC1792F6980081662A /* OZLIssueListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80AA1792F6980081662A /* OZLIssueListViewController.m */; };
 		D5DB80AD1792F6980081662A /* OZLIssueListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5DB80AB1792F6980081662A /* OZLIssueListViewController.xib */; };
 		D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80B0179300B90081662A /* OZLNetwork.m */; };
@@ -210,6 +210,7 @@
 		D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSortAndFilterViewController.swift; sourceTree = "<group>"; };
 		D0F10F391C36FDE700A0AE94 /* OZLSortAndFilterField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSortAndFilterField.swift; sourceTree = "<group>"; };
 		D0F10F3B1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLFieldSelectorViewController.swift; sourceTree = "<group>"; };
+		D0F10F3D1C370E0600A0AE94 /* OZLAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAppDelegate.swift; sourceTree = "<group>"; };
 		D5DB80561792F2BF0081662A /* Facets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Facets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5DB80591792F2BF0081662A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D5DB805B1792F2BF0081662A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -217,8 +218,6 @@
 		D5DB80611792F2BF0081662A /* Facets-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Facets-Info.plist"; sourceTree = "<group>"; };
 		D5DB80651792F2BF0081662A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D5DB80671792F2BF0081662A /* Facets-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Facets-Prefix.pch"; sourceTree = "<group>"; };
-		D5DB80681792F2BF0081662A /* OZLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OZLAppDelegate.h; sourceTree = "<group>"; };
-		D5DB80691792F2BF0081662A /* OZLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OZLAppDelegate.m; sourceTree = "<group>"; };
 		D5DB80A91792F6980081662A /* OZLIssueListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueListViewController.h; sourceTree = "<group>"; };
 		D5DB80AA1792F6980081662A /* OZLIssueListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueListViewController.m; sourceTree = "<group>"; };
 		D5DB80AB1792F6980081662A /* OZLIssueListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OZLIssueListViewController.xib; sourceTree = "<group>"; };
@@ -527,8 +526,7 @@
 				D5DB80A81792F4E40081662A /* View Controllers */,
 				D04C9FAE1BCEB244000366A7 /* OZLMainTabControllerViewController.h */,
 				D04C9FAF1BCEB245000366A7 /* OZLMainTabControllerViewController.m */,
-				D5DB80681792F2BF0081662A /* OZLAppDelegate.h */,
-				D5DB80691792F2BF0081662A /* OZLAppDelegate.m */,
+				D0F10F3D1C370E0600A0AE94 /* OZLAppDelegate.swift */,
 			);
 			path = Facets;
 			sourceTree = "<group>";
@@ -778,7 +776,6 @@
 			files = (
 				D02BD4FF1C0FD85600753EFF /* OZLModelVersion.m in Sources */,
 				D5DB80661792F2BF0081662A /* main.m in Sources */,
-				D5DB806A1792F2BF0081662A /* OZLAppDelegate.m in Sources */,
 				D04C9FB01BCEB245000366A7 /* OZLMainTabControllerViewController.m in Sources */,
 				D0987AD71C09488200D55DEB /* OZLJournalCell.swift in Sources */,
 				D0F10F3C1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift in Sources */,
@@ -801,6 +798,7 @@
 				2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */,
 				2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */,
 				2BCF88271793F4AA006FC859 /* OZLModelIssueStatus.m in Sources */,
+				D0F10F3E1C370E0600A0AE94 /* OZLAppDelegate.swift in Sources */,
 				D05AF7871C2C6971007911EA /* OZLModelMembership.m in Sources */,
 				D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */,
 				D02D4E4D1C0E11C60050B593 /* OZLRedmineHTMLParser.m in Sources */,
