@@ -8,7 +8,6 @@
 
 #import "OZLQueryListViewController.h"
 #import "OZLNetwork.h"
-#import "OZLIssueListViewController.h"
 
 @interface OZLQueryListViewController ()
 

@@ -10,6 +10,7 @@
 #import "OZLModelIssue.h"
 #import "OZLIssueViewModel.h"
 
+@protocol OZLQuickAssignDelegate;
 @interface OZLIssueViewController : UITableViewController
 
 @property (nonatomic, strong) OZLIssueViewModel *viewModel;

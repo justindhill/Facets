@@ -73,6 +73,18 @@ class OZLSortAndFilterViewController: UITableViewController {
     
     private let TextReuseIdentifier = "TextReuseIdentifier"
     
+    convenience init() {
+        self.init(style: .Grouped)
+    }
+    
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()

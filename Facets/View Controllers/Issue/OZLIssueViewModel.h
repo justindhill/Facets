@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, OZLIssueCompleteness) {
 
 @end
 
+@protocol OZLQuickAssignDelegate;
 @interface OZLIssueViewModel : NSObject <OZLQuickAssignDelegate>
 
 - (instancetype)initWithIssueModel:(OZLModelIssue *)issueModel NS_DESIGNATED_INITIALIZER;
