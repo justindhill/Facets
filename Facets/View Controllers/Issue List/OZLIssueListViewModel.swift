@@ -53,7 +53,6 @@ import UIKit
 
     var shouldShowProjectSelector = false
     var shouldShowComposeButton = false
-    var shouldShowProjectSearch = false
     
     var moreIssuesAvailable: Bool = false
     var isLoading: Bool = false

@@ -17,7 +17,6 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
     
     private var isFirstAppearance = true
     private var composeButton: UIButton?
-    private var searchController: UISearchController?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -49,27 +48,6 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
             
             self.showFooterActivityIndicator()
             self.reloadProjectData()
-        }
-        
-        if self.viewModel.shouldShowProjectSearch && self.searchController == nil {
-            
-            let resultsController = OZLIssueListViewController()
-            resultsController.viewModel = OZLIssueListViewModel()
-            resultsController.extendedLayoutIncludesOpaqueBars = true
-            
-            self.searchController = OZLSearchController(searchResultsController: resultsController)
-            self.searchController!.searchBar.placeholder = "Search Project"
-            self.searchController!.searchBar.searchBarStyle = .Minimal
-            self.searchController!.searchBar.backgroundColor = UIColor.whiteColor()
-            
-            
-            if #available(iOS 9.1, *) {
-                self.searchController!.obscuresBackgroundDuringPresentation = true
-            } else {
-                self.searchController?.dimsBackgroundDuringPresentation = true
-            }
-            
-            self.tableView.tableHeaderView = self.searchController?.searchBar
         }
         
         if self.viewModel.shouldShowComposeButton && self.composeButton?.superview == nil {
@@ -246,7 +224,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
         self.splitViewController?.showViewController(issueVC, sender: self)
     }
     
-    // MARK: - UIScrollViewDelegate
+    // MARK - UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let distanceFromBottom = scrollView.contentSize.height -
                                  scrollView.contentOffset.y -
@@ -273,6 +251,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+
     // MARK: - Behavior
     func refreshProjectSelector() {
         if self.viewModel.shouldShowProjectSelector {

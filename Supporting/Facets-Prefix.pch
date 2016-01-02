@@ -21,3 +21,4 @@
 #import "UIFont+OZLExtensions.h"
 #import "UIView+OZLExtensions.h"
 #import "UIColor+OZLExtensions.h"
+#import "UIImage+OZLExtensions.h"
