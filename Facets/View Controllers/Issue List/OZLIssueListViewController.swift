@@ -304,7 +304,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
                 } else {
                     weakSelf.tableView.reloadData()
                     
-                    if self.viewModel.moreIssuesAvailable {
+                    if !self.viewModel.moreIssuesAvailable {
                         weakSelf.hideFooterActivityIndicator()
                     }
                 }
