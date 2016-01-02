@@ -24,10 +24,12 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
         
         self.tabBar.translucent = false
         self.tabBar.barTintColor = UIColor.whiteColor()
+        self.extendedLayoutIncludesOpaqueBars = true
         
         self.projectIssuesVC.viewModel = OZLIssueListViewModel()
         self.projectIssuesVC.viewModel.shouldShowProjectSelector = true
         self.projectIssuesVC.viewModel.shouldShowComposeButton = true
+        self.projectIssuesVC.viewModel.shouldShowProjectSearch = true
         self.projectIssuesVC.view.tag = OZLSplitViewController.PrimaryPaneMember
         
         self.settingsVC.delegate = self
@@ -63,7 +65,7 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
         
         svc.masterNavigationController.navigationBar.translucent = false
         svc.masterNavigationController.navigationBar.barTintColor = UIColor.whiteColor()
-        svc.detailNavigationController.navigationBar.translucent = false
+        svc.masterNavigationController.view.backgroundColor = UIColor.whiteColor()
         svc.detailNavigationController.navigationBar.barTintColor = UIColor.whiteColor()
         
         return svc;
