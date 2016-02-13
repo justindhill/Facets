@@ -76,10 +76,12 @@ class OZLFieldSelectorViewController: UITableViewController {
             self.selectionChangeHandler?(field: OZLSortAndFilterField(displayName: displayName, serverName: serverName))
             
         } else if indexPath.section == CustomFieldSection {
-            let field = self.customFields[UInt(indexPath.row)]
+            guard let field = self.customFields[UInt(indexPath.row)] as? OZLModelCustomField else {
+                return
+            }
             
-            if let fieldId = field.fieldId, let fieldName = field.name {
-                let serverName = "cf_" + String(fieldId)
+            if let fieldName = field.name {
+                let serverName = "cf_" + String(field.fieldId)
                 self.selectionChangeHandler?(field: OZLSortAndFilterField(displayName: fieldName, serverName: serverName))
             }
         }

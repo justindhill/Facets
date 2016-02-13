@@ -10,7 +10,7 @@
 
 @interface OZLIssueAboutTabView ()
 
-@property NSMutableArray *labels;
+@property NSMutableArray *fieldViews;
 @property CGFloat minColumnWidth;
 @property NSInteger currentLayoutItemsPerColumn;
 @property OZLModelIssue *issueModel;
@@ -38,37 +38,37 @@
 }
 
 - (void)setup {
-    self.labels = [NSMutableArray array];
+    self.fieldViews = [NSMutableArray array];
     self.fieldNameFont = [UIFont OZLMediumSystemFontOfSize:12.];
     self.fieldValueFont = [UIFont systemFontOfSize:12];
-    self.minColumnWidth = 150.;
+    self.minColumnWidth = 120.;
 }
 
 - (void)applyIssueModel:(OZLModelIssue *)issueModel {
-    [self.labels makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self.fieldViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     self.issueModel = issueModel;
     
-    NSMutableArray *labels = [NSMutableArray array];
+    NSMutableArray *fieldViews = [NSMutableArray array];
     
     if (issueModel.status.name) {
-        [labels addObject:[self labelForFieldName:@"Status" value:issueModel.status.name]];
+        [fieldViews addObject:[[OZLAboutTabFieldView alloc] initWithTitle:@"Status".uppercaseString value:issueModel.status.name]];
     }
     
     if (issueModel.priority.name) {
-        [labels addObject:[self labelForFieldName:@"Priority" value:issueModel.priority.name]];
+        [fieldViews addObject:[[OZLAboutTabFieldView alloc] initWithTitle:@"Priority".uppercaseString value:issueModel.priority.name]];
     }
     
     if (issueModel.category.name) {
-        [labels addObject:[self labelForFieldName:@"Category" value:issueModel.category.name]];
+        [fieldViews addObject:[[OZLAboutTabFieldView alloc] initWithTitle:@"Category".uppercaseString value:issueModel.category.name]];
     }
     
     if (issueModel.targetVersion.name) {
-        [labels addObject:[self labelForFieldName:@"Target version" value:issueModel.targetVersion.name]];
+        [fieldViews addObject:[[OZLAboutTabFieldView alloc] initWithTitle:@"Target version".uppercaseString value:issueModel.targetVersion.name]];
     }
     
     if (issueModel.author.name) {
-        [labels addObject:[self labelForFieldName:@"Author" value:issueModel.author.name]];
+        [fieldViews addObject:[[OZLAboutTabFieldView alloc] initWithTitle:@"Author".uppercaseString value:issueModel.author.name]];
     }
     
     for (OZLModelCustomField *field in issueModel.customFields) {
@@ -76,11 +76,12 @@
         
         if (field.value) {
             NSString *displayValue = [OZLModelCustomField displayValueForCustomFieldType:cachedField.type attributeId:cachedField.fieldId attributeValue:field.value];
-            [labels addObject:[self labelForFieldName:field.name value:displayValue]];
+            
+            [fieldViews addObject:[[OZLAboutTabFieldView alloc] initWithTitle:field.name.uppercaseString value:displayValue]];
         }
     }
     
-    self.labels = labels;
+    self.fieldViews = fieldViews;
     
     [self setNeedsLayout];
 }
@@ -89,19 +90,19 @@
     CGFloat usableWidth = self.frame.size.width - (self.contentPadding * 2);
     CGFloat colCount = floorf(usableWidth / self.minColumnWidth);
     CGFloat colWidth = usableWidth / colCount;
-    NSInteger itemsPerColumn = ceilf(self.labels.count / colCount);
+    NSInteger itemsPerColumn = ceilf(self.fieldViews.count / colCount);
     
     self.currentLayoutItemsPerColumn = itemsPerColumn;
     
-    UILabel *previousLabel;
+    UILabel *previousFieldView;
     
-    for (NSInteger i = 0; i < self.labels.count; i++) {
+    for (NSInteger i = 0; i < self.fieldViews.count; i++) {
         NSInteger colIndex = i / itemsPerColumn;
         NSInteger rowIndex = i % itemsPerColumn;
-        UILabel *label = self.labels[i];
+        UILabel *fieldView = self.fieldViews[i];
         
-        if (!label.superview) {
-            [self addSubview:label];
+        if (!fieldView.superview) {
+            [self addSubview:fieldView];
         }
         
         CGFloat xOffset = ceilf(self.contentPadding + (colIndex * colWidth));
@@ -110,31 +111,16 @@
         if (rowIndex == 0) {
             yOffset = ceilf(self.contentPadding);
         } else {
-            yOffset = ceilf(previousLabel.bottom + (self.contentPadding / 3));
+            yOffset = ceilf(previousFieldView.bottom + self.contentPadding);
         }
         
-        label.frame = (CGRect){{xOffset, yOffset}, label.frame.size};
-        previousLabel = label;
+        fieldView.frame = (CGRect){{xOffset, yOffset}, [fieldView sizeThatFits:CGSizeMake(colWidth, CGFLOAT_MAX)]};
+        previousFieldView = fieldView;
     }
 }
 
-- (UILabel *)labelForFieldName:(NSString *)name value:(NSString *)value {
-    NSString *joined = [NSString stringWithFormat:@"%@: %@", name, value];
-    NSMutableAttributedString *aString = [[NSMutableAttributedString alloc] initWithString:joined];
-    [aString addAttribute:NSFontAttributeName value:self.fieldNameFont range:NSMakeRange(0, name.length + 1)];
-    [aString addAttribute:NSFontAttributeName value:self.fieldValueFont range:NSMakeRange(name.length + 2, value.length)];
-    
-    UILabel *label = [[UILabel alloc] init];
-    label.attributedText = aString;
-    label.numberOfLines = 1;
-    label.textColor = [UIColor darkGrayColor];
-    [label sizeToFit];
-    
-    return label;
-}
-
 - (CGFloat)intrinsicHeightWithWidth:(CGFloat)width {
-    if (!self.labels.count) {
+    if (!self.fieldViews.count) {
         return 0;
     }
     
@@ -150,7 +136,7 @@
     [sizingView applyIssueModel:self.issueModel];
     [sizingView layoutSubviews];
     
-    UILabel *bottomRowLabel = sizingView.labels[sizingView.currentLayoutItemsPerColumn - 1];
+    UILabel *bottomRowLabel = sizingView.fieldViews[sizingView.currentLayoutItemsPerColumn - 1];
     
     return bottomRowLabel.bottom + self.contentPadding;
 }

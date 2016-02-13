@@ -58,6 +58,7 @@
 		D05AF7811C2BC87A007911EA /* OZLSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */; };
 		D05AF7871C2C6971007911EA /* OZLModelMembership.m in Sources */ = {isa = PBXBuildFile; fileRef = D05AF7861C2C6971007911EA /* OZLModelMembership.m */; };
 		D05E08071C1FB6F400509501 /* OZLQuickAssignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E08061C1FB6F400509501 /* OZLQuickAssignView.swift */; };
+		D06473BA1C6F8B7E000A7180 /* OZLAboutTabFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06473B91C6F8B7E000A7180 /* OZLAboutTabFieldView.swift */; };
 		D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */; };
 		D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0987ABB1C07818500D55DEB /* Images.xcassets */; };
 		D0987AD31C0801E000D55DEB /* OZLModelJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD21C0801E000D55DEB /* OZLModelJournal.swift */; };
@@ -180,6 +181,7 @@
 		D05AF7851C2C6971007911EA /* OZLModelMembership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelMembership.h; sourceTree = "<group>"; };
 		D05AF7861C2C6971007911EA /* OZLModelMembership.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelMembership.m; sourceTree = "<group>"; };
 		D05E08061C1FB6F400509501 /* OZLQuickAssignView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQuickAssignView.swift; sourceTree = "<group>"; };
+		D06473B91C6F8B7E000A7180 /* OZLAboutTabFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAboutTabFieldView.swift; sourceTree = "<group>"; };
 		D06D51101C2F10F700180B89 /* OZLNavigationChildChangeListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLNavigationChildChangeListener.h; sourceTree = "<group>"; };
 		D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAsyncImageView.swift; sourceTree = "<group>"; };
 		D0987AB81C0772BA00D55DEB /* Facets-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facets-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 		D01F9BD51BEC8265005B2ED0 /* Issue */ = {
 			isa = PBXGroup;
 			children = (
+				D06473B81C6F8B3C000A7180 /* About Tab */,
 				D0292D661BF2DB4D00F717F2 /* Description view controller */,
 				D01F9C0E1BED9AC6005B2ED0 /* Cells */,
 				D0292D6E1BF3141900F717F2 /* OZLLoadingView.h */,
@@ -327,8 +330,6 @@
 				D01F9BDF1BEC84A3005B2ED0 /* OZLIssueHeaderView.m */,
 				D01F9C151BEEA96C005B2ED0 /* OZLTabTestView.h */,
 				D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */,
-				D01F9C181BEED9BE005B2ED0 /* OZLIssueAboutTabView.h */,
-				D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */,
 			);
 			path = Issue;
 			sourceTree = "<group>";
@@ -384,6 +385,16 @@
 				D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */,
 			);
 			path = "Quick Assign";
+			sourceTree = "<group>";
+		};
+		D06473B81C6F8B3C000A7180 /* About Tab */ = {
+			isa = PBXGroup;
+			children = (
+				D01F9C181BEED9BE005B2ED0 /* OZLIssueAboutTabView.h */,
+				D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */,
+				D06473B91C6F8B7E000A7180 /* OZLAboutTabFieldView.swift */,
+			);
+			path = "About Tab";
 			sourceTree = "<group>";
 		};
 		D0987AB71C0772BA00D55DEB /* Supporting */ = {
@@ -820,6 +831,7 @@
 				D000B1D11BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m in Sources */,
 				D0CD7C901BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m in Sources */,
 				D02BD4FC1C0F58AA00753EFF /* OZLModelStringContainer.m in Sources */,
+				D06473BA1C6F8B7E000A7180 /* OZLAboutTabFieldView.swift in Sources */,
 				2BBE4414179E586B00FD9E20 /* OZLModelTimeEntryActivity.m in Sources */,
 				D0987AD31C0801E000D55DEB /* OZLModelJournal.swift in Sources */,
 				D01F9C1A1BEED9BE005B2ED0 /* OZLIssueAboutTabView.m in Sources */,
