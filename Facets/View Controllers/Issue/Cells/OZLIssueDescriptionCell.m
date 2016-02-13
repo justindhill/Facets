@@ -11,7 +11,6 @@
 @interface OZLIssueDescriptionCell ()
 
 @property (strong) UILabel *descriptionPreviewLabel;
-@property (strong) UIButton *showMoreButton;
 
 @property BOOL isFirstLayout;
 
@@ -25,11 +24,6 @@
         self.descriptionPreviewLabel.textColor = [UIColor darkGrayColor];
         self.descriptionPreviewLabel.font = [UIFont systemFontOfSize:14];
         self.descriptionPreviewLabel.numberOfLines = 3;
-        
-        self.showMoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.showMoreButton setTitle:@"Show more >" forState:UIControlStateNormal];
-        [self.showMoreButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        self.showMoreButton.titleLabel.font = [UIFont systemFontOfSize:12];
         
         self.isFirstLayout = YES;
     }
@@ -46,7 +40,6 @@
 - (void)layoutSubviews {
     if (self.isFirstLayout) {
         [self.contentView addSubview:self.descriptionPreviewLabel];
-        [self.contentView addSubview:self.showMoreButton];
     }
     
     if (self.descriptionPreviewLabel.text) {
@@ -64,9 +57,6 @@
     
     self.descriptionPreviewLabel.frame = (CGRect){{self.contentPadding, 6.}, descSize};
     
-    [self.showMoreButton sizeToFit];
-    self.showMoreButton.frame = (CGRect){{ceilf(self.contentPadding), ceilf(self.descriptionPreviewLabel.bottom + 10)}, self.showMoreButton.frame.size};
-    
     self.isFirstLayout = NO;
 }
 
@@ -83,16 +73,12 @@
     sizingCell.descriptionPreviewLabel.text = description;
     [sizingCell layoutSubviews];
     
-    return sizingCell.showMoreButton.bottom;
+    return sizingCell.descriptionPreviewLabel.bottom + sizingCell.contentPadding;
 }
 
 - (NSString *)transformStringForDisplay:(NSString *)string {
     
     return [[string componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
-}
-
-- (void)prepareForReuse {
-    [self.showMoreButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
 }
 
 @end

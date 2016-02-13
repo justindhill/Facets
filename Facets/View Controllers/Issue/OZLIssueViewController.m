@@ -23,9 +23,6 @@
 #import <JTSImageViewController/JTSImageViewController.h>
 #import "OZLNavigationChildChangeListener.h"
 
-const NSInteger OZLDetailSectionIndex = 0;
-const NSInteger OZLDescriptionSectionIndex = 1;
-
 NSString * const OZLDetailReuseIdentifier = @"OZLDetailReuseIdentifier";
 NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier";
 NSString * const OZLAttachmentsReuseIdentifier = @"OZLAttachmentsReuseIdentifier";
@@ -182,12 +179,19 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 }
 
 #pragma mark - Button actions
-- (void)descriptionShowMoreAction:(UIButton *)button {
+- (void)showFullDescriptionAction:(UIButton *)button {
     OZLIssueFullDescriptionViewController *descriptionVC = [[OZLIssueFullDescriptionViewController alloc] init];
     descriptionVC.descriptionLabel.text = self.viewModel.issueModel.description;
     descriptionVC.contentPadding = OZLContentPadding;
     
     [self.navigationController pushViewController:descriptionVC animated:YES];
+}
+
+- (void)showAllActivityAction:(UIButton *)button {
+    OZLJournalViewerViewModel *vm = [[OZLJournalViewerViewModel alloc] initWithIssue:self.viewModel.issueModel];
+    OZLJournalViewerViewController *vc = [[OZLJournalViewerViewController alloc] initWithViewModel:vm];
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)quickAssignAction:(UIButton *)button {
@@ -305,7 +309,15 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     
     OZLIssueSectionHeaderView *header = [[OZLIssueSectionHeaderView alloc] init];
     header.contentPadding = OZLContentPadding;
-    header.sectionTitleLabel.text = [self.viewModel displayNameForSectionName:sectionName];
+    header.titleLabel.text = [self.viewModel displayNameForSectionName:sectionName];
+    
+    if ([sectionName isEqualToString:OZLIssueSectionRecentActivity]) {
+        [header.disclosureButton setTitle:@"Show all \u203a" forState:UIControlStateNormal];
+        [header.disclosureButton addTarget:self action:@selector(showAllActivityAction:) forControlEvents:UIControlEventTouchUpInside];
+    } else if ([sectionName isEqualToString:OZLIssueSectionDescription]) {
+        [header.disclosureButton setTitle:@"Show full description \u203a" forState:UIControlStateNormal];
+        [header.disclosureButton addTarget:self action:@selector(showFullDescriptionAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     return header;
 }
@@ -317,13 +329,9 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 #pragma mark - DRPSlidingTabViewDelegate
 - (void)view:(UIView *)view intrinsicHeightDidChangeTo:(CGFloat)newHeight {
     if (view == self.detailView) {
-        [UIView beginAnimations:nil context:NULL];
-        
         [self.tableView beginUpdates];
-        [self.tableView endUpdates];
         self.detailView.frame = self.detailView.superview.bounds;
-        
-        [UIView commitAnimations];
+        [self.tableView endUpdates];
     }
 }
 

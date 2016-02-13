@@ -137,7 +137,11 @@ class OZLJournalCell: OZLTableViewCell {
                 if detail.type == .Attachment {
                     detailString  = "Added attachment (\(new))"
                 } else {
-                    detailString  = "Set \(name.lowercaseString) to \(new)"
+                    if (new.characters.count > 20) {
+                        detailString = "Set \(name.lowercaseString) (value too long to be displayed)"
+                    } else {
+                        detailString = "Set \(name.lowercaseString) to \(new)"
+                    }
                 }
                 
             } else if let oldValue = detail.oldValue, let name = detail.displayName {

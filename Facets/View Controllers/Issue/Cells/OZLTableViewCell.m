@@ -10,12 +10,4 @@
 
 @implementation OZLTableViewCell
 
-+ (UILabel *)labelConfiguredForTitle {
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.font = [UIFont systemFontOfSize:14];
-    titleLabel.textColor = [UIColor lightGrayColor];
-    
-    return titleLabel;
-}
-
 @end
