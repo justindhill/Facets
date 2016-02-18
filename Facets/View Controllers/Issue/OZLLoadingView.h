@@ -7,9 +7,10 @@
 //
 
 #import "OZLView.h"
+#import <DRPLoadingSpinner/DRPLoadingSpinner.h>
 
 @interface OZLLoadingView : OZLView
 
-@property (strong) UIActivityIndicatorView *loadingSpinner;
+@property (strong) DRPLoadingSpinner *loadingSpinner;
 
 @end

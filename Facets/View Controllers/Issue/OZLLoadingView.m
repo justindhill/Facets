@@ -34,8 +34,12 @@
 
 - (void)setup {
     self.isFirstLayout = YES;
-    self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.loadingSpinner.frame = CGRectMake(0, 0, 22, 22);
+    self.loadingSpinner = [[DRPLoadingSpinner alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    self.loadingSpinner.colorSequence = @[ [UIColor lightGrayColor] ];
+    self.loadingSpinner.minimumArcLength = (M_PI / 3.);
+    self.loadingSpinner.lineWidth = 1.;
+    self.loadingSpinner.drawCycleDuration = .75;
+    self.loadingSpinner.rotationCycleDuration = 1.5;
 }
 
 - (void)layoutSubviews {
