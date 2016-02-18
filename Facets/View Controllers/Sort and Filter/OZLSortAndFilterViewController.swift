@@ -55,17 +55,7 @@ class OZLSortAndFilterViewController: UITableViewController {
     
     weak var delegate: OZLSortAndFilterViewControllerDelegate?
     
-    // WARNING: This is a weird, hacky way of doing a copy property in Swift. Maybe there's a better way, but I'm not convinced.
-    var internalOptions: OZLSortAndFilterOptions = OZLSortAndFilterOptions()
-    var options: OZLSortAndFilterOptions {
-        set(value) {
-            self.internalOptions = value.copy() as! OZLSortAndFilterOptions
-        }
-        
-        get {
-            return self.internalOptions
-        }
-    }
+    @NSCopying var options = OZLSortAndFilterOptions()
     
     private let SortFieldSection = 0;
     private let SortOrderSection = 1
