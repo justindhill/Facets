@@ -45,7 +45,7 @@ import UIKit
         if let view = self.view as? OZLQuickAssignView {
             self.preferredContentSize = CGSizeMake(320, 350)
             
-            view.cancelButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+            view.cancelButton.addTarget(self, action: #selector(OZLQuickAssignViewController.dismiss), forControlEvents: .TouchUpInside)
             view.backgroundColor = UIColor.whiteColor()
             
             view.tableView.dataSource = self
@@ -54,8 +54,8 @@ import UIKit
             
             view.filterField.delegate = self
             
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowOrHide:", name: UIKeyboardWillShowNotification, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowOrHide:", name: UIKeyboardWillHideNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: UIKeyboardWillShowNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
             guard let issueModel = self.issueModel else {
                 assertionFailure("Issue model wasn't set on OZLQuickAssignViewController before its view was loaded.");

@@ -23,7 +23,7 @@ import UIKit
             self.dimmingView.userInteractionEnabled = true
             
             self.dimmingView.addGestureRecognizer(self.backgroundTapRecognizer)
-            self.backgroundTapRecognizer.addTarget(self, action: "backgroundTapAction")
+            self.backgroundTapRecognizer.addTarget(self, action: #selector(OZLSheetPresentationController.backgroundTapAction))
         
             self.presentingViewController.transitionCoordinator()?.animateAlongsideTransition({ (context: UIViewControllerTransitionCoordinatorContext) -> Void in
                 

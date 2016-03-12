@@ -9,11 +9,13 @@
 #import "OZLQueryListViewController.h"
 #import "OZLNetwork.h"
 
-@interface OZLQueryListViewController ()
+@interface OZLQueryListViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property BOOL isFirstAppearance;
 @property NSArray *queries;
 @property NSInteger displayedProjectId;
+@property OZLLoadingView *loadingView;
+@property UITableViewController *tableViewController;
 
 @end
 
@@ -21,17 +23,39 @@
 
 NSString * const OZLQueryReuseIdentifier = @"query";
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        self.tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+    }
+
+    return self;
+}
+
+- (UITableView *)tableView {
+    return self.tableViewController.tableView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    [self addChildViewController:self.tableViewController];
+    [self.view addSubview:self.tableViewController.tableView];
+    [self.tableViewController didMoveToParentViewController:self];
+
+    self.loadingView = [[OZLLoadingView alloc] init];
+    [self.view addSubview:self.loadingView];
+
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+
     self.isFirstAppearance = YES;
     self.displayedProjectId = NSNotFound;
     
     // Do any additional setup after loading the view from its nib.
     self.title = @"Queries";
     
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    self.tableViewController.refreshControl = [[UIRefreshControl alloc] init];
+    [self.tableViewController.refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OZLQueryReuseIdentifier];
 }
@@ -48,6 +72,13 @@ NSString * const OZLQueryReuseIdentifier = @"query";
     }
     
     self.isFirstAppearance = NO;
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+
+    self.tableView.frame = self.view.bounds;
+    self.loadingView.frame = self.view.bounds;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -79,8 +110,12 @@ NSString * const OZLQueryReuseIdentifier = @"query";
 }
 
 - (void)refreshData {
-    if (!self.refreshControl.isRefreshing) {
-        [self.refreshControl beginRefreshing];
+
+    if (!self.queries) {
+        self.loadingView.hidden = NO;
+        [self.loadingView startLoading];
+    } else if (!self.tableViewController.refreshControl.isRefreshing) {
+        [self.tableViewController.refreshControl beginRefreshing];
     }
     
     __weak OZLQueryListViewController *weakSelf = self;
@@ -89,16 +124,16 @@ NSString * const OZLQueryReuseIdentifier = @"query";
     
     [[OZLNetwork sharedInstance] getQueryListForProject:projectId params:nil completion:^(NSArray *result, NSError *error) {
         if (error) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Fetch Error" message:[NSString stringWithFormat:@"Couldn't fetch the query list. \r\r%@", error.localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-            [weakSelf presentViewController:alert animated:YES completion:nil];
+            [weakSelf.loadingView endLoadingWithErrorMessage:@"There was a problem loading the query list. Please check your connection and try again."];
         } else {
+            [weakSelf.loadingView endLoadingWithErrorMessage:(result.count > 0) ? nil : @"Nothing to see here."];
             weakSelf.displayedProjectId = projectId;
             weakSelf.queries = result;
         }
-        
+
+        weakSelf.loadingView.hidden = (!error && weakSelf.queries.count > 0);
         [weakSelf.tableView reloadData];
-        [weakSelf.refreshControl endRefreshing];
+        [weakSelf.tableViewController.refreshControl endRefreshing];
     }];
 }
 

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OZLQueryListViewController : UITableViewController
+@interface OZLQueryListViewController : UIViewController
 
 @end

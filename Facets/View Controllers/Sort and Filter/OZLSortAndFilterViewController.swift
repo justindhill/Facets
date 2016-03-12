@@ -80,8 +80,8 @@ class OZLSortAndFilterViewController: UITableViewController {
         super.viewDidLoad()
         self.title = "Sort and Filter"
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelAction")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "saveAction")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(OZLSortAndFilterViewController.cancelAction))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: #selector(OZLSortAndFilterViewController.saveAction))
     }
     
     // MARK: Button actions

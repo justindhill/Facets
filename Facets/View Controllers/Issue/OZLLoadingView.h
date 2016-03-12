@@ -11,6 +11,8 @@
 
 @interface OZLLoadingView : OZLView
 
-@property (strong) DRPLoadingSpinner *loadingSpinner;
+- (void)startLoading;
+- (void)endLoading;
+- (void)endLoadingWithErrorMessage:(NSString *)errorMessage;
 
 @end

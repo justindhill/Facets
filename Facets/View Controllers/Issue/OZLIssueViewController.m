@@ -153,7 +153,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         OZLLoadingView *loadingView = [[OZLLoadingView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
         self.tableView.tableFooterView = loadingView;
         
-        [loadingView.loadingSpinner startAnimating];
+        [loadingView startLoading];
     }
 }
 

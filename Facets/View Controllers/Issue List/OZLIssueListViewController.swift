@@ -44,7 +44,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
             self.refreshProjectSelector()
             self.view.tintColor = self.parentViewController?.view.tintColor
             
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-filter"), style: .Done, target: self, action: "filterAction:")
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-filter"), style: .Done, target: self, action: #selector(OZLIssueListViewController.filterAction(_:)))
             
             self.showFooterActivityIndicator()
             self.reloadProjectData()
@@ -65,7 +65,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
             
             self.composeButton!.frame = CGRectMake(0, 0, self.IssueListComposeButtonHeight, self.IssueListComposeButtonHeight)
             self.composeButton!.layer.cornerRadius = 24.0
-            self.composeButton!.addTarget(self, action: "composeButtonAction:", forControlEvents:.TouchUpInside)
+            self.composeButton!.addTarget(self, action: #selector(OZLIssueListViewController.composeButtonAction(_:)), forControlEvents:.TouchUpInside)
             self.view.addSubview(self.composeButton!)
             
         } else if !self.viewModel.shouldShowComposeButton && self.composeButton?.superview != nil {
@@ -121,7 +121,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
     
     func composeButtonAction(sender: UIButton?) {
         let composer = OZLIssueComposerViewController()
-        composer.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismissComposerAction:")
+        composer.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(OZLIssueListViewController.dismissComposerAction(_:)))
         
         let nav = UINavigationController(rootViewController: composer)
         nav.modalPresentationStyle = .FormSheet
@@ -320,7 +320,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
         let height = (OZLContentPadding * 2) + IssueListComposeButtonHeight
     
         let loadingView = OZLLoadingView(frame: CGRectMake(0, 0, self.view.frame.size.width, height))
-        loadingView.loadingSpinner.startAnimating()
+        loadingView.startLoading()
         self.tableView.tableFooterView = loadingView;
     }
     

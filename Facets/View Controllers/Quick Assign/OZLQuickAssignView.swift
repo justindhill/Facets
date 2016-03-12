@@ -73,7 +73,7 @@ class OZLQuickAssignView: UIView {
         if self.loadingOverlay.superview == nil {
             self.addSubview(self.loadingOverlay)
             self.loadingOverlay.frame = self.bounds
-            self.loadingOverlay.loadingSpinner.startAnimating()
+            self.loadingOverlay.startLoading()
             self.filterField.resignFirstResponder()
         }
     }
@@ -81,7 +81,7 @@ class OZLQuickAssignView: UIView {
     func hideLoadingOverlay() {
         if self.loadingOverlay.superview != nil {
             self.loadingOverlay.removeFromSuperview()
-            self.loadingOverlay.loadingSpinner.stopAnimating()
+            self.loadingOverlay.endLoading()
         }
     }
 }

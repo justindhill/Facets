@@ -12,6 +12,7 @@ def all_pods
 	pod 'GTMNSStringHTMLAdditions'
 	pod 'Realm'
 	pod 'JVFloatLabeledTextField'
+	pod 'SSKeychain'
 
 	pod 'Reveal-iOS-SDK', :configuration => ['Debug']
 end
