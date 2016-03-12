@@ -30,8 +30,13 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+
         self.tableView.delegate = self
         self.tableView.dataSource = self
+
+        self.tableView.registerNib(UINib(nibName: "OZLIssueTableViewCell", bundle: NSBundle.mainBundle()),
+                                   forCellReuseIdentifier: IssueCellReuseIdentifier)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -197,20 +202,25 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44.0
+        let issue = self.viewModel.issues[indexPath.row];
+
+        return OZLIssueTableViewCell.heightWithWidth(tableView.frame.size.width,
+                                                     issue: issue,
+                                                     contentPadding: OZLContentPadding)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(IssueCellReuseIdentifier)
-        
-        if cell == nil {
-            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: IssueCellReuseIdentifier)
+        let cell = tableView.dequeueReusableCellWithIdentifier(IssueCellReuseIdentifier)
+
+        if let cell = cell as? OZLIssueTableViewCell {
+            let issue = self.viewModel.issues[indexPath.row]
+            cell.applyIssueModel(issue)
+            cell.contentPadding = OZLContentPadding
         }
         
-        let issue = self.viewModel.issues[indexPath.row]
-        cell!.textLabel?.text = issue.subject
-        cell!.detailTextLabel?.text = issue.assignedTo?.name
-        
+//        cell!.textLabel?.text = issue.subject
+//        cell!.detailTextLabel?.text = issue.assignedTo?.name
+
         return cell!
     }
     

@@ -1,4 +1,5 @@
 PODS:
+  - DateTools (1.7.0)
   - DRPLoadingSpinner (0.1.0)
   - DRPSlidingTabView (0.2.2)
   - GTMNSStringHTMLAdditions (0.2.1)
@@ -22,6 +23,7 @@ PODS:
   - TTTAttributedLabel (1.13.4)
 
 DEPENDENCIES:
+  - DateTools
   - DRPLoadingSpinner
   - DRPSlidingTabView (~> 0.2)
   - GTMNSStringHTMLAdditions
@@ -39,6 +41,7 @@ DEPENDENCIES:
   - TTTAttributedLabel
 
 SPEC CHECKSUMS:
+  DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
   DRPLoadingSpinner: 47cb1c2e47ae2617c87c8340075a24d94a48d879
   DRPSlidingTabView: b8a48b3d7a4848feaf755673344ce9cd3c622681
   GTMNSStringHTMLAdditions: 4bfc402b1b17165360728083156cae0a74ecb308
@@ -55,6 +58,6 @@ SPEC CHECKSUMS:
   SSKeychain: c71293fa57216a40ab06c23f4085387583293de4
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
-PODFILE CHECKSUM: 38dcd76d9b22106deac4e713d6e23aa568485c36
+PODFILE CHECKSUM: d2f6b4358f0c3fe5036cd97a1eac0cf5ab69dff5
 
 COCOAPODS: 1.0.0.beta.3

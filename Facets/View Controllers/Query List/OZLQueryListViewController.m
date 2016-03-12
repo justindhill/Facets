@@ -38,6 +38,8 @@ NSString * const OZLQueryReuseIdentifier = @"query";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:nil action:nil];
+
     [self addChildViewController:self.tableViewController];
     [self.view addSubview:self.tableViewController.tableView];
     [self.tableViewController didMoveToParentViewController:self];
