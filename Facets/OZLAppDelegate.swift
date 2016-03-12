@@ -9,7 +9,7 @@
 import UIKit
 
 class OZLAppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow? = UIWindow(frame: UIScreen.mainScreen().bounds)
+    var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         #if !DEBUG
@@ -22,7 +22,8 @@ class OZLAppDelegate: UIResponder, UIApplicationDelegate {
         OZLSingleton.sharedInstance()
         
         NSURLProtocol.registerClass(OZLURLProtocol.self)
-        
+
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.tintColor = UIColor.facetsBrandColor()
         self.window?.backgroundColor = UIColor.whiteColor()
         
