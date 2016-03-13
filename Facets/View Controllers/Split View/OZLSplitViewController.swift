@@ -32,7 +32,7 @@ import UIKit
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if self.traitCollection.userInterfaceIdiom == .Pad {
+        if self.traitCollection.userInterfaceIdiom == .Pad && self.presentedViewController == nil {
             self.detailNavigationController.viewControllers = [ OZLSplitViewPlaceholderPane() ]
         }
     }

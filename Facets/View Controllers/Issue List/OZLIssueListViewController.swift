@@ -78,7 +78,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
             self.composeButton = nil
         }
         
-        if let selectedIndexPaths = self.tableView.indexPathsForSelectedRows {
+        if let selectedIndexPaths = self.tableView.indexPathsForSelectedRows where self.presentedViewController == nil {
             for indexPath in selectedIndexPaths {
                 self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
             }
@@ -218,9 +218,6 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
             cell.contentPadding = OZLContentPadding
         }
         
-//        cell!.textLabel?.text = issue.subject
-//        cell!.detailTextLabel?.text = issue.assignedTo?.name
-
         return cell!
     }
     
