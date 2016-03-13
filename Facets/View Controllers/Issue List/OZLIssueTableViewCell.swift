@@ -33,9 +33,14 @@ class OZLIssueTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        self.contentView.layer.shouldRasterize = true
+        self.contentView.layer.rasterizationScale = UIScreen.mainScreen().scale
+
         self.priorityLabel.layer.masksToBounds = true
         self.assigneeAvatarImageView.layer.masksToBounds = true
-        self.assigneeAvatarImageView.backgroundColor = UIColor.OZLVeryLightGrayColor()
+
+        self.priorityLabel.backgroundColor = UIColor.facetsBrandColor()
+        self.assigneeAvatarImageView.backgroundColor = UIColor.lightGrayColor()
     }
 
     func applyIssueModel(issue: OZLModelIssue) {
@@ -55,6 +60,24 @@ class OZLIssueTableViewCell: UITableViewCell {
         if let dueDate = issue.dueDate {
             self.dueDateLabel.text = "due \(dueDate.timeAgoSinceNow())".uppercaseString
         }
+
+        self.setNeedsLayout()
+    }
+
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        if highlighted {
+            self.contentView.backgroundColor = UIColor.OZLVeryLightGrayColor()
+        } else {
+            self.contentView.backgroundColor = UIColor.whiteColor()
+        }
+    }
+
+    override func setSelected(selected: Bool, animated: Bool) {
+        if selected {
+            self.contentView.backgroundColor = UIColor.OZLVeryLightGrayColor()
+        } else {
+            self.contentView.backgroundColor = UIColor.whiteColor()
+        }
     }
 
     override func layoutSubviews() {
@@ -63,41 +86,41 @@ class OZLIssueTableViewCell: UITableViewCell {
         self.priorityLabel.sizeToFit()
         self.priorityLabel.frame = CGRectMake(self.contentPadding,
                                               self.contentPadding,
-                                              self.priorityLabel.frame.size.width + 6,
-                                              self.priorityLabel.frame.size.height + 4)
+                                              ceil(self.priorityLabel.frame.size.width + 6),
+                                              ceil(self.priorityLabel.frame.size.height + 4))
 
         self.statusLabel.sizeToFit()
-        self.statusLabel.frame = CGRectMake(self.priorityLabel.right,
+        self.statusLabel.frame = CGRectMake(floor(self.priorityLabel.right),
                                             self.priorityLabel.top,
-                                            self.statusLabel.frame.size.width + 6,
+                                            ceil(self.statusLabel.frame.size.width + 6),
                                             self.priorityLabel.frame.size.height)
 
         self.issueNumberLabel.sizeToFit()
-        self.issueNumberLabel.frame = CGRectMake(self.statusLabel.right + (self.contentPadding / 2),
+        self.issueNumberLabel.frame = CGRectMake(ceil(self.statusLabel.right + (self.contentPadding / 2)),
                                                  self.statusLabel.top,
                                                  self.issueNumberLabel.frame.size.width,
                                                  self.priorityLabel.frame.size.height)
 
-        self.subjectLabel.frame = CGRectMake(0, 0, self.frame.size.width - (2 * self.contentPadding), 0)
+        self.subjectLabel.frame = CGRectMake(0, 0, self.contentView.frame.size.width - (2 * self.contentPadding), 0)
         self.subjectLabel.sizeToFit()
         self.subjectLabel.frame = CGRectMake(self.contentPadding,
-                                             self.priorityLabel.bottom + (self.contentPadding / 2),
+                                             ceil(self.priorityLabel.bottom + (self.contentPadding / 2)),
                                              self.subjectLabel.frame.size.width,
                                              self.subjectLabel.frame.size.height)
 
         let bottomRowElementSpacing: CGFloat = 8.0
-        let bottomRowElementYOffset: CGFloat = self.subjectLabel.bottom + (self.contentPadding / 2)
+        let bottomRowElementYOffset: CGFloat = ceil(self.subjectLabel.bottom + (self.contentPadding / 2))
         let bottomRowElementHeight: CGFloat = 16.0
 
         if !self.assigneeNameLabel.hidden {
 
             self.assigneeNameLabel.sizeToFit()
-            self.assigneeNameLabel.frame = CGRectMake(self.frame.size.width - self.contentPadding - self.assigneeNameLabel.frame.size.width,
+            self.assigneeNameLabel.frame = CGRectMake(floor(self.contentView.frame.size.width - self.contentPadding - self.assigneeNameLabel.frame.size.width),
                                                       bottomRowElementYOffset,
                                                       self.assigneeNameLabel.frame.size.width,
                                                       bottomRowElementHeight)
 
-            self.assigneeAvatarImageView.frame = CGRectMake(self.assigneeNameLabel.frame.origin.x - bottomRowElementHeight - bottomRowElementSpacing,
+            self.assigneeAvatarImageView.frame = CGRectMake(floor(self.assigneeNameLabel.frame.origin.x - bottomRowElementHeight - bottomRowElementSpacing),
                                                             bottomRowElementYOffset,
                                                             bottomRowElementHeight,
                                                             bottomRowElementHeight)
@@ -107,12 +130,12 @@ class OZLIssueTableViewCell: UITableViewCell {
             self.dueDateLabel.sizeToFit()
 
             if self.assigneeAvatarImageView.hidden {
-                self.dueDateLabel.frame = CGRectMake(self.frame.size.width - self.contentPadding - self.dueDateLabel.frame.size.width,
+                self.dueDateLabel.frame = CGRectMake(floor(self.contentView.frame.size.width - self.contentPadding - self.dueDateLabel.frame.size.width),
                                                      bottomRowElementYOffset,
                                                      self.dueDateLabel.frame.size.width,
                                                      bottomRowElementHeight)
             } else {
-                self.dueDateLabel.frame = CGRectMake(self.assigneeAvatarImageView.frame.origin.x - self.dueDateLabel.frame.size.width - bottomRowElementSpacing,
+                self.dueDateLabel.frame = CGRectMake(floor(self.assigneeAvatarImageView.frame.origin.x - self.dueDateLabel.frame.size.width - bottomRowElementSpacing),
                                                      bottomRowElementYOffset,
                                                      self.dueDateLabel.frame.size.width,
                                                      bottomRowElementHeight)
