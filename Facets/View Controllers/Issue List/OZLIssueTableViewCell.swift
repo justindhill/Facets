@@ -39,6 +39,7 @@ class OZLIssueTableViewCell: UITableViewCell {
         self.priorityLabel.layer.masksToBounds = true
         self.assigneeAvatarImageView.layer.masksToBounds = true
 
+        self.priorityLabel.textColor = UIColor.whiteColor()
         self.priorityLabel.backgroundColor = UIColor.facetsBrandColor()
         self.assigneeAvatarImageView.backgroundColor = UIColor.lightGrayColor()
     }

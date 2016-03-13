@@ -10,7 +10,7 @@ import UIKit
 
 class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLSortAndFilterViewControllerDelegate, OZLNavigationChildChangeListener {
     
-    private let IssueListComposeButtonHeight: CGFloat = 48.0
+    private let IssueListComposeButtonHeight: CGFloat = 56.0
     private let ZeroHeightFooterTag = -1
     
     private let IssueCellReuseIdentifier = "IssueCellReuseIdentifier"
@@ -31,6 +31,8 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+
+        self.tableView.separatorInset = UIEdgeInsets(top: 0, left: OZLContentPadding, bottom: 0, right: OZLContentPadding)
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -69,7 +71,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
             self.composeButton!.layer.shadowOffset = CGSizeMake(0.0, 2.0)
             
             self.composeButton!.frame = CGRectMake(0, 0, self.IssueListComposeButtonHeight, self.IssueListComposeButtonHeight)
-            self.composeButton!.layer.cornerRadius = 24.0
+            self.composeButton!.layer.cornerRadius = (IssueListComposeButtonHeight / 2.0)
             self.composeButton!.addTarget(self, action: #selector(OZLIssueListViewController.composeButtonAction(_:)), forControlEvents:.TouchUpInside)
             self.view.addSubview(self.composeButton!)
             

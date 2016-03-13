@@ -15,7 +15,8 @@
 }
 
 + (UIColor *)facetsBrandColor {
-    return [UIColor colorWithRed:1 green:102. / 255. blue:102. / 255. alpha:1.];
+    return [UIColor colorWithRed:221. / 255. green:63. / 255. blue:93. / 255. alpha:1.];
+
 }
 
 @end
