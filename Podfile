@@ -13,7 +13,7 @@ def all_pods
 	pod 'Realm'
 	pod 'JVFloatLabeledTextField'
 	pod 'SSKeychain'
-	pod 'DateTools'
+	pod 'SORelativeDateTransformer'
 
 	pod 'Reveal-iOS-SDK', :configuration => ['Debug']
 end

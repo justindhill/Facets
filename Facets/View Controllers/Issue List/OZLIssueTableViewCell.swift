@@ -58,7 +58,11 @@ class OZLIssueTableViewCell: UITableViewCell {
         }
 
         if let dueDate = issue.dueDate {
-            self.dueDateLabel.text = "due \(dueDate.timeAgoSinceNow())".uppercaseString
+            let relativeDate = SORelativeDateTransformer.registeredTransformer().transformedValue(dueDate.inSystemTimeZone())
+
+            if let relativeDate = relativeDate {
+                self.dueDateLabel.text = "due \(relativeDate)".uppercaseString
+            }
         }
 
         self.setNeedsLayout()
