@@ -8,7 +8,9 @@
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
 #import "OZLRedmineHTMLParser.h"
+
 #import <RaptureXML/RXMLElement.h>
+#import "NSString+OZLURLEncoding.h"
 
 NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
@@ -98,9 +100,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         [request setValue:authCookie forHTTPHeaderField:@"Cookie"];
         
-        NSString *encodedBackURL = [url.absoluteString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
-        NSString *encodedToken = [authToken stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
-        NSString *formValueString = [NSString stringWithFormat:@"username=%@&password=%@&authenticity_token=%@&back_url=%@", username, password, encodedToken, encodedBackURL];
+        NSString *encodedBackURL = [url.absoluteString URLEncodedString];
+        NSString *encodedToken = [authToken URLEncodedString];
+        NSString *formValueString = [NSString stringWithFormat:@"username=%@&password=%@&authenticity_token=%@&back_url=%@", [username URLEncodedString], [password URLEncodedString], encodedToken, encodedBackURL];
         request.HTTPBody = [formValueString dataUsingEncoding:NSUTF8StringEncoding];
         
         NSLog(@"request: %@", request);
