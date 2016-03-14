@@ -11,7 +11,7 @@ import UIKit
 class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewControllerDelegate {
     
     let projectIssuesVC = OZLIssueListViewController(nibName: "OZLIssueListViewController", bundle: nil)
-    let queryListVC = OZLQueryListViewController(nibName: "OZLQueryListViewController", bundle: nil)
+    let queryListVC = OZLQueryListViewController(style: .Plain)
     let settingsVC = OZLAccountViewController(nibName: "OZLAccountViewController", bundle: nil)
     
     let projectSplitView = OZLMainTabControllerViewController.customizedSplitViewController()

@@ -54,13 +54,12 @@
 		D035A4AD1C0A04BD0057AA48 /* OZLModelJournalDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035A4AC1C0A04BD0057AA48 /* OZLModelJournalDetail.swift */; };
 		D035A4BF1C0A98D80057AA48 /* OZLModelCustomField.m in Sources */ = {isa = PBXBuildFile; fileRef = D035A4BE1C0A98D80057AA48 /* OZLModelCustomField.m */; };
 		D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */; };
-		D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */; };
-		D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */; };
 		D0403EF91BF4291B002B6B98 /* OZLIssueViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0403EF81BF4291B002B6B98 /* OZLIssueViewModel.m */; };
 		D04801441BD004E50047C5DE /* CAPSOptionsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04801411BD004E50047C5DE /* CAPSOptionsMenu.swift */; };
 		D04801451BD004E50047C5DE /* CAPSOptionsMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04801421BD004E50047C5DE /* CAPSOptionsMenuAction.swift */; };
 		D04801461BD004E50047C5DE /* CAPSOptionsMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */; };
 		D056780C1C965733002F6BCF /* NSString+OZLURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */; };
+		D056780E1C965F04002F6BCF /* OZLQueryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056780D1C965F04002F6BCF /* OZLQueryListViewController.swift */; };
 		D05AF77F1C2BBC84007911EA /* OZLQuickAssignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */; };
 		D05AF7811C2BC87A007911EA /* OZLSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */; };
 		D05AF7871C2C6971007911EA /* OZLModelMembership.m in Sources */ = {isa = PBXBuildFile; fileRef = D05AF7861C2C6971007911EA /* OZLModelMembership.m */; };
@@ -184,9 +183,6 @@
 		D035A4BE1C0A98D80057AA48 /* OZLModelCustomField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelCustomField.m; sourceTree = "<group>"; };
 		D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelQuery.h; sourceTree = "<group>"; };
 		D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelQuery.m; sourceTree = "<group>"; };
-		D03D6C441BD0196A00A47E24 /* OZLQueryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLQueryListViewController.h; sourceTree = "<group>"; };
-		D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLQueryListViewController.m; sourceTree = "<group>"; };
-		D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OZLQueryListViewController.xib; sourceTree = "<group>"; };
 		D0403EF71BF4291B002B6B98 /* OZLIssueViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueViewModel.h; sourceTree = "<group>"; };
 		D0403EF81BF4291B002B6B98 /* OZLIssueViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueViewModel.m; sourceTree = "<group>"; };
 		D04801411BD004E50047C5DE /* CAPSOptionsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenu.swift; sourceTree = "<group>"; };
@@ -194,6 +190,7 @@
 		D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuButton.swift; sourceTree = "<group>"; };
 		D056780A1C965733002F6BCF /* NSString+OZLURLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OZLURLEncoding.h"; sourceTree = "<group>"; };
 		D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OZLURLEncoding.m"; sourceTree = "<group>"; };
+		D056780D1C965F04002F6BCF /* OZLQueryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQueryListViewController.swift; sourceTree = "<group>"; };
 		D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQuickAssignViewController.swift; sourceTree = "<group>"; };
 		D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSheetPresentationController.swift; sourceTree = "<group>"; };
 		D05AF7851C2C6971007911EA /* OZLModelMembership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelMembership.h; sourceTree = "<group>"; };
@@ -395,9 +392,7 @@
 		D03D6C431BD0194B00A47E24 /* Query List */ = {
 			isa = PBXGroup;
 			children = (
-				D03D6C441BD0196A00A47E24 /* OZLQueryListViewController.h */,
-				D03D6C451BD0196A00A47E24 /* OZLQueryListViewController.m */,
-				D03D6C461BD0196A00A47E24 /* OZLQueryListViewController.xib */,
+				D056780D1C965F04002F6BCF /* OZLQueryListViewController.swift */,
 			);
 			path = "Query List";
 			sourceTree = "<group>";
@@ -731,7 +726,6 @@
 				D5DB80AD1792F6980081662A /* OZLIssueListViewController.xib in Resources */,
 				D0C9F0541C30742400976B06 /* OZLSplitViewPlaceholderPane.xib in Resources */,
 				D5DB80B61793016B0081662A /* OZLAccountViewController.xib in Resources */,
-				D03D6C481BD0196A00A47E24 /* OZLQueryListViewController.xib in Resources */,
 				D01F9B9C1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle in Resources */,
 				D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */,
 				D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */,
@@ -834,10 +828,10 @@
 				D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */,
 				D05AF7811C2BC87A007911EA /* OZLSheetPresentationController.swift in Sources */,
 				D5DB80BD17930ECD0081662A /* OZLSingleton.m in Sources */,
+				D056780E1C965F04002F6BCF /* OZLQueryListViewController.swift in Sources */,
 				D0F10F401C3710F900A0AE94 /* OZLMainTabControllerViewController.swift in Sources */,
 				D0BCD0EC1C14C70F00B0DC6D /* UIImage+OZLExtensions.m in Sources */,
 				D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */,
-				D03D6C471BD0196A00A47E24 /* OZLQueryListViewController.m in Sources */,
 				D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */,
 				D000B1DE1BF96BBA00CA2845 /* OZLWebViewController.m in Sources */,
 				D01F9B8F1BEB23FA005B2ED0 /* OZLServerSync.m in Sources */,

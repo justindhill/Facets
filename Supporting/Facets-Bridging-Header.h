@@ -21,7 +21,6 @@
 
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
-#import "OZLQueryListViewController.h"
 #import "OZLAccountViewController.h"
 #import "OZLIssueViewModel.h"
 #import "OZLIssueViewController.h"
