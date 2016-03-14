@@ -127,7 +127,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func composeButtonAction(sender: UIButton?) {
-        let composer = OZLIssueComposerViewController()
+        let composer = OZLIssueComposerViewController(style: .Grouped)
         composer.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(OZLIssueListViewController.dismissComposerAction(_:)))
         
         let nav = UINavigationController(rootViewController: composer)
