@@ -74,7 +74,7 @@ class OZLQueryListViewController: OZLTableViewController {
         vm.projectId = query.projectId
         vm.queryId = query.queryId
 
-        let vc = OZLIssueListViewController(nibName: "OZLIssueListViewController", bundle: nil)
+        let vc = OZLIssueListViewController(style: .Plain)
         vc.viewModel = vm
         vc.view.tag = OZLSplitViewController.PrimaryPaneMember
 

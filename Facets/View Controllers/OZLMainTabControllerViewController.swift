@@ -10,7 +10,7 @@ import UIKit
 
 class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewControllerDelegate {
     
-    let projectIssuesVC = OZLIssueListViewController(nibName: "OZLIssueListViewController", bundle: nil)
+    let projectIssuesVC = OZLIssueListViewController(style: .Plain)
     let queryListVC = OZLQueryListViewController(style: .Plain)
     let settingsVC = OZLAccountViewController(nibName: "OZLAccountViewController", bundle: nil)
     

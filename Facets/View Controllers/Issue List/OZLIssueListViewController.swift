@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLSortAndFilterViewControllerDelegate, OZLNavigationChildChangeListener {
+class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLSortAndFilterViewControllerDelegate, OZLNavigationChildChangeListener {
     
     private let IssueListComposeButtonHeight: CGFloat = 56.0
     private let ZeroHeightFooterTag = -1
@@ -17,8 +17,6 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
     
     private var isFirstAppearance = true
     private var composeButton: UIButton?
-    
-    @IBOutlet weak var tableView: UITableView!
     
     var viewModel: OZLIssueListViewModel! {
         willSet(newValue) {
@@ -39,6 +37,9 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
 
         self.tableView.registerNib(UINib(nibName: "OZLIssueTableViewCell", bundle: NSBundle.mainBundle()),
                                    forCellReuseIdentifier: IssueCellReuseIdentifier)
+
+        self.tableViewController.refreshControl = UIRefreshControl()
+        self.tableViewController.refreshControl?.addTarget(self, action: #selector(reloadProjectData), forControlEvents: .ValueChanged)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -199,7 +200,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // MARK: - UITableViewDataSource/Delegate
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel.issues.count
     }
     
@@ -211,7 +212,7 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
                                                      contentPadding: OZLContentPadding)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(IssueCellReuseIdentifier)
 
         if let cell = cell as? OZLIssueTableViewCell {
@@ -303,6 +304,11 @@ class OZLIssueListViewController: UIViewController, UITableViewDelegate, UITable
         weak var weakSelf = self
         
         self.viewModel.loadIssuesCompletion({ (error) -> Void in
+
+            if let refreshControl = weakSelf?.tableViewController.refreshControl where refreshControl.refreshing {
+                refreshControl.endRefreshing()
+            }
+
             if let weakSelf = weakSelf {
                 if let error = error {
                     let alert = UIAlertController(title: "Couldn't load issue list", message: error.localizedDescription, preferredStyle: .Alert)
