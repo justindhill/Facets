@@ -55,6 +55,8 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     self.issueHeader = [[OZLIssueHeaderView alloc] init];
     self.issueHeader.contentPadding = OZLContentPadding;
     [self.issueHeader.assignButton addTarget:self action:@selector(quickAssignAction:) forControlEvents:UIControlEventTouchUpInside];
+
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OZLDetailReuseIdentifier];
@@ -129,7 +131,6 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 
 - (void)applyIssueModel:(OZLModelIssue *)issue {
     self.navigationItem.title = [NSString stringWithFormat:@"%@ #%ld", issue.tracker.name, (long)issue.index];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"#%ld", (long)issue.index] style:UIBarButtonItemStylePlain target:nil action:nil];
     [self.issueHeader applyIssueModel:issue];
     [self.aboutTabView applyIssueModel:issue];
     [self refreshHeaderSizeForWidth:self.view.frame.size.width];
