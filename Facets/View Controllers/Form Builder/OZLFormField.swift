@@ -6,10 +6,15 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
+protocol OZLFormFieldValueChangeDelegate {
+    func fieldValueChangedFrom(fromValue: AnyObject?, toValue: AnyObject?, atKeyPath: String)
+}
+
 class OZLFormField: NSObject {
     var keyPath: String
     var placeholder: String
     var cellClass: AnyClass
+    var fieldHeight: CGFloat = 0.0
 
     init(keyPath: String, placeholder: String) {
         self.keyPath = keyPath
@@ -22,6 +27,8 @@ class OZLFormField: NSObject {
 
 class OZLFormFieldCell: UITableViewCell {
     var contentPadding: CGFloat = 0.0;
+    var keyPath: String?
+    var delegate: OZLFormFieldValueChangeDelegate?
 
     override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,7 +39,7 @@ class OZLFormFieldCell: UITableViewCell {
     }
 
     func applyFormField(field: OZLFormField) {
-        assertionFailure("Must override this in a subclass.")
+        self.keyPath = field.keyPath
     }
 
     class func registerOnTableViewIfNeeded(tableView: UITableView) {

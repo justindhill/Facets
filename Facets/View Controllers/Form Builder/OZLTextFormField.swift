@@ -7,7 +7,6 @@
 //
 
 class OZLTextFormField: OZLFormField {
-
     var currentValue: String?
 
     init(keyPath: String, placeholder: String, currentValue: String? = nil) {
@@ -15,24 +14,34 @@ class OZLTextFormField: OZLFormField {
 
         super.init(keyPath: keyPath, placeholder: placeholder)
 
+        self.fieldHeight = 48.0
         self.cellClass = OZLTextFormFieldCell.self
     }
-
 }
 
-class OZLTextFormFieldCell: OZLFormFieldCell {
+class OZLTextFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
 
     var textField = JVFloatLabeledTextField()
+    private var valueBeforeEditing: String?
 
     required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.setup()
+    }
+
+    func setup() {
+        self.textField.delegate = self
+        self.textField.returnKeyType = .Done
     }
 
     override func applyFormField(field: OZLFormField) {
+        super.applyFormField(field)
+        
         guard let field = field as? OZLTextFormField else {
             assertionFailure("Somehow got passed the wrong type of field")
             return
@@ -58,7 +67,26 @@ class OZLTextFormFieldCell: OZLFormFieldCell {
         self.textField.layoutSubviews()
     }
 
-    override class func heightForWidth(width: CGFloat) -> CGFloat {
-        return 48.0
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+
+        return false
+    }
+
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        self.valueBeforeEditing = textField.text
+
+        return true
+    }
+
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        if textField.text != self.valueBeforeEditing {
+            let oldValue = self.valueBeforeEditing != "" ? self.valueBeforeEditing : nil
+            let newValue = textField.text != "" ? textField.text : nil
+
+            self.delegate?.fieldValueChangedFrom(oldValue, toValue: newValue, atKeyPath: self.keyPath!)
+        }
+
+        return true
     }
 }

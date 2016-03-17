@@ -32,6 +32,7 @@
 
 #import <ISO8601/ISO8601.h>
 #import <JVFloatLabeledTextField/JVFloatLabeledTextField.h>
+#import <JVFloatLabeledTextField/JVFloatLabeledTextView.h>
 #import <SORelativeDateTransformer/SORelativeDateTransformer.h>
 
 #import <HockeySDK/HockeySDK.h>

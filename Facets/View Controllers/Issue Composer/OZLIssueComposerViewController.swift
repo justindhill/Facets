@@ -19,10 +19,20 @@ class OZLIssueComposerViewController: OZLFormViewController {
     override func definitionsForFields() -> [OZLFormSection] {
         return [
             OZLFormSection(title: nil, fields: [
-                OZLTextFormField(keyPath: "issue.tracker", placeholder: "Tracker", currentValue: "Bug"),
+                OZLTextFormField(keyPath: "issue.project", placeholder: "Project", currentValue: "Universal App"),
+                OZLEnumerationFormField(
+                    keyPath: "issue.tracker",
+                    placeholder: "Tracker",
+                    currentValue: nil,
+                    possibleValues: ["Bug", "Task", "Improvement"]),
+
                 OZLTextFormField(keyPath: "issue.subject", placeholder: "Subject"),
-                OZLTextFormField(keyPath: "issue.description", placeholder: "Description")
+                OZLTextViewFormField(keyPath: "issue.description", placeholder: "Description")
             ])
         ]
+    }
+
+    override func fieldValueChangedFrom(fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String) {
+        print("from: \(fromValue), to: \(toValue), keyPath: \(keyPath)")
     }
 }

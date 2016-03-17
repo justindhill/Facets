@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OZLFormViewController: OZLTableViewController {
+class OZLFormViewController: OZLTableViewController, OZLFormFieldValueChangeDelegate {
 
     var sections: [OZLFormSection] = []
 
@@ -49,6 +49,7 @@ class OZLFormViewController: OZLTableViewController {
             let cell = cellClass.init(style: .Default, reuseIdentifier: String(cellClass.self))
             cell.applyFormField(field)
             cell.contentPadding = OZLContentPadding
+            cell.delegate = self
 
             return cell
         }
@@ -59,10 +60,10 @@ class OZLFormViewController: OZLTableViewController {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let field = self.sections[indexPath.section].fields[indexPath.row]
 
-        if let cellClass = field.cellClass as? OZLFormFieldCell.Type {
-            return cellClass.heightForWidth(tableView.frame.size.width)
-        }
+        return field.fieldHeight
+    }
 
-        return 0.0
+    func fieldValueChangedFrom(fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String) {
+        assertionFailure("Must override fieldValueChangedFrom:toValue:atKeyPath: in a subclass")
     }
 }
