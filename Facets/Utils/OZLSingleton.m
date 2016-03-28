@@ -1,6 +1,6 @@
 //
 //  OZLSingleton.m
-//  RedmineMobile
+//  Facets
 //
 //  Created by Lee Zhijie on 7/15/13.
 

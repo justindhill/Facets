@@ -1,6 +1,6 @@
 //
 //  OZLModelUser.h
-//  RedmineMobile
+//  Facets
 //
 //  Created by lizhijie on 7/15/13.
 

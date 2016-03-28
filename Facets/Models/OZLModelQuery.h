@@ -1,6 +1,6 @@
 //
 //  OZLModelQuery.h
-//  RedmineMobile
+//  Facets
 //
 //  Created by Justin Hill on 10/15/15.
 //  Copyright © 2015 Lee Zhijie. All rights reserved.

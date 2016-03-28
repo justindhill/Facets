@@ -1,6 +1,6 @@
 //
 //  main.m
-//  RedmineMobile
+//  Facets
 //
 //  Created by Lee Zhijie on 7/14/13.
 //  Copyright (c) 2013 Lee Zhijie. All rights reserved.

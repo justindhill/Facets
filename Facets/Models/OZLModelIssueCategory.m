@@ -1,6 +1,6 @@
 //
 //  OZLModelIssueCategory.m
-//  RedmineMobile
+//  Facets
 //
 //  Created by lizhijie on 7/16/13.
 
