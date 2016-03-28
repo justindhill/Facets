@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "OZLModelAttachment.h"
 
+@class OZLAsyncImageView;
+
 @interface OZLIssueAttachmentGalleryItemCell : UICollectionViewCell
 
 @property (nonatomic, strong) OZLModelAttachment *attachment;

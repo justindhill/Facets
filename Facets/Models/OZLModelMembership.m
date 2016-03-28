@@ -7,6 +7,7 @@
 //
 
 #import "OZLModelMembership.h"
+#import "Facets-Swift.h"
 
 @implementation OZLModelMembership
 

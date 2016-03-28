@@ -8,6 +8,7 @@
 
 #import "OZLIssueAttachmentGalleryCell.h"
 #import "OZLIssueAttachmentGalleryItemCell.h"
+#import "Facets-Swift.h"
 
 @interface OZLIssueAttachmentGalleryCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 

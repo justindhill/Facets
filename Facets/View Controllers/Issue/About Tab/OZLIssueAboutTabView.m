@@ -7,6 +7,7 @@
 //
 
 #import "OZLIssueAboutTabView.h"
+#import "Facets-Swift.h"
 
 @interface OZLIssueAboutTabView ()
 

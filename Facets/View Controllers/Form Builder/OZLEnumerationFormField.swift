@@ -6,14 +6,41 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
-protocol OZLEnumerationFormFieldValue: class {
+@objc protocol OZLEnumerationFormFieldValue: class {
     func stringValue() -> String
 }
 
 class OZLEnumerationFormField: OZLFormField {
 
-    var possibleValues: [AnyObject]!
+    var possibleValues: [AnyObject]?
     var currentValue: String?
+
+    init(keyPath: String, placeholder: String, currentValue: RLMObject?, possibleRealmValues: RLMCollection) {
+        super.init(keyPath: keyPath, placeholder: placeholder)
+
+        if let currentValue = currentValue {
+            guard let currentValue = currentValue as? OZLEnumerationFormFieldValue else {
+                fatalError("Passed a currentValue Realm object that doesn't conform to OZLEnumerationFormFieldValue")
+            }
+
+            self.currentValue = currentValue.stringValue()
+        }
+
+        if possibleRealmValues.count > 0 {
+            var values = [OZLEnumerationFormFieldValue]()
+
+            for index in 0..<possibleRealmValues.count {
+                if let value = possibleRealmValues[index] as? OZLEnumerationFormFieldValue {
+                    values.append(value)
+                } else {
+                    fatalError("Passed an RLMArray whose object type doesn't conform to OZLEnumerationFormFieldValue")
+                }
+            }
+
+            self.possibleValues = values
+            self.setup()
+        }
+    }
 
     init(keyPath: String, placeholder: String, currentValue: String?, possibleValues: [OZLEnumerationFormFieldValue]) {
         super.init(keyPath: keyPath, placeholder: placeholder)
@@ -26,11 +53,11 @@ class OZLEnumerationFormField: OZLFormField {
         self.setup()
     }
 
-    init(keyPath: String, placeholder: String, currentValue: String?, possibleValues: [String]) {
+    init(keyPath: String, placeholder: String, currentValue: String?, possibleStringValues: [String]) {
         super.init(keyPath: keyPath, placeholder: placeholder)
 
         self.currentValue = currentValue
-        self.possibleValues = possibleValues
+        self.possibleValues = possibleStringValues
 
         self.setup()
     }
@@ -106,7 +133,7 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
                     let val = val as! String
                     sheet.addAction(UIAlertAction(title: val, style: .Default, handler: { (action) in
                         if let weakSelf = weakSelf where weakSelf.textField.text != val {
-                            weakSelf.delegate?.fieldValueChangedFrom(weakSelf.textField.text, toValue: val, atKeyPath: weakSelf.keyPath!)
+                            weakSelf.delegate?.formFieldCell(weakSelf, valueChangedFrom: weakSelf.textField.text, toValue: val, atKeyPath: weakSelf.keyPath, userInfo: weakSelf.userInfo)
                         }
 
                         weakSelf?.textField.text = val
@@ -116,7 +143,7 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
 
                     sheet.addAction(UIAlertAction(title: val.stringValue(), style: .Default, handler: { (action) in
                         if let weakSelf = weakSelf where weakSelf.textField.text != val.stringValue() {
-                            weakSelf.delegate?.fieldValueChangedFrom(nil, toValue: val, atKeyPath: self.keyPath!)
+                            weakSelf.delegate?.formFieldCell(weakSelf, valueChangedFrom: nil, toValue: val, atKeyPath: weakSelf.keyPath, userInfo: weakSelf.userInfo)
                         }
 
                         weakSelf?.textField.text = val.stringValue()
@@ -126,6 +153,7 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
 
             sheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: nil))
 
+            self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: nil)
             closestVC.presentViewController(sheet, animated: true, completion: nil)
         }
 

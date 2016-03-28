@@ -22,6 +22,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <JTSImageViewController/JTSImageViewController.h>
 #import "OZLNavigationChildChangeListener.h"
+#import "Facets-Swift.h"
 
 NSString * const OZLDetailReuseIdentifier = @"OZLDetailReuseIdentifier";
 NSString * const OZLDescriptionReuseIdentifier = @"OZLDescriptionReuseIdentifier";
@@ -174,6 +175,13 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         vc.delegate = self.previewQuickAssignDelegate;
         
         [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:vc animated:YES completion:nil];
+    }]];
+
+    [items addObject:[UIPreviewAction actionWithTitle:@"Edit" style:UIPreviewActionStyleDefault handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
+        OZLIssueComposerViewController *vc = [[OZLIssueComposerViewController alloc] initWithIssue:self.viewModel.issueModel];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:nav animated:YES completion:nil];
     }]];
     
     return items;

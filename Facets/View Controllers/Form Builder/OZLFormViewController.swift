@@ -8,16 +8,23 @@
 
 import UIKit
 
-class OZLFormViewController: OZLTableViewController, OZLFormFieldValueChangeDelegate {
+class OZLFormViewController: OZLTableViewController, OZLFormFieldDelegate {
 
     var sections: [OZLFormSection] = []
+    var contentPadding: CGFloat = OZLContentPadding
+    var changes: [String: AnyObject?] = [:]
+    var currentEditingResponder: UIResponder?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
 
-        self.tableView.backgroundColor = UIColor.OZLVeryLightGrayColor()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
 
-        self.reloadData()
+        if self.tableView.numberOfSections == 0 {
+            self.reloadData()
+        }
     }
 
     func reloadData() {
@@ -48,7 +55,7 @@ class OZLFormViewController: OZLTableViewController, OZLFormFieldValueChangeDele
 
             let cell = cellClass.init(style: .Default, reuseIdentifier: String(cellClass.self))
             cell.applyFormField(field)
-            cell.contentPadding = OZLContentPadding
+            cell.contentPadding = self.contentPadding
             cell.delegate = self
 
             return cell
@@ -57,13 +64,39 @@ class OZLFormViewController: OZLTableViewController, OZLFormFieldValueChangeDele
         return UITableViewCell(style: .Default, reuseIdentifier: nil)
     }
 
+    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
+    }
+
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let field = self.sections[indexPath.section].fields[indexPath.row]
 
         return field.fieldHeight
     }
 
-    func fieldValueChangedFrom(fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String) {
-        assertionFailure("Must override fieldValueChangedFrom:toValue:atKeyPath: in a subclass")
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.sections[section].title
+    }
+
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if self.sections[section].fields.count == 0 {
+            return CGFloat.min
+        } else if section == 0 {
+            return 58.0
+        } else {
+            return 38.0
+        }
+    }
+
+    func formFieldCell(formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String, userInfo: [String : AnyObject]) {
+        self.changes[keyPath] = toValue
+    }
+
+    func formFieldCellWillBeginEditing(formCell: OZLFormFieldCell, firstResponder: UIResponder?) {
+        if firstResponder == nil {
+            self.currentEditingResponder?.resignFirstResponder()
+        }
+
+        self.currentEditingResponder = firstResponder
     }
 }

@@ -7,6 +7,7 @@
 //
 
 #import "OZLModelVersion.h"
+#import "Facets-Swift.h"
 
 @implementation OZLModelVersion
 

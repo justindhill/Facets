@@ -80,19 +80,6 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
     }];
     
     self.activeCount += 1;
-    [[OZLNetwork sharedInstance] getTrackerListWithParams:nil completion:^(NSArray *result, NSError *error) {
-        if (!error) {
-            [[RLMRealm defaultRealm] beginWriteTransaction];
-            [[RLMRealm defaultRealm] deleteObjects:[OZLModelTracker allObjects]];
-            [[RLMRealm defaultRealm] addObjects:result];
-            [[RLMRealm defaultRealm] commitWriteTransaction];
-        }
-        
-        weakSelf.activeCount -= 1;
-        [weakSelf checkForCompletion];
-    }];
-    
-    self.activeCount += 1;
     [[OZLNetwork sharedInstance] getIssueStatusListWithParams:nil completion:^(NSArray *result, NSError *error) {
         if (!error) {
             [[RLMRealm defaultRealm] beginWriteTransaction];

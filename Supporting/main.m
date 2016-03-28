@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Facets-Swift.h"
 
 int main(int argc, char *argv[]) {
     @autoreleasepool {

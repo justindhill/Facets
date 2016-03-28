@@ -128,7 +128,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     }
     
     func composeButtonAction(sender: UIButton?) {
-        let composer = OZLIssueComposerViewController(style: .Grouped)
+        let composer = OZLIssueComposerViewController(currentProjectID: OZLSingleton.sharedInstance().currentProjectID)
         composer.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(OZLIssueListViewController.dismissComposerAction(_:)))
         
         let nav = UINavigationController(rootViewController: composer)
@@ -335,8 +335,8 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         let height = (OZLContentPadding * 2) + IssueListComposeButtonHeight
     
         let loadingView = OZLLoadingView(frame: CGRectMake(0, 0, self.view.frame.size.width, height))
-        loadingView.startLoading()
         self.tableView.tableFooterView = loadingView;
+        loadingView.startLoading()
     }
     
     func hideFooterActivityIndicator() {

@@ -13,7 +13,6 @@
     #import <Foundation/Foundation.h>
 #endif
 
-#import "Facets-Swift.h"
 #import <Realm/Realm.h>
 #import "OZLSingleton.h"
 #import "OZLConstants.h"

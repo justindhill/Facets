@@ -9,6 +9,7 @@
 #import "OZLIssueViewModel.h"
 #import "OZLModelIssue.h"
 #import "OZLNetwork.h"
+#import "Facets-Swift.h"
 
 NSString * const OZLIssueSectionDetail = @"OZLIssueSectionDetail";
 NSString * const OZLIssueSectionDescription = @"OZLIssueSectionDescription";

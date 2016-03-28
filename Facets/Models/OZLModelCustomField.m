@@ -7,6 +7,7 @@
 //
 
 #import "OZLModelCustomField.h"
+#import "Facets-Swift.h"
 
 @interface OZLModelCustomField () {
     NSString *_value;

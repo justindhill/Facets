@@ -540,8 +540,10 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
-- (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError *error))completion {
-    NSDictionary *issueDict = issueData.changeDictionary;
+- (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError * _Nullable error))completion {
+    NSDictionary *issueDict = @{
+        @"issue": issueData.changeDictionary
+    };
     
     NSError *jsonError;
     NSData *bodyData = [NSJSONSerialization dataWithJSONObject:issueDict options:0 error:&jsonError];
@@ -702,46 +704,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             }
             
             completion(priorities, nil);
-        }
-    }];
-}
-
-#pragma mark -
-#pragma mark tracker api
-- (void)getTrackerListWithParams:(NSDictionary *)params completion:(void(^)(NSArray *result, NSError *error))completion {
-    
-    [self GET:@"/trackers.json" params:params completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
-        
-        if (error) {
-            if (completion) {
-                completion(nil, error);
-            }
-            
-            return;
-        }
-        
-        NSError *jsonError;
-        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
-        
-        if (jsonError) {
-            if (completion) {
-                completion(nil, jsonError);
-            }
-            
-            return;
-        }
-
-        if (completion) {
-            NSMutableArray *trackers = [[NSMutableArray alloc] init];
-
-            NSArray *dic = [responseObject objectForKey:@"trackers"];
-            
-            for (NSDictionary *p in dic) {
-                OZLModelTracker *tracker = [[OZLModelTracker alloc] initWithAttributeDictionary:p];
-                [trackers addObject:tracker];
-            }
-            
-            completion(trackers, nil);
         }
     }];
 }
@@ -960,13 +922,14 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     [task resume];
 }
 
-- (void)POST:(NSString *)relativePath bodyData:(NSData *)bodyData completion:(void(^)(NSData *responseData, NSHTTPURLResponse *response, NSError *error))completion {
+- (void)POST:(NSString *)relativePath bodyData:(NSData *)bodyData completion:(void(^)(NSData * _Nullable responseData, NSHTTPURLResponse * _Nullable response, NSError * _Nullable error))completion {
     
     NSURL *url = [self urlWithRelativePath:relativePath];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     request.HTTPBody = bodyData;
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     
     self.activeRequestCount += 1;
     

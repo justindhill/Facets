@@ -7,6 +7,7 @@
 #import "OZLModelIssue.h"
 #import "OZLModelProject.h"
 #import "OZLModelVersion.h"
+#import "Facets-Swift.h"
 
 @interface OZLModelIssue ()
 

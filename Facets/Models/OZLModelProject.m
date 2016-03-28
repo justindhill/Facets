@@ -7,6 +7,11 @@
 // This code is distributed under the terms and conditions of the MIT license.
 
 #import "OZLModelProject.h"
+#import "Facets-Swift.h"
+
+@interface OZLModelProject () <OZLEnumerationFormFieldValue>
+
+@end
 
 @implementation OZLModelProject
 
@@ -57,6 +62,10 @@
             [self.trackers addObject:[[OZLModelTracker alloc] initWithAttributeDictionary:trackerDict]];
         }
     }
+}
+
+- (NSString *)stringValue {
+    return self.name;
 }
 
 @end
