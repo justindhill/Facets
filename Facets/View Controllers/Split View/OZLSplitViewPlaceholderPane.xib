@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OZLSplitViewPlaceholderPane" customModule="Facets" customModuleProvider="target">
@@ -16,18 +15,18 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NSb-Wj-NLF">
-                    <rect key="frame" x="253.5" y="269.5" width="94" height="38.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="facets-icon-grayscale" translatesAutoresizingMaskIntoConstraints="NO" id="7p5-pq-cSR">
+                    <rect key="frame" x="172" y="172" width="256" height="256"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="NSb-Wj-NLF" firstAttribute="baseline" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="UOw-o9-iNf"/>
-                <constraint firstItem="NSb-Wj-NLF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ndu-Hg-xZI"/>
+                <constraint firstItem="7p5-pq-cSR" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Tbh-Zh-ePW"/>
+                <constraint firstItem="7p5-pq-cSR" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="pue-Ks-rqs"/>
             </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="facets-icon-grayscale" width="256" height="256"/>
+    </resources>
 </document>
