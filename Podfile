@@ -1,7 +1,7 @@
 def all_pods
 	pod 'Reachability'
 	pod 'MBProgressHUD'
-	pod 'HockeySDK', '~> 3.8'
+	pod 'HockeySDK', '~> 4.0-beta'
 	pod 'DRPSlidingTabView', '~> 0.2'
 	pod 'DRPLoadingSpinner'
 	pod 'TTTAttributedLabel'

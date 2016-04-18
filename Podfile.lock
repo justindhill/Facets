@@ -2,9 +2,9 @@ PODS:
   - DRPLoadingSpinner (0.1.0)
   - DRPSlidingTabView (0.2.2)
   - GTMNSStringHTMLAdditions (0.2.1)
-  - HockeySDK (3.8.6):
-    - HockeySDK/AllFeaturesLib (= 3.8.6)
-  - HockeySDK/AllFeaturesLib (3.8.6)
+  - HockeySDK (4.0.0-beta.1):
+    - HockeySDK/AllFeaturesLib (= 4.0.0-beta.1)
+  - HockeySDK/AllFeaturesLib (4.0.0-beta.1)
   - ISO8601 (0.5.0)
   - JTSImageViewController (1.5.1)
   - JVFloatLabeledTextField (1.1.0)
@@ -26,7 +26,7 @@ DEPENDENCIES:
   - DRPLoadingSpinner
   - DRPSlidingTabView (~> 0.2)
   - GTMNSStringHTMLAdditions
-  - HockeySDK (~> 3.8)
+  - HockeySDK (~> 4.0-beta)
   - ISO8601
   - JTSImageViewController
   - JVFloatLabeledTextField
@@ -44,7 +44,7 @@ SPEC CHECKSUMS:
   DRPLoadingSpinner: 47cb1c2e47ae2617c87c8340075a24d94a48d879
   DRPSlidingTabView: b8a48b3d7a4848feaf755673344ce9cd3c622681
   GTMNSStringHTMLAdditions: 4bfc402b1b17165360728083156cae0a74ecb308
-  HockeySDK: ab68303eec6680f6b539de65d747742dd276e934
+  HockeySDK: 403a124a75d625d3c201191eb8d0db70aea6a9b2
   ISO8601: 25d7a973fa8daf31a50bbd0401d2e7b98e8a7df3
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
   JVFloatLabeledTextField: ea4a3d8387ddd43724c472bb2b8ab39b79af05d4
