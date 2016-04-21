@@ -6,8 +6,8 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <TTTAttributedLabel/TTTAttributedLabel.h>
+@import UIKit;
+@import TTTAttributedLabel;
 
 @interface OZLIssueFullDescriptionViewController : UIViewController
 

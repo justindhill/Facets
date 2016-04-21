@@ -6,8 +6,8 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <DRPSlidingTabView/DRPSlidingTabView.h>
+@import UIKit;
+@import DRPSlidingTabView;
 
 @interface OZLTabTestView : UIView <DRPIntrinsicHeightChangeEmitter>
 

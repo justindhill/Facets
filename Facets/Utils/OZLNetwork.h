@@ -4,7 +4,7 @@
 //
 //  Created by Lee Zhijie on 7/14/13.
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 #import "OZLModelProject.h"
 #import "OZLModelIssue.h"
 #import "OZLModelIssuePriority.h"

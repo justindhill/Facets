@@ -6,10 +6,15 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
+@import DRPSlidingTabView;
+@import AVKit;
+@import AVFoundation;
+@import JTSImageViewController;
+@import TTTAttributedLabel;
+
 #import "OZLIssueViewController.h"
 #import "OZLIssueHeaderView.h"
 #import "OZLIssueDescriptionCell.h"
-#import <DRPSlidingTabView/DRPSlidingTabView.h>
 #import "OZLIssueFullDescriptionViewController.h"
 #import "OZLWebViewController.h"
 #import "OZLLoadingView.h"
@@ -17,10 +22,6 @@
 #import "OZLIssueAboutTabView.h"
 #import "OZLTabTestView.h"
 #import "OZLIssueAttachmentGalleryCell.h"
-
-#import <AVKit/AVKit.h>
-#import <AVFoundation/AVFoundation.h>
-#import <JTSImageViewController/JTSImageViewController.h>
 #import "OZLNavigationChildChangeListener.h"
 #import "Facets-Swift.h"
 

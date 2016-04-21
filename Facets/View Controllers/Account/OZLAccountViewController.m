@@ -10,7 +10,7 @@
 #import "OZLNetwork.h"
 #import "OZLModelProject.h"
 
-#import <MBProgressHUD/MBProgressHUD.h>
+@import MBProgressHUD;
 
 @interface OZLAccountViewController ()
 

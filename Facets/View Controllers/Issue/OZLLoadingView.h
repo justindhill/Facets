@@ -7,7 +7,6 @@
 //
 
 #import "OZLView.h"
-#import <DRPLoadingSpinner/DRPLoadingSpinner.h>
 
 @interface OZLLoadingView : OZLView
 

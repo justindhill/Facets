@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ISO8601
 
 class OZLModelJournal: NSObject {
     

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Lee Zhijie. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import "Facets-Swift.h"
 
 int main(int argc, char *argv[]) {

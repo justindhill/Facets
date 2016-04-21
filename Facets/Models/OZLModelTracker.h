@@ -4,7 +4,8 @@
 //
 //  Created by lizhijie on 7/15/13.
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+@import Realm;
 
 @interface OZLModelTracker : RLMObject
 

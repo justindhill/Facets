@@ -6,6 +6,8 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
+import JVFloatLabeledTextField
+
 class OZLTextFormField: OZLFormField {
     var currentValue: String?
 

@@ -6,8 +6,10 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
+@import TTTAttributedLabel;
+@import SafariServices;
+
 #import "OZLIssueFullDescriptionViewController.h"
-#import <SafariServices/SafariServices.h>
 #import "OZLLoadingView.h"
 
 @interface OZLIssueFullDescriptionViewController () <TTTAttributedLabelDelegate>

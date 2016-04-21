@@ -6,8 +6,9 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
+@import ISO8601;
+
 #import "OZLModelAttachment.h"
-#import <ISO8601/ISO8601.h>
 
 @implementation OZLModelAttachment
 

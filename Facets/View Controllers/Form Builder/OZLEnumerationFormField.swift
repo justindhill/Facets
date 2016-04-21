@@ -6,6 +6,8 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
+import JVFloatLabeledTextField
+
 @objc protocol OZLEnumerationFormFieldValue: class {
     func stringValue() -> String
 }

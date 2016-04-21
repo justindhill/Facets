@@ -4,7 +4,7 @@
 //
 //  Created by lizhijie on 7/15/13.
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 #import "OZLModelTracker.h"
 #import "OZLModelIssueStatus.h"
 #import "OZLModelUser.h"

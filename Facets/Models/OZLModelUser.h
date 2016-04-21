@@ -4,6 +4,8 @@
 //
 //  Created by lizhijie on 7/15/13.
 
+@import Realm;
+
 @interface OZLModelUser : RLMObject
 
 @property (nonatomic) NSInteger userId;

@@ -4,12 +4,13 @@
 //
 //  Created by Lee Zhijie on 7/14/13.
 
+@import RaptureXML_Frankly;
+
 #import "OZLNetwork.h"
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
 #import "OZLRedmineHTMLParser.h"
 
-#import <RaptureXML/RXMLElement.h>
 #import "NSString+OZLURLEncoding.h"
 
 NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";

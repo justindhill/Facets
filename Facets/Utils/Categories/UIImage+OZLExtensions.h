@@ -6,7 +6,7 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface UIImage (OZLExtensions)
 

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Lee Zhijie. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface OZLModelQuery : NSObject
 

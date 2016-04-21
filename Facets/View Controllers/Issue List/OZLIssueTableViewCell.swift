@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SORelativeDateTransformer
 
 class OZLIssueTableViewCell: UITableViewCell {
 

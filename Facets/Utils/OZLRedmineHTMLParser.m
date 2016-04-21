@@ -6,11 +6,12 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
+@import RaptureXML_Frankly;
+@import GTMNSStringHTMLAdditions;
+
 #import "OZLRedmineHTMLParser.h"
 #import "OZLModelCustomField.h"
 #import "OZLModelStringContainer.h"
-#import <RaptureXML/RXMLElement.h>
-#import <GTMNSStringHTMLAdditions/GTMNSString+HTML.h>
 
 @implementation OZLRedmineHTMLParser
 

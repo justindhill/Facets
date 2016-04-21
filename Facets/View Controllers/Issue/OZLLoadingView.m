@@ -6,6 +6,8 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
+@import DRPLoadingSpinner;
+
 #import "OZLLoadingView.h"
 
 @interface OZLLoadingView ()

@@ -6,9 +6,10 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
+@import WebKit;
+
 #import "OZLWebViewController.h"
 #import "OZLNetwork.h"
-#import <WebKit/WebKit.h>
 
 @interface OZLWebViewController ()
 

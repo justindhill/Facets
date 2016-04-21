@@ -6,7 +6,7 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface NSString (OZLURLEncoding)
 

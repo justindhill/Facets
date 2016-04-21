@@ -1,4 +1,6 @@
 def all_pods
+	use_frameworks!
+
 	pod 'Reachability'
 	pod 'MBProgressHUD'
 	pod 'HockeySDK', '~> 4.0-beta'
@@ -6,7 +8,7 @@ def all_pods
 	pod 'DRPLoadingSpinner'
 	pod 'TTTAttributedLabel'
 	pod 'JTSImageViewController'
-	pod 'RaptureXML'
+	pod 'RaptureXML@Frankly'
 	pod 'SDWebImage'
 	pod 'ISO8601'
 	pod 'GTMNSStringHTMLAdditions'

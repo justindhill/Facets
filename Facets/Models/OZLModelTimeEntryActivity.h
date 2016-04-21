@@ -4,7 +4,7 @@
 //
 //  Created by lizhijie on 7/23/13.
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface OZLModelTimeEntryActivity : NSObject
 

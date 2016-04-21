@@ -6,7 +6,7 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
-#import <Realm/Realm.h>
+@import Realm;
 #import "OZLModelStringContainer.h"
 
 typedef NS_ENUM(NSInteger, OZLModelCustomFieldType) {

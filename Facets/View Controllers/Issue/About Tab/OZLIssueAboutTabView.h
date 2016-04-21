@@ -6,7 +6,8 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
-#import <DRPSlidingTabView/DRPSlidingTabView.h>
+@import DRPSlidingTabView;
+
 #import "OZLModelIssue.h"
 
 @interface OZLIssueAboutTabView : UIView <DRPIntrinsicHeightChangeEmitter>

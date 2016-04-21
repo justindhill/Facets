@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JVFloatLabeledTextField
 
 class OZLQuickAssignView: UIView {
     let filterField = JVFloatLabeledTextField()

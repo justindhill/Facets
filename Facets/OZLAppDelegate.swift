@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import HockeySDK
 
 class OZLAppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
-#import <Realm/Realm.h>
+@import Realm;
 
 typedef NS_ENUM(NSInteger, OZLModelVersionSharing) {
     OZLModelVersionSharingNone,
