@@ -2,7 +2,6 @@ def all_pods
 	use_frameworks!
 
 	pod 'Reachability'
-	pod 'MBProgressHUD'
 	pod 'HockeySDK', '~> 4.0-beta'
 	pod 'DRPSlidingTabView', '~> 0.2'
 	pod 'DRPLoadingSpinner'

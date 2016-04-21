@@ -10,9 +10,11 @@
 #import "OZLNetwork.h"
 #import "OZLModelProject.h"
 
-@import MBProgressHUD;
+@import JGProgressHUD;
 
 @interface OZLAccountViewController ()
+
+@property JGProgressHUD *hud;
 
 @end
 
@@ -33,12 +35,13 @@
 }
 
 - (void)saveButtonAction:(id)sender {
-    
+
     __weak OZLAccountViewController *weakSelf = self;
-    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.animationType = MBProgressHUDAnimationZoom;
-    
+    __block JGProgressHUD *hud = [[JGProgressHUD alloc] initWithStyle:JGProgressHUDStyleDark];
+    hud.animation = [[JGProgressHUDFadeZoomAnimation alloc] init];
+    [hud showInView:self.view];
+    self.hud = hud;
+
     NSURL *baseURL = [NSURL URLWithString:_redmineHomeURL.text];
     [[OZLNetwork sharedInstance] authenticateCredentialsWithURL:baseURL username:_username.text password:_password.text completion:^(NSError *error) {
         if (error) {
@@ -46,7 +49,8 @@
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
             
             [weakSelf presentViewController:alert animated:YES completion:nil];
-            [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+            [hud dismissAnimated:YES];
+            weakSelf.hud = nil;
         } else {
             [[OZLSingleton sharedInstance] setRedmineUserKey:_redmineUserKey.text];
             [[OZLSingleton sharedInstance] setRedmineHomeURL:_redmineHomeURL.text];
@@ -64,7 +68,8 @@
     [[OZLSingleton sharedInstance].serverSync startSyncCompletion:^(NSError *error) {
         [weakSelf.delegate accountViewControllerDidSuccessfullyAuthenticate:weakSelf shouldTransitionToIssues:weakSelf.isFirstLogin];
         weakSelf.isFirstLogin = NO;
-        [MBProgressHUD hideHUDForView:weakSelf.view animated:YES];
+        [weakSelf.hud dismissAnimated:YES];
+        weakSelf.hud = nil;
     }];
 }
 
