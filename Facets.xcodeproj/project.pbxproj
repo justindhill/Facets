@@ -1,3813 +1,1079 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>archiveVersion</key>
-	<string>1</string>
-	<key>classes</key>
-	<dict/>
-	<key>objectVersion</key>
-	<string>46</string>
-	<key>objects</key>
-	<dict>
-		<key>01DD75BA34B4D8C7F130038A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Facets.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-Facets/Pods-Facets.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>05B1DF986AB081F42815F1D4</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Facets/Pods-Facets-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>08DDAACD9EA3DBBFCAC22AB0</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Facets.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-Facets/Pods-Facets.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>18CF2E438279467187D5025D</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>&#128230; Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>19E24BE326E9073938665DF4</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>&#128230; Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Facets/Pods-Facets-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>22591AB17F3286978343DDB9</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Check Pods Manifest.lock</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>2B6F38381797BEBA00D06F51</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>QuartzCore.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/QuartzCore.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>2B6F38391797BEBA00D06F51</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2B6F38381797BEBA00D06F51</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2B9968A91794F71B0086F115</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelIssueCategory.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2B9968AA1794F71B0086F115</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelIssueCategory.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2B9968AB1794F71B0086F115</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2B9968AA1794F71B0086F115</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BBE4412179E586B00FD9E20</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelTimeEntryActivity.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BBE4413179E586B00FD9E20</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelTimeEntryActivity.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BBE4414179E586B00FD9E20</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BBE4413179E586B00FD9E20</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BCB50FD1796370F006845AC</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0292D601BF2D9CD00F717F2</string>
-				<string>D0292D611BF2D9CD00F717F2</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Views</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCC0FD0179D56BA003DFB44</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelTimeEntries.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCC0FD1179D56BA003DFB44</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelTimeEntries.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCC0FD2179D56BA003DFB44</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BCC0FD1179D56BA003DFB44</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BCCA0521795312E00FA8B1A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>OZLConstants.h</string>
-			<key>path</key>
-			<string>Models/OZLConstants.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCCA0531795312E00FA8B1A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>OZLConstants.m</string>
-			<key>path</key>
-			<string>Models/OZLConstants.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCCA0541795312E00FA8B1A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BCCA0531795312E00FA8B1A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BCF88111793CB4F006FC859</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CFNetwork.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/CFNetwork.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>2BCF88121793CB4F006FC859</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BCF88111793CB4F006FC859</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BCF88131793CB94006FC859</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>SystemConfiguration.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/SystemConfiguration.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>2BCF88141793CB94006FC859</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BCF88131793CB94006FC859</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BCF881A1793EF9F006FC859</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D000B1DC1BF96BBA00CA2845</string>
-				<string>D000B1DD1BF96BBA00CA2845</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Web View</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF881C1793F3C8006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelIssue.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF881D1793F3C8006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelIssue.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF881E1793F3C8006FC859</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BCF881D1793F3C8006FC859</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BCF881F1793F478006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelTracker.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF88201793F478006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelTracker.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF88211793F478006FC859</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BCF88201793F478006FC859</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BCF88251793F4AA006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelIssueStatus.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF88261793F4AA006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelIssueStatus.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF88271793F4AA006FC859</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BCF88261793F4AA006FC859</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BCF88281793F4C9006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelIssuePriority.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF88291793F4C9006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelIssuePriority.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF882A1793F4C9006FC859</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BCF88291793F4C9006FC859</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>2BCF882E1793F5CE006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelUser.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF882F1793F5CE006FC859</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelUser.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>2BCF88301793F5CE006FC859</key>
-		<dict>
-			<key>fileRef</key>
-			<string>2BCF882F1793F5CE006FC859</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>3A733CDC58B57E5887B40DA5</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Facets/Pods-Facets-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>59715124B36EDC258F54C943</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods_Facets.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>6669BE11D86EF56D6891EE26</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>08DDAACD9EA3DBBFCAC22AB0</string>
-				<string>01DD75BA34B4D8C7F130038A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D000B1CB1BF7CE2A00CA2845</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0CD7C8E1BF7A5EF0043C94B</string>
-				<string>D0CD7C8F1BF7A5EF0043C94B</string>
-				<string>D000B1CF1BF7CE9E00CA2845</string>
-				<string>D000B1D01BF7CE9E00CA2845</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Attachment Gallery</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D000B1CF1BF7CE9E00CA2845</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLIssueAttachmentGalleryItemCell.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D000B1D01BF7CE9E00CA2845</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLIssueAttachmentGalleryItemCell.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D000B1D11BF7CE9E00CA2845</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D000B1D01BF7CE9E00CA2845</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D000B1D21BF7D9A300CA2845</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>AVFoundation.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/AVFoundation.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>D000B1D31BF7D9A300CA2845</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>AVKit.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/AVKit.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>D000B1D41BF7D9A300CA2845</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D000B1D21BF7D9A300CA2845</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D000B1D51BF7D9A300CA2845</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D000B1D31BF7D9A300CA2845</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D000B1D91BF816D400CA2845</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>OZLURLProtocol.h</string>
-			<key>path</key>
-			<string>Utils/OZLURLProtocol.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D000B1DA1BF816D400CA2845</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>OZLURLProtocol.m</string>
-			<key>path</key>
-			<string>Utils/OZLURLProtocol.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D000B1DB1BF816D400CA2845</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D000B1DA1BF816D400CA2845</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D000B1DC1BF96BBA00CA2845</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLWebViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D000B1DD1BF96BBA00CA2845</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLWebViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D000B1DE1BF96BBA00CA2845</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D000B1DD1BF96BBA00CA2845</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D000B1DF1BF96EC600CA2845</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>WebKit.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/WebKit.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>D000B1E01BF96EC600CA2845</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D000B1DF1BF96EC600CA2845</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D014C2B01C95D37E00D381A9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>NSDate+OZLExtensions.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D014C2B11C95D37E00D381A9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D014C2B01C95D37E00D381A9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D014C2B21C95DD8D00D381A9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLTableViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D014C2B31C95DD8D00D381A9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D014C2B21C95DD8D00D381A9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D014C2B41C96144C00D381A9</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D014C2B51C96151A00D381A9</string>
-				<string>D014C2BB1C96355C00D381A9</string>
-				<string>D014C2B71C962AD700D381A9</string>
-				<string>D014C2B91C962DB500D381A9</string>
-				<string>D096EF211C98EE3800563610</string>
-				<string>D035CEF41C9A210D00805183</string>
-				<string>D022D6DE1C9B3B480035ABF5</string>
-				<string>D022D6E01C9B49930035ABF5</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Form Builder</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D014C2B51C96151A00D381A9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLFormViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D014C2B61C96151A00D381A9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D014C2B51C96151A00D381A9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D014C2B71C962AD700D381A9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLFormField.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D014C2B81C962AD700D381A9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D014C2B71C962AD700D381A9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D014C2B91C962DB500D381A9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLTextFormField.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D014C2BA1C962DB500D381A9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D014C2B91C962DB500D381A9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D014C2BB1C96355C00D381A9</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLFormSection.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D014C2BC1C96355C00D381A9</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D014C2BB1C96355C00D381A9</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9B8D1BEB23FA005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>OZLServerSync.h</string>
-			<key>path</key>
-			<string>Utils/OZLServerSync.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9B8E1BEB23FA005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>OZLServerSync.m</string>
-			<key>path</key>
-			<string>Utils/OZLServerSync.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9B8F1BEB23FA005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9B8E1BEB23FA005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9B991BEBC107005B2ED0</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D01F9B9A1BEBC107005B2ED0</string>
-				<string>D01F9B9B1BEBC107005B2ED0</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>BTNavigationDropdownMenu</string>
-			<key>path</key>
-			<string>BTNavigationDropdownMenu/Source</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9B9A1BEBC107005B2ED0</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.plug-in</string>
-			<key>path</key>
-			<string>BTNavigationDropdownMenu.bundle</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9B9B1BEBC107005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>BTNavigationDropdownMenu.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9B9C1BEBC107005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9B9A1BEBC107005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9B9D1BEBC107005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9B9B1BEBC107005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9BAB1BEBC4D9005B2ED0</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D01F9BAC1BEBC4FD005B2ED0</string>
-				<string>D01F9BAD1BEBC4FD005B2ED0</string>
-				<string>D01F9BE11BEC8BDD005B2ED0</string>
-				<string>D01F9BE21BEC8BDD005B2ED0</string>
-				<string>D01F9C121BEDABB8005B2ED0</string>
-				<string>D01F9C131BEDABB8005B2ED0</string>
-				<string>D0987AB51C07720F00D55DEB</string>
-				<string>D0BCD0EA1C14C70F00B0DC6D</string>
-				<string>D0BCD0EB1C14C70F00B0DC6D</string>
-				<string>D014C2B01C95D37E00D381A9</string>
-				<string>D056780A1C965733002F6BCF</string>
-				<string>D056780B1C965733002F6BCF</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Categories</string>
-			<key>path</key>
-			<string>Utils/Categories</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BAC1BEBC4FD005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>UIFont+OZLExtensions.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BAD1BEBC4FD005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>UIFont+OZLExtensions.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BAE1BEBC4FD005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9BAD1BEBC4FD005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9BD51BEC8265005B2ED0</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D06473B81C6F8B3C000A7180</string>
-				<string>D0292D661BF2DB4D00F717F2</string>
-				<string>D01F9C0E1BED9AC6005B2ED0</string>
-				<string>D0292D6E1BF3141900F717F2</string>
-				<string>D0292D6F1BF3141900F717F2</string>
-				<string>D01F9BD61BEC8283005B2ED0</string>
-				<string>D01F9BD71BEC8283005B2ED0</string>
-				<string>D0403EF71BF4291B002B6B98</string>
-				<string>D0403EF81BF4291B002B6B98</string>
-				<string>D01F9BDE1BEC84A3005B2ED0</string>
-				<string>D01F9BDF1BEC84A3005B2ED0</string>
-				<string>D01F9C151BEEA96C005B2ED0</string>
-				<string>D01F9C161BEEA96C005B2ED0</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Issue</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BD61BEC8283005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLIssueViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BD71BEC8283005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLIssueViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BD81BEC8283005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9BD71BEC8283005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9BDE1BEC84A3005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLIssueHeaderView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BDF1BEC84A3005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLIssueHeaderView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BE01BEC84A3005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9BDF1BEC84A3005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9BE11BEC8BDD005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>UIView+OZLExtensions.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BE21BEC8BDD005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>UIView+OZLExtensions.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9BE31BEC8BDD005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9BE21BEC8BDD005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9C0B1BED9ABC005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLTableViewCell.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C0C1BED9ABC005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLTableViewCell.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C0D1BED9ABC005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9C0C1BED9ABC005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9C0E1BED9AC6005B2ED0</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D000B1CB1BF7CE2A00CA2845</string>
-				<string>D01F9C0B1BED9ABC005B2ED0</string>
-				<string>D01F9C0C1BED9ABC005B2ED0</string>
-				<string>D01F9C0F1BED9B15005B2ED0</string>
-				<string>D01F9C101BED9B15005B2ED0</string>
-				<string>D0987AD41C0904C200D55DEB</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Cells</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C0F1BED9B15005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLIssueDescriptionCell.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C101BED9B15005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLIssueDescriptionCell.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C111BED9B15005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9C101BED9B15005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9C121BEDABB8005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>UIColor+OZLExtensions.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C131BEDABB8005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>UIColor+OZLExtensions.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C141BEDABB8005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9C131BEDABB8005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9C151BEEA96C005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLTabTestView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C161BEEA96C005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLTabTestView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C171BEEA96C005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9C161BEEA96C005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D01F9C181BEED9BE005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLIssueAboutTabView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C191BEED9BE005B2ED0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLIssueAboutTabView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D01F9C1A1BEED9BE005B2ED0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D01F9C191BEED9BE005B2ED0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D022D6DE1C9B3B480035ABF5</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLSwitchFormField.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D022D6DF1C9B3B480035ABF5</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D022D6DE1C9B3B480035ABF5</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D022D6E01C9B49930035ABF5</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLButtonFormField.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D022D6E11C9B49930035ABF5</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D022D6E01C9B49930035ABF5</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0292D601BF2D9CD00F717F2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0292D611BF2D9CD00F717F2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0292D621BF2D9CD00F717F2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0292D611BF2D9CD00F717F2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0292D661BF2DB4D00F717F2</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0292D671BF2DBB600F717F2</string>
-				<string>D0292D681BF2DBB600F717F2</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Description view controller</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0292D671BF2DBB600F717F2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLIssueFullDescriptionViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0292D681BF2DBB600F717F2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLIssueFullDescriptionViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0292D691BF2DBB600F717F2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0292D681BF2DBB600F717F2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0292D6A1BF2EEB200F717F2</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>SafariServices.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/SafariServices.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>D0292D6B1BF2EEB200F717F2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0292D6A1BF2EEB200F717F2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0292D6C1BF2EF4E00F717F2</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>MobileCoreServices.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/MobileCoreServices.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>D0292D6E1BF3141900F717F2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLLoadingView.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0292D6F1BF3141900F717F2</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLLoadingView.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0292D701BF3141900F717F2</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0292D6F1BF3141900F717F2</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D02BD4FA1C0F58AA00753EFF</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelStringContainer.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D02BD4FB1C0F58AA00753EFF</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelStringContainer.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D02BD4FC1C0F58AA00753EFF</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D02BD4FB1C0F58AA00753EFF</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D02BD4FD1C0FD85600753EFF</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelVersion.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D02BD4FE1C0FD85600753EFF</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelVersion.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D02BD4FF1C0FD85600753EFF</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D02BD4FE1C0FD85600753EFF</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D02D4E4B1C0E11C60050B593</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>OZLRedmineHTMLParser.h</string>
-			<key>path</key>
-			<string>Utils/OZLRedmineHTMLParser.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D02D4E4C1C0E11C60050B593</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>OZLRedmineHTMLParser.m</string>
-			<key>path</key>
-			<string>Utils/OZLRedmineHTMLParser.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D02D4E4D1C0E11C60050B593</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D02D4E4C1C0E11C60050B593</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D035A4AC1C0A04BD0057AA48</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLModelJournalDetail.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D035A4AD1C0A04BD0057AA48</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D035A4AC1C0A04BD0057AA48</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D035A4AE1C0A09400057AA48</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Generate Swift warnings</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>TAGS="WARNING:"
-echo "searching ${SRCROOT}/Facets for ${TAGS}"
-find "${SRCROOT}/Facets" \( -name "*.swift" \) -print0 | xargs -0 egrep --with-filename --line-number --only-matching "($TAGS).*\$" | perl -p -e "s/($TAGS)/ warning: \$1/"</string>
-		</dict>
-		<key>D035A4BD1C0A98D80057AA48</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelCustomField.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D035A4BE1C0A98D80057AA48</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelCustomField.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D035A4BF1C0A98D80057AA48</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D035A4BE1C0A98D80057AA48</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D035CEF41C9A210D00805183</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLEnumerationFormField.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D035CEF51C9A210D00805183</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D035CEF41C9A210D00805183</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D03D6C401BD017AB00A47E24</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelQuery.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D03D6C411BD017AB00A47E24</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelQuery.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D03D6C421BD017AB00A47E24</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D03D6C411BD017AB00A47E24</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D03D6C431BD0194B00A47E24</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D056780D1C965F04002F6BCF</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Query List</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0403EF71BF4291B002B6B98</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLIssueViewModel.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0403EF81BF4291B002B6B98</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLIssueViewModel.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0403EF91BF4291B002B6B98</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0403EF81BF4291B002B6B98</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D04801401BD004E50047C5DE</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D04801411BD004E50047C5DE</string>
-				<string>D04801421BD004E50047C5DE</string>
-				<string>D04801431BD004E50047C5DE</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>OptionsMenu</string>
-			<key>path</key>
-			<string>OptionsMenu/Classes</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D04801411BD004E50047C5DE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>CAPSOptionsMenu.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D04801421BD004E50047C5DE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>CAPSOptionsMenuAction.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D04801431BD004E50047C5DE</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>CAPSOptionsMenuButton.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D04801441BD004E50047C5DE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D04801411BD004E50047C5DE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D04801451BD004E50047C5DE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D04801421BD004E50047C5DE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D04801461BD004E50047C5DE</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D04801431BD004E50047C5DE</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D056780A1C965733002F6BCF</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>NSString+OZLURLEncoding.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D056780B1C965733002F6BCF</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>NSString+OZLURLEncoding.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D056780C1C965733002F6BCF</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D056780B1C965733002F6BCF</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D056780D1C965F04002F6BCF</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLQueryListViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D056780E1C965F04002F6BCF</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D056780D1C965F04002F6BCF</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D05AF77E1C2BBC84007911EA</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLQuickAssignViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D05AF77F1C2BBC84007911EA</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D05AF77E1C2BBC84007911EA</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D05AF7801C2BC87A007911EA</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLSheetPresentationController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D05AF7811C2BC87A007911EA</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D05AF7801C2BC87A007911EA</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D05AF7851C2C6971007911EA</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelMembership.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D05AF7861C2C6971007911EA</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelMembership.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D05AF7871C2C6971007911EA</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D05AF7861C2C6971007911EA</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D05E08031C1FB6B400509501</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D05E08061C1FB6F400509501</string>
-				<string>D05AF77E1C2BBC84007911EA</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Quick Assign</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D05E08061C1FB6F400509501</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLQuickAssignView.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D05E08071C1FB6F400509501</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D05E08061C1FB6F400509501</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D06473B81C6F8B3C000A7180</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D01F9C181BEED9BE005B2ED0</string>
-				<string>D01F9C191BEED9BE005B2ED0</string>
-				<string>D06473B91C6F8B7E000A7180</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>About Tab</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D06473B91C6F8B7E000A7180</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLAboutTabFieldView.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D06473BA1C6F8B7E000A7180</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D06473B91C6F8B7E000A7180</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D06D51101C2F10F700180B89</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLNavigationChildChangeListener.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D096EF211C98EE3800563610</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLTextViewFormField.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D096EF221C98EE3800563610</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D096EF211C98EE3800563610</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0987AB51C07720F00D55DEB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLAsyncImageView.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0987AB61C07720F00D55DEB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0987AB51C07720F00D55DEB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0987AB71C0772BA00D55DEB</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0E489071BCDCF9100C082B7</string>
-				<string>D5DB80611792F2BF0081662A</string>
-				<string>D5DB80651792F2BF0081662A</string>
-				<string>D5DB80671792F2BF0081662A</string>
-				<string>D0987AB81C0772BA00D55DEB</string>
-				<string>D0987ABB1C07818500D55DEB</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Supporting</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0987AB81C0772BA00D55DEB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Facets-Bridging-Header.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0987ABB1C07818500D55DEB</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>folder.assetcatalog</string>
-			<key>path</key>
-			<string>Images.xcassets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0987ABC1C07818500D55DEB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0987ABB1C07818500D55DEB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0987AD21C0801E000D55DEB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLModelJournal.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0987AD31C0801E000D55DEB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0987AD21C0801E000D55DEB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0987AD41C0904C200D55DEB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLIssueSectionHeaderView.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0987AD51C0904C200D55DEB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0987AD41C0904C200D55DEB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0987AD61C09488200D55DEB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLJournalCell.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0987AD71C09488200D55DEB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0987AD61C09488200D55DEB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0A53D2E1C38300300E424F0</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLIssueListViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0A53D2F1C38300300E424F0</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0A53D2E1C38300300E424F0</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0B293851BE59D1800F71A55</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0F10F421C371FD300A0AE94</string>
-				<string>D0A53D2E1C38300300E424F0</string>
-				<string>D0DD77831C94A8EF008DC65D</string>
-				<string>D0DD77851C94A90A008DC65D</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Issue List</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0BCD0DF1C14C30E00B0DC6D</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0BCD0E01C14C33E00B0DC6D</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Issue Composer</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0BCD0E01C14C33E00B0DC6D</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLIssueComposerViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0BCD0E11C14C33E00B0DC6D</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0BCD0E01C14C33E00B0DC6D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0BCD0E21C14C6DA00B0DC6D</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0F10F311C358BE500A0AE94</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Resources</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0BCD0EA1C14C70F00B0DC6D</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>UIImage+OZLExtensions.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0BCD0EB1C14C70F00B0DC6D</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>UIImage+OZLExtensions.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0BCD0EC1C14C70F00B0DC6D</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0BCD0EB1C14C70F00B0DC6D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0BFA90E1C6FE40F00F4D1FB</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0987AD61C09488200D55DEB</string>
-				<string>D0BFA90F1C6FE47600F4D1FB</string>
-				<string>D0BFA9111C6FE50300F4D1FB</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Journal Viewer</string>
-			<key>path</key>
-			<string>Facets/View Controllers/Journal Viewer</string>
-			<key>sourceTree</key>
-			<string>SOURCE_ROOT</string>
-		</dict>
-		<key>D0BFA90F1C6FE47600F4D1FB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLJournalViewerViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0BFA9101C6FE47600F4D1FB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0BFA90F1C6FE47600F4D1FB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0BFA9111C6FE50300F4D1FB</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLJournalViewerViewModel.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0BFA9121C6FE50300F4D1FB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0BFA9111C6FE50300F4D1FB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0C9F0481C30585100976B06</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D05AF7801C2BC87A007911EA</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Presentation Controllers</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0C9F0491C30593300976B06</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D5DB80B21793016B0081662A</string>
-				<string>D5DB80B31793016B0081662A</string>
-				<string>D5DB80B41793016B0081662A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Account</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0C9F04A1C30726E00976B06</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0C9F04B1C30726E00976B06</string>
-				<string>D0C9F0511C30742400976B06</string>
-				<string>D0C9F0521C30742400976B06</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Split View</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0C9F04B1C30726E00976B06</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLSplitViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0C9F04C1C30726E00976B06</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0C9F04B1C30726E00976B06</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0C9F0511C30742400976B06</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLSplitViewPlaceholderPane.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0C9F0521C30742400976B06</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.xib</string>
-			<key>path</key>
-			<string>OZLSplitViewPlaceholderPane.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0C9F0531C30742400976B06</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0C9F0511C30742400976B06</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0C9F0541C30742400976B06</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0C9F0521C30742400976B06</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0CD7C881BF791FA0043C94B</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelAttachment.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0CD7C891BF791FA0043C94B</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelAttachment.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0CD7C8A1BF791FA0043C94B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0CD7C891BF791FA0043C94B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0CD7C8E1BF7A5EF0043C94B</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLIssueAttachmentGalleryCell.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0CD7C8F1BF7A5EF0043C94B</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLIssueAttachmentGalleryCell.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0CD7C901BF7A5EF0043C94B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0CD7C8F1BF7A5EF0043C94B</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0DD77831C94A8EF008DC65D</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLIssueTableViewCell.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0DD77841C94A8EF008DC65D</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0DD77831C94A8EF008DC65D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0DD77851C94A90A008DC65D</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.xib</string>
-			<key>path</key>
-			<string>OZLIssueTableViewCell.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0DD77861C94A90A008DC65D</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0DD77851C94A90A008DC65D</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0E489071BCDCF9100C082B7</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.storyboard</string>
-			<key>path</key>
-			<string>Launch Screen.storyboard</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0E489081BCDCF9100C082B7</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0E489071BCDCF9100C082B7</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0F10F311C358BE500A0AE94</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>folder.assetcatalog</string>
-			<key>path</key>
-			<string>Icons.xcassets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0F10F321C358BE500A0AE94</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0F10F311C358BE500A0AE94</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0F10F331C35AE9600A0AE94</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D0F10F371C35B14C00A0AE94</string>
-				<string>D0F10F391C36FDE700A0AE94</string>
-				<string>D0F10F3B1C36FE5F00A0AE94</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Sort and Filter</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0F10F371C35B14C00A0AE94</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLSortAndFilterViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0F10F381C35B14C00A0AE94</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0F10F371C35B14C00A0AE94</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0F10F391C36FDE700A0AE94</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLSortAndFilterField.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0F10F3A1C36FDE700A0AE94</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0F10F391C36FDE700A0AE94</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0F10F3B1C36FE5F00A0AE94</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLFieldSelectorViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0F10F3C1C36FE5F00A0AE94</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0F10F3B1C36FE5F00A0AE94</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0F10F3D1C370E0600A0AE94</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLAppDelegate.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0F10F3E1C370E0600A0AE94</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0F10F3D1C370E0600A0AE94</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0F10F3F1C3710F900A0AE94</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLMainTabControllerViewController.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0F10F401C3710F900A0AE94</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0F10F3F1C3710F900A0AE94</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D0F10F421C371FD300A0AE94</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.swift</string>
-			<key>path</key>
-			<string>OZLIssueListViewModel.swift</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D0F10F431C371FD300A0AE94</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D0F10F421C371FD300A0AE94</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D5DB804D1792F2BF0081662A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D5DB805F1792F2BF0081662A</string>
-				<string>D5DB80761792F3EE0081662A</string>
-				<string>D5DB80581792F2BF0081662A</string>
-				<string>D0987AB71C0772BA00D55DEB</string>
-				<string>D5DB80571792F2BF0081662A</string>
-				<string>D0BCD0E21C14C6DA00B0DC6D</string>
-				<string>6669BE11D86EF56D6891EE26</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB804E1792F2BF0081662A</key>
-		<dict>
-			<key>attributes</key>
-			<dict>
-				<key>CLASSPREFIX</key>
-				<string>OZL</string>
-				<key>LastSwiftMigration</key>
-				<string>0710</string>
-				<key>LastTestingUpgradeCheck</key>
-				<string>0710</string>
-				<key>LastUpgradeCheck</key>
-				<string>0710</string>
-				<key>ORGANIZATIONNAME</key>
-				<string>Justin Hill</string>
-				<key>TargetAttributes</key>
-				<dict>
-					<key>D5DB80551792F2BF0081662A</key>
-					<dict>
-						<key>DevelopmentTeam</key>
-						<string>5K3CGZPRYC</string>
-					</dict>
-				</dict>
-			</dict>
-			<key>buildConfigurationList</key>
-			<string>D5DB80511792F2BF0081662A</string>
-			<key>compatibilityVersion</key>
-			<string>Xcode 3.2</string>
-			<key>developmentRegion</key>
-			<string>English</string>
-			<key>hasScannedForEncodings</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXProject</string>
-			<key>knownRegions</key>
-			<array>
-				<string>en</string>
-			</array>
-			<key>mainGroup</key>
-			<string>D5DB804D1792F2BF0081662A</string>
-			<key>productRefGroup</key>
-			<string>D5DB80571792F2BF0081662A</string>
-			<key>projectDirPath</key>
-			<string></string>
-			<key>projectReferences</key>
-			<array/>
-			<key>projectRoot</key>
-			<string></string>
-			<key>targets</key>
-			<array>
-				<string>D5DB80551792F2BF0081662A</string>
-			</array>
-		</dict>
-		<key>D5DB80511792F2BF0081662A</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>D5DB80711792F2BF0081662A</string>
-				<string>D5DB80721792F2BF0081662A</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>D5DB80521792F2BF0081662A</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>D014C2B61C96151A00D381A9</string>
-				<string>D02BD4FF1C0FD85600753EFF</string>
-				<string>D5DB80661792F2BF0081662A</string>
-				<string>D0987AD71C09488200D55DEB</string>
-				<string>D0F10F3C1C36FE5F00A0AE94</string>
-				<string>D014C2B31C95DD8D00D381A9</string>
-				<string>D5DB80B1179300B90081662A</string>
-				<string>D014C2BC1C96355C00D381A9</string>
-				<string>D5DB80B51793016B0081662A</string>
-				<string>D05AF7811C2BC87A007911EA</string>
-				<string>D5DB80BD17930ECD0081662A</string>
-				<string>D056780E1C965F04002F6BCF</string>
-				<string>D0F10F401C3710F900A0AE94</string>
-				<string>D0BCD0EC1C14C70F00B0DC6D</string>
-				<string>D0987AB61C07720F00D55DEB</string>
-				<string>D5DB80C217931C8B0081662A</string>
-				<string>D000B1DE1BF96BBA00CA2845</string>
-				<string>D01F9B8F1BEB23FA005B2ED0</string>
-				<string>D0292D691BF2DBB600F717F2</string>
-				<string>D04801451BD004E50047C5DE</string>
-				<string>D014C2BA1C962DB500D381A9</string>
-				<string>D0292D701BF3141900F717F2</string>
-				<string>D056780C1C965733002F6BCF</string>
-				<string>D01F9C111BED9B15005B2ED0</string>
-				<string>2BCF881E1793F3C8006FC859</string>
-				<string>D0DD77841C94A8EF008DC65D</string>
-				<string>2BCF88211793F478006FC859</string>
-				<string>2BCF88271793F4AA006FC859</string>
-				<string>D0F10F3E1C370E0600A0AE94</string>
-				<string>D05AF7871C2C6971007911EA</string>
-				<string>D01F9C171BEEA96C005B2ED0</string>
-				<string>D02D4E4D1C0E11C60050B593</string>
-				<string>D0BFA9101C6FE47600F4D1FB</string>
-				<string>D014C2B11C95D37E00D381A9</string>
-				<string>D0F10F3A1C36FDE700A0AE94</string>
-				<string>D000B1DB1BF816D400CA2845</string>
-				<string>2BCF882A1793F4C9006FC859</string>
-				<string>D0CD7C8A1BF791FA0043C94B</string>
-				<string>D0403EF91BF4291B002B6B98</string>
-				<string>D0C9F04C1C30726E00976B06</string>
-				<string>D035CEF51C9A210D00805183</string>
-				<string>D05AF77F1C2BBC84007911EA</string>
-				<string>D01F9BAE1BEBC4FD005B2ED0</string>
-				<string>2BCF88301793F5CE006FC859</string>
-				<string>D04801441BD004E50047C5DE</string>
-				<string>2B9968AB1794F71B0086F115</string>
-				<string>D05E08071C1FB6F400509501</string>
-				<string>2BCCA0541795312E00FA8B1A</string>
-				<string>D0A53D2F1C38300300E424F0</string>
-				<string>D03D6C421BD017AB00A47E24</string>
-				<string>D0BCD0E11C14C33E00B0DC6D</string>
-				<string>D01F9C0D1BED9ABC005B2ED0</string>
-				<string>D0BFA9121C6FE50300F4D1FB</string>
-				<string>D01F9B9D1BEBC107005B2ED0</string>
-				<string>D0987AD51C0904C200D55DEB</string>
-				<string>D01F9BE01BEC84A3005B2ED0</string>
-				<string>D0F10F381C35B14C00A0AE94</string>
-				<string>D014C2B81C962AD700D381A9</string>
-				<string>D035A4AD1C0A04BD0057AA48</string>
-				<string>D0292D621BF2D9CD00F717F2</string>
-				<string>D035A4BF1C0A98D80057AA48</string>
-				<string>D01F9BD81BEC8283005B2ED0</string>
-				<string>D01F9C141BEDABB8005B2ED0</string>
-				<string>D04801461BD004E50047C5DE</string>
-				<string>D022D6E11C9B49930035ABF5</string>
-				<string>D01F9BE31BEC8BDD005B2ED0</string>
-				<string>D0C9F0531C30742400976B06</string>
-				<string>2BCC0FD2179D56BA003DFB44</string>
-				<string>D000B1D11BF7CE9E00CA2845</string>
-				<string>D0CD7C901BF7A5EF0043C94B</string>
-				<string>D02BD4FC1C0F58AA00753EFF</string>
-				<string>D06473BA1C6F8B7E000A7180</string>
-				<string>2BBE4414179E586B00FD9E20</string>
-				<string>D0987AD31C0801E000D55DEB</string>
-				<string>D096EF221C98EE3800563610</string>
-				<string>D01F9C1A1BEED9BE005B2ED0</string>
-				<string>D0F10F431C371FD300A0AE94</string>
-				<string>D022D6DF1C9B3B480035ABF5</string>
-			</array>
-			<key>isa</key>
-			<string>PBXSourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>D5DB80531792F2BF0081662A</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>D000B1E01BF96EC600CA2845</string>
-				<string>D000B1D41BF7D9A300CA2845</string>
-				<string>D000B1D51BF7D9A300CA2845</string>
-				<string>D0292D6B1BF2EEB200F717F2</string>
-				<string>2B6F38391797BEBA00D06F51</string>
-				<string>2BCF88141793CB94006FC859</string>
-				<string>2BCF88121793CB4F006FC859</string>
-				<string>D5DB805A1792F2BF0081662A</string>
-				<string>D5DB805C1792F2BF0081662A</string>
-				<string>D5DB805E1792F2BF0081662A</string>
-				<string>F25CAFD4367D40C36A9E4288</string>
-			</array>
-			<key>isa</key>
-			<string>PBXFrameworksBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>D5DB80541792F2BF0081662A</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array>
-				<string>D0C9F0541C30742400976B06</string>
-				<string>D5DB80B61793016B0081662A</string>
-				<string>D01F9B9C1BEBC107005B2ED0</string>
-				<string>D0987ABC1C07818500D55DEB</string>
-				<string>D0E489081BCDCF9100C082B7</string>
-				<string>D0F10F321C358BE500A0AE94</string>
-				<string>D0DD77861C94A90A008DC65D</string>
-			</array>
-			<key>isa</key>
-			<string>PBXResourcesBuildPhase</string>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-		</dict>
-		<key>D5DB80551792F2BF0081662A</key>
-		<dict>
-			<key>buildConfigurationList</key>
-			<string>D5DB80731792F2BF0081662A</string>
-			<key>buildPhases</key>
-			<array>
-				<string>22591AB17F3286978343DDB9</string>
-				<string>18CF2E438279467187D5025D</string>
-				<string>D5DB80521792F2BF0081662A</string>
-				<string>D5DB80531792F2BF0081662A</string>
-				<string>D5DB80541792F2BF0081662A</string>
-				<string>OBJCLEANCUSTOMRUNSCRIPTT</string>
-				<string>D035A4AE1C0A09400057AA48</string>
-				<string>19E24BE326E9073938665DF4</string>
-				<string>E3281CDA6519B9A7E806852C</string>
-				<string>3A733CDC58B57E5887B40DA5</string>
-				<string>05B1DF986AB081F42815F1D4</string>
-			</array>
-			<key>buildRules</key>
-			<array/>
-			<key>dependencies</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXNativeTarget</string>
-			<key>name</key>
-			<string>Facets</string>
-			<key>productName</key>
-			<string>RedmineMobile</string>
-			<key>productReference</key>
-			<string>D5DB80561792F2BF0081662A</string>
-			<key>productType</key>
-			<string>com.apple.product-type.application</string>
-		</dict>
-		<key>D5DB80561792F2BF0081662A</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.application</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Facets.app</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>D5DB80571792F2BF0081662A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D5DB80561792F2BF0081662A</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80581792F2BF0081662A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D000B1DF1BF96EC600CA2845</string>
-				<string>D000B1D21BF7D9A300CA2845</string>
-				<string>D000B1D31BF7D9A300CA2845</string>
-				<string>D0292D6C1BF2EF4E00F717F2</string>
-				<string>D0292D6A1BF2EEB200F717F2</string>
-				<string>2B6F38381797BEBA00D06F51</string>
-				<string>2BCF88131793CB94006FC859</string>
-				<string>2BCF88111793CB4F006FC859</string>
-				<string>D5DB80591792F2BF0081662A</string>
-				<string>D5DB805B1792F2BF0081662A</string>
-				<string>D5DB805D1792F2BF0081662A</string>
-				<string>59715124B36EDC258F54C943</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Frameworks</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80591792F2BF0081662A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>UIKit.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/UIKit.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>D5DB805A1792F2BF0081662A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D5DB80591792F2BF0081662A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D5DB805B1792F2BF0081662A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>Foundation.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/Foundation.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>D5DB805C1792F2BF0081662A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D5DB805B1792F2BF0081662A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D5DB805D1792F2BF0081662A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>wrapper.framework</string>
-			<key>name</key>
-			<string>CoreGraphics.framework</string>
-			<key>path</key>
-			<string>System/Library/Frameworks/CoreGraphics.framework</string>
-			<key>sourceTree</key>
-			<string>SDKROOT</string>
-		</dict>
-		<key>D5DB805E1792F2BF0081662A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D5DB805D1792F2BF0081662A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D5DB805F1792F2BF0081662A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>2BCB50FD1796370F006845AC</string>
-				<string>D5DB80BF17931C580081662A</string>
-				<string>D5DB80AE1793008F0081662A</string>
-				<string>D0C9F0481C30585100976B06</string>
-				<string>D5DB80A81792F4E40081662A</string>
-				<string>D0F10F3D1C370E0600A0AE94</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Facets</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80611792F2BF0081662A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Facets-Info.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80651792F2BF0081662A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>main.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80661792F2BF0081662A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D5DB80651792F2BF0081662A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D5DB80671792F2BF0081662A</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>Facets-Prefix.pch</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80711792F2BF0081662A</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>NO</string>
-				<key>CURRENT_PROJECT_VERSION</key>
-				<string>40</string>
-				<key>EMBEDDED_CONTENT_CONTAINS_SWIFT</key>
-				<string>YES</string>
-				<key>ENABLE_TESTABILITY</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_DYNAMIC_NO_PIC</key>
-				<string>NO</string>
-				<key>GCC_OPTIMIZATION_LEVEL</key>
-				<string>0</string>
-				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
-				<array>
-					<string>DEBUG=1</string>
-					<string>$(inherited)</string>
-				</array>
-				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-				<string>NO</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>ONLY_ACTIVE_ARCH</key>
-				<string>YES</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1,2</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>D5DB80721792F2BF0081662A</key>
-		<dict>
-			<key>buildSettings</key>
-			<dict>
-				<key>ALWAYS_SEARCH_USER_PATHS</key>
-				<string>NO</string>
-				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
-				<string>gnu++0x</string>
-				<key>CLANG_CXX_LIBRARY</key>
-				<string>libc++</string>
-				<key>CLANG_ENABLE_OBJC_ARC</key>
-				<string>YES</string>
-				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_EMPTY_BODY</key>
-				<string>YES</string>
-				<key>CLANG_WARN_ENUM_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN_INT_CONVERSION</key>
-				<string>YES</string>
-				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
-				<string>YES</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>COPY_PHASE_STRIP</key>
-				<string>YES</string>
-				<key>CURRENT_PROJECT_VERSION</key>
-				<string>40</string>
-				<key>EMBEDDED_CONTENT_CONTAINS_SWIFT</key>
-				<string>YES</string>
-				<key>GCC_C_LANGUAGE_STANDARD</key>
-				<string>gnu99</string>
-				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-				<string>YES</string>
-				<key>GCC_WARN_UNUSED_VARIABLE</key>
-				<string>YES</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>OTHER_CFLAGS</key>
-				<string>-DNS_BLOCK_ASSERTIONS=1</string>
-				<key>SDKROOT</key>
-				<string>iphoneos</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1,2</string>
-				<key>VALIDATE_PRODUCT</key>
-				<string>YES</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>D5DB80731792F2BF0081662A</key>
-		<dict>
-			<key>buildConfigurations</key>
-			<array>
-				<string>D5DB80741792F2BF0081662A</string>
-				<string>D5DB80751792F2BF0081662A</string>
-			</array>
-			<key>defaultConfigurationIsVisible</key>
-			<string>0</string>
-			<key>defaultConfigurationName</key>
-			<string>Release</string>
-			<key>isa</key>
-			<string>XCConfigurationList</string>
-		</dict>
-		<key>D5DB80741792F2BF0081662A</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>08DDAACD9EA3DBBFCAC22AB0</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>App Icon</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_MODULE_DEBUGGING</key>
-				<string>NO</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Developer</string>
-				<key>CURRENT_PROJECT_VERSION</key>
-				<string>40</string>
-				<key>DEFINES_MODULE</key>
-				<string>NO</string>
-				<key>EMBEDDED_CONTENT_CONTAINS_SWIFT</key>
-				<string>$(inherited)</string>
-				<key>ENABLE_BITCODE</key>
-				<string>NO</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Supporting/Facets-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>Supporting/Facets-Info.plist</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>@executable_path/Frameworks $(inherited)</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.franklychat.Facets</string>
-				<key>PRODUCT_NAME</key>
-				<string>Facets</string>
-				<key>PROVISIONING_PROFILE</key>
-				<string>8dccb32b-97de-4411-a2f4-ad210727eb6c</string>
-				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
-				<string>${SRCROOT}/Supporting/Facets-Bridging-Header.h</string>
-				<key>SWIFT_OPTIMIZATION_LEVEL</key>
-				<string>-Onone</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1,2</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Debug</string>
-		</dict>
-		<key>D5DB80751792F2BF0081662A</key>
-		<dict>
-			<key>baseConfigurationReference</key>
-			<string>01DD75BA34B4D8C7F130038A</string>
-			<key>buildSettings</key>
-			<dict>
-				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
-				<string>App Icon</string>
-				<key>CLANG_ENABLE_MODULES</key>
-				<string>YES</string>
-				<key>CLANG_ENABLE_MODULE_DEBUGGING</key>
-				<string>NO</string>
-				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Developer</string>
-				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Distribution</string>
-				<key>CURRENT_PROJECT_VERSION</key>
-				<string>40</string>
-				<key>DEFINES_MODULE</key>
-				<string>NO</string>
-				<key>EMBEDDED_CONTENT_CONTAINS_SWIFT</key>
-				<string>$(inherited)</string>
-				<key>ENABLE_BITCODE</key>
-				<string>NO</string>
-				<key>ENABLE_NS_ASSERTIONS</key>
-				<string>NO</string>
-				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
-				<string>YES</string>
-				<key>GCC_PREFIX_HEADER</key>
-				<string>Supporting/Facets-Prefix.pch</string>
-				<key>INFOPLIST_FILE</key>
-				<string>Supporting/Facets-Info.plist</string>
-				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
-				<string>8.0</string>
-				<key>LD_RUNPATH_SEARCH_PATHS</key>
-				<string>@executable_path/Frameworks $(inherited)</string>
-				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
-				<string>com.franklychat.Facets</string>
-				<key>PRODUCT_NAME</key>
-				<string>Facets</string>
-				<key>PROVISIONING_PROFILE</key>
-				<string>98018c9b-5696-410e-a4ec-541903a9788a</string>
-				<key>SWIFT_OBJC_BRIDGING_HEADER</key>
-				<string>${SRCROOT}/Supporting/Facets-Bridging-Header.h</string>
-				<key>TARGETED_DEVICE_FAMILY</key>
-				<string>1,2</string>
-				<key>WRAPPER_EXTENSION</key>
-				<string>app</string>
-			</dict>
-			<key>isa</key>
-			<string>XCBuildConfiguration</string>
-			<key>name</key>
-			<string>Release</string>
-		</dict>
-		<key>D5DB80761792F3EE0081662A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D04801401BD004E50047C5DE</string>
-				<string>D01F9B991BEBC107005B2ED0</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Libs</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80A81792F4E40081662A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D014C2B41C96144C00D381A9</string>
-				<string>D0C9F0491C30593300976B06</string>
-				<string>D01F9BD51BEC8265005B2ED0</string>
-				<string>D0BCD0DF1C14C30E00B0DC6D</string>
-				<string>D0B293851BE59D1800F71A55</string>
-				<string>D0BFA90E1C6FE40F00F4D1FB</string>
-				<string>D03D6C431BD0194B00A47E24</string>
-				<string>D05E08031C1FB6B400509501</string>
-				<string>D0F10F331C35AE9600A0AE94</string>
-				<string>D0C9F04A1C30726E00976B06</string>
-				<string>2BCF881A1793EF9F006FC859</string>
-				<string>D0F10F3F1C3710F900A0AE94</string>
-				<string>D014C2B21C95DD8D00D381A9</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>View Controllers</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80AE1793008F0081662A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D01F9BAB1BEBC4D9005B2ED0</string>
-				<string>D5DB80AF179300B90081662A</string>
-				<string>D5DB80B0179300B90081662A</string>
-				<string>D5DB80BB17930ECD0081662A</string>
-				<string>D5DB80BC17930ECD0081662A</string>
-				<string>2BCCA0521795312E00FA8B1A</string>
-				<string>2BCCA0531795312E00FA8B1A</string>
-				<string>D01F9B8D1BEB23FA005B2ED0</string>
-				<string>D01F9B8E1BEB23FA005B2ED0</string>
-				<string>D000B1D91BF816D400CA2845</string>
-				<string>D000B1DA1BF816D400CA2845</string>
-				<string>D02D4E4B1C0E11C60050B593</string>
-				<string>D02D4E4C1C0E11C60050B593</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Utils</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80AF179300B90081662A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>OZLNetwork.h</string>
-			<key>path</key>
-			<string>Utils/OZLNetwork.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80B0179300B90081662A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>OZLNetwork.m</string>
-			<key>path</key>
-			<string>Utils/OZLNetwork.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80B1179300B90081662A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D5DB80B0179300B90081662A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D5DB80B21793016B0081662A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>OZLAccountViewController.h</string>
-			<key>path</key>
-			<string>Account/OZLAccountViewController.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80B31793016B0081662A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>OZLAccountViewController.m</string>
-			<key>path</key>
-			<string>Account/OZLAccountViewController.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80B41793016B0081662A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>file.xib</string>
-			<key>name</key>
-			<string>OZLAccountViewController.xib</string>
-			<key>path</key>
-			<string>Account/OZLAccountViewController.xib</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80B51793016B0081662A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D5DB80B31793016B0081662A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D5DB80B61793016B0081662A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D5DB80B41793016B0081662A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D5DB80BB17930ECD0081662A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>name</key>
-			<string>OZLSingleton.h</string>
-			<key>path</key>
-			<string>Utils/OZLSingleton.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80BC17930ECD0081662A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>name</key>
-			<string>OZLSingleton.m</string>
-			<key>path</key>
-			<string>Utils/OZLSingleton.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80BD17930ECD0081662A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D5DB80BC17930ECD0081662A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>D5DB80BF17931C580081662A</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>2BCF88251793F4AA006FC859</string>
-				<string>2BCF88261793F4AA006FC859</string>
-				<string>D5DB80C017931C8B0081662A</string>
-				<string>D5DB80C117931C8B0081662A</string>
-				<string>2BCF881C1793F3C8006FC859</string>
-				<string>2BCF881D1793F3C8006FC859</string>
-				<string>2BCF881F1793F478006FC859</string>
-				<string>2BCF88201793F478006FC859</string>
-				<string>2BCF88281793F4C9006FC859</string>
-				<string>2BCF88291793F4C9006FC859</string>
-				<string>2BCF882E1793F5CE006FC859</string>
-				<string>2BCF882F1793F5CE006FC859</string>
-				<string>2B9968A91794F71B0086F115</string>
-				<string>2B9968AA1794F71B0086F115</string>
-				<string>2BCC0FD0179D56BA003DFB44</string>
-				<string>2BCC0FD1179D56BA003DFB44</string>
-				<string>2BBE4412179E586B00FD9E20</string>
-				<string>2BBE4413179E586B00FD9E20</string>
-				<string>D03D6C401BD017AB00A47E24</string>
-				<string>D03D6C411BD017AB00A47E24</string>
-				<string>D0CD7C881BF791FA0043C94B</string>
-				<string>D0CD7C891BF791FA0043C94B</string>
-				<string>D0987AD21C0801E000D55DEB</string>
-				<string>D035A4AC1C0A04BD0057AA48</string>
-				<string>D035A4BD1C0A98D80057AA48</string>
-				<string>D035A4BE1C0A98D80057AA48</string>
-				<string>D02BD4FA1C0F58AA00753EFF</string>
-				<string>D02BD4FB1C0F58AA00753EFF</string>
-				<string>D02BD4FD1C0FD85600753EFF</string>
-				<string>D02BD4FE1C0FD85600753EFF</string>
-				<string>D05AF7851C2C6971007911EA</string>
-				<string>D05AF7861C2C6971007911EA</string>
-				<string>D06D51101C2F10F700180B89</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>path</key>
-			<string>Models</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80C017931C8B0081662A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>OZLModelProject.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80C117931C8B0081662A</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>OZLModelProject.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>D5DB80C217931C8B0081662A</key>
-		<dict>
-			<key>fileRef</key>
-			<string>D5DB80C117931C8B0081662A</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>E3281CDA6519B9A7E806852C</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>&#128230; Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Facets/Pods-Facets-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>F25CAFD4367D40C36A9E4288</key>
-		<dict>
-			<key>fileRef</key>
-			<string>59715124B36EDC258F54C943</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>OBJCLEANCUSTOMRUNSCRIPTT</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Objective-Clean Run Script</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/bash</string>
-			<key>shellScript</key>
-			<string>if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then
-if [[ -d "${LOCAL_APPS_DIR}/Objective-Clean.app" ]]; then 
-"${LOCAL_APPS_DIR}"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean "${SRCROOT}/Facets" 
-else
-echo "warning: You have to install and set up Objective-Clean to use its features!" 
-fi
-fi</string>
-		</dict>
-	</dict>
-	<key>rootObject</key>
-	<string>D5DB804E1792F2BF0081662A</string>
-</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 47;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B6F38391797BEBA00D06F51 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B6F38381797BEBA00D06F51 /* QuartzCore.framework */; };
+		2B9968AB1794F71B0086F115 /* OZLModelIssueCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B9968AA1794F71B0086F115 /* OZLModelIssueCategory.m */; };
+		2BBE4414179E586B00FD9E20 /* OZLModelTimeEntryActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE4413179E586B00FD9E20 /* OZLModelTimeEntryActivity.m */; };
+		2BCC0FD2179D56BA003DFB44 /* OZLModelTimeEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCC0FD1179D56BA003DFB44 /* OZLModelTimeEntries.m */; };
+		2BCCA0541795312E00FA8B1A /* OZLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCCA0531795312E00FA8B1A /* OZLConstants.m */; };
+		2BCF88121793CB4F006FC859 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF88111793CB4F006FC859 /* CFNetwork.framework */; };
+		2BCF88141793CB94006FC859 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF88131793CB94006FC859 /* SystemConfiguration.framework */; };
+		2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF881D1793F3C8006FC859 /* OZLModelIssue.m */; };
+		2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF88201793F478006FC859 /* OZLModelTracker.m */; };
+		2BCF88271793F4AA006FC859 /* OZLModelIssueStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF88261793F4AA006FC859 /* OZLModelIssueStatus.m */; };
+		2BCF882A1793F4C9006FC859 /* OZLModelIssuePriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF88291793F4C9006FC859 /* OZLModelIssuePriority.m */; };
+		2BCF88301793F5CE006FC859 /* OZLModelUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF882F1793F5CE006FC859 /* OZLModelUser.m */; };
+		D000B1D11BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D000B1D01BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m */; };
+		D000B1D41BF7D9A300CA2845 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D000B1D21BF7D9A300CA2845 /* AVFoundation.framework */; };
+		D000B1D51BF7D9A300CA2845 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D000B1D31BF7D9A300CA2845 /* AVKit.framework */; };
+		D000B1DB1BF816D400CA2845 /* OZLURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */; };
+		D000B1DE1BF96BBA00CA2845 /* OZLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */; };
+		D000B1E01BF96EC600CA2845 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D000B1DF1BF96EC600CA2845 /* WebKit.framework */; };
+		D00793961CC87F100050FF48 /* OZLDateFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00793951CC87F100050FF48 /* OZLDateFormField.swift */; };
+		D00793981CC8A8310050FF48 /* SORelativeDateTransformer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */; };
+		D014C2B11C95D37E00D381A9 /* NSDate+OZLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */; };
+		D014C2B31C95DD8D00D381A9 /* OZLTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B21C95DD8D00D381A9 /* OZLTableViewController.swift */; };
+		D014C2B61C96151A00D381A9 /* OZLFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B51C96151A00D381A9 /* OZLFormViewController.swift */; };
+		D014C2B81C962AD700D381A9 /* OZLFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B71C962AD700D381A9 /* OZLFormField.swift */; };
+		D014C2BA1C962DB500D381A9 /* OZLTextFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B91C962DB500D381A9 /* OZLTextFormField.swift */; };
+		D014C2BC1C96355C00D381A9 /* OZLFormSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2BB1C96355C00D381A9 /* OZLFormSection.swift */; };
+		D01F9B8F1BEB23FA005B2ED0 /* OZLServerSync.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */; };
+		D01F9B9C1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D01F9B9A1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle */; };
+		D01F9B9D1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01F9B9B1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift */; };
+		D01F9BAE1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9BAD1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m */; };
+		D01F9BD81BEC8283005B2ED0 /* OZLIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9BD71BEC8283005B2ED0 /* OZLIssueViewController.m */; };
+		D01F9BE01BEC84A3005B2ED0 /* OZLIssueHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9BDF1BEC84A3005B2ED0 /* OZLIssueHeaderView.m */; };
+		D01F9BE31BEC8BDD005B2ED0 /* UIView+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9BE21BEC8BDD005B2ED0 /* UIView+OZLExtensions.m */; };
+		D01F9C0D1BED9ABC005B2ED0 /* OZLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C0C1BED9ABC005B2ED0 /* OZLTableViewCell.m */; };
+		D01F9C111BED9B15005B2ED0 /* OZLIssueDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */; };
+		D01F9C141BEDABB8005B2ED0 /* UIColor+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */; };
+		D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */; };
+		D01F9C1A1BEED9BE005B2ED0 /* OZLIssueAboutTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */; };
+		D022D6DF1C9B3B480035ABF5 /* OZLSwitchFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022D6DE1C9B3B480035ABF5 /* OZLSwitchFormField.swift */; };
+		D022D6E11C9B49930035ABF5 /* OZLButtonFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D022D6E01C9B49930035ABF5 /* OZLButtonFormField.swift */; };
+		D0292D621BF2D9CD00F717F2 /* OZLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D611BF2D9CD00F717F2 /* OZLView.m */; };
+		D0292D691BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D681BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m */; };
+		D0292D6B1BF2EEB200F717F2 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0292D6A1BF2EEB200F717F2 /* SafariServices.framework */; };
+		D0292D701BF3141900F717F2 /* OZLLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292D6F1BF3141900F717F2 /* OZLLoadingView.m */; };
+		D02BD4FC1C0F58AA00753EFF /* OZLModelStringContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = D02BD4FB1C0F58AA00753EFF /* OZLModelStringContainer.m */; };
+		D02BD4FF1C0FD85600753EFF /* OZLModelVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D02BD4FE1C0FD85600753EFF /* OZLModelVersion.m */; };
+		D02D4E4D1C0E11C60050B593 /* OZLRedmineHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D02D4E4C1C0E11C60050B593 /* OZLRedmineHTMLParser.m */; };
+		D035A4AD1C0A04BD0057AA48 /* OZLModelJournalDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035A4AC1C0A04BD0057AA48 /* OZLModelJournalDetail.swift */; };
+		D035A4BF1C0A98D80057AA48 /* OZLModelCustomField.m in Sources */ = {isa = PBXBuildFile; fileRef = D035A4BE1C0A98D80057AA48 /* OZLModelCustomField.m */; };
+		D035CEF51C9A210D00805183 /* OZLEnumerationFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035CEF41C9A210D00805183 /* OZLEnumerationFormField.swift */; };
+		D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */; };
+		D0403EF91BF4291B002B6B98 /* OZLIssueViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0403EF81BF4291B002B6B98 /* OZLIssueViewModel.m */; };
+		D04801441BD004E50047C5DE /* CAPSOptionsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04801411BD004E50047C5DE /* CAPSOptionsMenu.swift */; };
+		D04801451BD004E50047C5DE /* CAPSOptionsMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04801421BD004E50047C5DE /* CAPSOptionsMenuAction.swift */; };
+		D04801461BD004E50047C5DE /* CAPSOptionsMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */; };
+		D056780C1C965733002F6BCF /* NSString+OZLURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */; };
+		D056780E1C965F04002F6BCF /* OZLQueryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056780D1C965F04002F6BCF /* OZLQueryListViewController.swift */; };
+		D05AF77F1C2BBC84007911EA /* OZLQuickAssignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */; };
+		D05AF7811C2BC87A007911EA /* OZLSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */; };
+		D05AF7871C2C6971007911EA /* OZLModelMembership.m in Sources */ = {isa = PBXBuildFile; fileRef = D05AF7861C2C6971007911EA /* OZLModelMembership.m */; };
+		D05E08071C1FB6F400509501 /* OZLQuickAssignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E08061C1FB6F400509501 /* OZLQuickAssignView.swift */; };
+		D06473BA1C6F8B7E000A7180 /* OZLAboutTabFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06473B91C6F8B7E000A7180 /* OZLAboutTabFieldView.swift */; };
+		D096EF221C98EE3800563610 /* OZLTextViewFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D096EF211C98EE3800563610 /* OZLTextViewFormField.swift */; };
+		D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */; };
+		D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0987ABB1C07818500D55DEB /* Images.xcassets */; };
+		D0987AD31C0801E000D55DEB /* OZLModelJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD21C0801E000D55DEB /* OZLModelJournal.swift */; };
+		D0987AD51C0904C200D55DEB /* OZLIssueSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD41C0904C200D55DEB /* OZLIssueSectionHeaderView.swift */; };
+		D0987AD71C09488200D55DEB /* OZLJournalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD61C09488200D55DEB /* OZLJournalCell.swift */; };
+		D0A53D2F1C38300300E424F0 /* OZLIssueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A53D2E1C38300300E424F0 /* OZLIssueListViewController.swift */; };
+		D0BCD0E11C14C33E00B0DC6D /* OZLIssueComposerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BCD0E01C14C33E00B0DC6D /* OZLIssueComposerViewController.swift */; };
+		D0BCD0EC1C14C70F00B0DC6D /* UIImage+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BCD0EB1C14C70F00B0DC6D /* UIImage+OZLExtensions.m */; };
+		D0BFA9101C6FE47600F4D1FB /* OZLJournalViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFA90F1C6FE47600F4D1FB /* OZLJournalViewerViewController.swift */; };
+		D0BFA9121C6FE50300F4D1FB /* OZLJournalViewerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BFA9111C6FE50300F4D1FB /* OZLJournalViewerViewModel.swift */; };
+		D0C9F04C1C30726E00976B06 /* OZLSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C9F04B1C30726E00976B06 /* OZLSplitViewController.swift */; };
+		D0C9F0531C30742400976B06 /* OZLSplitViewPlaceholderPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C9F0511C30742400976B06 /* OZLSplitViewPlaceholderPane.swift */; };
+		D0C9F0541C30742400976B06 /* OZLSplitViewPlaceholderPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0C9F0521C30742400976B06 /* OZLSplitViewPlaceholderPane.xib */; };
+		D0CD7C8A1BF791FA0043C94B /* OZLModelAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C891BF791FA0043C94B /* OZLModelAttachment.m */; };
+		D0CD7C901BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CD7C8F1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m */; };
+		D0DD77841C94A8EF008DC65D /* OZLIssueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DD77831C94A8EF008DC65D /* OZLIssueTableViewCell.swift */; };
+		D0DD77861C94A90A008DC65D /* OZLIssueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0DD77851C94A90A008DC65D /* OZLIssueTableViewCell.xib */; };
+		D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */; };
+		D0F10F321C358BE500A0AE94 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0F10F311C358BE500A0AE94 /* Icons.xcassets */; };
+		D0F10F381C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */; };
+		D0F10F3A1C36FDE700A0AE94 /* OZLSortAndFilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F391C36FDE700A0AE94 /* OZLSortAndFilterField.swift */; };
+		D0F10F3C1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F3B1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift */; };
+		D0F10F3E1C370E0600A0AE94 /* OZLAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F3D1C370E0600A0AE94 /* OZLAppDelegate.swift */; };
+		D0F10F401C3710F900A0AE94 /* OZLMainTabControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F3F1C3710F900A0AE94 /* OZLMainTabControllerViewController.swift */; };
+		D0F10F431C371FD300A0AE94 /* OZLIssueListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F10F421C371FD300A0AE94 /* OZLIssueListViewModel.swift */; };
+		D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB80591792F2BF0081662A /* UIKit.framework */; };
+		D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805B1792F2BF0081662A /* Foundation.framework */; };
+		D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB805D1792F2BF0081662A /* CoreGraphics.framework */; };
+		D5DB80661792F2BF0081662A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80651792F2BF0081662A /* main.m */; };
+		D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80B0179300B90081662A /* OZLNetwork.m */; };
+		D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80B31793016B0081662A /* OZLAccountViewController.m */; };
+		D5DB80B61793016B0081662A /* OZLAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5DB80B41793016B0081662A /* OZLAccountViewController.xib */; };
+		D5DB80BD17930ECD0081662A /* OZLSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80BC17930ECD0081662A /* OZLSingleton.m */; };
+		D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DB80C117931C8B0081662A /* OZLModelProject.m */; };
+		F25CAFD4367D40C36A9E4288 /* Pods_Facets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59715124B36EDC258F54C943 /* Pods_Facets.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		01DD75BA34B4D8C7F130038A /* Pods-Facets.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Facets.release.xcconfig"; path = "Pods/Target Support Files/Pods-Facets/Pods-Facets.release.xcconfig"; sourceTree = "<group>"; };
+		08DDAACD9EA3DBBFCAC22AB0 /* Pods-Facets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Facets.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Facets/Pods-Facets.debug.xcconfig"; sourceTree = "<group>"; };
+		2B6F38381797BEBA00D06F51 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2B9968A91794F71B0086F115 /* OZLModelIssueCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelIssueCategory.h; sourceTree = "<group>"; };
+		2B9968AA1794F71B0086F115 /* OZLModelIssueCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelIssueCategory.m; sourceTree = "<group>"; };
+		2BBE4412179E586B00FD9E20 /* OZLModelTimeEntryActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelTimeEntryActivity.h; sourceTree = "<group>"; };
+		2BBE4413179E586B00FD9E20 /* OZLModelTimeEntryActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelTimeEntryActivity.m; sourceTree = "<group>"; };
+		2BCC0FD0179D56BA003DFB44 /* OZLModelTimeEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelTimeEntries.h; sourceTree = "<group>"; };
+		2BCC0FD1179D56BA003DFB44 /* OZLModelTimeEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelTimeEntries.m; sourceTree = "<group>"; };
+		2BCCA0521795312E00FA8B1A /* OZLConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLConstants.h; path = Models/OZLConstants.h; sourceTree = "<group>"; };
+		2BCCA0531795312E00FA8B1A /* OZLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLConstants.m; path = Models/OZLConstants.m; sourceTree = "<group>"; };
+		2BCF88111793CB4F006FC859 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		2BCF88131793CB94006FC859 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2BCF881C1793F3C8006FC859 /* OZLModelIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelIssue.h; sourceTree = "<group>"; };
+		2BCF881D1793F3C8006FC859 /* OZLModelIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelIssue.m; sourceTree = "<group>"; };
+		2BCF881F1793F478006FC859 /* OZLModelTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelTracker.h; sourceTree = "<group>"; };
+		2BCF88201793F478006FC859 /* OZLModelTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelTracker.m; sourceTree = "<group>"; };
+		2BCF88251793F4AA006FC859 /* OZLModelIssueStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelIssueStatus.h; sourceTree = "<group>"; };
+		2BCF88261793F4AA006FC859 /* OZLModelIssueStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelIssueStatus.m; sourceTree = "<group>"; };
+		2BCF88281793F4C9006FC859 /* OZLModelIssuePriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelIssuePriority.h; sourceTree = "<group>"; };
+		2BCF88291793F4C9006FC859 /* OZLModelIssuePriority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelIssuePriority.m; sourceTree = "<group>"; };
+		2BCF882E1793F5CE006FC859 /* OZLModelUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelUser.h; sourceTree = "<group>"; };
+		2BCF882F1793F5CE006FC859 /* OZLModelUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelUser.m; sourceTree = "<group>"; };
+		59715124B36EDC258F54C943 /* Pods_Facets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Facets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D000B1CF1BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueAttachmentGalleryItemCell.h; sourceTree = "<group>"; };
+		D000B1D01BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueAttachmentGalleryItemCell.m; sourceTree = "<group>"; };
+		D000B1D21BF7D9A300CA2845 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D000B1D31BF7D9A300CA2845 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		D000B1D91BF816D400CA2845 /* OZLURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLURLProtocol.h; path = Utils/OZLURLProtocol.h; sourceTree = "<group>"; };
+		D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLURLProtocol.m; path = Utils/OZLURLProtocol.m; sourceTree = "<group>"; };
+		D000B1DC1BF96BBA00CA2845 /* OZLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLWebViewController.h; sourceTree = "<group>"; };
+		D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLWebViewController.m; sourceTree = "<group>"; };
+		D000B1DF1BF96EC600CA2845 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D00793951CC87F100050FF48 /* OZLDateFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLDateFormField.swift; sourceTree = "<group>"; };
+		D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SORelativeDateTransformer.bundle; sourceTree = "<group>"; };
+		D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+OZLExtensions.swift"; sourceTree = "<group>"; };
+		D014C2B21C95DD8D00D381A9 /* OZLTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLTableViewController.swift; sourceTree = "<group>"; };
+		D014C2B51C96151A00D381A9 /* OZLFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLFormViewController.swift; sourceTree = "<group>"; };
+		D014C2B71C962AD700D381A9 /* OZLFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLFormField.swift; sourceTree = "<group>"; };
+		D014C2B91C962DB500D381A9 /* OZLTextFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLTextFormField.swift; sourceTree = "<group>"; };
+		D014C2BB1C96355C00D381A9 /* OZLFormSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLFormSection.swift; sourceTree = "<group>"; };
+		D01F9B8D1BEB23FA005B2ED0 /* OZLServerSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLServerSync.h; path = Utils/OZLServerSync.h; sourceTree = "<group>"; };
+		D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLServerSync.m; path = Utils/OZLServerSync.m; sourceTree = "<group>"; };
+		D01F9B9A1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BTNavigationDropdownMenu.bundle; sourceTree = "<group>"; };
+		D01F9B9B1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTNavigationDropdownMenu.swift; sourceTree = "<group>"; };
+		D01F9BAC1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+OZLExtensions.h"; sourceTree = "<group>"; };
+		D01F9BAD1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+OZLExtensions.m"; sourceTree = "<group>"; };
+		D01F9BD61BEC8283005B2ED0 /* OZLIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueViewController.h; sourceTree = "<group>"; };
+		D01F9BD71BEC8283005B2ED0 /* OZLIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueViewController.m; sourceTree = "<group>"; };
+		D01F9BDE1BEC84A3005B2ED0 /* OZLIssueHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueHeaderView.h; sourceTree = "<group>"; };
+		D01F9BDF1BEC84A3005B2ED0 /* OZLIssueHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueHeaderView.m; sourceTree = "<group>"; };
+		D01F9BE11BEC8BDD005B2ED0 /* UIView+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+OZLExtensions.h"; sourceTree = "<group>"; };
+		D01F9BE21BEC8BDD005B2ED0 /* UIView+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+OZLExtensions.m"; sourceTree = "<group>"; };
+		D01F9C0B1BED9ABC005B2ED0 /* OZLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLTableViewCell.h; sourceTree = "<group>"; };
+		D01F9C0C1BED9ABC005B2ED0 /* OZLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLTableViewCell.m; sourceTree = "<group>"; };
+		D01F9C0F1BED9B15005B2ED0 /* OZLIssueDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueDescriptionCell.h; sourceTree = "<group>"; };
+		D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueDescriptionCell.m; sourceTree = "<group>"; };
+		D01F9C121BEDABB8005B2ED0 /* UIColor+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+OZLExtensions.h"; sourceTree = "<group>"; };
+		D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+OZLExtensions.m"; sourceTree = "<group>"; };
+		D01F9C151BEEA96C005B2ED0 /* OZLTabTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLTabTestView.h; sourceTree = "<group>"; };
+		D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLTabTestView.m; sourceTree = "<group>"; };
+		D01F9C181BEED9BE005B2ED0 /* OZLIssueAboutTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueAboutTabView.h; sourceTree = "<group>"; };
+		D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueAboutTabView.m; sourceTree = "<group>"; };
+		D022D6DE1C9B3B480035ABF5 /* OZLSwitchFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSwitchFormField.swift; sourceTree = "<group>"; };
+		D022D6E01C9B49930035ABF5 /* OZLButtonFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLButtonFormField.swift; sourceTree = "<group>"; };
+		D0292D601BF2D9CD00F717F2 /* OZLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLView.h; sourceTree = "<group>"; };
+		D0292D611BF2D9CD00F717F2 /* OZLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLView.m; sourceTree = "<group>"; };
+		D0292D671BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueFullDescriptionViewController.h; sourceTree = "<group>"; };
+		D0292D681BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueFullDescriptionViewController.m; sourceTree = "<group>"; };
+		D0292D6A1BF2EEB200F717F2 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		D0292D6C1BF2EF4E00F717F2 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		D0292D6E1BF3141900F717F2 /* OZLLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLLoadingView.h; sourceTree = "<group>"; };
+		D0292D6F1BF3141900F717F2 /* OZLLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLLoadingView.m; sourceTree = "<group>"; };
+		D02BD4FA1C0F58AA00753EFF /* OZLModelStringContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelStringContainer.h; sourceTree = "<group>"; };
+		D02BD4FB1C0F58AA00753EFF /* OZLModelStringContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelStringContainer.m; sourceTree = "<group>"; };
+		D02BD4FD1C0FD85600753EFF /* OZLModelVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelVersion.h; sourceTree = "<group>"; };
+		D02BD4FE1C0FD85600753EFF /* OZLModelVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelVersion.m; sourceTree = "<group>"; };
+		D02D4E4B1C0E11C60050B593 /* OZLRedmineHTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLRedmineHTMLParser.h; path = Utils/OZLRedmineHTMLParser.h; sourceTree = "<group>"; };
+		D02D4E4C1C0E11C60050B593 /* OZLRedmineHTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLRedmineHTMLParser.m; path = Utils/OZLRedmineHTMLParser.m; sourceTree = "<group>"; };
+		D035A4AC1C0A04BD0057AA48 /* OZLModelJournalDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLModelJournalDetail.swift; sourceTree = "<group>"; };
+		D035A4BD1C0A98D80057AA48 /* OZLModelCustomField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelCustomField.h; sourceTree = "<group>"; };
+		D035A4BE1C0A98D80057AA48 /* OZLModelCustomField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelCustomField.m; sourceTree = "<group>"; };
+		D035CEF41C9A210D00805183 /* OZLEnumerationFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLEnumerationFormField.swift; sourceTree = "<group>"; };
+		D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelQuery.h; sourceTree = "<group>"; };
+		D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelQuery.m; sourceTree = "<group>"; };
+		D0403EF71BF4291B002B6B98 /* OZLIssueViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueViewModel.h; sourceTree = "<group>"; };
+		D0403EF81BF4291B002B6B98 /* OZLIssueViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueViewModel.m; sourceTree = "<group>"; };
+		D04801411BD004E50047C5DE /* CAPSOptionsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenu.swift; sourceTree = "<group>"; };
+		D04801421BD004E50047C5DE /* CAPSOptionsMenuAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuAction.swift; sourceTree = "<group>"; };
+		D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSOptionsMenuButton.swift; sourceTree = "<group>"; };
+		D056780A1C965733002F6BCF /* NSString+OZLURLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OZLURLEncoding.h"; sourceTree = "<group>"; };
+		D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OZLURLEncoding.m"; sourceTree = "<group>"; };
+		D056780D1C965F04002F6BCF /* OZLQueryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQueryListViewController.swift; sourceTree = "<group>"; };
+		D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQuickAssignViewController.swift; sourceTree = "<group>"; };
+		D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSheetPresentationController.swift; sourceTree = "<group>"; };
+		D05AF7851C2C6971007911EA /* OZLModelMembership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelMembership.h; sourceTree = "<group>"; };
+		D05AF7861C2C6971007911EA /* OZLModelMembership.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelMembership.m; sourceTree = "<group>"; };
+		D05E08061C1FB6F400509501 /* OZLQuickAssignView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQuickAssignView.swift; sourceTree = "<group>"; };
+		D06473B91C6F8B7E000A7180 /* OZLAboutTabFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAboutTabFieldView.swift; sourceTree = "<group>"; };
+		D06D51101C2F10F700180B89 /* OZLNavigationChildChangeListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLNavigationChildChangeListener.h; sourceTree = "<group>"; };
+		D096EF211C98EE3800563610 /* OZLTextViewFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLTextViewFormField.swift; sourceTree = "<group>"; };
+		D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAsyncImageView.swift; sourceTree = "<group>"; };
+		D0987AB81C0772BA00D55DEB /* Facets-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facets-Bridging-Header.h"; sourceTree = "<group>"; };
+		D0987ABB1C07818500D55DEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D0987AD21C0801E000D55DEB /* OZLModelJournal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLModelJournal.swift; sourceTree = "<group>"; };
+		D0987AD41C0904C200D55DEB /* OZLIssueSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueSectionHeaderView.swift; sourceTree = "<group>"; };
+		D0987AD61C09488200D55DEB /* OZLJournalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLJournalCell.swift; sourceTree = "<group>"; };
+		D0A53D2E1C38300300E424F0 /* OZLIssueListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueListViewController.swift; sourceTree = "<group>"; };
+		D0BCD0E01C14C33E00B0DC6D /* OZLIssueComposerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueComposerViewController.swift; sourceTree = "<group>"; };
+		D0BCD0EA1C14C70F00B0DC6D /* UIImage+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+OZLExtensions.h"; sourceTree = "<group>"; };
+		D0BCD0EB1C14C70F00B0DC6D /* UIImage+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+OZLExtensions.m"; sourceTree = "<group>"; };
+		D0BFA90F1C6FE47600F4D1FB /* OZLJournalViewerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLJournalViewerViewController.swift; sourceTree = "<group>"; };
+		D0BFA9111C6FE50300F4D1FB /* OZLJournalViewerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLJournalViewerViewModel.swift; sourceTree = "<group>"; };
+		D0C9F04B1C30726E00976B06 /* OZLSplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSplitViewController.swift; sourceTree = "<group>"; };
+		D0C9F0511C30742400976B06 /* OZLSplitViewPlaceholderPane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSplitViewPlaceholderPane.swift; sourceTree = "<group>"; };
+		D0C9F0521C30742400976B06 /* OZLSplitViewPlaceholderPane.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OZLSplitViewPlaceholderPane.xib; sourceTree = "<group>"; };
+		D0CD7C881BF791FA0043C94B /* OZLModelAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelAttachment.h; sourceTree = "<group>"; };
+		D0CD7C891BF791FA0043C94B /* OZLModelAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelAttachment.m; sourceTree = "<group>"; };
+		D0CD7C8E1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueAttachmentGalleryCell.h; sourceTree = "<group>"; };
+		D0CD7C8F1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueAttachmentGalleryCell.m; sourceTree = "<group>"; };
+		D0DD77831C94A8EF008DC65D /* OZLIssueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueTableViewCell.swift; sourceTree = "<group>"; };
+		D0DD77851C94A90A008DC65D /* OZLIssueTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OZLIssueTableViewCell.xib; sourceTree = "<group>"; };
+		D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		D0F10F311C358BE500A0AE94 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
+		D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSortAndFilterViewController.swift; sourceTree = "<group>"; };
+		D0F10F391C36FDE700A0AE94 /* OZLSortAndFilterField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSortAndFilterField.swift; sourceTree = "<group>"; };
+		D0F10F3B1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLFieldSelectorViewController.swift; sourceTree = "<group>"; };
+		D0F10F3D1C370E0600A0AE94 /* OZLAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAppDelegate.swift; sourceTree = "<group>"; };
+		D0F10F3F1C3710F900A0AE94 /* OZLMainTabControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLMainTabControllerViewController.swift; sourceTree = "<group>"; };
+		D0F10F421C371FD300A0AE94 /* OZLIssueListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueListViewModel.swift; sourceTree = "<group>"; };
+		D5DB80561792F2BF0081662A /* Facets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Facets.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5DB80591792F2BF0081662A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D5DB805B1792F2BF0081662A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D5DB805D1792F2BF0081662A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D5DB80611792F2BF0081662A /* Facets-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Facets-Info.plist"; sourceTree = "<group>"; };
+		D5DB80651792F2BF0081662A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D5DB80671792F2BF0081662A /* Facets-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Facets-Prefix.pch"; sourceTree = "<group>"; };
+		D5DB80AF179300B90081662A /* OZLNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLNetwork.h; path = Utils/OZLNetwork.h; sourceTree = "<group>"; };
+		D5DB80B0179300B90081662A /* OZLNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLNetwork.m; path = Utils/OZLNetwork.m; sourceTree = "<group>"; };
+		D5DB80B21793016B0081662A /* OZLAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLAccountViewController.h; path = Account/OZLAccountViewController.h; sourceTree = "<group>"; };
+		D5DB80B31793016B0081662A /* OZLAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLAccountViewController.m; path = Account/OZLAccountViewController.m; sourceTree = "<group>"; };
+		D5DB80B41793016B0081662A /* OZLAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OZLAccountViewController.xib; path = Account/OZLAccountViewController.xib; sourceTree = "<group>"; };
+		D5DB80BB17930ECD0081662A /* OZLSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OZLSingleton.h; path = Utils/OZLSingleton.h; sourceTree = "<group>"; };
+		D5DB80BC17930ECD0081662A /* OZLSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLSingleton.m; path = Utils/OZLSingleton.m; sourceTree = "<group>"; };
+		D5DB80C017931C8B0081662A /* OZLModelProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelProject.h; sourceTree = "<group>"; };
+		D5DB80C117931C8B0081662A /* OZLModelProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelProject.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D5DB80531792F2BF0081662A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D000B1E01BF96EC600CA2845 /* WebKit.framework in Frameworks */,
+				D000B1D41BF7D9A300CA2845 /* AVFoundation.framework in Frameworks */,
+				D000B1D51BF7D9A300CA2845 /* AVKit.framework in Frameworks */,
+				D0292D6B1BF2EEB200F717F2 /* SafariServices.framework in Frameworks */,
+				2B6F38391797BEBA00D06F51 /* QuartzCore.framework in Frameworks */,
+				2BCF88141793CB94006FC859 /* SystemConfiguration.framework in Frameworks */,
+				2BCF88121793CB4F006FC859 /* CFNetwork.framework in Frameworks */,
+				D5DB805A1792F2BF0081662A /* UIKit.framework in Frameworks */,
+				D5DB805C1792F2BF0081662A /* Foundation.framework in Frameworks */,
+				D5DB805E1792F2BF0081662A /* CoreGraphics.framework in Frameworks */,
+				F25CAFD4367D40C36A9E4288 /* Pods_Facets.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2BCB50FD1796370F006845AC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0292D601BF2D9CD00F717F2 /* OZLView.h */,
+				D0292D611BF2D9CD00F717F2 /* OZLView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2BCF881A1793EF9F006FC859 /* Web View */ = {
+			isa = PBXGroup;
+			children = (
+				D000B1DC1BF96BBA00CA2845 /* OZLWebViewController.h */,
+				D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */,
+			);
+			path = "Web View";
+			sourceTree = "<group>";
+		};
+		6669BE11D86EF56D6891EE26 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				08DDAACD9EA3DBBFCAC22AB0 /* Pods-Facets.debug.xcconfig */,
+				01DD75BA34B4D8C7F130038A /* Pods-Facets.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D000B1CB1BF7CE2A00CA2845 /* Attachment Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				D0CD7C8E1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.h */,
+				D0CD7C8F1BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m */,
+				D000B1CF1BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.h */,
+				D000B1D01BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m */,
+			);
+			path = "Attachment Gallery";
+			sourceTree = "<group>";
+		};
+		D014C2B41C96144C00D381A9 /* Form Builder */ = {
+			isa = PBXGroup;
+			children = (
+				D014C2B51C96151A00D381A9 /* OZLFormViewController.swift */,
+				D014C2BB1C96355C00D381A9 /* OZLFormSection.swift */,
+				D014C2B71C962AD700D381A9 /* OZLFormField.swift */,
+				D014C2B91C962DB500D381A9 /* OZLTextFormField.swift */,
+				D096EF211C98EE3800563610 /* OZLTextViewFormField.swift */,
+				D035CEF41C9A210D00805183 /* OZLEnumerationFormField.swift */,
+				D022D6DE1C9B3B480035ABF5 /* OZLSwitchFormField.swift */,
+				D022D6E01C9B49930035ABF5 /* OZLButtonFormField.swift */,
+				D00793951CC87F100050FF48 /* OZLDateFormField.swift */,
+			);
+			path = "Form Builder";
+			sourceTree = "<group>";
+		};
+		D01F9B991BEBC107005B2ED0 /* BTNavigationDropdownMenu */ = {
+			isa = PBXGroup;
+			children = (
+				D01F9B9A1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle */,
+				D01F9B9B1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift */,
+			);
+			name = BTNavigationDropdownMenu;
+			path = BTNavigationDropdownMenu/Source;
+			sourceTree = "<group>";
+		};
+		D01F9BAB1BEBC4D9005B2ED0 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D01F9BAC1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.h */,
+				D01F9BAD1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m */,
+				D01F9BE11BEC8BDD005B2ED0 /* UIView+OZLExtensions.h */,
+				D01F9BE21BEC8BDD005B2ED0 /* UIView+OZLExtensions.m */,
+				D01F9C121BEDABB8005B2ED0 /* UIColor+OZLExtensions.h */,
+				D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */,
+				D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */,
+				D0BCD0EA1C14C70F00B0DC6D /* UIImage+OZLExtensions.h */,
+				D0BCD0EB1C14C70F00B0DC6D /* UIImage+OZLExtensions.m */,
+				D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */,
+				D056780A1C965733002F6BCF /* NSString+OZLURLEncoding.h */,
+				D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */,
+			);
+			name = Categories;
+			path = Utils/Categories;
+			sourceTree = "<group>";
+		};
+		D01F9BD51BEC8265005B2ED0 /* Issue */ = {
+			isa = PBXGroup;
+			children = (
+				D06473B81C6F8B3C000A7180 /* About Tab */,
+				D0292D661BF2DB4D00F717F2 /* Description view controller */,
+				D01F9C0E1BED9AC6005B2ED0 /* Cells */,
+				D0292D6E1BF3141900F717F2 /* OZLLoadingView.h */,
+				D0292D6F1BF3141900F717F2 /* OZLLoadingView.m */,
+				D01F9BD61BEC8283005B2ED0 /* OZLIssueViewController.h */,
+				D01F9BD71BEC8283005B2ED0 /* OZLIssueViewController.m */,
+				D0403EF71BF4291B002B6B98 /* OZLIssueViewModel.h */,
+				D0403EF81BF4291B002B6B98 /* OZLIssueViewModel.m */,
+				D01F9BDE1BEC84A3005B2ED0 /* OZLIssueHeaderView.h */,
+				D01F9BDF1BEC84A3005B2ED0 /* OZLIssueHeaderView.m */,
+				D01F9C151BEEA96C005B2ED0 /* OZLTabTestView.h */,
+				D01F9C161BEEA96C005B2ED0 /* OZLTabTestView.m */,
+			);
+			path = Issue;
+			sourceTree = "<group>";
+		};
+		D01F9C0E1BED9AC6005B2ED0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D000B1CB1BF7CE2A00CA2845 /* Attachment Gallery */,
+				D01F9C0B1BED9ABC005B2ED0 /* OZLTableViewCell.h */,
+				D01F9C0C1BED9ABC005B2ED0 /* OZLTableViewCell.m */,
+				D01F9C0F1BED9B15005B2ED0 /* OZLIssueDescriptionCell.h */,
+				D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */,
+				D0987AD41C0904C200D55DEB /* OZLIssueSectionHeaderView.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		D0292D661BF2DB4D00F717F2 /* Description view controller */ = {
+			isa = PBXGroup;
+			children = (
+				D0292D671BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.h */,
+				D0292D681BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m */,
+			);
+			path = "Description view controller";
+			sourceTree = "<group>";
+		};
+		D03D6C431BD0194B00A47E24 /* Query List */ = {
+			isa = PBXGroup;
+			children = (
+				D056780D1C965F04002F6BCF /* OZLQueryListViewController.swift */,
+			);
+			path = "Query List";
+			sourceTree = "<group>";
+		};
+		D04801401BD004E50047C5DE /* OptionsMenu */ = {
+			isa = PBXGroup;
+			children = (
+				D04801411BD004E50047C5DE /* CAPSOptionsMenu.swift */,
+				D04801421BD004E50047C5DE /* CAPSOptionsMenuAction.swift */,
+				D04801431BD004E50047C5DE /* CAPSOptionsMenuButton.swift */,
+			);
+			name = OptionsMenu;
+			path = OptionsMenu/Classes;
+			sourceTree = "<group>";
+		};
+		D05E08031C1FB6B400509501 /* Quick Assign */ = {
+			isa = PBXGroup;
+			children = (
+				D05E08061C1FB6F400509501 /* OZLQuickAssignView.swift */,
+				D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */,
+			);
+			path = "Quick Assign";
+			sourceTree = "<group>";
+		};
+		D06473B81C6F8B3C000A7180 /* About Tab */ = {
+			isa = PBXGroup;
+			children = (
+				D01F9C181BEED9BE005B2ED0 /* OZLIssueAboutTabView.h */,
+				D01F9C191BEED9BE005B2ED0 /* OZLIssueAboutTabView.m */,
+				D06473B91C6F8B7E000A7180 /* OZLAboutTabFieldView.swift */,
+			);
+			path = "About Tab";
+			sourceTree = "<group>";
+		};
+		D0987AB71C0772BA00D55DEB /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */,
+				D5DB80611792F2BF0081662A /* Facets-Info.plist */,
+				D5DB80651792F2BF0081662A /* main.m */,
+				D5DB80671792F2BF0081662A /* Facets-Prefix.pch */,
+				D0987AB81C0772BA00D55DEB /* Facets-Bridging-Header.h */,
+				D0987ABB1C07818500D55DEB /* Images.xcassets */,
+			);
+			path = Supporting;
+			sourceTree = "<group>";
+		};
+		D0B293851BE59D1800F71A55 /* Issue List */ = {
+			isa = PBXGroup;
+			children = (
+				D0F10F421C371FD300A0AE94 /* OZLIssueListViewModel.swift */,
+				D0A53D2E1C38300300E424F0 /* OZLIssueListViewController.swift */,
+				D0DD77831C94A8EF008DC65D /* OZLIssueTableViewCell.swift */,
+				D0DD77851C94A90A008DC65D /* OZLIssueTableViewCell.xib */,
+			);
+			path = "Issue List";
+			sourceTree = "<group>";
+		};
+		D0BCD0DF1C14C30E00B0DC6D /* Issue Composer */ = {
+			isa = PBXGroup;
+			children = (
+				D0BCD0E01C14C33E00B0DC6D /* OZLIssueComposerViewController.swift */,
+			);
+			path = "Issue Composer";
+			sourceTree = "<group>";
+		};
+		D0BCD0E21C14C6DA00B0DC6D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */,
+				D0F10F311C358BE500A0AE94 /* Icons.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D0BFA90E1C6FE40F00F4D1FB /* Journal Viewer */ = {
+			isa = PBXGroup;
+			children = (
+				D0987AD61C09488200D55DEB /* OZLJournalCell.swift */,
+				D0BFA90F1C6FE47600F4D1FB /* OZLJournalViewerViewController.swift */,
+				D0BFA9111C6FE50300F4D1FB /* OZLJournalViewerViewModel.swift */,
+			);
+			name = "Journal Viewer";
+			path = "Facets/View Controllers/Journal Viewer";
+			sourceTree = SOURCE_ROOT;
+		};
+		D0C9F0481C30585100976B06 /* Presentation Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */,
+			);
+			path = "Presentation Controllers";
+			sourceTree = "<group>";
+		};
+		D0C9F0491C30593300976B06 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				D5DB80B21793016B0081662A /* OZLAccountViewController.h */,
+				D5DB80B31793016B0081662A /* OZLAccountViewController.m */,
+				D5DB80B41793016B0081662A /* OZLAccountViewController.xib */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		D0C9F04A1C30726E00976B06 /* Split View */ = {
+			isa = PBXGroup;
+			children = (
+				D0C9F04B1C30726E00976B06 /* OZLSplitViewController.swift */,
+				D0C9F0511C30742400976B06 /* OZLSplitViewPlaceholderPane.swift */,
+				D0C9F0521C30742400976B06 /* OZLSplitViewPlaceholderPane.xib */,
+			);
+			path = "Split View";
+			sourceTree = "<group>";
+		};
+		D0F10F331C35AE9600A0AE94 /* Sort and Filter */ = {
+			isa = PBXGroup;
+			children = (
+				D0F10F371C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift */,
+				D0F10F391C36FDE700A0AE94 /* OZLSortAndFilterField.swift */,
+				D0F10F3B1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift */,
+			);
+			path = "Sort and Filter";
+			sourceTree = "<group>";
+		};
+		D5DB804D1792F2BF0081662A = {
+			isa = PBXGroup;
+			children = (
+				D5DB805F1792F2BF0081662A /* Facets */,
+				D5DB80761792F3EE0081662A /* Libs */,
+				D5DB80581792F2BF0081662A /* Frameworks */,
+				D0987AB71C0772BA00D55DEB /* Supporting */,
+				D5DB80571792F2BF0081662A /* Products */,
+				D0BCD0E21C14C6DA00B0DC6D /* Resources */,
+				6669BE11D86EF56D6891EE26 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		D5DB80571792F2BF0081662A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D5DB80561792F2BF0081662A /* Facets.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D5DB80581792F2BF0081662A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D000B1DF1BF96EC600CA2845 /* WebKit.framework */,
+				D000B1D21BF7D9A300CA2845 /* AVFoundation.framework */,
+				D000B1D31BF7D9A300CA2845 /* AVKit.framework */,
+				D0292D6C1BF2EF4E00F717F2 /* MobileCoreServices.framework */,
+				D0292D6A1BF2EEB200F717F2 /* SafariServices.framework */,
+				2B6F38381797BEBA00D06F51 /* QuartzCore.framework */,
+				2BCF88131793CB94006FC859 /* SystemConfiguration.framework */,
+				2BCF88111793CB4F006FC859 /* CFNetwork.framework */,
+				D5DB80591792F2BF0081662A /* UIKit.framework */,
+				D5DB805B1792F2BF0081662A /* Foundation.framework */,
+				D5DB805D1792F2BF0081662A /* CoreGraphics.framework */,
+				59715124B36EDC258F54C943 /* Pods_Facets.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D5DB805F1792F2BF0081662A /* Facets */ = {
+			isa = PBXGroup;
+			children = (
+				2BCB50FD1796370F006845AC /* Views */,
+				D5DB80BF17931C580081662A /* Models */,
+				D5DB80AE1793008F0081662A /* Utils */,
+				D0C9F0481C30585100976B06 /* Presentation Controllers */,
+				D5DB80A81792F4E40081662A /* View Controllers */,
+				D0F10F3D1C370E0600A0AE94 /* OZLAppDelegate.swift */,
+			);
+			path = Facets;
+			sourceTree = "<group>";
+		};
+		D5DB80761792F3EE0081662A /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				D04801401BD004E50047C5DE /* OptionsMenu */,
+				D01F9B991BEBC107005B2ED0 /* BTNavigationDropdownMenu */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
+		D5DB80A81792F4E40081662A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D014C2B41C96144C00D381A9 /* Form Builder */,
+				D0C9F0491C30593300976B06 /* Account */,
+				D01F9BD51BEC8265005B2ED0 /* Issue */,
+				D0BCD0DF1C14C30E00B0DC6D /* Issue Composer */,
+				D0B293851BE59D1800F71A55 /* Issue List */,
+				D0BFA90E1C6FE40F00F4D1FB /* Journal Viewer */,
+				D03D6C431BD0194B00A47E24 /* Query List */,
+				D05E08031C1FB6B400509501 /* Quick Assign */,
+				D0F10F331C35AE9600A0AE94 /* Sort and Filter */,
+				D0C9F04A1C30726E00976B06 /* Split View */,
+				2BCF881A1793EF9F006FC859 /* Web View */,
+				D0F10F3F1C3710F900A0AE94 /* OZLMainTabControllerViewController.swift */,
+				D014C2B21C95DD8D00D381A9 /* OZLTableViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		D5DB80AE1793008F0081662A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D01F9BAB1BEBC4D9005B2ED0 /* Categories */,
+				D5DB80AF179300B90081662A /* OZLNetwork.h */,
+				D5DB80B0179300B90081662A /* OZLNetwork.m */,
+				D5DB80BB17930ECD0081662A /* OZLSingleton.h */,
+				D5DB80BC17930ECD0081662A /* OZLSingleton.m */,
+				2BCCA0521795312E00FA8B1A /* OZLConstants.h */,
+				2BCCA0531795312E00FA8B1A /* OZLConstants.m */,
+				D01F9B8D1BEB23FA005B2ED0 /* OZLServerSync.h */,
+				D01F9B8E1BEB23FA005B2ED0 /* OZLServerSync.m */,
+				D000B1D91BF816D400CA2845 /* OZLURLProtocol.h */,
+				D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */,
+				D02D4E4B1C0E11C60050B593 /* OZLRedmineHTMLParser.h */,
+				D02D4E4C1C0E11C60050B593 /* OZLRedmineHTMLParser.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		D5DB80BF17931C580081662A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2BCF88251793F4AA006FC859 /* OZLModelIssueStatus.h */,
+				2BCF88261793F4AA006FC859 /* OZLModelIssueStatus.m */,
+				D5DB80C017931C8B0081662A /* OZLModelProject.h */,
+				D5DB80C117931C8B0081662A /* OZLModelProject.m */,
+				2BCF881C1793F3C8006FC859 /* OZLModelIssue.h */,
+				2BCF881D1793F3C8006FC859 /* OZLModelIssue.m */,
+				2BCF881F1793F478006FC859 /* OZLModelTracker.h */,
+				2BCF88201793F478006FC859 /* OZLModelTracker.m */,
+				2BCF88281793F4C9006FC859 /* OZLModelIssuePriority.h */,
+				2BCF88291793F4C9006FC859 /* OZLModelIssuePriority.m */,
+				2BCF882E1793F5CE006FC859 /* OZLModelUser.h */,
+				2BCF882F1793F5CE006FC859 /* OZLModelUser.m */,
+				2B9968A91794F71B0086F115 /* OZLModelIssueCategory.h */,
+				2B9968AA1794F71B0086F115 /* OZLModelIssueCategory.m */,
+				2BCC0FD0179D56BA003DFB44 /* OZLModelTimeEntries.h */,
+				2BCC0FD1179D56BA003DFB44 /* OZLModelTimeEntries.m */,
+				2BBE4412179E586B00FD9E20 /* OZLModelTimeEntryActivity.h */,
+				2BBE4413179E586B00FD9E20 /* OZLModelTimeEntryActivity.m */,
+				D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */,
+				D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */,
+				D0CD7C881BF791FA0043C94B /* OZLModelAttachment.h */,
+				D0CD7C891BF791FA0043C94B /* OZLModelAttachment.m */,
+				D0987AD21C0801E000D55DEB /* OZLModelJournal.swift */,
+				D035A4AC1C0A04BD0057AA48 /* OZLModelJournalDetail.swift */,
+				D035A4BD1C0A98D80057AA48 /* OZLModelCustomField.h */,
+				D035A4BE1C0A98D80057AA48 /* OZLModelCustomField.m */,
+				D02BD4FA1C0F58AA00753EFF /* OZLModelStringContainer.h */,
+				D02BD4FB1C0F58AA00753EFF /* OZLModelStringContainer.m */,
+				D02BD4FD1C0FD85600753EFF /* OZLModelVersion.h */,
+				D02BD4FE1C0FD85600753EFF /* OZLModelVersion.m */,
+				D05AF7851C2C6971007911EA /* OZLModelMembership.h */,
+				D05AF7861C2C6971007911EA /* OZLModelMembership.m */,
+				D06D51101C2F10F700180B89 /* OZLNavigationChildChangeListener.h */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D5DB80551792F2BF0081662A /* Facets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5DB80731792F2BF0081662A /* Build configuration list for PBXNativeTarget "Facets" */;
+			buildPhases = (
+				01D1DED6B4AD00B91F3E6F3A /* 📦 Check Pods Manifest.lock */,
+				D5DB80521792F2BF0081662A /* Sources */,
+				D5DB80531792F2BF0081662A /* Frameworks */,
+				D5DB80541792F2BF0081662A /* Resources */,
+				OBJCLEANCUSTOMRUNSCRIPTT /* Objective-Clean Run Script */,
+				D035A4AE1C0A09400057AA48 /* Generate Swift warnings */,
+				2A1E48B200E1FEA8056B7A85 /* 📦 Embed Pods Frameworks */,
+				5FE0F0AB9AF653F597FA01F1 /* 📦 Copy Pods Resources */,
+				4CAAD43FDEF54E91750EFB86 /* Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Facets;
+			productName = RedmineMobile;
+			productReference = D5DB80561792F2BF0081662A /* Facets.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D5DB804E1792F2BF0081662A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = OZL;
+				LastSwiftMigration = 0710;
+				LastTestingUpgradeCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Justin Hill";
+				TargetAttributes = {
+					D5DB80551792F2BF0081662A = {
+						DevelopmentTeam = 5K3CGZPRYC;
+					};
+				};
+			};
+			buildConfigurationList = D5DB80511792F2BF0081662A /* Build configuration list for PBXProject "Facets" */;
+			compatibilityVersion = "Xcode 6.3";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D5DB804D1792F2BF0081662A;
+			productRefGroup = D5DB80571792F2BF0081662A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D5DB80551792F2BF0081662A /* Facets */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D5DB80541792F2BF0081662A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0C9F0541C30742400976B06 /* OZLSplitViewPlaceholderPane.xib in Resources */,
+				D5DB80B61793016B0081662A /* OZLAccountViewController.xib in Resources */,
+				D01F9B9C1BEBC107005B2ED0 /* BTNavigationDropdownMenu.bundle in Resources */,
+				D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */,
+				D0E489081BCDCF9100C082B7 /* Launch Screen.storyboard in Resources */,
+				D0F10F321C358BE500A0AE94 /* Icons.xcassets in Resources */,
+				D00793981CC8A8310050FF48 /* SORelativeDateTransformer.bundle in Resources */,
+				D0DD77861C94A90A008DC65D /* OZLIssueTableViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		01D1DED6B4AD00B91F3E6F3A /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		2A1E48B200E1FEA8056B7A85 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Facets/Pods-Facets-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4CAAD43FDEF54E91750EFB86 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Facets/Pods-Facets-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5FE0F0AB9AF653F597FA01F1 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Facets/Pods-Facets-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D035A4AE1C0A09400057AA48 /* Generate Swift warnings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Swift warnings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"WARNING:\"\necho \"searching ${SRCROOT}/Facets for ${TAGS}\"\nfind \"${SRCROOT}/Facets\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
+		};
+		OBJCLEANCUSTOMRUNSCRIPTT /* Objective-Clean Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Objective-Clean Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "if [[ -z ${SKIP_OBJCLEAN} || ${SKIP_OBJCLEAN} != 1 ]]; then\nif [[ -d \"${LOCAL_APPS_DIR}/Objective-Clean.app\" ]]; then \n\"${LOCAL_APPS_DIR}\"/Objective-Clean.app/Contents/Resources/ObjClean.app/Contents/MacOS/ObjClean \"${SRCROOT}/Facets\" \nelse\necho \"warning: You have to install and set up Objective-Clean to use its features!\" \nfi\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D5DB80521792F2BF0081662A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D014C2B61C96151A00D381A9 /* OZLFormViewController.swift in Sources */,
+				D02BD4FF1C0FD85600753EFF /* OZLModelVersion.m in Sources */,
+				D5DB80661792F2BF0081662A /* main.m in Sources */,
+				D0987AD71C09488200D55DEB /* OZLJournalCell.swift in Sources */,
+				D0F10F3C1C36FE5F00A0AE94 /* OZLFieldSelectorViewController.swift in Sources */,
+				D014C2B31C95DD8D00D381A9 /* OZLTableViewController.swift in Sources */,
+				D5DB80B1179300B90081662A /* OZLNetwork.m in Sources */,
+				D014C2BC1C96355C00D381A9 /* OZLFormSection.swift in Sources */,
+				D5DB80B51793016B0081662A /* OZLAccountViewController.m in Sources */,
+				D05AF7811C2BC87A007911EA /* OZLSheetPresentationController.swift in Sources */,
+				D5DB80BD17930ECD0081662A /* OZLSingleton.m in Sources */,
+				D056780E1C965F04002F6BCF /* OZLQueryListViewController.swift in Sources */,
+				D0F10F401C3710F900A0AE94 /* OZLMainTabControllerViewController.swift in Sources */,
+				D0BCD0EC1C14C70F00B0DC6D /* UIImage+OZLExtensions.m in Sources */,
+				D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */,
+				D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */,
+				D000B1DE1BF96BBA00CA2845 /* OZLWebViewController.m in Sources */,
+				D01F9B8F1BEB23FA005B2ED0 /* OZLServerSync.m in Sources */,
+				D0292D691BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m in Sources */,
+				D04801451BD004E50047C5DE /* CAPSOptionsMenuAction.swift in Sources */,
+				D014C2BA1C962DB500D381A9 /* OZLTextFormField.swift in Sources */,
+				D0292D701BF3141900F717F2 /* OZLLoadingView.m in Sources */,
+				D056780C1C965733002F6BCF /* NSString+OZLURLEncoding.m in Sources */,
+				D01F9C111BED9B15005B2ED0 /* OZLIssueDescriptionCell.m in Sources */,
+				2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */,
+				D0DD77841C94A8EF008DC65D /* OZLIssueTableViewCell.swift in Sources */,
+				D00793961CC87F100050FF48 /* OZLDateFormField.swift in Sources */,
+				2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */,
+				2BCF88271793F4AA006FC859 /* OZLModelIssueStatus.m in Sources */,
+				D0F10F3E1C370E0600A0AE94 /* OZLAppDelegate.swift in Sources */,
+				D05AF7871C2C6971007911EA /* OZLModelMembership.m in Sources */,
+				D01F9C171BEEA96C005B2ED0 /* OZLTabTestView.m in Sources */,
+				D02D4E4D1C0E11C60050B593 /* OZLRedmineHTMLParser.m in Sources */,
+				D0BFA9101C6FE47600F4D1FB /* OZLJournalViewerViewController.swift in Sources */,
+				D014C2B11C95D37E00D381A9 /* NSDate+OZLExtensions.swift in Sources */,
+				D0F10F3A1C36FDE700A0AE94 /* OZLSortAndFilterField.swift in Sources */,
+				D000B1DB1BF816D400CA2845 /* OZLURLProtocol.m in Sources */,
+				2BCF882A1793F4C9006FC859 /* OZLModelIssuePriority.m in Sources */,
+				D0CD7C8A1BF791FA0043C94B /* OZLModelAttachment.m in Sources */,
+				D0403EF91BF4291B002B6B98 /* OZLIssueViewModel.m in Sources */,
+				D0C9F04C1C30726E00976B06 /* OZLSplitViewController.swift in Sources */,
+				D035CEF51C9A210D00805183 /* OZLEnumerationFormField.swift in Sources */,
+				D05AF77F1C2BBC84007911EA /* OZLQuickAssignViewController.swift in Sources */,
+				D01F9BAE1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m in Sources */,
+				2BCF88301793F5CE006FC859 /* OZLModelUser.m in Sources */,
+				D04801441BD004E50047C5DE /* CAPSOptionsMenu.swift in Sources */,
+				2B9968AB1794F71B0086F115 /* OZLModelIssueCategory.m in Sources */,
+				D05E08071C1FB6F400509501 /* OZLQuickAssignView.swift in Sources */,
+				2BCCA0541795312E00FA8B1A /* OZLConstants.m in Sources */,
+				D0A53D2F1C38300300E424F0 /* OZLIssueListViewController.swift in Sources */,
+				D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */,
+				D0BCD0E11C14C33E00B0DC6D /* OZLIssueComposerViewController.swift in Sources */,
+				D01F9C0D1BED9ABC005B2ED0 /* OZLTableViewCell.m in Sources */,
+				D0BFA9121C6FE50300F4D1FB /* OZLJournalViewerViewModel.swift in Sources */,
+				D01F9B9D1BEBC107005B2ED0 /* BTNavigationDropdownMenu.swift in Sources */,
+				D0987AD51C0904C200D55DEB /* OZLIssueSectionHeaderView.swift in Sources */,
+				D01F9BE01BEC84A3005B2ED0 /* OZLIssueHeaderView.m in Sources */,
+				D0F10F381C35B14C00A0AE94 /* OZLSortAndFilterViewController.swift in Sources */,
+				D014C2B81C962AD700D381A9 /* OZLFormField.swift in Sources */,
+				D035A4AD1C0A04BD0057AA48 /* OZLModelJournalDetail.swift in Sources */,
+				D0292D621BF2D9CD00F717F2 /* OZLView.m in Sources */,
+				D035A4BF1C0A98D80057AA48 /* OZLModelCustomField.m in Sources */,
+				D01F9BD81BEC8283005B2ED0 /* OZLIssueViewController.m in Sources */,
+				D01F9C141BEDABB8005B2ED0 /* UIColor+OZLExtensions.m in Sources */,
+				D04801461BD004E50047C5DE /* CAPSOptionsMenuButton.swift in Sources */,
+				D022D6E11C9B49930035ABF5 /* OZLButtonFormField.swift in Sources */,
+				D01F9BE31BEC8BDD005B2ED0 /* UIView+OZLExtensions.m in Sources */,
+				D0C9F0531C30742400976B06 /* OZLSplitViewPlaceholderPane.swift in Sources */,
+				2BCC0FD2179D56BA003DFB44 /* OZLModelTimeEntries.m in Sources */,
+				D000B1D11BF7CE9E00CA2845 /* OZLIssueAttachmentGalleryItemCell.m in Sources */,
+				D0CD7C901BF7A5EF0043C94B /* OZLIssueAttachmentGalleryCell.m in Sources */,
+				D02BD4FC1C0F58AA00753EFF /* OZLModelStringContainer.m in Sources */,
+				D06473BA1C6F8B7E000A7180 /* OZLAboutTabFieldView.swift in Sources */,
+				2BBE4414179E586B00FD9E20 /* OZLModelTimeEntryActivity.m in Sources */,
+				D0987AD31C0801E000D55DEB /* OZLModelJournal.swift in Sources */,
+				D096EF221C98EE3800563610 /* OZLTextViewFormField.swift in Sources */,
+				D01F9C1A1BEED9BE005B2ED0 /* OZLIssueAboutTabView.m in Sources */,
+				D0F10F431C371FD300A0AE94 /* OZLIssueListViewModel.swift in Sources */,
+				D022D6DF1C9B3B480035ABF5 /* OZLSwitchFormField.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D5DB80711792F2BF0081662A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 40;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D5DB80721792F2BF0081662A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 40;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D5DB80741792F2BF0081662A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08DDAACD9EA3DBBFCAC22AB0 /* Pods-Facets.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 40;
+				DEFINES_MODULE = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
+				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
+				PRODUCT_NAME = Facets;
+				PROVISIONING_PROFILE = "8dccb32b-97de-4411-a2f4-ad210727eb6c";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D5DB80751792F2BF0081662A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01DD75BA34B4D8C7F130038A /* Pods-Facets.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 40;
+				DEFINES_MODULE = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
+				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
+				PRODUCT_NAME = Facets;
+				PROVISIONING_PROFILE = "98018c9b-5696-410e-a4ec-541903a9788a";
+				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D5DB80511792F2BF0081662A /* Build configuration list for PBXProject "Facets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5DB80711792F2BF0081662A /* Debug */,
+				D5DB80721792F2BF0081662A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D5DB80731792F2BF0081662A /* Build configuration list for PBXNativeTarget "Facets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5DB80741792F2BF0081662A /* Debug */,
+				D5DB80751792F2BF0081662A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D5DB804E1792F2BF0081662A /* Project object */;
+}

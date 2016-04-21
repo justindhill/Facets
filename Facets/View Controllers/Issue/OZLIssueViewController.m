@@ -59,6 +59,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     [self.issueHeader.assignButton addTarget:self action:@selector(quickAssignAction:) forControlEvents:UIControlEventTouchUpInside];
 
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonAction:)];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:OZLDetailReuseIdentifier];
@@ -189,6 +190,13 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 }
 
 #pragma mark - Button actions
+- (void)editButtonAction:(UIButton *)button {
+    OZLIssueComposerViewController *vc = [[OZLIssueComposerViewController alloc] initWithIssue:self.viewModel.issueModel];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
 - (void)showFullDescriptionAction:(UIButton *)button {
     OZLIssueFullDescriptionViewController *descriptionVC = [[OZLIssueFullDescriptionViewController alloc] init];
     descriptionVC.descriptionLabel.text = self.viewModel.issueModel.description;

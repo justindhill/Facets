@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JGProgressHUD
 
 class OZLIssueComposerViewController: OZLFormViewController {
 
@@ -15,6 +16,8 @@ class OZLIssueComposerViewController: OZLFormViewController {
     private let StatusKeypath = "issue.status"
     private let SubjectKeypath = "issue.subject"
     private let DescriptionKeypath = "issue.description"
+    private let StartDateKeypath = "issue.start-date"
+    private let DueDateKeypath = "issue.due-date"
 
     private enum EditMode {
         case New
@@ -85,7 +88,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
     override func definitionsForFields() -> [OZLFormSection] {
 
         return [
-            OZLFormSection(title: nil, fields: [
+            OZLFormSection(title: "General", fields: [
                 OZLEnumerationFormField(keyPath: ProjectKeypath,
                     placeholder: "Project",
                     currentValue: self.changes[ProjectKeypath] as? RLMObject ?? self.currentProject,
@@ -94,24 +97,36 @@ class OZLIssueComposerViewController: OZLFormViewController {
                 OZLEnumerationFormField(
                     keyPath: TrackerKeypath,
                     placeholder: "Tracker",
-                    currentValue: self.issue.tracker,
+                    currentValue: self.changes[TrackerKeypath] as? RLMObject ?? self.issue.tracker,
                     possibleRealmValues: self.currentProject.trackers),
-
-                OZLEnumerationFormField(
-                    keyPath: StatusKeypath,
-                    placeholder: "Status",
-                    currentValue: self.issue.status,
-                    possibleRealmValues: self.issueStatuses),
 
                 OZLTextFormField(
                     keyPath: SubjectKeypath,
                     placeholder: "Subject",
-                    currentValue: self.issue.subject),
+                    currentValue: self.changes[SubjectKeypath] as? String ?? self.issue.subject),
 
                 OZLTextViewFormField(
                     keyPath: DescriptionKeypath,
                     placeholder: "Description",
-                    currentValue: self.issue.description)
+                    currentValue: self.changes[DescriptionKeypath] as? String ?? self.issue.description),
+
+                OZLEnumerationFormField(
+                    keyPath: StatusKeypath,
+                    placeholder: "Status",
+                    currentValue: self.changes[StatusKeypath] as? RLMObject ?? self.issue.status,
+                    possibleRealmValues: self.issueStatuses)
+            ]),
+
+            OZLFormSection(title: "Scheduling", fields: [
+                OZLDateFormField(
+                    keyPath: StartDateKeypath,
+                    placeholder: "Start date",
+                    currentValue: self.changes[StartDateKeypath] as? NSDate ?? self.issue.startDate),
+
+                OZLDateFormField(
+                    keyPath: DueDateKeypath,
+                    placeholder: "Due date",
+                    currentValue: self.changes[DueDateKeypath] as? NSDate ?? self.issue.dueDate)
             ])
         ]
     }
@@ -139,7 +154,14 @@ class OZLIssueComposerViewController: OZLFormViewController {
             if keyPath == StatusKeypath {
                 self.issue.status = toValue
             }
+        } else if let toValue = toValue as? NSDate {
+            if keyPath == DueDateKeypath {
+                self.issue.dueDate = toValue
+            } else if keyPath == StartDateKeypath {
+                self.issue.startDate = toValue
+            }
         }
+        
         print("from: \(fromValue), to: \(toValue), keyPath: \(keyPath)")
     }
 
@@ -148,18 +170,56 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
         print(self.issue.changeDictionary)
 
+        let hud = JGProgressHUD(style: .Dark)
+        hud.showInView(self.view)
+
+        weak var weakSelf = self
+
+        func completion(success: Bool, error: NSError?) {
+            if let weakSelf = weakSelf {
+                if success == false {
+                    print(error)
+                    hud.indicatorView = JGProgressHUDImageIndicatorView(imageInLibraryBundleNamed: "jg_hud_error", enableTinting: true)
+                    hud.dismissAfterDelay(1.5)
+                } else {
+                    hud.indicatorView = JGProgressHUDImageIndicatorView(imageInLibraryBundleNamed: "jg_hud_success", enableTinting: true)
+
+                    weak var innerWeakSelf = weakSelf
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), {
+                        if let innerWeakSelf = innerWeakSelf {
+                            innerWeakSelf.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                    })
+                }
+            }
+        }
+
         if self.editMode == .New {
-            OZLNetwork.sharedInstance().createIssue(self.issue, withParams: [:], completion: { (success, error) in
-                print(error)
-            })
+            OZLNetwork.sharedInstance().createIssue(self.issue, withParams: [:], completion: completion)
         } else if self.editMode == .Existing {
-            OZLNetwork.sharedInstance().updateIssue(self.issue, withParams: nil, completion: { (success, error) in
-                print(error)
-            })
+            OZLNetwork.sharedInstance().updateIssue(self.issue, withParams: nil, completion: completion)
         }
     }
 
     func dismissAction() {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+extension JGProgressHUDImageIndicatorView {
+    convenience init(image: UIImage!, enableTinting: Bool) {
+        var image: UIImage = image
+
+        if enableTinting {
+            image = image.imageWithRenderingMode(.AlwaysTemplate)
+        }
+
+        self.init(image: image)
+    }
+
+    convenience init(imageInLibraryBundleNamed name: String, enableTinting: Bool) {
+        let bundle = NSBundle(path: NSBundle(forClass: JGProgressHUD.self).pathForResource("JGProgressHUD Resources", ofType: "bundle")!)
+        let image = UIImage(named: name, inBundle: bundle, compatibleWithTraitCollection: nil)
+        self.init(image: image, enableTinting: enableTinting)
     }
 }

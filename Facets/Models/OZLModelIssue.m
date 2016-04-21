@@ -11,6 +11,8 @@
 #import "OZLModelVersion.h"
 #import "Facets-Swift.h"
 
+static NSDateFormatter *OZLModelUpdateDateFormatter;
+
 @interface OZLModelIssue ()
 
 @property (nullable, strong) NSMutableDictionary *mutableChangeDictionary;
@@ -18,6 +20,13 @@
 @end
 
 @implementation OZLModelIssue
+
++ (void)initialize {
+    [super initialize];
+
+    OZLModelUpdateDateFormatter = [[NSDateFormatter alloc] init];
+    OZLModelUpdateDateFormatter.dateFormat = @"yyyy-MM-dd";
+}
 
 @synthesize description = _description;
 
@@ -283,7 +292,7 @@
     _startDate = startDate;
     
     if (self.modelDiffingEnabled && startDate) {
-        self.mutableChangeDictionary[@"start_date"] = [startDate ISO8601String];
+        self.mutableChangeDictionary[@"start_date"] = [OZLModelUpdateDateFormatter stringFromDate:startDate];
     }
 }
 
@@ -291,7 +300,7 @@
     _dueDate = dueDate;
     
     if (self.modelDiffingEnabled && dueDate) {
-        self.mutableChangeDictionary[@"due_date"] = [dueDate ISO8601String];
+        self.mutableChangeDictionary[@"due_date"] = [OZLModelUpdateDateFormatter stringFromDate:dueDate];
     }
 }
 

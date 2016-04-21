@@ -64,9 +64,6 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 // issue status
 - (void)getIssueStatusListWithParams:(nullable NSDictionary *)params completion:(void (^)(NSArray * _Nullable result, NSError * _Nullable error))completion;
 
-// tracker
-- (void)getTrackerListWithParams:(nullable NSDictionary *)params completion:(void (^)(NSArray * _Nullable result, NSError * _Nullable error))completion;
-
 // query list
 - (void)getQueryListForProject:(NSInteger)project params:(nullable NSDictionary *)params completion:(void(^)(NSArray * _Nullable result, NSError * _Nullable error))completion;
 
