@@ -344,11 +344,9 @@ static NSDateFormatter *OZLModelUpdateDateFormatter;
     }
 }
 
-- (void)setNotes:(NSString *)notes {
-    _notes = notes;
-    
-    if (self.modelDiffingEnabled && notes) {
-        self.mutableChangeDictionary[@"notes"] = notes;
+- (void)setUpdateComment:(NSString *)comment {
+    if (self.modelDiffingEnabled && comment) {
+        self.mutableChangeDictionary[@"notes"] = comment;
     }
 }
 
@@ -374,7 +372,6 @@ static NSDateFormatter *OZLModelUpdateDateFormatter;
     copy.doneRatio = self.doneRatio;
     copy.spentHours = self.spentHours;
     copy.estimatedHours = self.estimatedHours;
-    copy.notes = self.notes;
     copy.attachments = self.attachments;
     copy.journals = self.journals;
     

@@ -18,6 +18,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
     private let DescriptionKeypath = "issue.description"
     private let StartDateKeypath = "issue.start-date"
     private let DueDateKeypath = "issue.due-date"
+    private let CommentKeypath = "issue.update-comment"
 
     private enum EditMode {
         case New
@@ -87,48 +88,62 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
     override func definitionsForFields() -> [OZLFormSection] {
 
-        return [
-            OZLFormSection(title: "General", fields: [
-                OZLEnumerationFormField(keyPath: ProjectKeypath,
-                    placeholder: "Project",
-                    currentValue: self.changes[ProjectKeypath] as? RLMObject ?? self.currentProject,
-                    possibleRealmValues: self.projects),
+        var sections = [OZLFormSection]()
 
-                OZLEnumerationFormField(
-                    keyPath: TrackerKeypath,
-                    placeholder: "Tracker",
-                    currentValue: self.changes[TrackerKeypath] as? RLMObject ?? self.issue.tracker,
-                    possibleRealmValues: self.currentProject.trackers),
+        if self.editMode == .Existing {
+            sections.append(OZLFormSection(
+                title: "Update comment",
+                fields: [
+                    OZLTextViewFormField(keyPath: CommentKeypath, placeholder: "Comment", currentValue: nil)
+                ]))
+        }
 
-                OZLTextFormField(
-                    keyPath: SubjectKeypath,
-                    placeholder: "Subject",
-                    currentValue: self.changes[SubjectKeypath] as? String ?? self.issue.subject),
+        let generalSection = OZLFormSection(title: "General", fields: [
+            OZLEnumerationFormField(keyPath: ProjectKeypath,
+                placeholder: "Project",
+                currentValue: self.changes[ProjectKeypath] as? RLMObject ?? self.currentProject,
+                possibleRealmValues: self.projects),
 
-                OZLTextViewFormField(
-                    keyPath: DescriptionKeypath,
-                    placeholder: "Description",
-                    currentValue: self.changes[DescriptionKeypath] as? String ?? self.issue.description),
+            OZLEnumerationFormField(
+                keyPath: TrackerKeypath,
+                placeholder: "Tracker",
+                currentValue: self.changes[TrackerKeypath] as? RLMObject ?? self.issue.tracker,
+                possibleRealmValues: self.currentProject.trackers),
 
-                OZLEnumerationFormField(
-                    keyPath: StatusKeypath,
-                    placeholder: "Status",
-                    currentValue: self.changes[StatusKeypath] as? RLMObject ?? self.issue.status,
-                    possibleRealmValues: self.issueStatuses)
-            ]),
+            OZLEnumerationFormField(
+                keyPath: StatusKeypath,
+                placeholder: "Status",
+                currentValue: self.changes[StatusKeypath] as? RLMObject ?? self.issue.status,
+                possibleRealmValues: self.issueStatuses),
 
-            OZLFormSection(title: "Scheduling", fields: [
-                OZLDateFormField(
-                    keyPath: StartDateKeypath,
-                    placeholder: "Start date",
-                    currentValue: self.changes[StartDateKeypath] as? NSDate ?? self.issue.startDate),
+            OZLTextFormField(
+                keyPath: SubjectKeypath,
+                placeholder: "Subject",
+                currentValue: self.changes[SubjectKeypath] as? String ?? self.issue.subject),
 
-                OZLDateFormField(
-                    keyPath: DueDateKeypath,
-                    placeholder: "Due date",
-                    currentValue: self.changes[DueDateKeypath] as? NSDate ?? self.issue.dueDate)
-            ])
-        ]
+            OZLTextViewFormField(
+                keyPath: DescriptionKeypath,
+                placeholder: "Description",
+                currentValue: self.changes[DescriptionKeypath] as? String ?? self.issue.description)
+        ])
+
+        sections.append(generalSection)
+
+        let schedulingSection = OZLFormSection(title: "Scheduling", fields: [
+            OZLDateFormField(
+                keyPath: StartDateKeypath,
+                placeholder: "Start date",
+                currentValue: self.changes[StartDateKeypath] as? NSDate ?? self.issue.startDate),
+
+            OZLDateFormField(
+                keyPath: DueDateKeypath,
+                placeholder: "Due date",
+                currentValue: self.changes[DueDateKeypath] as? NSDate ?? self.issue.dueDate)
+        ])
+
+        sections.append(schedulingSection)
+
+        return sections
     }
 
     override func formFieldCell(formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String, userInfo: [String : AnyObject]) {
@@ -139,6 +154,8 @@ class OZLIssueComposerViewController: OZLFormViewController {
                 self.issue.subject = toValue
             } else if keyPath == DescriptionKeypath {
                 self.issue.description = toValue
+            } else if keyPath == CommentKeypath {
+                self.issue.setUpdateComment(toValue)
             }
 
         } else if let toValue = toValue as? OZLModelTracker {

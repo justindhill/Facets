@@ -49,7 +49,6 @@
 @property (nonatomic, assign) float doneRatio;
 @property (nonatomic, assign) float spentHours;
 @property (nonatomic, assign) float estimatedHours;
-@property (nullable, nonatomic, strong) NSString *notes;// used as paramter to update a issue
 
 /**
  *  @brief Attachments attached to the issue.
@@ -62,6 +61,8 @@
 @property (nullable, strong) NSArray<OZLModelJournal *> *journals;
 
 - (nonnull id)initWithDictionary:(nonnull NSDictionary *)dic;
+
+- (void)setUpdateComment:(NSString *)comment;
 
 + (nullable NSString *)displayValueForAttributeName:(nullable NSString *)name attributeId:(NSInteger)attributeId;
 + (nonnull NSString *)displayNameForAttributeName:(nonnull NSString *)attributeName;
