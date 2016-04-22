@@ -8,9 +8,10 @@
 
 @import Realm;
 
-@interface OZLModelStringContainer : RLMObject
+@interface OZLModelStringContainer : RLMObject 
 
-+ (nonnull instancetype)containerWithString:(nonnull NSString *)string;
++ (nonnull instancetype)containerWithString:(nonnull NSString *)string value:(nonnull NSString *)value;
+@property (nullable, strong) NSString *stringValue;
 @property (nullable, strong) NSString *value;
 
 @end

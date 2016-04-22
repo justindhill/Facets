@@ -229,6 +229,16 @@ static NSDateFormatter *OZLModelUpdateDateFormatter;
     }
 }
 
+- (void)setValueOnDiff:(NSString *)value forCustomFieldId:(NSInteger)fieldId {
+    if (self.mutableChangeDictionary[@"custom_fields"] == nil && value && fieldId > 0) {
+        self.mutableChangeDictionary[@"custom_fields"] = [NSMutableDictionary dictionary];
+    }
+
+    if (fieldId > 0 && value) {
+        self.mutableChangeDictionary[@"custom_fields"][@(fieldId)] = value;
+    }
+}
+
 - (void)setProjectId:(NSInteger)projectId {
     _projectId = projectId;
     

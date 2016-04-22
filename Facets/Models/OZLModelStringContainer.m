@@ -7,12 +7,18 @@
 //
 
 #import "OZLModelStringContainer.h"
+#import "Facets-Swift.h"
+
+@interface OZLModelStringContainer () <OZLEnumerationFormFieldValue>
+
+@end
 
 @implementation OZLModelStringContainer
 
-+ (nonnull instancetype)containerWithString:(nonnull NSString *)string {
++ (nonnull instancetype)containerWithString:(nonnull NSString *)string value:(NSString *)value {
     OZLModelStringContainer *container = [[OZLModelStringContainer alloc] init];
-    container.value = string;
+    container.stringValue = string;
+    container.value = value;
     
     return container;
 }

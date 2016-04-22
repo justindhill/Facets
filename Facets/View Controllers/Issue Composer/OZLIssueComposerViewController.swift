@@ -9,6 +9,8 @@
 import UIKit
 import JGProgressHUD
 
+private let CustomFieldUserInfoKey = "custom-field"
+
 class OZLIssueComposerViewController: OZLFormViewController {
 
     private let ProjectKeypath = "issue.project"
@@ -28,13 +30,21 @@ class OZLIssueComposerViewController: OZLFormViewController {
     var currentProject: OZLModelProject
     var projects = OZLModelProject.allObjects()
     var issueStatuses = OZLModelIssueStatus.allObjects()
-    @NSCopying var issue: OZLModelIssue
+    var customFields: [OZLModelCustomField]?
     private var editMode: EditMode
+
+    @NSCopying var issue: OZLModelIssue
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "New Issue"
+
+        if issue.index > 0 {
+            self.title = "\(self.issue.tracker?.name ?? "") #\(self.issue.index)"
+        } else {
+            self.title = "New Issue"
+        }
+
+        self.refreshCustomFields()
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit", style: .Plain, target: self, action: #selector(submitAction))
     }
@@ -47,8 +57,23 @@ class OZLIssueComposerViewController: OZLFormViewController {
         }
     }
 
-    func refreshPossibleValues() {
+    func refreshCustomFields() {
+        weak var weakSelf = self
 
+        func completion(fields: [AnyObject]?, error: NSError?) {
+            print(fields)
+
+            if let fields = fields as? [OZLModelCustomField] {
+                weakSelf?.customFields = fields
+                weakSelf?.reloadData()
+            }
+        }
+
+        if self.issue.index > 0 {
+            OZLNetwork.sharedInstance().getCustomFieldsForIssue(self.issue.index, completion: completion)
+        } else {
+            OZLNetwork.sharedInstance().getCustomFieldsForProject(self.currentProject.projectId, completion: completion)
+        }
     }
 
     init(currentProjectID: Int) {
@@ -143,13 +168,27 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
         sections.append(schedulingSection)
 
+        if let customFields = self.customFields where customFields.count > 0 {
+            var fields = [OZLFormField]()
+
+            for field in customFields {
+                fields.append(field.createFormFieldForIssue(self.issue))
+            }
+
+            sections.append(OZLFormSection(title: "Custom Fields", fields: fields))
+        }
+
         return sections
     }
 
     override func formFieldCell(formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String, userInfo: [String : AnyObject]) {
         super.formFieldCell(formCell, valueChangedFrom:fromValue , toValue: toValue, atKeyPath: keyPath, userInfo: userInfo)
 
-        if let toValue = toValue as? String {
+        if let customField = userInfo[CustomFieldUserInfoKey] as? OZLModelCustomField {
+            if let toValue = toValue as? OZLModelStringContainer, value = toValue.value {
+                self.issue.setValueOnDiff(value, forCustomFieldId: customField.fieldId)
+            }
+        } else if let toValue = toValue as? String {
             if keyPath == SubjectKeypath {
                 self.issue.subject = toValue
             } else if keyPath == DescriptionKeypath {
@@ -223,7 +262,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
     }
 }
 
-extension JGProgressHUDImageIndicatorView {
+private extension JGProgressHUDImageIndicatorView {
     convenience init(image: UIImage!, enableTinting: Bool) {
         var image: UIImage = image
 
@@ -238,5 +277,42 @@ extension JGProgressHUDImageIndicatorView {
         let bundle = NSBundle(path: NSBundle(forClass: JGProgressHUD.self).pathForResource("JGProgressHUD Resources", ofType: "bundle")!)
         let image = UIImage(named: name, inBundle: bundle, compatibleWithTraitCollection: nil)
         self.init(image: image, enableTinting: enableTinting)
+    }
+}
+
+private extension OZLModelCustomField {
+    func createFormFieldForIssue(issue: OZLModelIssue) -> OZLFormField {
+        let fieldName = self.name ?? ""
+        let keyPath = "cf_\(self.fieldId)"
+
+        var formField: OZLFormField!
+
+        switch self.type {
+        case .Boolean:
+            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value, possibleStringValues: ["", "Yes", "No"])
+        case .Date:
+            formField = OZLDateFormField(keyPath: keyPath, placeholder: fieldName)
+        case .Link:
+            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName)
+        case .List:
+            // WARNING: don't force unwrap this...
+            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: nil, possibleRealmValues: self.options!)
+        case .LongText:
+            formField = OZLTextViewFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
+        case .Text:
+            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
+        case .User:
+            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
+        case .Version:
+            // WARNING: don't force unwrap this...
+            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: nil, possibleRealmValues: self.options!)
+        default:
+//            assertionFailure()
+            formField = OZLFormField(keyPath: "", placeholder: "")
+        }
+
+        formField.userInfo[CustomFieldUserInfoKey] = self
+
+        return formField
     }
 }

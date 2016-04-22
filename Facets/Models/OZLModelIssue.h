@@ -64,6 +64,8 @@
 
 - (void)setUpdateComment:(nullable NSString *)comment;
 
+- (void)setValueOnDiff:(nonnull NSString *)value forCustomFieldId:(NSInteger)fieldId;
+
 + (nullable NSString *)displayValueForAttributeName:(nullable NSString *)name attributeId:(NSInteger)attributeId;
 + (nonnull NSString *)displayNameForAttributeName:(nonnull NSString *)attributeName;
 

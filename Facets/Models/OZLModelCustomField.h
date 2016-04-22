@@ -35,7 +35,7 @@ RLM_ARRAY_TYPE(OZLModelStringContainer)
 
 // Readonly values are ignored by Realm. We don't want to store a value for a custom field,
 // so even though semantically it seems weird, functionally, it's correct.
-@property (nullable, readonly) NSString *value;
+@property (nullable) NSString *value;
 
 @property (nullable, strong) RLMArray<OZLModelStringContainer *><OZLModelStringContainer> *options;
 

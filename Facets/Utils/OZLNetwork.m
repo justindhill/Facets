@@ -240,10 +240,18 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
-- (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelCustomField *> *fields, NSError *error))completion {
-    
+- (void)getCustomFieldsForIssue:(NSInteger)issue completion:(void (^)(NSArray * _Nullable, NSError * _Nullable))completion {
+    NSString *path = [NSString stringWithFormat:@"/issues/%ld", (long)issue];
+    [self getCustomFieldsForPath:path completion:completion];
+}
+
+- (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray * _Nullable, NSError * _Nullable))completion {
     NSString *path = [NSString stringWithFormat:@"/projects/%ld/issues/new", (long)project];
-    
+    [self getCustomFieldsForPath:path completion:completion];
+}
+
+- (void)getCustomFieldsForPath:(NSString *)path completion:(void (^)(NSArray<OZLModelCustomField *> *fields, NSError *error))completion {
+
     [self GET:path params:nil completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         if (error) {
             if (completion) {
@@ -541,9 +549,28 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }];
 }
 
+- (NSDictionary *)changeDictionaryWithIssue:(OZLModelIssue *)issue {
+    NSMutableDictionary *changeDict = [issue.changeDictionary mutableCopy];
+
+    NSDictionary *customFieldsDict = changeDict[@"custom_fields"];
+
+    if ([customFieldsDict isKindOfClass:[NSDictionary class]]) {
+        NSMutableArray *customFieldsArray = [NSMutableArray array];
+        [customFieldsDict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            [customFieldsArray addObject:@{@"value": obj, @"id": key}];
+        }];
+
+        changeDict[@"custom_fields"] = customFieldsArray;
+    }
+
+    return changeDict;
+}
+
 - (void)createIssue:(OZLModelIssue *)issueData withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError * _Nullable error))completion {
+
+    NSDictionary *changeDict = [self changeDictionaryWithIssue:issueData];
     NSDictionary *issueDict = @{
-        @"issue": issueData.changeDictionary
+        @"issue": changeDict
     };
     
     NSError *jsonError;
@@ -579,7 +606,8 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }
 
     //project info
-    NSDictionary *issueDict = @{ @"issue": issueData.changeDictionary };
+    NSDictionary *changeDict = [self changeDictionaryWithIssue:issueData];
+    NSDictionary *issueDict = @{ @"issue": changeDict };
     
     NSError *jsonError;
     NSData *bodyData = [NSJSONSerialization dataWithJSONObject:issueDict options:0 error:&jsonError];
