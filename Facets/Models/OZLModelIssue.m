@@ -93,10 +93,27 @@ static NSDateFormatter *OZLModelUpdateDateFormatter;
         
         _subject = [dic objectForKey:@"subject"];
         _description = [dic objectForKey:@"description"];
-        _startDate = [NSDate dateWithISO8601String:[dic objectForKey:@"start_date"]];
-        _dueDate = [NSDate dateWithISO8601String:[dic objectForKey:@"due_date"]];
-        _createdOn = [NSDate dateWithISO8601String:[dic objectForKey:@"created_on"]];
-        _updatedOn = [NSDate dateWithISO8601String:[dic objectForKey:@"updated_on"]];
+
+        NSString *startDateString = [dic objectForKey:@"start_date"];
+        if (startDateString) {
+            _startDate = [NSDate dateWithISO8601String:startDateString];
+        }
+
+        NSString *dueDateString = [dic objectForKey:@"due_date"];
+        if (dueDateString) {
+            _dueDate = [NSDate dateWithISO8601String:dueDateString];
+        }
+
+        NSString *createdOnString = [dic objectForKey:@"created_on"];
+        if (createdOnString) {
+            _createdOn = [NSDate dateWithISO8601String:createdOnString];
+        }
+
+        NSString *updatedOnString = [dic objectForKey:@"updated_on"];
+        if (updatedOnString) {
+            _updatedOn = [NSDate dateWithISO8601String:updatedOnString];
+        }
+
         _doneRatio = [[dic objectForKey:@"done_ratio"] floatValue];
         
         id targetVersion = dic[@"fixed_version"];

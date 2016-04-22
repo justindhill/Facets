@@ -30,7 +30,7 @@
     
     NSString *plainString = [html gtm_stringByUnescapingFromHTML];
     
-    RXMLElement *ele = [RXMLElement elementFromXMLString:plainString encoding:NSUTF8StringEncoding];
+    RXMLElement *ele = [RXMLElement elementFromHTMLString:plainString encoding:NSUTF8StringEncoding];
     NSArray *fieldParagraphs = [ele childrenWithRootXPath:@"//div[@id='attributes']/div[@class='splitcontent'][2]/div/p"];
     
     for (RXMLElement *p in fieldParagraphs) {

@@ -165,7 +165,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
         __block NSString *authToken;
         
-        RXMLElement *ele = [RXMLElement elementFromXMLData:data];
+        RXMLElement *ele = [RXMLElement elementFromHTMLData:data];
         RXMLElement *head = [ele child:@"head"];
         
         [head iterate:@"meta" usingBlock:^(RXMLElement *metaEle) {
