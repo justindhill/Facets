@@ -33,17 +33,25 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
         self.settingsVC.delegate = self
         
         self.projectSplitView.masterNavigationController.viewControllers = [ self.projectIssuesVC ]
-        self.projectSplitView.tabBarItem = UITabBarItem(title: "Issues", image: nil, tag: 0)
+        self.projectSplitView.tabBarItem = UITabBarItem(title: "Issues", image: UIImage(named: "icon-list"), tag: 0)
         
         self.queryListSplitView.masterNavigationController.viewControllers = [ self.queryListVC ]
-        self.queryListSplitView.tabBarItem = UITabBarItem(title:"Queries", image:nil, tag:0)
+        self.queryListSplitView.tabBarItem = UITabBarItem(title:"Queries", image: UIImage(named: "icon-search"), tag:0)
         
         let settingsNav = UINavigationController(rootViewController: self.settingsVC)
         settingsNav.navigationBar.translucent = false
         settingsNav.navigationBar.barTintColor = UIColor.whiteColor()
-        settingsNav.tabBarItem = UITabBarItem(title: "Settings", image: nil, tag: 0)
+        settingsNav.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "icon-cog"), tag: 0)
+
+        let watchingVC = UIViewController()
+        watchingVC.title = "Watching"
+
+        let watchingNav = UINavigationController(rootViewController: watchingVC)
+        watchingNav.navigationBar.translucent = false
+        watchingNav.navigationBar.barTintColor = UIColor.whiteColor()
+        watchingNav.tabBarItem = UITabBarItem(title: "Watching", image: UIImage(named: "icon-eye"), tag: 0)
         
-        self.viewControllers = [ self.projectSplitView, self.queryListSplitView, settingsNav ]
+        self.viewControllers = [ self.projectSplitView, self.queryListSplitView, watchingNav, settingsNav ]
         
         if OZLSingleton.sharedInstance().isUserLoggedIn && OZLSingleton.sharedInstance().currentProjectID != NSNotFound {
             self.projectIssuesVC.viewModel.projectId = OZLSingleton.sharedInstance().currentProjectID
