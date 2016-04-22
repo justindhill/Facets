@@ -62,7 +62,7 @@
 
 - (nonnull id)initWithDictionary:(nonnull NSDictionary *)dic;
 
-- (void)setUpdateComment:(NSString *)comment;
+- (void)setUpdateComment:(nullable NSString *)comment;
 
 + (nullable NSString *)displayValueForAttributeName:(nullable NSString *)name attributeId:(NSInteger)attributeId;
 + (nonnull NSString *)displayNameForAttributeName:(nonnull NSString *)attributeName;

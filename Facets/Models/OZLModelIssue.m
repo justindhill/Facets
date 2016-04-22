@@ -186,6 +186,10 @@ static NSDateFormatter *OZLModelUpdateDateFormatter;
         return @"Category";
     } else if ([attributeName isEqualToString:@"priority_id"]) {
         return @"Priority";
+    } else if ([attributeName isEqualToString:@"due_date"]) {
+        return @"Due date";
+    } else if ([attributeName isEqualToString:@"start_date"]) {
+        return @"Start date";
     }
         
     return attributeName;
