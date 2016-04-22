@@ -48,7 +48,7 @@ import UIKit
         }
     }
     
-    let projects = OZLModelProject.allObjects().sortedResultsUsingProperty("name", ascending: true)
+    let projects = OZLModelProject.allObjects()
     var issues: Array<OZLModelIssue> = []
 
     var shouldShowProjectSelector = false
