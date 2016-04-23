@@ -412,7 +412,6 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         
         [self.navigationController pushViewController:textVC animated:YES];
     }
-    NSLog(@"Attachment selected: %@", attachment);
 }
 
 #pragma mark - Transitioning

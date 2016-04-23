@@ -178,7 +178,6 @@ NSString * const USER_DEFAULTS_REDMINE_COOKIE = @"USER_DEFAULTS_REDMINE_COOKIE";
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     if (self.isUserLoggedIn) {
         [[OZLNetwork sharedInstance] authenticateCredentialsWithURL:[NSURL URLWithString:self.redmineHomeURL] username:self.redmineUserName password:self.redminePassword completion:^(NSError * _Nullable error) {
-            NSLog(@"");
             [self.serverSync startSyncCompletion:nil];
         }];
     }

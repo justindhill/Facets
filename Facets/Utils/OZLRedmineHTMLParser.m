@@ -79,7 +79,6 @@
     [p iterate:@"select.option" usingBlock:^(RXMLElement *optionEle) {
         NSString *optionText = [optionEle.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *optionValue = [optionEle attribute:@"value"];
-//        NSLog(@"option value: %@", optionText);
         
         if (optionText.length == 0) {
             return;

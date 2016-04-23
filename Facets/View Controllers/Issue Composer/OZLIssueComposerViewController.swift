@@ -61,8 +61,6 @@ class OZLIssueComposerViewController: OZLFormViewController {
         weak var weakSelf = self
 
         func completion(fields: [AnyObject]?, error: NSError?) {
-            print(fields)
-
             if let fields = fields as? [OZLModelCustomField] {
                 weakSelf?.customFields = fields
                 weakSelf?.reloadData()
@@ -256,7 +254,6 @@ class OZLIssueComposerViewController: OZLFormViewController {
         func completion(success: Bool, error: NSError?) {
             if let weakSelf = weakSelf {
                 if success == false {
-                    print(error)
                     hud.indicatorView = JGProgressHUDImageIndicatorView(imageInLibraryBundleNamed: "jg_hud_error", enableTinting: true)
                     hud.dismissAfterDelay(1.5)
                 } else {

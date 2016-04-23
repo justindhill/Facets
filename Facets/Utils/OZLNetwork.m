@@ -106,9 +106,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSString *formValueString = [NSString stringWithFormat:@"username=%@&password=%@&authenticity_token=%@&back_url=%@", [username URLEncodedString], [password URLEncodedString], encodedToken, encodedBackURL];
         request.HTTPBody = [formValueString dataUsingEncoding:NSUTF8StringEncoding];
         
-        NSLog(@"request: %@", request);
-        NSLog(@"form string: '%@'", formValueString);
-        
+//        NSLog(@"request: %@", request);
+//        NSLog(@"form string: '%@'", formValueString);
+
         NSURLSessionDataTask *task = [weakSelf.urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
