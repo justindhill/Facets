@@ -126,19 +126,19 @@ class OZLIssueComposerViewController: OZLFormViewController {
         let generalSection = OZLFormSection(title: "General", fields: [
             OZLEnumerationFormField(keyPath: ProjectKeypath,
                 placeholder: "Project",
-                currentValue: self.changes[ProjectKeypath] as? RLMObject ?? self.currentProject,
+                currentValue: (self.changes[ProjectKeypath] as? OZLEnumerationFormFieldValue)?.stringValue() ?? self.currentProject.name,
                 possibleRealmValues: self.projects),
 
             OZLEnumerationFormField(
                 keyPath: TrackerKeypath,
                 placeholder: "Tracker",
-                currentValue: self.changes[TrackerKeypath] as? RLMObject ?? self.issue.tracker,
+                currentValue: (self.changes[TrackerKeypath] as? OZLEnumerationFormFieldValue)?.stringValue() ?? self.issue.tracker?.name,
                 possibleRealmValues: self.currentProject.trackers),
 
             OZLEnumerationFormField(
                 keyPath: StatusKeypath,
                 placeholder: "Status",
-                currentValue: self.changes[StatusKeypath] as? RLMObject ?? self.issue.status,
+                currentValue: (self.changes[StatusKeypath] as? OZLEnumerationFormFieldValue)?.stringValue() ?? self.issue.status?.name,
                 possibleRealmValues: self.issueStatuses),
 
             OZLTextFormField(
@@ -176,6 +176,12 @@ class OZLIssueComposerViewController: OZLFormViewController {
             }
 
             sections.append(OZLFormSection(title: "Custom Fields", fields: fields))
+            self.tableView.tableFooterView = nil
+        } else {
+            let loadingView = OZLLoadingView(frame: CGRectMake(0, 0, 320, 44))
+            loadingView.startLoading()
+            loadingView.backgroundColor = UIColor.clearColor()
+            self.tableView.tableFooterView = loadingView
         }
 
         return sections
@@ -183,18 +189,23 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
     override func formFieldCell(formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String, userInfo: [String : AnyObject]) {
         super.formFieldCell(formCell, valueChangedFrom:fromValue , toValue: toValue, atKeyPath: keyPath, userInfo: userInfo)
+        let customField = userInfo[CustomFieldUserInfoKey] as? OZLModelCustomField
 
-        if let customField = userInfo[CustomFieldUserInfoKey] as? OZLModelCustomField {
-            if let toValue = toValue as? OZLModelStringContainer, value = toValue.value {
-                self.issue.setValueOnDiff(value, forCustomFieldId: customField.fieldId)
-            }
-        } else if let toValue = toValue as? String {
+        if let toValue = toValue as? String {
             if keyPath == SubjectKeypath {
                 self.issue.subject = toValue
             } else if keyPath == DescriptionKeypath {
                 self.issue.description = toValue
             } else if keyPath == CommentKeypath {
                 self.issue.setUpdateComment(toValue)
+            } else if let customField = customField {
+                if let toValue = Float(toValue) where customField.type == .Float {
+                    self.issue.setValueOnDiff(toValue, forCustomFieldId: customField.fieldId)
+                } else if let toValue = Int(toValue) where customField.type == .Integer {
+                    self.issue.setValueOnDiff(toValue, forCustomFieldId: customField.fieldId)
+                } else {
+                    assertionFailure("An unexpected custom field passed a raw string to valueChangedFrom:to:atKeyPath:userInfo:")
+                }
             }
 
         } else if let toValue = toValue as? OZLModelTracker {
@@ -210,11 +221,22 @@ class OZLIssueComposerViewController: OZLFormViewController {
             if keyPath == StatusKeypath {
                 self.issue.status = toValue
             }
+        } else if let toValue = toValue as? OZLModelVersion {
+            if let customField = customField {
+                self.issue.setValueOnDiff(String(toValue.versionId), forCustomFieldId: customField.fieldId)
+            }
         } else if let toValue = toValue as? NSDate {
             if keyPath == DueDateKeypath {
                 self.issue.dueDate = toValue
             } else if keyPath == StartDateKeypath {
                 self.issue.startDate = toValue
+            } else if let customField = customField {
+                // WARNING: Handle date formatting
+//                self.issue.setValueOnDiff(<#T##value: String##String#>, forCustomFieldId: <#T##Int#>)
+            }
+        } else if let toValue = toValue as? OZLModelStringContainer, value = toValue.value {
+            if let customField = customField {
+                self.issue.setValueOnDiff(value, forCustomFieldId: customField.fieldId)
             }
         }
         
@@ -289,14 +311,26 @@ private extension OZLModelCustomField {
 
         switch self.type {
         case .Boolean:
-            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value, possibleStringValues: ["", "Yes", "No"])
+            formField = OZLEnumerationFormField(
+                keyPath: keyPath,
+                placeholder: fieldName,
+                currentValue: self.value == "0" ? "No" : self.value == "1" ? "Yes" : nil,
+                possibleValues: [
+                    OZLModelStringContainer(string: "", value: ""),
+                    OZLModelStringContainer(string: "Yes", value: "1"),
+                    OZLModelStringContainer(string: "No", value: "0")
+                ]
+            )
         case .Date:
             formField = OZLDateFormField(keyPath: keyPath, placeholder: fieldName)
+        case .Float:
+            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
+        case .Integer:
+            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
         case .Link:
             formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName)
         case .List:
-            // WARNING: don't force unwrap this...
-            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: nil, possibleRealmValues: self.options!)
+            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value, possibleRealmValues: self.options!)
         case .LongText:
             formField = OZLTextViewFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
         case .Text:
@@ -304,8 +338,7 @@ private extension OZLModelCustomField {
         case .User:
             formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
         case .Version:
-            // WARNING: don't force unwrap this...
-            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: nil, possibleRealmValues: self.options!)
+            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value, possibleRealmValues: self.options!)
         default:
 //            assertionFailure()
             formField = OZLFormField(keyPath: "", placeholder: "")

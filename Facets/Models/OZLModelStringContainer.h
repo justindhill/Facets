@@ -7,8 +7,9 @@
 //
 
 @import Realm;
+@protocol OZLEnumerationFormFieldValue;
 
-@interface OZLModelStringContainer : RLMObject 
+@interface OZLModelStringContainer : RLMObject <OZLEnumerationFormFieldValue>
 
 + (nonnull instancetype)containerWithString:(nonnull NSString *)string value:(nonnull NSString *)value;
 @property (nullable, strong) NSString *stringValue;

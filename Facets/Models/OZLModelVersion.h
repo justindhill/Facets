@@ -22,7 +22,8 @@ typedef NS_ENUM(NSInteger, OZLModelVersionStatus) {
     OZLModelVersionStatusClosed
 };
 
-@interface OZLModelVersion : RLMObject
+@protocol OZLEnumerationFormFieldValue;
+@interface OZLModelVersion : RLMObject <OZLEnumerationFormFieldValue>
 
 - (instancetype)initWithAttributeDictionary:(NSDictionary *)attributes;
 

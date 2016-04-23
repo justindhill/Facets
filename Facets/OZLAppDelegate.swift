@@ -34,4 +34,8 @@ class OZLAppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+
+    func applicationDidBecomeActive(application: UIApplication) {
+
+    }
 }

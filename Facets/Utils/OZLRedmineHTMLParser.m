@@ -43,14 +43,21 @@
         
         NSArray<OZLModelStringContainer *> *options;
 
-        NSString *value;
+        __block NSString *value;
 #warning Custom field support is incomplete! Need to parse the rest of the types.
         if (fieldType == OZLModelCustomFieldTypeInvalid) {
             continue;
-        } else if (fieldType == OZLModelCustomFieldTypeList) {
+        } else if (fieldType == OZLModelCustomFieldTypeList || fieldType == OZLModelCustomFieldTypeVersion) {
             options = [self optionsFromListFieldParagraph:p currentValue:&value];
+        } else if (fieldType == OZLModelCustomFieldTypeBoolean) {
+            [p iterate:@"span.label" usingBlock:^(RXMLElement *e) {
+                RXMLElement *input = [e child:@"input"];
+                if ([[input attribute:@"checked"] isEqualToString:@"checked"]) {
+                    value = [input attribute:@"value"];
+                }
+            }];
         }
-        
+
         OZLModelCustomField *field = [[OZLModelCustomField alloc] init];
         field.name = fieldName;
         field.type = fieldType;

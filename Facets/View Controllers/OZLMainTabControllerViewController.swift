@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewControllerDelegate {
+class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewControllerDelegate, UITabBarControllerDelegate {
     
     let projectIssuesVC = OZLIssueListViewController(style: .Plain)
     let queryListVC = OZLQueryListViewController(style: .Plain)
@@ -21,7 +21,8 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.whiteColor()
-        
+
+        self.delegate = self
         self.tabBar.translucent = false
         self.tabBar.barTintColor = UIColor.whiteColor()
         
@@ -31,7 +32,7 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
         self.projectIssuesVC.view.tag = OZLSplitViewController.PrimaryPaneMember
         
         self.settingsVC.delegate = self
-        
+
         self.projectSplitView.masterNavigationController.viewControllers = [ self.projectIssuesVC ]
         self.projectSplitView.tabBarItem = UITabBarItem(title: "Issues", image: UIImage(named: "icon-list"), tag: 0)
         
@@ -93,5 +94,14 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
             
             CATransaction.commit()
         }
+    }
+
+    // MARK: UITabBarControllerDelegate
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        if let viewController = viewController as? OZLSplitViewController where viewController == self.selectedViewController {
+            viewController.masterNavigationController.popToRootViewControllerAnimated(true)
+        }
+
+        return true
     }
 }

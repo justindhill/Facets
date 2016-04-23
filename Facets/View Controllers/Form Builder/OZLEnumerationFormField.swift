@@ -17,16 +17,10 @@ class OZLEnumerationFormField: OZLFormField {
     var possibleValues: [AnyObject]?
     var currentValue: String?
 
-    init(keyPath: String, placeholder: String, currentValue: RLMObject?, possibleRealmValues: RLMCollection) {
+    init(keyPath: String, placeholder: String, currentValue: String?, possibleRealmValues: RLMCollection) {
         super.init(keyPath: keyPath, placeholder: placeholder)
 
-        if let currentValue = currentValue {
-            guard let currentValue = currentValue as? OZLEnumerationFormFieldValue else {
-                fatalError("Passed a currentValue Realm object that doesn't conform to OZLEnumerationFormFieldValue")
-            }
-
-            self.currentValue = currentValue.stringValue()
-        }
+        self.currentValue = currentValue
 
         if possibleRealmValues.count > 0 {
             var values = [OZLEnumerationFormFieldValue]()
@@ -40,8 +34,9 @@ class OZLEnumerationFormField: OZLFormField {
             }
 
             self.possibleValues = values
-            self.setup()
         }
+        
+        self.setup()
     }
 
     init(keyPath: String, placeholder: String, currentValue: String?, possibleValues: [OZLEnumerationFormFieldValue]) {
