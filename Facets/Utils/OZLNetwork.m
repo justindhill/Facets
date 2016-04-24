@@ -79,7 +79,9 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     __weak OZLNetwork *weakSelf = self;
     
     [self fetchAuthValidationTokensWithBaseURL:url completion:^(NSString *authCookie, NSString *authToken, NSError *error) {
+#ifndef RELEASE
         NSLog(@"authCookie: %@\nauthToken: %@", authCookie, authToken);
+#endif
         
         if (error) {
             if (completion) {
