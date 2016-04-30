@@ -21,6 +21,11 @@ class OZLIssueComposerViewController: OZLFormViewController {
     private let StartDateKeypath = "issue.start-date"
     private let DueDateKeypath = "issue.due-date"
     private let CommentKeypath = "issue.update-comment"
+    private let TargetVersionKeypath = "issue.target-version"
+    private let CategoryKeypath = "issue.category"
+    private let AssigneeKeypath = "issue.assignee"
+    private let TimeEstimationKeypath = "issue.estimated-time"
+    private let PercentCompleteKeypath = "issue.percent-complete"
 
     private enum EditMode {
         case New
@@ -29,7 +34,10 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
     var currentProject: OZLModelProject
     var projects = OZLModelProject.allObjects()
+    var versions = OZLModelVersion.allObjects()
+    var categories = OZLModelIssueCategory.allObjects()
     var issueStatuses = OZLModelIssueStatus.allObjects()
+    var users = OZLModelUser.allObjects()
     var customFields: [OZLModelCustomField]?
     private var editMode: EditMode
 
@@ -139,6 +147,18 @@ class OZLIssueComposerViewController: OZLFormViewController {
                 currentValue: (self.changes[StatusKeypath] as? OZLEnumerationFormFieldValue)?.stringValue() ?? self.issue.status?.name,
                 possibleRealmValues: self.issueStatuses),
 
+            OZLEnumerationFormField(
+                keyPath: CategoryKeypath,
+                placeholder: "Category",
+                currentValue: (self.changes[CategoryKeypath] as? OZLEnumerationFormFieldValue)?.stringValue() ?? self.issue.category?.name,
+                possibleRealmValues: self.categories),
+
+            OZLEnumerationFormField(
+                keyPath: AssigneeKeypath,
+                placeholder: "Assignee",
+                currentValue: (self.changes[AssigneeKeypath] as? OZLEnumerationFormFieldValue)?.stringValue() ?? self.issue.assignedTo?.name,
+                possibleRealmValues: self.users),
+
             OZLTextFormField(
                 keyPath: SubjectKeypath,
                 placeholder: "Subject",
@@ -153,6 +173,22 @@ class OZLIssueComposerViewController: OZLFormViewController {
         sections.append(generalSection)
 
         let schedulingSection = OZLFormSection(title: "Scheduling", fields: [
+            OZLEnumerationFormField(
+                keyPath: TargetVersionKeypath,
+                placeholder: "Target version",
+                currentValue: (self.changes[TargetVersionKeypath] as? OZLEnumerationFormFieldValue)?.stringValue() ?? self.issue.targetVersion?.name,
+                possibleRealmValues: self.versions),
+
+            OZLTextFormField(
+                keyPath: TimeEstimationKeypath,
+                placeholder: "Estimated time",
+                currentValue: (self.changes[TimeEstimationKeypath] as? String) ?? String(self.issue.estimatedHours)),
+
+            OZLTextFormField(
+                keyPath: PercentCompleteKeypath,
+                placeholder: "Percent complete",
+                currentValue: (self.changes[PercentCompleteKeypath] as? String ?? String(self.issue.doneRatio))),
+
             OZLDateFormField(
                 keyPath: StartDateKeypath,
                 placeholder: "Start date",

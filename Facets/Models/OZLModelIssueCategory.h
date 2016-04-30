@@ -4,7 +4,9 @@
 //
 //  Created by lizhijie on 7/16/13.
 
-@interface OZLModelIssueCategory : RLMObject
+@protocol OZLEnumerationFormFieldValue;
+
+@interface OZLModelIssueCategory : RLMObject <OZLEnumerationFormFieldValue>
 
 @property (nonatomic) NSInteger categoryId;
 @property (nonatomic, strong) NSString *name;
