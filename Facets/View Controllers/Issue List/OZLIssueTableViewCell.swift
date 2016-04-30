@@ -41,7 +41,7 @@ class OZLIssueTableViewCell: UITableViewCell {
         self.assigneeAvatarImageView.layer.masksToBounds = true
 
         self.priorityLabel.textColor = UIColor.whiteColor()
-        self.priorityLabel.backgroundColor = UIColor.facetsBrandColor()
+        self.priorityLabel.backgroundColor = self.tintColor
         self.assigneeAvatarImageView.backgroundColor = UIColor.lightGrayColor()
     }
 
@@ -165,6 +165,10 @@ class OZLIssueTableViewCell: UITableViewCell {
         self.statusLabel.layer.mask = rightRoundedMask
 
         self.assigneeAvatarImageView.layer.cornerRadius = (self.assigneeAvatarImageView.frame.size.width / 2.0)
+    }
+
+    override func tintColorDidChange() {
+        self.priorityLabel.backgroundColor = self.tintColor
     }
 
     private static let sizingInstance = OZLIssueTableViewCell.cell()

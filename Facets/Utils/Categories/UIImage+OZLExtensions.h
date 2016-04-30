@@ -11,5 +11,6 @@
 @interface UIImage (OZLExtensions)
 
 + (UIImage *)ozl_templateImageNamed:(NSString *)name;
++ (UIImage *)ozl_imageNamed:(NSString *)name maskedWithColor:(UIColor *)color;
 
 @end
