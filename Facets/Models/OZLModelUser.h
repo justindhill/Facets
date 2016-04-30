@@ -6,7 +6,9 @@
 
 @import Realm;
 
-@interface OZLModelUser : RLMObject
+@protocol OZLEnumerationFormFieldValue;
+
+@interface OZLModelUser : RLMObject <OZLEnumerationFormFieldValue>
 
 @property (nonatomic) NSInteger userId;
 @property (nonatomic, strong) NSString *login;

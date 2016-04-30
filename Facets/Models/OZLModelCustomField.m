@@ -21,6 +21,10 @@
     return @"fieldId";
 }
 
++ (NSArray *)ignoredProperties {
+    return @[ @"value" ];
+}
+
 - (instancetype)initWithAttributeDictionary:(NSDictionary *)attributes {
     if (self = [super init]) {
         [self applyAttributeDictionary:attributes];
@@ -36,7 +40,7 @@
     NSString *valueString = attributes[@"value"];
     
     if (valueString.length > 0) {
-        _value = attributes[@"value"];
+        self.value = attributes[@"value"];
     }
 }
 

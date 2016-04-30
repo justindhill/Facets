@@ -28,6 +28,7 @@
 		D00793961CC87F100050FF48 /* OZLDateFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00793951CC87F100050FF48 /* OZLDateFormField.swift */; };
 		D00793981CC8A8310050FF48 /* SORelativeDateTransformer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */; };
 		D00793A01CC9AA290050FF48 /* Pods-Facets.beta.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D007939F1CC9AA290050FF48 /* Pods-Facets.beta.xcconfig */; };
+		D00EA1F51CD53597002210E0 /* UIColor+OZLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00EA1F41CD53597002210E0 /* UIColor+OZLExtensions.swift */; };
 		D014C2B11C95D37E00D381A9 /* NSDate+OZLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */; };
 		D014C2B31C95DD8D00D381A9 /* OZLTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B21C95DD8D00D381A9 /* OZLTableViewController.swift */; };
 		D014C2B61C96151A00D381A9 /* OZLFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B51C96151A00D381A9 /* OZLFormViewController.swift */; };
@@ -145,6 +146,7 @@
 		D00793951CC87F100050FF48 /* OZLDateFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLDateFormField.swift; sourceTree = "<group>"; };
 		D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SORelativeDateTransformer.bundle; sourceTree = "<group>"; };
 		D007939F1CC9AA290050FF48 /* Pods-Facets.beta.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-Facets.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Facets/Pods-Facets.beta.xcconfig"; sourceTree = "<group>"; };
+		D00EA1F41CD53597002210E0 /* UIColor+OZLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+OZLExtensions.swift"; sourceTree = "<group>"; };
 		D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+OZLExtensions.swift"; sourceTree = "<group>"; };
 		D014C2B21C95DD8D00D381A9 /* OZLTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLTableViewController.swift; sourceTree = "<group>"; };
 		D014C2B51C96151A00D381A9 /* OZLFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLFormViewController.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				D0BCD0EA1C14C70F00B0DC6D /* UIImage+OZLExtensions.h */,
 				D0BCD0EB1C14C70F00B0DC6D /* UIImage+OZLExtensions.m */,
 				D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */,
+				D00EA1F41CD53597002210E0 /* UIColor+OZLExtensions.swift */,
 				D056780A1C965733002F6BCF /* NSString+OZLURLEncoding.h */,
 				D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */,
 			);
@@ -903,6 +906,7 @@
 				2BCCA0541795312E00FA8B1A /* OZLConstants.m in Sources */,
 				D0A53D2F1C38300300E424F0 /* OZLIssueListViewController.swift in Sources */,
 				D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */,
+				D00EA1F51CD53597002210E0 /* UIColor+OZLExtensions.swift in Sources */,
 				D0BCD0E11C14C33E00B0DC6D /* OZLIssueComposerViewController.swift in Sources */,
 				D01F9C0D1BED9ABC005B2ED0 /* OZLTableViewCell.m in Sources */,
 				D0BFA9121C6FE50300F4D1FB /* OZLJournalViewerViewModel.swift in Sources */,
@@ -951,7 +955,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -975,7 +979,7 @@
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEFINES_MODULE = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
@@ -1008,7 +1012,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
@@ -1044,7 +1048,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1068,7 +1072,7 @@
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEFINES_MODULE = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
@@ -1096,7 +1100,7 @@
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEFINES_MODULE = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;

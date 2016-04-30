@@ -75,4 +75,8 @@
     }
 }
 
+- (NSString *)stringValue {
+    return self.name;
+}
+
 @end

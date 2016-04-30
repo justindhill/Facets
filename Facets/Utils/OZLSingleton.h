@@ -30,4 +30,7 @@
 @property (nonatomic) NSInteger currentProjectID;// last viewed project id
 @property (readonly) BOOL isUserLoggedIn;
 
+- (void)startSessionUpkeep;
+- (void)suspendSessionUpkeep;
+
 @end

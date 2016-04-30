@@ -50,19 +50,17 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         
         if self.isFirstAppearance {
             self.refreshProjectSelector()
-            self.view.tintColor = self.parentViewController?.view.tintColor
             
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-filter"), style: .Done, target: self, action: #selector(OZLIssueListViewController.filterAction(_:)))
             
             self.showFooterActivityIndicator()
             self.reloadProjectData()
         }
-        
+
         if self.viewModel.shouldShowComposeButton && self.composeButton?.superview == nil {
             self.composeButton = UIButton(type: .System)
-            self.composeButton!.backgroundColor = self.view.tintColor;
-            self.composeButton!.tintColor = UIColor.whiteColor()
-            self.composeButton!.setImage(UIImage(named: "icon-plus"), forState:.Normal)
+
+            self.composeButton!.setImage(UIImage.ozl_imageNamed("icon-plus", maskedWithColor: UIColor.whiteColor()), forState:.Normal)
             self.composeButton!.titleLabel?.font = UIFont.systemFontOfSize(28)
             self.composeButton!.contentHorizontalAlignment = .Center
             self.composeButton!.contentVerticalAlignment = .Center
@@ -74,6 +72,12 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             self.composeButton!.frame = CGRectMake(0, 0, self.IssueListComposeButtonHeight, self.IssueListComposeButtonHeight)
             self.composeButton!.layer.cornerRadius = (IssueListComposeButtonHeight / 2.0)
             self.composeButton!.addTarget(self, action: #selector(OZLIssueListViewController.composeButtonAction(_:)), forControlEvents:.TouchUpInside)
+
+            self.composeButton!.setBackgroundImage(
+                UIColor.blackColor().circularImageWithDiameter(self.IssueListComposeButtonHeight).imageWithRenderingMode(.AlwaysTemplate),
+                forState: .Normal
+            )
+
             self.view.addSubview(self.composeButton!)
             
         } else if !self.viewModel.shouldShowComposeButton && self.composeButton?.superview != nil {
@@ -103,7 +107,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         
         self.isFirstAppearance = false
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         

@@ -229,6 +229,18 @@ static NSDateFormatter *OZLModelUpdateDateFormatter;
     }
 }
 
+- (void)setValueOnDiff:(nonnull id)value forCustomFieldId:(NSInteger)fieldId {
+    NSAssert([value isKindOfClass:[NSString class]] || [value isKindOfClass:[NSNumber class]], nil);
+
+    if (self.mutableChangeDictionary[@"custom_fields"] == nil && value && fieldId > 0) {
+        self.mutableChangeDictionary[@"custom_fields"] = [NSMutableDictionary dictionary];
+    }
+
+    if (fieldId > 0 && value) {
+        self.mutableChangeDictionary[@"custom_fields"][@(fieldId)] = value;
+    }
+}
+
 - (void)setProjectId:(NSInteger)projectId {
     _projectId = projectId;
     
@@ -281,7 +293,7 @@ static NSDateFormatter *OZLModelUpdateDateFormatter;
     _targetVersion = targetVersion;
     
     if (self.modelDiffingEnabled && targetVersion) {
-        self.mutableChangeDictionary[@"target_version_id"] = @(targetVersion.versionId);
+        self.mutableChangeDictionary[@"fixed_version_id"] = @(targetVersion.versionId);
     }
 }
 

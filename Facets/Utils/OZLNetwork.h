@@ -43,7 +43,8 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 
 // project 
 - (void)getProjectListWithParams:(NSDictionary *)params completion:(void (^)(NSArray * _Nullable result, NSError * _Nullable error))completion;
-- (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelCustomField *> * _Nullable fields, NSError * _Nullable error))completion;
+- (void)getCustomFieldsForIssue:(NSInteger)issue completion:(void (^)(NSArray * _Nullable, NSError * _Nullable))completion;
+- (void)getCustomFieldsForProject:(NSInteger)project completion:(void (^)(NSArray * _Nullable, NSError * _Nullable))completion;
 - (void)getVersionsForProject:(NSInteger)project completion:(void (^)(NSArray<OZLModelVersion *> * _Nullable versions, NSError * _Nullable error))completion;
 - (void)getMembershipsForProject:(NSInteger)project offset:(NSInteger)offset limit:(NSInteger)limit completion:(void (^)(NSArray<OZLModelMembership *> * _Nullable memberships, NSInteger totalCount, NSError * _Nullable error))completion;
 - (void)deleteProject:(NSInteger)projectid withParams:(NSDictionary *)params completion:(void (^)(BOOL success, NSError * _Nullable error))completion;

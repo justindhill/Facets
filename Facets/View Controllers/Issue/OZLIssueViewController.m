@@ -193,6 +193,8 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 - (void)editButtonAction:(UIButton *)button {
     OZLIssueComposerViewController *vc = [[OZLIssueComposerViewController alloc] initWithIssue:self.viewModel.issueModel];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    nav.navigationBar.translucent = NO;
+    nav.navigationBar.barTintColor = [UIColor whiteColor];
 
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -410,7 +412,6 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         
         [self.navigationController pushViewController:textVC animated:YES];
     }
-    NSLog(@"Attachment selected: %@", attachment);
 }
 
 #pragma mark - Transitioning

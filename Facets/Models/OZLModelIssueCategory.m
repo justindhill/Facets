@@ -5,6 +5,7 @@
 //  Created by lizhijie on 7/16/13.
 
 #import "OZLModelIssueCategory.h"
+#import "Facets-Swift.h"
 
 @implementation OZLModelIssueCategory
 
@@ -23,6 +24,10 @@
 - (void)applyAttributeDictionary:(NSDictionary *)attributes {
     self.categoryId = [[attributes objectForKey:@"id"] integerValue];
     self.name = [attributes objectForKey:@"name"];
+}
+
+- (NSString *)stringValue {
+    return self.name;
 }
 
 @end

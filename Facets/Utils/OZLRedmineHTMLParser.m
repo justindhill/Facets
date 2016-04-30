@@ -41,21 +41,28 @@
         NSInteger fieldId = [[self.formatter numberFromString:fieldIdString] integerValue];
         OZLModelCustomFieldType fieldType = [self fieldTypeFromParagraph:p];
         
-//        NSLog(@"field name: %@, id: %ld, type: %ld", fieldName, (long)fieldId, (long)fieldType);
-        
         NSArray<OZLModelStringContainer *> *options;
-        
+
+        __block NSString *value;
 #warning Custom field support is incomplete! Need to parse the rest of the types.
         if (fieldType == OZLModelCustomFieldTypeInvalid) {
             continue;
-        } else if (fieldType == OZLModelCustomFieldTypeList) {
-             options = [self optionsFromListFieldParagraph:p];
+        } else if (fieldType == OZLModelCustomFieldTypeList || fieldType == OZLModelCustomFieldTypeVersion) {
+            options = [self optionsFromListFieldParagraph:p currentValue:&value];
+        } else if (fieldType == OZLModelCustomFieldTypeBoolean) {
+            [p iterate:@"span.label" usingBlock:^(RXMLElement *e) {
+                RXMLElement *input = [e child:@"input"];
+                if ([[input attribute:@"checked"] isEqualToString:@"checked"]) {
+                    value = [input attribute:@"value"];
+                }
+            }];
         }
-        
+
         OZLModelCustomField *field = [[OZLModelCustomField alloc] init];
         field.name = fieldName;
         field.type = fieldType;
         field.fieldId = fieldId;
+        field.value = value;
         
         if (options.count > 0) {
             [field.options addObjects:options];
@@ -67,17 +74,21 @@
     return fields;
 }
 
-+ (NSArray<OZLModelStringContainer *> *)optionsFromListFieldParagraph:(RXMLElement *)p {
++ (NSArray<OZLModelStringContainer *> *)optionsFromListFieldParagraph:(RXMLElement *)p currentValue:(NSString **)currentValue{
     NSMutableArray *options = [NSMutableArray array];
     [p iterate:@"select.option" usingBlock:^(RXMLElement *optionEle) {
         NSString *optionText = [optionEle.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//        NSLog(@"option value: %@", optionText);
+        NSString *optionValue = [optionEle attribute:@"value"];
         
         if (optionText.length == 0) {
             return;
         }
+
+        if ([[optionEle attribute:@"selected"] isEqualToString:@"selected"] && currentValue) {
+            *currentValue = optionEle.text;
+        }
         
-        OZLModelStringContainer *option = [OZLModelStringContainer containerWithString:optionText];
+        OZLModelStringContainer *option = [OZLModelStringContainer containerWithString:optionText value:optionValue];
         
         [options addObject:option];
     }];

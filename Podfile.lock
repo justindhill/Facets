@@ -10,16 +10,14 @@ PODS:
   - JTSImageViewController (1.5.1)
   - JVFloatLabeledTextField (1.1.0)
   - RaptureXML@Frankly (1.0.3)
-  - Reachability (3.2)
-  - Realm (0.98.8):
-    - Realm/Headers (= 0.98.8)
-  - Realm/Headers (0.98.8)
+  - Realm (0.99.0):
+    - Realm/Headers (= 0.99.0)
+  - Realm/Headers (0.99.0)
   - Reveal-iOS-SDK (1.6.2)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
   - SORelativeDateTransformer (1.1.10)
-  - SSKeychain (1.4.0)
   - TTTAttributedLabel (1.13.4)
 
 DEPENDENCIES:
@@ -32,12 +30,10 @@ DEPENDENCIES:
   - JTSImageViewController
   - JVFloatLabeledTextField
   - RaptureXML@Frankly
-  - Reachability
   - Realm
   - Reveal-iOS-SDK
   - SDWebImage
   - SORelativeDateTransformer
-  - SSKeychain
   - TTTAttributedLabel
 
 SPEC CHECKSUMS:
@@ -50,12 +46,10 @@ SPEC CHECKSUMS:
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
   JVFloatLabeledTextField: ea4a3d8387ddd43724c472bb2b8ab39b79af05d4
   RaptureXML@Frankly: 2cf369025bd8b7f7401365170c263dc2efb902c5
-  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  Realm: 0e293bb62999730599efc3048896bbd4f2e43bcd
+  Realm: cf275f109b94e5399896960c90285a043edb3d56
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
-  SSKeychain: c71293fa57216a40ab06c23f4085387583293de4
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
 COCOAPODS: 0.39.0
