@@ -127,8 +127,11 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         
         let nav = UINavigationController(rootViewController: sortAndFilter)
         nav.modalPresentationStyle = .FormSheet
-        
-        self.presentViewController(nav, animated: true, completion: nil)
+
+        if let rightBarButtonItem = self.navigationItem.rightBarButtonItem {
+            let popover = UIPopoverController(contentViewController: nav)
+            popover.presentPopoverFromBarButtonItem(rightBarButtonItem, permittedArrowDirections: .Any, animated: true)
+        }
     }
     
     func composeButtonAction(sender: UIButton?) {

@@ -195,6 +195,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     nav.navigationBar.translucent = NO;
     nav.navigationBar.barTintColor = [UIColor whiteColor];
+    nav.modalPresentationStyle = UIModalPresentationFormSheet;
 
     [self presentViewController:nav animated:YES completion:nil];
 }
