@@ -293,7 +293,7 @@ static NSDateFormatter *OZLModelUpdateDateFormatter;
     _targetVersion = targetVersion;
     
     if (self.modelDiffingEnabled && targetVersion) {
-        self.mutableChangeDictionary[@"target_version_id"] = @(targetVersion.versionId);
+        self.mutableChangeDictionary[@"fixed_version_id"] = @(targetVersion.versionId);
     }
 }
 

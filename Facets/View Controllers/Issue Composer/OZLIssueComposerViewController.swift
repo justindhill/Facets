@@ -232,6 +232,14 @@ class OZLIssueComposerViewController: OZLFormViewController {
                 self.issue.description = toValue
             } else if keyPath == CommentKeypath {
                 self.issue.setUpdateComment(toValue)
+            } else if keyPath == TimeEstimationKeypath {
+                if let toValue = Float(toValue) {
+                    self.issue.estimatedHours = Float(toValue)
+                }
+            } else if keyPath == PercentCompleteKeypath {
+                if let toValue = Float(toValue) {
+                    self.issue.doneRatio = toValue
+                }
             } else if let customField = customField {
                 if let toValue = Float(toValue) where customField.type == .Float {
                     self.issue.setValueOnDiff(toValue, forCustomFieldId: customField.fieldId)
@@ -255,9 +263,19 @@ class OZLIssueComposerViewController: OZLFormViewController {
             if keyPath == StatusKeypath {
                 self.issue.status = toValue
             }
+        } else if let toValue = toValue as? OZLModelIssueCategory {
+            if keyPath == CategoryKeypath {
+                self.issue.category = toValue
+            }
         } else if let toValue = toValue as? OZLModelVersion {
-            if let customField = customField {
+            if keyPath == TargetVersionKeypath {
+                self.issue.targetVersion = toValue
+            } else if let customField = customField {
                 self.issue.setValueOnDiff(String(toValue.versionId), forCustomFieldId: customField.fieldId)
+            }
+        } else if let toValue = toValue as? OZLModelUser {
+            if keyPath == AssigneeKeypath {
+                self.issue.assignedTo = toValue
             }
         } else if let toValue = toValue as? NSDate {
             if keyPath == DueDateKeypath {
