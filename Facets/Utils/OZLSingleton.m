@@ -11,6 +11,7 @@
 @interface OZLSingleton ()
 
 @property (strong) OZLServerSync *serverSync;
+@property NSTimer *sessionRefreshTimer;
 
 @end
 
@@ -56,8 +57,6 @@ NSString * const USER_DEFAULTS_REDMINE_COOKIE = @"USER_DEFAULTS_REDMINE_COOKIE";
             [[OZLNetwork sharedInstance] updateSessionCookieWithHost:self.redmineHomeURL
                                                         cookieHeader:self.redmineCookie];
         }
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     
     return self;
@@ -175,7 +174,23 @@ NSString * const USER_DEFAULTS_REDMINE_COOKIE = @"USER_DEFAULTS_REDMINE_COOKIE";
                                                         forProtectionSpace:protectionSpace];
 }
 
-- (void)applicationDidBecomeActive:(NSNotification *)notification {
+- (void)startSessionUpkeep {
+    if (!self.sessionRefreshTimer) {
+        [self refreshSession];
+
+        self.sessionRefreshTimer = [NSTimer timerWithTimeInterval:(3 * 60) target:self selector:@selector(refreshSession) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.sessionRefreshTimer forMode:NSRunLoopCommonModes];
+    }
+}
+
+- (void)suspendSessionUpkeep {
+    if (self.sessionRefreshTimer) {
+        [self.sessionRefreshTimer invalidate];
+        self.sessionRefreshTimer = nil;
+    }
+}
+
+- (void)refreshSession {
     if (self.isUserLoggedIn) {
         [[OZLNetwork sharedInstance] authenticateCredentialsWithURL:[NSURL URLWithString:self.redmineHomeURL] username:self.redmineUserName password:self.redminePassword completion:^(NSError * _Nullable error) {
             [self.serverSync startSyncCompletion:nil];

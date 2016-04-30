@@ -11,31 +11,35 @@ import HockeySDK
 
 class OZLAppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         #if !DEBUG
             BITHockeyManager.sharedHockeyManager().configureWithIdentifier("8d240e4921f15253d040d9347ad7d9ac")
             BITHockeyManager.sharedHockeyManager().startManager()
             BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
         #endif
-        
+
         OZLNetwork.sharedInstance()
         OZLSingleton.sharedInstance()
-        
+
         NSURLProtocol.registerClass(OZLURLProtocol.self)
 
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.tintColor = UIColor.facetsBrandColor()
         self.window?.backgroundColor = UIColor.whiteColor()
-        
+
         let vc = OZLMainTabControllerViewController()
         self.window?.rootViewController = vc
         self.window?.makeKeyAndVisible()
-        
+
         return true
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
+        OZLSingleton.sharedInstance().startSessionUpkeep()
+    }
 
+    func applicationDidEnterBackground(application: UIApplication) {
+        OZLSingleton.sharedInstance().suspendSessionUpkeep()
     }
 }

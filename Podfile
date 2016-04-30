@@ -1,7 +1,6 @@
 def all_pods
 	use_frameworks!
 
-	pod 'Reachability'
 	pod 'HockeySDK', '~> 4.0-beta'
 	pod 'DRPSlidingTabView', '~> 0.2'
 	pod 'DRPLoadingSpinner'
@@ -13,7 +12,6 @@ def all_pods
 	pod 'GTMNSStringHTMLAdditions'
 	pod 'Realm'
 	pod 'JVFloatLabeledTextField'
-	pod 'SSKeychain'
 	pod 'SORelativeDateTransformer'
 	pod 'JGProgressHUD'
 
