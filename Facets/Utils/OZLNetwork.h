@@ -6,7 +6,6 @@
 
 @import Foundation;
 #import "OZLModelProject.h"
-#import "OZLModelIssue.h"
 #import "OZLModelIssuePriority.h"
 #import "OZLModelIssueStatus.h"
 #import "OZLModelTracker.h"

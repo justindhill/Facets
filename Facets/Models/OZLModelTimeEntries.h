@@ -6,7 +6,6 @@
 
 @import Foundation;
 #import "OZLModelProject.h"
-#import "OZLModelIssue.h"
 #import "OZLModelUser.h"
 #import "OZLModelTimeEntryActivity.h"
 

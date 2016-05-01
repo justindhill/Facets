@@ -7,7 +7,6 @@
 //
 
 @import UIKit;
-#import "OZLModelIssue.h"
 
 @class OZLModelIssue;
 

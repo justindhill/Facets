@@ -7,7 +7,6 @@
 //
 
 #import "OZLIssueViewModel.h"
-#import "OZLModelIssue.h"
 #import "OZLNetwork.h"
 #import "Facets-Swift.h"
 

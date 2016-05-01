@@ -9,6 +9,8 @@
 #import "OZLIssueAboutTabView.h"
 #import "Facets-Swift.h"
 
+#import "OZLModelCustomField.h"
+
 @interface OZLIssueAboutTabView ()
 
 @property NSMutableArray *fieldViews;

@@ -7,7 +7,6 @@
 //
 
 @import UIKit;
-#import "OZLModelIssue.h"
 #import "OZLIssueViewModel.h"
 
 @protocol OZLQuickAssignDelegate;

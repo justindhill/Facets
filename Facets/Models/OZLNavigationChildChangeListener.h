@@ -7,7 +7,6 @@
 //
 
 @import Foundation;
-#import "OZLModelIssue.h"
 
 @protocol OZLNavigationChildChangeListener <NSObject>
 

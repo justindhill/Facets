@@ -8,8 +8,6 @@
 
 @import DRPSlidingTabView;
 
-#import "OZLModelIssue.h"
-
 @class OZLModelIssue;
 
 @interface OZLIssueAboutTabView : UIView <DRPIntrinsicHeightChangeEmitter>

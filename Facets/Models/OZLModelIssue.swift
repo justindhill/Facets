@@ -20,7 +20,13 @@ import Foundation
     }
     private(set) var changeDictionary: [String: AnyObject]? = nil
 
-    var tracker: OZLModelTracker?
+    var tracker: OZLModelTracker? {
+        didSet {
+            if let tracker = tracker where self.modelDiffingEnabled {
+                self.changeDictionary?["tracker_id"] = tracker.trackerId
+            }
+        }
+    }
     var author: OZLModelUser?
     var assignedTo: OZLModelUser?
     var priority: OZLModelIssuePriority?
