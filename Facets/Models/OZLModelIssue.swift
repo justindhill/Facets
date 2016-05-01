@@ -27,12 +27,55 @@ import Foundation
             }
         }
     }
-    var author: OZLModelUser?
-    var assignedTo: OZLModelUser?
-    var priority: OZLModelIssuePriority?
-    var status: OZLModelIssueStatus?
-    var category: OZLModelIssueCategory?
-    var targetVersion: OZLModelVersion?
+
+    var author: OZLModelUser? {
+        didSet {
+            if let author = author where self.modelDiffingEnabled {
+                self.changeDictionary?["author_id"] = author.userId
+            }
+        }
+    }
+
+    var assignedTo: OZLModelUser? {
+        didSet {
+            if let assignedTo = assignedTo where self.modelDiffingEnabled {
+                self.changeDictionary?["assigned_to_id"] = assignedTo.userId
+            }
+        }
+    }
+
+    var priority: OZLModelIssuePriority? {
+        didSet {
+            if let priority = priority where self.modelDiffingEnabled {
+                self.changeDictionary?["priority_id"] = priority.priorityId
+            }
+        }
+    }
+
+    var status: OZLModelIssueStatus? {
+        didSet {
+            if let status = status where self.modelDiffingEnabled {
+                self.changeDictionary?["status_id"] = status.statusId
+            }
+        }
+    }
+
+    var category: OZLModelIssueCategory? {
+        didSet {
+            if let category = category where self.modelDiffingEnabled {
+                self.changeDictionary?["category_id"] = category.categoryId
+            }
+        }
+    }
+
+    var targetVersion: OZLModelVersion? {
+        didSet {
+            if let targetVersion = targetVersion where self.modelDiffingEnabled {
+                self.changeDictionary?["fixed_version_id"] = targetVersion.versionId
+            }
+        }
+    }
+
     var attachments: [OZLModelAttachment]?
     var journals: [OZLModelJournal]?
     var customFields: [OZLModelCustomField]?
