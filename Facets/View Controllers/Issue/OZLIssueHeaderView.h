@@ -9,6 +9,8 @@
 @import UIKit;
 #import "OZLModelIssue.h"
 
+@class OZLModelIssue;
+
 @interface OZLIssueHeaderView : UIView
 
 @property (strong) UILabel *titleLabel;

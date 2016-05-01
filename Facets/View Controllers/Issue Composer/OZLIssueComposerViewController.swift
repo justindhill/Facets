@@ -167,7 +167,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
             OZLTextViewFormField(
                 keyPath: DescriptionKeypath,
                 placeholder: "Description",
-                currentValue: self.changes[DescriptionKeypath] as? String ?? self.issue.description)
+                currentValue: self.changes[DescriptionKeypath] as? String ?? self.issue.issueDescription)
         ])
 
         sections.append(generalSection)
@@ -229,7 +229,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
             if keyPath == SubjectKeypath {
                 self.issue.subject = toValue
             } else if keyPath == DescriptionKeypath {
-                self.issue.description = toValue
+                self.issue.issueDescription = toValue
             } else if keyPath == CommentKeypath {
                 self.issue.setUpdateComment(toValue)
             } else if keyPath == TimeEstimationKeypath {

@@ -10,6 +10,8 @@
 #import "OZLModelUser.h"
 #import "OZLModelTimeEntryActivity.h"
 
+@class OZLModelIssue;
+
 @interface OZLModelTimeEntries : NSObject
 
 @property (nonatomic) NSInteger index;

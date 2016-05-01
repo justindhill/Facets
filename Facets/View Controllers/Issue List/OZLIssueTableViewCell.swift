@@ -48,7 +48,7 @@ class OZLIssueTableViewCell: UITableViewCell {
     func applyIssueModel(issue: OZLModelIssue) {
         self.priorityLabel.text = issue.priority?.name.uppercaseString;
         self.statusLabel.text = issue.status?.name.uppercaseString;
-        self.issueNumberLabel.text = "#\(issue.index)"
+        self.issueNumberLabel.text = String(format: "#%d", issue.index)
         self.subjectLabel.text = issue.subject;
 
         self.assigneeNameLabel.hidden = (issue.assignedTo == nil)

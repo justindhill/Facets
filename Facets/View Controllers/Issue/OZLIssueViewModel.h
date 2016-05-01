@@ -9,6 +9,8 @@
 @import Foundation;
 #import "OZLModelIssue.h"
 
+@class OZLModelIssue;
+
 extern NSString * const OZLIssueSectionDetail;
 extern NSString * const OZLIssueSectionDescription;
 extern NSString * const OZLIssueSectionAttachments;
@@ -20,7 +22,9 @@ typedef NS_ENUM(NSInteger, OZLIssueCompleteness) {
     OZLIssueCompletenessAll
 };
 
+@class OZLModelJournal;
 @class OZLIssueViewModel;
+
 @protocol OZLIssueViewModelDelegate <NSObject>
 
 - (void)viewModel:(OZLIssueViewModel *)viewModel didFinishLoadingIssueWithError:(NSError *)error;

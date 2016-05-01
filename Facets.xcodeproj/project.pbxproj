@@ -14,7 +14,6 @@
 		2BCCA0541795312E00FA8B1A /* OZLConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCCA0531795312E00FA8B1A /* OZLConstants.m */; };
 		2BCF88121793CB4F006FC859 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF88111793CB4F006FC859 /* CFNetwork.framework */; };
 		2BCF88141793CB94006FC859 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCF88131793CB94006FC859 /* SystemConfiguration.framework */; };
-		2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF881D1793F3C8006FC859 /* OZLModelIssue.m */; };
 		2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF88201793F478006FC859 /* OZLModelTracker.m */; };
 		2BCF88271793F4AA006FC859 /* OZLModelIssueStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF88261793F4AA006FC859 /* OZLModelIssueStatus.m */; };
 		2BCF882A1793F4C9006FC859 /* OZLModelIssuePriority.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCF88291793F4C9006FC859 /* OZLModelIssuePriority.m */; };
@@ -29,6 +28,7 @@
 		D00793981CC8A8310050FF48 /* SORelativeDateTransformer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */; };
 		D00793A01CC9AA290050FF48 /* Pods-Facets.beta.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D007939F1CC9AA290050FF48 /* Pods-Facets.beta.xcconfig */; };
 		D00EA1F51CD53597002210E0 /* UIColor+OZLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00EA1F41CD53597002210E0 /* UIColor+OZLExtensions.swift */; };
+		D00EA1F71CD56869002210E0 /* OZLModelIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00EA1F61CD56869002210E0 /* OZLModelIssue.swift */; };
 		D014C2B11C95D37E00D381A9 /* NSDate+OZLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */; };
 		D014C2B31C95DD8D00D381A9 /* OZLTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B21C95DD8D00D381A9 /* OZLTableViewController.swift */; };
 		D014C2B61C96151A00D381A9 /* OZLFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B51C96151A00D381A9 /* OZLFormViewController.swift */; };
@@ -123,8 +123,6 @@
 		2BCCA0531795312E00FA8B1A /* OZLConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OZLConstants.m; path = Models/OZLConstants.m; sourceTree = "<group>"; };
 		2BCF88111793CB4F006FC859 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		2BCF88131793CB94006FC859 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		2BCF881C1793F3C8006FC859 /* OZLModelIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelIssue.h; sourceTree = "<group>"; };
-		2BCF881D1793F3C8006FC859 /* OZLModelIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelIssue.m; sourceTree = "<group>"; };
 		2BCF881F1793F478006FC859 /* OZLModelTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelTracker.h; sourceTree = "<group>"; };
 		2BCF88201793F478006FC859 /* OZLModelTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelTracker.m; sourceTree = "<group>"; };
 		2BCF88251793F4AA006FC859 /* OZLModelIssueStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelIssueStatus.h; sourceTree = "<group>"; };
@@ -147,6 +145,7 @@
 		D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SORelativeDateTransformer.bundle; sourceTree = "<group>"; };
 		D007939F1CC9AA290050FF48 /* Pods-Facets.beta.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-Facets.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Facets/Pods-Facets.beta.xcconfig"; sourceTree = "<group>"; };
 		D00EA1F41CD53597002210E0 /* UIColor+OZLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+OZLExtensions.swift"; sourceTree = "<group>"; };
+		D00EA1F61CD56869002210E0 /* OZLModelIssue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLModelIssue.swift; sourceTree = "<group>"; };
 		D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+OZLExtensions.swift"; sourceTree = "<group>"; };
 		D014C2B21C95DD8D00D381A9 /* OZLTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLTableViewController.swift; sourceTree = "<group>"; };
 		D014C2B51C96151A00D381A9 /* OZLFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLFormViewController.swift; sourceTree = "<group>"; };
@@ -647,8 +646,7 @@
 				2BCF88261793F4AA006FC859 /* OZLModelIssueStatus.m */,
 				D5DB80C017931C8B0081662A /* OZLModelProject.h */,
 				D5DB80C117931C8B0081662A /* OZLModelProject.m */,
-				2BCF881C1793F3C8006FC859 /* OZLModelIssue.h */,
-				2BCF881D1793F3C8006FC859 /* OZLModelIssue.m */,
+				D00EA1F61CD56869002210E0 /* OZLModelIssue.swift */,
 				2BCF881F1793F478006FC859 /* OZLModelTracker.h */,
 				2BCF88201793F478006FC859 /* OZLModelTracker.m */,
 				2BCF88281793F4C9006FC859 /* OZLModelIssuePriority.h */,
@@ -879,7 +877,6 @@
 				D0292D701BF3141900F717F2 /* OZLLoadingView.m in Sources */,
 				D056780C1C965733002F6BCF /* NSString+OZLURLEncoding.m in Sources */,
 				D01F9C111BED9B15005B2ED0 /* OZLIssueDescriptionCell.m in Sources */,
-				2BCF881E1793F3C8006FC859 /* OZLModelIssue.m in Sources */,
 				D0DD77841C94A8EF008DC65D /* OZLIssueTableViewCell.swift in Sources */,
 				D00793961CC87F100050FF48 /* OZLDateFormField.swift in Sources */,
 				2BCF88211793F478006FC859 /* OZLModelTracker.m in Sources */,
@@ -922,6 +919,7 @@
 				D01F9C141BEDABB8005B2ED0 /* UIColor+OZLExtensions.m in Sources */,
 				D04801461BD004E50047C5DE /* CAPSOptionsMenuButton.swift in Sources */,
 				D022D6E11C9B49930035ABF5 /* OZLButtonFormField.swift in Sources */,
+				D00EA1F71CD56869002210E0 /* OZLModelIssue.swift in Sources */,
 				D01F9BE31BEC8BDD005B2ED0 /* UIView+OZLExtensions.m in Sources */,
 				D0C9F0531C30742400976B06 /* OZLSplitViewPlaceholderPane.swift in Sources */,
 				2BCC0FD2179D56BA003DFB44 /* OZLModelTimeEntries.m in Sources */,

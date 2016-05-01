@@ -202,7 +202,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 
 - (void)showFullDescriptionAction:(UIButton *)button {
     OZLIssueFullDescriptionViewController *descriptionVC = [[OZLIssueFullDescriptionViewController alloc] init];
-    descriptionVC.descriptionLabel.text = self.viewModel.issueModel.description;
+    descriptionVC.descriptionLabel.text = self.viewModel.issueModel.issueDescription;
     descriptionVC.contentPadding = OZLContentPadding;
     
     [self.navigationController pushViewController:descriptionVC animated:YES];
@@ -258,7 +258,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     } else if ([sectionName isEqualToString:OZLIssueSectionDescription]) {
         OZLIssueDescriptionCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLDescriptionReuseIdentifier forIndexPath:indexPath];
         cell.contentPadding = 16.;
-        cell.descriptionPreviewString = self.viewModel.issueModel.description;
+        cell.descriptionPreviewString = self.viewModel.issueModel.issueDescription;
         [cell.showMoreButton addTarget:self action:@selector(descriptionShowMoreAction:) forControlEvents:UIControlEventTouchUpInside];
         
         return cell;
@@ -296,7 +296,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         
     } else if ([sectionName isEqualToString:OZLIssueSectionDescription]) {
         return [OZLIssueDescriptionCell heightWithWidth:tableView.frame.size.width
-                                           description:self.viewModel.issueModel.description
+                                           description:self.viewModel.issueModel.issueDescription
                                         contentPadding:OZLContentPadding];
         
     } else if ([sectionName isEqualToString:OZLIssueSectionAttachments]) {

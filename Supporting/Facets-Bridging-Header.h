@@ -1,5 +1,6 @@
 // Facets-Bridging-Header.h
 
+#import "OZLModelAttachment.h"
 #import "OZLModelUser.h"
 #import "OZLModelProject.h"
 #import "OZLModelTracker.h"

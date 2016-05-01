@@ -12,6 +12,7 @@
 #import "OZLRedmineHTMLParser.h"
 
 #import "NSString+OZLURLEncoding.h"
+#import "Facets-Swift.h"
 
 NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 

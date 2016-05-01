@@ -57,12 +57,12 @@ import UIKit
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: UIKeyboardWillShowNotification, object: nil)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
-            guard let issueModel = self.issueModel else {
+            guard let issueModel = self.issueModel, projectId = issueModel.projectId else {
                 assertionFailure("Issue model wasn't set on OZLQuickAssignViewController before its view was loaded.");
                 return
             }
             
-            self.canonicalMemberships = OZLModelMembership.objectsWithPredicate(NSPredicate(format: "%K = %ld", "projectId", issueModel.projectId))
+            self.canonicalMemberships = OZLModelMembership.objectsWithPredicate(NSPredicate(format: "%K = %ld", "projectId", projectId))
             self.filteredMemberships = self.canonicalMemberships
         }
     }

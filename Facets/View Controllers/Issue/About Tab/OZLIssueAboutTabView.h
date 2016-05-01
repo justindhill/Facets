@@ -10,6 +10,8 @@
 
 #import "OZLModelIssue.h"
 
+@class OZLModelIssue;
+
 @interface OZLIssueAboutTabView : UIView <DRPIntrinsicHeightChangeEmitter>
 
 @property (nonatomic, strong) UIFont *fieldNameFont;

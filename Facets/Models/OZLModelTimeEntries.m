@@ -5,6 +5,7 @@
 //  Created by lizhijie on 7/22/13.
 
 #import "OZLModelTimeEntries.h"
+#import "Facets-Swift.h"
 
 @implementation OZLModelTimeEntries
 

@@ -79,7 +79,7 @@ NSString * const OZLIssueSectionRecentActivity = @"OZLIssueSectionRecentActivity
 - (void)updateSectionNames {
     NSMutableArray *names = [NSMutableArray arrayWithObjects:OZLIssueSectionDetail, nil];
     
-    if (self.issueModel.description.length > 0) {
+    if (self.issueModel.issueDescription.length > 0) {
         [names addObject:OZLIssueSectionDescription];
     }
     

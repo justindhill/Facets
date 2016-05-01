@@ -7,6 +7,7 @@
 //
 
 #import "OZLIssueHeaderView.h"
+#import "Facets-Swift.h"
 
 const CGFloat profileSideLen = 32.;
 const CGFloat assigneeTextSize = 14.;
