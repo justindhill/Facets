@@ -150,6 +150,9 @@ class OZLJournalCell: OZLTableViewCell {
                 } else {
                     detailString  = "Removed \(name.lowercaseString)"
                 }
+            } else {
+                // This should never happen, but let's cover our bases.
+                detailString = ""
             }
             
             str.appendAttributedString(NSAttributedString(string: detailString, attributes:  detailAttributes))

@@ -308,7 +308,8 @@ import Foundation
                 case "category_id": return OZLModelIssueCategory(forPrimaryKey: id)?.name
                 case "priority_id": return OZLModelIssuePriority(forPrimaryKey: id)?.name
 
-                default: return nil
+                default:
+                    return String(id)
             }
         }
 
@@ -327,8 +328,12 @@ import Foundation
                 case "priority_id": return "Priority"
                 case "due_date": return "Due date"
                 case "start_date": return "Start date"
+                case "done_ratio": return "Percent complete"
+                case "estimated_hours": return "Estimated hours"
 
-                default: return nil
+                default:
+                    assertionFailure("We were asked for a display name for an attribute we don't know of!")
+                    return name
             }
         }
 
