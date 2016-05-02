@@ -11,9 +11,11 @@
 #import "OZLModelProject.h"
 
 @import JGProgressHUD;
+@import OnePasswordExtension;
 
 @interface OZLAccountViewController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *onePasswordButton;
 @property JGProgressHUD *hud;
 
 @end
@@ -25,10 +27,19 @@
     
     self.title = @"Settings";
 
-    _redmineHomeURL.text = [[OZLSingleton sharedInstance] redmineHomeURL];
-    _redmineUserKey.text = [[OZLSingleton sharedInstance] redmineUserKey];
-    _username.text = [[OZLSingleton sharedInstance] redmineUserName];
-    _password.text = [[OZLSingleton sharedInstance] redminePassword];
+    self.redmineHomeURL.text = [[OZLSingleton sharedInstance] redmineHomeURL];
+    self.redmineUserKey.text = [[OZLSingleton sharedInstance] redmineUserKey];
+    self.username.text = [[OZLSingleton sharedInstance] redmineUserName];
+    self.password.text = [[OZLSingleton sharedInstance] redminePassword];
+
+    NSBundle *opBundle = [NSBundle bundleForClass:[OnePasswordExtension class]];
+    NSBundle *opResBundle = [NSBundle bundleWithPath:[opBundle.bundlePath stringByAppendingPathComponent:@"OnePasswordExtensionResources.bundle"]];
+    UIImage *onePasswordImage = [UIImage imageNamed:@"onepassword-button" inBundle:opResBundle compatibleWithTraitCollection:nil];
+    onePasswordImage = [onePasswordImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+
+    [self.onePasswordButton setImage:onePasswordImage forState:UIControlStateNormal];
+    self.onePasswordButton.hidden = ![[OnePasswordExtension sharedExtension] isAppExtensionAvailable];
+    [self.onePasswordButton addTarget:self action:@selector(onePasswordButtonAction:) forControlEvents:UIControlEventTouchUpInside];
 
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped)];
     [self.view addGestureRecognizer:tapper];
@@ -59,6 +70,23 @@
             
             [weakSelf startSync];
         }
+    }];
+}
+
+- (void)onePasswordButtonAction:(UIButton *)sender {
+    __weak OZLAccountViewController *weakSelf = self;
+
+    [[OnePasswordExtension sharedExtension] findLoginForURLString:self.redmineHomeURL.text forViewController:self sender:sender completion:^(NSDictionary *loginDictionary, NSError *error) {
+        if (loginDictionary.count == 0) {
+            if (error.code != AppExtensionErrorCodeCancelledByUser) {
+                NSLog(@"Error invoking 1Password App Extension for find login: %@", error);
+            }
+            return;
+        }
+
+        weakSelf.username.text = loginDictionary[AppExtensionUsernameKey];
+        weakSelf.password.text = loginDictionary[AppExtensionPasswordKey];
+        [weakSelf saveButtonAction:nil];
     }];
 }
 

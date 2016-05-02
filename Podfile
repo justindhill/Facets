@@ -14,6 +14,7 @@ def all_pods
 	pod 'JVFloatLabeledTextField'
 	pod 'SORelativeDateTransformer'
 	pod 'JGProgressHUD'
+	pod '1PasswordExtension'
 
 	pod 'Reveal-iOS-SDK', :configuration => ['Debug']
 end
