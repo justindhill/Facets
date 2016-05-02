@@ -126,11 +126,15 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         sortAndFilter.options = self.viewModel.sortAndFilterOptions
         
         let nav = UINavigationController(rootViewController: sortAndFilter)
-        nav.modalPresentationStyle = .FormSheet
 
         if let rightBarButtonItem = self.navigationItem.rightBarButtonItem {
-            let popover = UIPopoverController(contentViewController: nav)
-            popover.presentPopoverFromBarButtonItem(rightBarButtonItem, permittedArrowDirections: .Any, animated: true)
+            if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+                let popover = UIPopoverController(contentViewController: nav)
+                popover.presentPopoverFromBarButtonItem(rightBarButtonItem, permittedArrowDirections: .Any, animated: true)
+            } else {
+                nav.modalPresentationStyle = .FormSheet
+                self.presentViewController(nav, animated: true, completion: nil)
+            }
         }
     }
     
