@@ -28,6 +28,8 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.tintAdjustmentMode = .Normal
+
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: OZLContentPadding, bottom: 0, right: OZLContentPadding)

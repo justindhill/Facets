@@ -11,8 +11,8 @@ import SORelativeDateTransformer
 
 class OZLIssueTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var priorityLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var priorityPillSection: UIButton!
+    @IBOutlet weak var statusPillSection: UIButton!
     @IBOutlet weak var issueNumberLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var assigneeNameLabel: UILabel!
@@ -37,19 +37,26 @@ class OZLIssueTableViewCell: UITableViewCell {
         self.contentView.layer.shouldRasterize = true
         self.contentView.layer.rasterizationScale = UIScreen.mainScreen().scale
 
-        self.priorityLabel.layer.masksToBounds = true
+        self.priorityPillSection.userInteractionEnabled = false
+        self.statusPillSection.userInteractionEnabled = false
+
         self.assigneeAvatarImageView.layer.masksToBounds = true
 
-        self.priorityLabel.textColor = UIColor.whiteColor()
-        self.priorityLabel.backgroundColor = self.tintColor
+        self.priorityPillSection.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.assigneeAvatarImageView.backgroundColor = UIColor.lightGrayColor()
+
+        let leftBgImage = self.cappedImageWithRoundedCorners(.Left, cornerRadius: 2.0, height: 16.0).imageWithRenderingMode(.AlwaysTemplate)
+        self.priorityPillSection.setBackgroundImage(leftBgImage, forState: .Normal)
+
+        let rightBgImage = self.cappedImageWithRoundedCorners(.Right, cornerRadius: 2.0, height: 16.0, color: UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1))
+        self.statusPillSection.setBackgroundImage(rightBgImage, forState: .Normal)
     }
 
     func applyIssueModel(issue: OZLModelIssue) {
-        self.priorityLabel.text = issue.priority?.name.uppercaseString;
-        self.statusLabel.text = issue.status?.name.uppercaseString;
+        self.priorityPillSection.setTitle(issue.priority?.name.uppercaseString, forState: .Normal)
+        self.statusPillSection.setTitle(issue.status?.name.uppercaseString, forState: .Normal)
         self.issueNumberLabel.text = String(format: "#%d", issue.index)
-        self.subjectLabel.text = issue.subject;
+        self.subjectLabel.text = issue.subject
 
         self.assigneeNameLabel.hidden = (issue.assignedTo == nil)
         self.assigneeAvatarImageView.hidden = (issue.assignedTo == nil)
@@ -89,28 +96,28 @@ class OZLIssueTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.priorityLabel.sizeToFit()
-        self.priorityLabel.frame = CGRectMake(self.contentPadding,
+        self.priorityPillSection.sizeToFit()
+        self.priorityPillSection.frame = CGRectMake(self.contentPadding,
                                               self.contentPadding,
-                                              ceil(self.priorityLabel.frame.size.width + 6),
-                                              ceil(self.priorityLabel.frame.size.height + 4))
+                                              ceil(self.priorityPillSection.frame.size.width + 6),
+                                              ceil(self.priorityPillSection.frame.size.height + 4))
 
-        self.statusLabel.sizeToFit()
-        self.statusLabel.frame = CGRectMake(floor(self.priorityLabel.right),
-                                            self.priorityLabel.top,
-                                            ceil(self.statusLabel.frame.size.width + 6),
-                                            self.priorityLabel.frame.size.height)
+        self.statusPillSection.sizeToFit()
+        self.statusPillSection.frame = CGRectMake(floor(self.priorityPillSection.right),
+                                            self.priorityPillSection.top,
+                                            ceil(self.statusPillSection.frame.size.width + 6),
+                                            self.priorityPillSection.frame.size.height)
 
         self.issueNumberLabel.sizeToFit()
-        self.issueNumberLabel.frame = CGRectMake(ceil(self.statusLabel.right + (self.contentPadding / 2)),
-                                                 self.statusLabel.top,
+        self.issueNumberLabel.frame = CGRectMake(ceil(self.statusPillSection.right + (self.contentPadding / 2)),
+                                                 self.statusPillSection.top,
                                                  self.issueNumberLabel.frame.size.width,
-                                                 self.priorityLabel.frame.size.height)
+                                                 self.priorityPillSection.frame.size.height)
 
         self.subjectLabel.frame = CGRectMake(0, 0, self.contentView.frame.size.width - (2 * self.contentPadding), 0)
         self.subjectLabel.sizeToFit()
         self.subjectLabel.frame = CGRectMake(self.contentPadding,
-                                             ceil(self.priorityLabel.bottom + (self.contentPadding / 2)),
+                                             ceil(self.priorityPillSection.bottom + (self.contentPadding / 2)),
                                              self.subjectLabel.frame.size.width,
                                              self.subjectLabel.frame.size.height)
 
@@ -154,21 +161,7 @@ class OZLIssueTableViewCell: UITableViewCell {
     override func layoutSublayersOfLayer(layer: CALayer) {
         super.layoutSublayersOfLayer(layer)
 
-        let leftRoundedMask = CAShapeLayer()
-        leftRoundedMask.path = UIBezierPath(roundedRect: self.priorityLabel.bounds, byRoundingCorners: [.TopLeft, .BottomLeft], cornerRadii: CGSizeMake(2.0, 2.0)).CGPath
-
-        self.priorityLabel.layer.mask = leftRoundedMask
-
-        let rightRoundedMask = CAShapeLayer()
-        rightRoundedMask.path = UIBezierPath(roundedRect: self.statusLabel.bounds, byRoundingCorners: [.TopRight, .BottomRight], cornerRadii: CGSizeMake(2.0, 2.0)).CGPath
-
-        self.statusLabel.layer.mask = rightRoundedMask
-
         self.assigneeAvatarImageView.layer.cornerRadius = (self.assigneeAvatarImageView.frame.size.width / 2.0)
-    }
-
-    override func tintColorDidChange() {
-        self.priorityLabel.backgroundColor = self.tintColor
     }
 
     private static let sizingInstance = OZLIssueTableViewCell.cell()
@@ -188,5 +181,39 @@ class OZLIssueTableViewCell: UITableViewCell {
         } else {
             return instance.subjectLabel.bottom + contentPadding
         }
+    }
+
+    // MARK: - Private
+    private enum RoundedImageSide {
+        case Left
+        case Right
+    }
+
+    private func cappedImageWithRoundedCorners(side: RoundedImageSide, cornerRadius: CGFloat, height: CGFloat, color: UIColor = UIColor.blackColor()) -> UIImage {
+        let rect = CGRectMake(0, 0, cornerRadius + 1, max(height - (2 * cornerRadius), 2 * cornerRadius) + 1)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
+        let ctx = UIGraphicsGetCurrentContext()
+
+        var corners: UIRectCorner!
+        if side == .Left {
+            corners = [.TopLeft, .BottomLeft]
+        } else {
+            corners = [.TopRight, .BottomRight]
+        }
+
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSizeMake(cornerRadius, cornerRadius)).CGPath
+        color.setFill()
+        CGContextAddPath(ctx, path)
+        CGContextFillPath(ctx)
+
+        var image = UIGraphicsGetImageFromCurrentImageContext()
+
+        if side == .Left {
+            image = image.resizableImageWithCapInsets(UIEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, 1))
+        } else {
+            image = image.resizableImageWithCapInsets(UIEdgeInsetsMake(cornerRadius, 1, cornerRadius, cornerRadius))
+        }
+
+        return image
     }
 }
