@@ -10,8 +10,7 @@
     
     let JournalCellReuseIdentifier = "JournalCellReuseIdentifier"
     let viewModel: OZLJournalViewerViewModel
-    var isFirstAppearance = true
-    
+
     init(viewModel: OZLJournalViewerViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -28,21 +27,6 @@
         self.tableView.allowsSelection = false
         self.tableView.separatorStyle = .None
         self.tableView.registerClass(OZLJournalCell.self, forCellReuseIdentifier:self.JournalCellReuseIdentifier)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        if (self.isFirstAppearance) {
-            self.tableView.setContentOffset(CGPointMake(0,
-                self.tableView.contentSize.height - self.tableView.contentInset.top - self.tableView.frame.size.height),
-                animated: false)
-        }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.isFirstAppearance = false
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

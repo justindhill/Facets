@@ -65,6 +65,8 @@ class OZLJournalCell: OZLTableViewCell {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
+        
         if self.isFirstLayout {
             self.contentView.addSubview(self.profileImageView)
             self.contentView.addSubview(self.usernameLabel)

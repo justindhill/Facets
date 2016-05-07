@@ -229,7 +229,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSString *sectionName = self.viewModel.currentSectionNames[section];
     
-    if ([sectionName isEqualToString:OZLIssueSectionRecentActivity]) {
+    if ([sectionName isEqualToString:OZLIssueViewModel.SectionRecentActivity]) {
         return self.viewModel.recentActivityCount;
     }
     
@@ -239,7 +239,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *sectionName = self.viewModel.currentSectionNames[indexPath.section];
     
-    if ([sectionName isEqualToString:OZLIssueSectionDetail]) {
+    if ([sectionName isEqualToString:OZLIssueViewModel.SectionDetail]) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLDetailReuseIdentifier forIndexPath:indexPath];
         cell.clipsToBounds = YES;
         
@@ -255,7 +255,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         
         return cell;
         
-    } else if ([sectionName isEqualToString:OZLIssueSectionDescription]) {
+    } else if ([sectionName isEqualToString:OZLIssueViewModel.SectionDescription]) {
         OZLIssueDescriptionCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLDescriptionReuseIdentifier forIndexPath:indexPath];
         cell.contentPadding = 16.;
         cell.descriptionPreviewString = self.viewModel.issueModel.issueDescription;
@@ -263,7 +263,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         
         return cell;
         
-    } else if ([sectionName isEqualToString:OZLIssueSectionAttachments]) {
+    } else if ([sectionName isEqualToString:OZLIssueViewModel.SectionAttachments]) {
         OZLIssueAttachmentGalleryCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLAttachmentsReuseIdentifier forIndexPath:indexPath];
         cell.contentPadding = 16.;
         cell.attachments = self.viewModel.issueModel.attachments;
@@ -271,7 +271,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
         
         return cell;
         
-    } else if ([sectionName isEqualToString:OZLIssueSectionRecentActivity]) {
+    } else if ([sectionName isEqualToString:OZLIssueViewModel.SectionRecentActivity]) {
         OZLJournalCell *cell = [tableView dequeueReusableCellWithIdentifier:OZLRecentActivityReuseIdentifier forIndexPath:indexPath];
         
         OZLModelJournal *journal = [self.viewModel recentActivityAtIndex:indexPath.row];
@@ -291,18 +291,18 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *sectionName = self.viewModel.currentSectionNames[indexPath.section];
     
-    if ([sectionName isEqualToString:OZLIssueSectionDetail]) {
+    if ([sectionName isEqualToString:OZLIssueViewModel.SectionDetail]) {
         return self.detailView.intrinsicHeight;
         
-    } else if ([sectionName isEqualToString:OZLIssueSectionDescription]) {
+    } else if ([sectionName isEqualToString:OZLIssueViewModel.SectionDescription]) {
         return [OZLIssueDescriptionCell heightWithWidth:tableView.frame.size.width
                                            description:self.viewModel.issueModel.issueDescription
                                         contentPadding:OZLContentPadding];
         
-    } else if ([sectionName isEqualToString:OZLIssueSectionAttachments]) {
+    } else if ([sectionName isEqualToString:OZLIssueViewModel.SectionAttachments]) {
         return 110.;
         
-    } else if ([sectionName isEqualToString:OZLIssueSectionRecentActivity]) {
+    } else if ([sectionName isEqualToString:OZLIssueViewModel.SectionRecentActivity]) {
         OZLModelJournal *journal = [self.viewModel recentActivityAtIndex:indexPath.row];
         
         return [OZLJournalCell heightWithWidth:self.view.frame.size.width contentPadding:OZLContentPadding journalModel:journal];
@@ -318,7 +318,7 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     NSString *sectionName = self.viewModel.currentSectionNames[section];
     
-    if ([sectionName isEqualToString:OZLIssueSectionDetail]) {
+    if ([sectionName isEqualToString:OZLIssueViewModel.SectionDetail]) {
         return 0.;
     }
     
@@ -332,10 +332,10 @@ NSString * const OZLRecentActivityReuseIdentifier = @"OZLRecentActivityReuseIden
     header.contentPadding = OZLContentPadding;
     header.titleLabel.text = [self.viewModel displayNameForSectionName:sectionName];
     
-    if ([sectionName isEqualToString:OZLIssueSectionRecentActivity]) {
+    if ([sectionName isEqualToString:OZLIssueViewModel.SectionRecentActivity]) {
         [header.disclosureButton setTitle:@"Show all \u203a" forState:UIControlStateNormal];
         [header.disclosureButton addTarget:self action:@selector(showAllActivityAction:) forControlEvents:UIControlEventTouchUpInside];
-    } else if ([sectionName isEqualToString:OZLIssueSectionDescription]) {
+    } else if ([sectionName isEqualToString:OZLIssueViewModel.SectionDescription]) {
         [header.disclosureButton setTitle:@"Show full description \u203a" forState:UIControlStateNormal];
         [header.disclosureButton addTarget:self action:@selector(showFullDescriptionAction:) forControlEvents:UIControlEventTouchUpInside];
     }

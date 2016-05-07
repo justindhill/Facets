@@ -19,6 +19,6 @@
     }
 
     func journalAtIndex(index: Int) -> OZLModelJournal? {
-        return self.issue.journals?[index]
+        return self.issue.journals?[self.numberOfJournals() - index - 1]
     }
 }

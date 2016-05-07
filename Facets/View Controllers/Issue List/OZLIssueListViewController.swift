@@ -240,10 +240,11 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let issueModel = self.viewModel.issues[indexPath.row]
         let viewModel = OZLIssueViewModel(issueModel: issueModel)
-        
-        let issueVC = OZLIssueViewController()
-        issueVC.viewModel = viewModel
-        
+
+        let issueVC = OZLNewIssueViewController(viewModel: viewModel)
+//        let issueVC = OZLIssueViewController()
+//        issueVC.viewModel = viewModel
+
         self.splitViewController?.showViewController(issueVC, sender: self)
     }
     

@@ -7,8 +7,8 @@
 //
 
 @import UIKit;
-#import "OZLIssueViewModel.h"
 
+@class OZLIssueViewModel;
 @protocol OZLQuickAssignDelegate;
 @interface OZLIssueViewController : UITableViewController
 

@@ -330,6 +330,8 @@ import Foundation
                 case "start_date": return "Start date"
                 case "done_ratio": return "Percent complete"
                 case "estimated_hours": return "Estimated hours"
+                case "description": return "Description"
+                case "subject": return "Subject"
 
                 default:
                     assertionFailure("We were asked for a display name for an attribute we don't know of!")

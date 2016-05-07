@@ -19,7 +19,6 @@
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
 #import "OZLAccountViewController.h"
-#import "OZLIssueViewModel.h"
 #import "OZLIssueViewController.h"
 #import "OZLNavigationChildChangeListener.h"
 
@@ -27,3 +26,7 @@
 #import "UIView+OZLExtensions.h"
 #import "UIColor+OZLExtensions.h"
 #import "UIImage+OZLExtensions.h"
+
+#import "OZLIssueHeaderView.h"
+#import "OZLIssueDescriptionCell.h"
+#import "OZLIssueFullDescriptionViewController.h"

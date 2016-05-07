@@ -20,10 +20,10 @@ import UIKit
         super.init(frame: frame)
         
         self.titleLabel.font = UIFont.systemFontOfSize(14)
-        self.titleLabel.textColor = UIColor.lightGrayColor()
+        self.titleLabel.textColor = UIColor.grayColor()
         
         self.disclosureButton.titleLabel?.font = UIFont.systemFontOfSize(12)
-        self.disclosureButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+        self.disclosureButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
         self.disclosureButton.contentVerticalAlignment = .Bottom
     }
     

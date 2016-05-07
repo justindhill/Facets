@@ -38,6 +38,8 @@
 }
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
+    
     if (self.isFirstLayout) {
         [self.contentView addSubview:self.descriptionPreviewLabel];
     }
@@ -69,7 +71,7 @@
     });
     
     sizingCell.bounds = CGRectMake(0, 0, width, 0);
-    sizingCell.contentPadding = padding;
+    sizingCell.separatorInset = UIEdgeInsetsMake(0, padding, 0, padding);
     sizingCell.descriptionPreviewLabel.text = description;
     [sizingCell layoutSubviews];
     
