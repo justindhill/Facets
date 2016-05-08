@@ -198,10 +198,9 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             let issue = self.viewModel.issues[indexPath.row]
             let viewModel = OZLIssueViewModel(issueModel: issue)
             
-            let issueVC = OZLIssueViewController()
-            issueVC.viewModel = viewModel
+            let issueVC = OZLNewIssueViewController(viewModel: viewModel)
             issueVC.previewQuickAssignDelegate = self.viewModel
-            
+
             return issueVC
         }
         

@@ -8,14 +8,21 @@
 
 class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate, UIViewControllerTransitioningDelegate {
 
-    private let ReuseIdentifier = "ReuseIdentifier"
+    private let DetailReuseIdentifier = "DetailReuseIdentifier"
+    private let AttachmentReuseIdentifier = "AttachmentReuseIdentifier"
     private let DescriptionReuseIdentifier = "DescriptionReuseIdentifier"
     private let RecentActivityReuseIdentifier = "RecentActivityReuseIdentifier"
+
+    let ShowAllDetailsString = "Show all"
+    let HideUnpinnedDetailsString = "Hide unpinned details"
 
     var contentPadding: CGFloat = OZLContentPadding
     var viewModel: OZLIssueViewModel
     var header = OZLIssueHeaderView()
 
+    weak var previewQuickAssignDelegate: OZLQuickAssignDelegate?
+
+    //MARK: - Life cycle
     init(viewModel: OZLIssueViewModel) {
         self.viewModel = viewModel
         super.init(style: .Grouped)
@@ -38,7 +45,8 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         self.header.contentPadding = OZLContentPadding;
         self.header.assignButton.addTarget(self, action: #selector(quickAssignAction), forControlEvents: .TouchUpInside)
 
-        self.tableView.registerClass(OZLTableViewCell.self, forCellReuseIdentifier: ReuseIdentifier)
+        self.tableView.registerClass(OZLTableViewCell.self, forCellReuseIdentifier: DetailReuseIdentifier)
+        self.tableView.registerClass(OZLTableViewCell.self, forCellReuseIdentifier: AttachmentReuseIdentifier)
         self.tableView.registerClass(OZLIssueDescriptionCell.self, forCellReuseIdentifier: DescriptionReuseIdentifier)
         self.tableView.registerClass(OZLJournalCell.self, forCellReuseIdentifier: RecentActivityReuseIdentifier)
     }
@@ -71,6 +79,32 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         self.presentViewController(vc, animated: true, completion: nil)
     }
 
+    // MARK: - Previewing
+    @available(iOS 9.0, *)
+    override func previewActionItems() -> [UIPreviewActionItem] {
+        var items = [UIPreviewActionItem]()
+
+        items.append(UIPreviewAction(title: "Quick Assign", style: .Default, handler: { (action, previewViewController) in
+            if let issueCopy = self.viewModel.issueModel.copy() as? OZLModelIssue {
+                let vc = OZLQuickAssignViewController(issueModel: issueCopy)
+                vc.transitioningDelegate = self
+                vc.modalPresentationStyle = .Custom
+                vc.delegate = self.previewQuickAssignDelegate
+
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(vc, animated: true, completion: nil)
+            }
+        }))
+
+        items.append(UIPreviewAction(title: "Edit", style: .Default, handler: { (action, previewViewController) in
+            let vc = OZLIssueComposerViewController(issue: self.viewModel.issueModel)
+            let nav = UINavigationController(rootViewController: vc)
+
+            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
+        }))
+
+        return items
+    }
+
     // MARK: - UITableViewDelegate/DataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.viewModel.currentSectionNames.count
@@ -80,7 +114,7 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         let sectionName = self.viewModel.currentSectionNames[section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
-            return 5
+            return self.viewModel.numberOfDetails()
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
             return self.viewModel.issueModel.attachments?.count ?? 0
         } else if sectionName == OZLIssueViewModel.SectionDescription {
@@ -98,10 +132,12 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         let sectionName = self.viewModel.currentSectionNames[indexPath.section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
-            cell = tableView.dequeueReusableCellWithIdentifier(ReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
-            cell?.textLabel?.text = "\(indexPath.row)"
+            cell = tableView.dequeueReusableCellWithIdentifier(DetailReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
+            let (name, value, isPinned) = self.viewModel.detailAtIndex(indexPath.row)
+            cell?.textLabel?.text = "\(name) - \(value)"
+            cell?.accessoryType = (isPinned && self.viewModel.showAllDetails) ? .Checkmark : .None
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
-            cell = tableView.dequeueReusableCellWithIdentifier(ReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(AttachmentReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
             cell?.textLabel?.text = self.viewModel.issueModel.attachments?[indexPath.row].name
         } else if sectionName == OZLIssueViewModel.SectionDescription {
             cell = tableView.dequeueReusableCellWithIdentifier(DescriptionReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
@@ -133,6 +169,14 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
             return OZLJournalCell.heightWithWidth(self.view.frame.size.width,
                                                   contentPadding: self.contentPadding,
                                                   journalModel: self.viewModel.recentActivityAtIndex(indexPath.row))
+        } else if sectionName == OZLIssueViewModel.SectionDetail {
+            let (_, _, isPinned) = self.viewModel.detailAtIndex(indexPath.row)
+
+            if self.viewModel.showAllDetails || isPinned {
+                return 44.0
+            } else {
+                return 0.0
+            }
         }
 
         return 44.0
@@ -155,6 +199,20 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         }
 
         return header
+    }
+
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let sectionName = self.viewModel.currentSectionNames[section]
+
+        if sectionName == OZLIssueViewModel.SectionDetail {
+            let footerView = OZLIssueDetailsSectionFooter()
+            footerView.leftButton.setTitle(self.viewModel.showAllDetails ? HideUnpinnedDetailsString : ShowAllDetailsString, forState: .Normal)
+            footerView.leftButton.addTarget(self, action: #selector(togglePinnedDetailsAction(_:)), forControlEvents: .TouchUpInside)
+
+            return footerView
+        }
+
+        return nil
     }
 
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -181,14 +239,25 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         return self.viewModel.displayNameForSectionName(sectionName)
     }
 
-    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        let sectionName = self.viewModel.currentSectionNames[section]
+    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        let sectionName = self.viewModel.currentSectionNames[indexPath.section]
 
-        if sectionName == OZLIssueViewModel.SectionDetail {
-            return "Show all • Edit pinned properties"
+        if sectionName == OZLIssueViewModel.SectionDetail && self.viewModel.showAllDetails {
+            return true
         }
 
-        return nil
+        return false
+    }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+
+        let sectionName = self.viewModel.currentSectionNames[indexPath.section]
+
+        if sectionName == OZLIssueViewModel.SectionDetail && self.viewModel.showAllDetails {
+            self.viewModel.togglePinningForDetailAtIndex(indexPath.row)
+            tableView.reloadRowsAtIndexPaths([ indexPath ], withRowAnimation: .Fade)
+        }
     }
 
     // MARK: - Button actions
@@ -207,6 +276,14 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    func togglePinnedDetailsAction(button: UIButton) {
+        button.setTitle(!self.viewModel.showAllDetails ? HideUnpinnedDetailsString : ShowAllDetailsString, forState: .Normal)
+        button.superview?.setNeedsLayout()
+        button.superview?.layoutIfNeeded()
+
+        self.viewModel.showAllDetails = !self.viewModel.showAllDetails
+    }
+
     // MARK: - View model delegate
     func viewModel(viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?) {
         self.applyViewModel(viewModel)
@@ -214,6 +291,16 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
 
     func viewModelIssueContentDidChange(viewModel: OZLIssueViewModel) {
         self.applyViewModel(viewModel)
+    }
+
+    func viewModelDetailDisplayModeDidChange(viewModel: OZLIssueViewModel) {
+        self.tableView.beginUpdates()
+
+        if let detailsSectionIndex = self.viewModel.sectionNumberForSectionName(OZLIssueViewModel.SectionDetail) {
+            self.tableView.reloadSections(NSIndexSet(index: detailsSectionIndex), withRowAnimation: .Fade)
+        }
+
+        self.tableView.endUpdates()
     }
 
     // MARK: - Transitioning delegate

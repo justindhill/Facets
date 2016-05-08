@@ -32,11 +32,7 @@ RLM_ARRAY_TYPE(OZLModelStringContainer)
 @property NSInteger fieldId;
 @property OZLModelCustomFieldType type;
 @property (nullable, strong) NSString *name;
-
-// Readonly values are ignored by Realm. We don't want to store a value for a custom field,
-// so even though semantically it seems weird, functionally, it's correct.
 @property (nullable) NSString *value;
-
 @property (nullable, strong) RLMArray<OZLModelStringContainer *><OZLModelStringContainer> *options;
 
 + (nonnull NSString *)displayValueForCustomFieldType:(OZLModelCustomFieldType)type attributeId:(NSInteger)attributeId attributeValue:(nonnull NSString *)attributeValue;

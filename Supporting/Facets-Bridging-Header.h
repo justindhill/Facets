@@ -19,7 +19,6 @@
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
 #import "OZLAccountViewController.h"
-#import "OZLIssueViewController.h"
 #import "OZLNavigationChildChangeListener.h"
 
 #import "UIFont+OZLExtensions.h"

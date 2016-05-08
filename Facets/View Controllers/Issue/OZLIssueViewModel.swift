@@ -8,12 +8,13 @@
 
 import Foundation
 
-@objc protocol OZLIssueViewModelDelegate {
+protocol OZLIssueViewModelDelegate: AnyObject {
     func viewModel(viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?)
+    func viewModelDetailDisplayModeDidChange(viewModel: OZLIssueViewModel)
     func viewModelIssueContentDidChange(viewModel: OZLIssueViewModel)
 }
 
-@objc enum OZLIssueCompleteness: Int {
+enum OZLIssueCompleteness: Int {
     case None
     case Some
     case All
@@ -26,6 +27,19 @@ import Foundation
     static let SectionAttachments = "OZLIssueSectionAttachments"
     static let SectionRecentActivity = "OZLIssueSectionRecentActivity"
 
+    private var pinnedDetailIdentifiers: Set<String> = ["status_id", "priority_id", "3"]
+
+    var showAllDetails = false {
+        didSet(oldValue) {
+            if self.showAllDetails != oldValue {
+                self.delegate?.viewModelDetailDisplayModeDidChange(self)
+            }
+        }
+    }
+
+    // (identifier, displayName, displayValue)
+    private var details: [(String, String, String)] = []
+
     weak var delegate: OZLIssueViewModelDelegate?
     var successfullyFetchedIssue = false
     var currentSectionNames: [String] = []
@@ -33,17 +47,21 @@ import Foundation
     var issueModel: OZLModelIssue {
         didSet {
             self.updateSectionNames()
+            self.refreshDetails()
         }
     }
 
+    // MARK: - Life cycle
     init(issueModel: OZLModelIssue) {
         self.issueModel = issueModel
         
         super.init()
 
         self.updateSectionNames()
+        self.refreshDetails()
     }
 
+    // MARK: - Behavior
     func updateSectionNames() {
         var sectionNames = [ OZLIssueViewModel.SectionDetail ]
 
@@ -77,27 +95,21 @@ import Foundation
             return "DESCRIPTION"
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
             return "ATTACHMENTS"
+        } else if sectionName == OZLIssueViewModel.SectionRecentActivity {
+            return "RECENT ACTIVITY"
         }
 
         return nil
     }
 
-    func recentActivityCount() -> Int {
-        return min(self.issueModel.journals?.count ?? 0, 3)
-    }
-
-    func recentActivityAtIndex(index: Int) -> OZLModelJournal {
-        if let journals = self.issueModel.journals {
-            return journals[journals.count - index - 1]
-        }
-
-        fatalError("Journals array doesn't exist")
+    func sectionNumberForSectionName(sectionName: String) -> Int? {
+        return self.currentSectionNames.indexOf(sectionName)
     }
 
     func loadIssueData() {
         weak var weakSelf = self
 
-        let params = [ "include": "attachments,journals" ]
+        let params = [ "include": "attachments,journals,relations" ]
         OZLNetwork.sharedInstance().getDetailForIssue(self.issueModel.index, withParams: params) { (issue, error) in
             if let weakSelf = weakSelf {
                 if let issue = issue {
@@ -110,6 +122,83 @@ import Foundation
         }
     }
 
+    // MARK: - Details
+    func refreshDetails() {
+        var details = [(String, String, String)]()
+
+        if let status = self.issueModel.status?.name {
+            details.append(("status_id", OZLModelIssue.displayNameForAttributeName("status_id"), status))
+        }
+
+        if let priority = self.issueModel.priority?.name {
+            details.append(("priority_id", OZLModelIssue.displayNameForAttributeName("priority_id"), priority))
+        }
+
+        if let author = self.issueModel.author?.name {
+            details.append(("author", OZLModelIssue.displayNameForAttributeName("author"), author))
+        }
+
+        if let startDate = self.issueModel.startDate {
+            details.append(("start_date", OZLModelIssue.displayNameForAttributeName("start_date"), String(startDate)))
+        }
+
+        if let doneRatio = self.issueModel.doneRatio {
+            details.append(("done_ratio", OZLModelIssue.displayNameForAttributeName("done_ratio"), String(doneRatio)))
+        }
+
+        if let spentHours = self.issueModel.spentHours {
+            details.append(("spent_hours", OZLModelIssue.displayNameForAttributeName("spent_hours"), String(spentHours)))
+        }
+
+        for field in self.issueModel.customFields ?? [] where field.value != nil {
+            let cachedField = OZLModelCustomField(forPrimaryKey: field.fieldId)
+            
+            details.append(
+                (
+                    String(field.fieldId),
+                    field.name ?? "",
+                    OZLModelCustomField.displayValueForCustomFieldType(cachedField?.type ?? field.type, attributeId: field.fieldId, attributeValue: field.value ?? "")
+                )
+            )
+        }
+
+        self.details = details
+    }
+
+    func numberOfDetails() -> Int {
+        return self.details.count
+    }
+
+    func detailAtIndex(index: Int) -> (String, String, Bool) {
+        let (identifier, name, value) = self.details[index]
+
+        return (name, value, self.pinnedDetailIdentifiers.contains(identifier))
+    }
+
+    func togglePinningForDetailAtIndex(index: Int) {
+        let (identifier, _, _) = self.details[index]
+
+        if self.pinnedDetailIdentifiers.contains(identifier) {
+            self.pinnedDetailIdentifiers.remove(identifier)
+        } else {
+            self.pinnedDetailIdentifiers.insert(identifier)
+        }
+    }
+
+    // MARK: - Recent activity
+    func recentActivityCount() -> Int {
+        return min(self.issueModel.journals?.count ?? 0, 3)
+    }
+
+    func recentActivityAtIndex(index: Int) -> OZLModelJournal {
+        if let journals = self.issueModel.journals {
+            return journals[journals.count - index - 1]
+        }
+
+        fatalError("Journals array doesn't exist")
+    }
+
+    // MARK: - Quick assign delegate
     func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?) {
         self.issueModel = issue
 

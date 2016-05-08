@@ -316,9 +316,10 @@ import Foundation
         return nil
     }
 
-    class func displayNameForAttributeName(name: String?) -> String? {
+    class func displayNameForAttributeName(name: String?) -> String {
         if let name = name {
             switch name {
+                case "author": return "Author"
                 case "project_id": return "Project"
                 case "tracker_id": return "Tracker"
                 case "fixed_version_id": return "Target version"
@@ -329,17 +330,18 @@ import Foundation
                 case "due_date": return "Due date"
                 case "start_date": return "Start date"
                 case "done_ratio": return "Percent complete"
+                case "spent_hours": return "Spent hours"
                 case "estimated_hours": return "Estimated hours"
                 case "description": return "Description"
                 case "subject": return "Subject"
 
                 default:
                     assertionFailure("We were asked for a display name for an attribute we don't know of!")
-                    return name
+                    return name ?? ""
             }
         }
 
-        return nil
+        return ""
     }
 
     func copyWithZone(zone: NSZone) -> AnyObject {
