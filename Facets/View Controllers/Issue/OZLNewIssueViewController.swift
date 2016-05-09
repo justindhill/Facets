@@ -49,6 +49,8 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         self.tableView.registerClass(OZLTableViewCell.self, forCellReuseIdentifier: AttachmentReuseIdentifier)
         self.tableView.registerClass(OZLIssueDescriptionCell.self, forCellReuseIdentifier: DescriptionReuseIdentifier)
         self.tableView.registerClass(OZLJournalCell.self, forCellReuseIdentifier: RecentActivityReuseIdentifier)
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(editButtonAction(_:)))
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -282,6 +284,17 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         button.superview?.layoutIfNeeded()
 
         self.viewModel.showAllDetails = !self.viewModel.showAllDetails
+    }
+
+    func editButtonAction(button: UIButton) {
+        let composer = OZLIssueComposerViewController(issue: self.viewModel.issueModel)
+
+        let nav = UINavigationController(rootViewController: composer)
+        nav.navigationBar.translucent = false
+        nav.navigationBar.barTintColor = UIColor.whiteColor()
+        nav.modalPresentationStyle = .FormSheet
+
+        self.presentViewController(nav, animated: true, completion: nil)
     }
 
     // MARK: - View model delegate
