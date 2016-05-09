@@ -1,7 +1,7 @@
 def all_pods
 	use_frameworks!
 
-	pod 'HockeySDK', '~> 4.0-beta'
+	pod 'HockeySDK', '~> 4.0.0'
 	pod 'DRPSlidingTabView', '~> 0.2'
 	pod 'DRPLoadingSpinner'
 	pod 'TTTAttributedLabel'
