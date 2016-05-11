@@ -22,12 +22,15 @@ enum OZLIssueCompleteness: Int {
 
 @objc class OZLIssueViewModel: NSObject, OZLQuickAssignDelegate {
 
+    private static let PinnedIdentifiersDefaultsKeypath = "facets.issue.pinned-detail-identifiers"
+
     static let SectionDetail = "OZLIssueSectionDetail"
     static let SectionDescription = "OZLIssueSectionDescription"
     static let SectionAttachments = "OZLIssueSectionAttachments"
     static let SectionRecentActivity = "OZLIssueSectionRecentActivity"
 
-    private var pinnedDetailIdentifiers: Set<String> = ["status_id", "priority_id", "3"]
+    private static let defaultPinnedDetailIdentifiers: Set<String> = ["status_id", "category_id", "priority_id", "fixed_version_id"]
+    private var pinnedDetailIdentifiers = OZLIssueViewModel.defaultPinnedDetailIdentifiers
 
     var showAllDetails = false {
         didSet(oldValue) {
@@ -57,8 +60,17 @@ enum OZLIssueCompleteness: Int {
         
         super.init()
 
+        let keyPath = self.targetedPinnedIdentifiersDefaultsKeypath()
+        if let storedIdentifiers = NSUserDefaults.standardUserDefaults().arrayForKey(keyPath) as? [String] {
+            self.pinnedDetailIdentifiers = Set(storedIdentifiers)
+        }
+
         self.updateSectionNames()
         self.refreshDetails()
+    }
+
+    func targetedPinnedIdentifiersDefaultsKeypath() -> String {
+        return "\(OZLIssueViewModel.PinnedIdentifiersDefaultsKeypath).\(self.issueModel.projectId)"
     }
 
     // MARK: - Behavior
@@ -142,6 +154,14 @@ enum OZLIssueCompleteness: Int {
             details.append(("start_date", OZLModelIssue.displayNameForAttributeName("start_date"), String(startDate)))
         }
 
+        if let category = self.issueModel.category {
+            details.append(("category_id", OZLModelIssue.displayNameForAttributeName("category_id"), category.name))
+        }
+
+        if let targetVersion = self.issueModel.targetVersion {
+            details.append(("fixed_version_id", OZLModelIssue.displayNameForAttributeName("fixed_version_id"), targetVersion.name))
+        }
+
         if let doneRatio = self.issueModel.doneRatio {
             details.append(("done_ratio", OZLModelIssue.displayNameForAttributeName("done_ratio"), String(doneRatio)))
         }
@@ -183,6 +203,8 @@ enum OZLIssueCompleteness: Int {
         } else {
             self.pinnedDetailIdentifiers.insert(identifier)
         }
+
+        NSUserDefaults.standardUserDefaults().setObject(Array(self.pinnedDetailIdentifiers), forKey: self.targetedPinnedIdentifiersDefaultsKeypath())
     }
 
     // MARK: - Recent activity

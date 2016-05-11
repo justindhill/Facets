@@ -203,6 +203,10 @@ import Foundation
             self.assignedTo = OZLModelUser(attributeDictionary: assignedTo)
         }
 
+        if let category = d["category"] as? [NSObject: AnyObject] {
+            self.category = OZLModelIssueCategory(attributeDictionary: category)
+        }
+
         if let priority = d["priority"] as? [NSObject: AnyObject] {
             self.priority = OZLModelIssuePriority(attributeDictionary: priority)
         }

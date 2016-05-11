@@ -6,9 +6,9 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
-#import "OZLView.h"
+#import <UIKit/UIKit.h>
 
-@interface OZLLoadingView : OZLView
+@interface OZLLoadingView : UIView
 
 - (void)startLoading;
 - (void)endLoading;
