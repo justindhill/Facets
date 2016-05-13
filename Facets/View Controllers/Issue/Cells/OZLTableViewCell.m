@@ -10,4 +10,9 @@
 
 @implementation OZLTableViewCell
 
++ (CGFloat)heightForWidth:(CGFloat)width model:(NSObject  * _Nonnull)model layoutMargins:(UIEdgeInsets)layoutMargins {
+    NSAssert(NO, @"heightForWidth:model:layoutMargins: must be overridden in a subclass.");
+    return 0;
+}
+
 @end

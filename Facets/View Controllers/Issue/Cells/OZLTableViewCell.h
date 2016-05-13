@@ -15,4 +15,6 @@
  */
 @property CGFloat contentPadding;
 
++ (CGFloat)heightForWidth:(CGFloat)width model:(NSObject *)model layoutMargins:(UIEdgeInsets)layoutMargins;
+
 @end

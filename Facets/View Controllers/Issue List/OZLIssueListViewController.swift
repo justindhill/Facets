@@ -198,7 +198,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             let issue = self.viewModel.issues[indexPath.row]
             let viewModel = OZLIssueViewModel(issueModel: issue)
             
-            let issueVC = OZLNewIssueViewController(viewModel: viewModel)
+            let issueVC = OZLIssueViewController(viewModel: viewModel)
             issueVC.previewQuickAssignDelegate = self.viewModel
 
             return issueVC
@@ -240,9 +240,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         let issueModel = self.viewModel.issues[indexPath.row]
         let viewModel = OZLIssueViewModel(issueModel: issueModel)
 
-        let issueVC = OZLNewIssueViewController(viewModel: viewModel)
-//        let issueVC = OZLIssueViewController()
-//        issueVC.viewModel = viewModel
+        let issueVC = OZLIssueViewController(viewModel: viewModel)
 
         self.splitViewController?.showViewController(issueVC, sender: self)
     }

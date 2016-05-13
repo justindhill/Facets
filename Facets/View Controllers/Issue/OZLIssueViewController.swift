@@ -1,12 +1,12 @@
 //
-//  OZLNewIssueViewController.swift
+//  OZLIssueViewController.swift
 //  Facets
 //
 //  Created by Justin Hill on 5/2/16.
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
-class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate, UIViewControllerTransitioningDelegate {
+class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate, UIViewControllerTransitioningDelegate {
 
     private let DetailReuseIdentifier = "DetailReuseIdentifier"
     private let AttachmentReuseIdentifier = "AttachmentReuseIdentifier"
@@ -46,7 +46,7 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
         self.header.assignButton.addTarget(self, action: #selector(quickAssignAction), forControlEvents: .TouchUpInside)
 
         self.tableView.registerClass(OZLTableViewCell.self, forCellReuseIdentifier: DetailReuseIdentifier)
-        self.tableView.registerClass(OZLTableViewCell.self, forCellReuseIdentifier: AttachmentReuseIdentifier)
+        self.tableView.registerClass(OZLIssueAttachmentCell.self, forCellReuseIdentifier: AttachmentReuseIdentifier)
         self.tableView.registerClass(OZLIssueDescriptionCell.self, forCellReuseIdentifier: DescriptionReuseIdentifier)
         self.tableView.registerClass(OZLJournalCell.self, forCellReuseIdentifier: RecentActivityReuseIdentifier)
 
@@ -140,7 +140,11 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
             cell?.accessoryType = (isPinned && self.viewModel.showAllDetails) ? .Checkmark : .None
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
             cell = tableView.dequeueReusableCellWithIdentifier(AttachmentReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
-            cell?.textLabel?.text = self.viewModel.issueModel.attachments?[indexPath.row].name
+
+            if let cell = cell as? OZLIssueAttachmentCell {
+                cell.attachmentTitleLabel.text = self.viewModel.issueModel.attachments?[indexPath.row].name
+                cell.userNameLabel.text = self.viewModel.issueModel.attachments?[indexPath.row].attacher.name
+            }
         } else if sectionName == OZLIssueViewModel.SectionDescription {
             cell = tableView.dequeueReusableCellWithIdentifier(DescriptionReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
 
@@ -179,6 +183,10 @@ class OZLNewIssueViewController: OZLTableViewController, OZLIssueViewModelDelega
             } else {
                 return 0.0
             }
+        } else if sectionName == OZLIssueViewModel.SectionAttachments {
+            return OZLIssueAttachmentCell.heightForWidth(self.tableView.frame.size.width,
+                                                         model: self.viewModel.issueModel.attachments?[indexPath.row],
+                                                         layoutMargins: self.tableView.layoutMargins)
         }
 
         return 44.0
