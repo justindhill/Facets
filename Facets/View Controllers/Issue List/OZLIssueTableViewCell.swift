@@ -93,70 +93,70 @@ class OZLIssueTableViewCell: UITableViewCell {
         }
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        self.priorityPillSection.sizeToFit()
-        self.priorityPillSection.frame = CGRectMake(self.contentPadding,
-                                              self.contentPadding,
-                                              ceil(self.priorityPillSection.frame.size.width + 6),
-                                              ceil(self.priorityPillSection.frame.size.height + 4))
-
-        self.statusPillSection.sizeToFit()
-        self.statusPillSection.frame = CGRectMake(floor(self.priorityPillSection.right),
-                                            self.priorityPillSection.top,
-                                            ceil(self.statusPillSection.frame.size.width + 6),
-                                            self.priorityPillSection.frame.size.height)
-
-        self.issueNumberLabel.sizeToFit()
-        self.issueNumberLabel.frame = CGRectMake(ceil(self.statusPillSection.right + (self.contentPadding / 2)),
-                                                 self.statusPillSection.top,
-                                                 self.issueNumberLabel.frame.size.width,
-                                                 self.priorityPillSection.frame.size.height)
-
-        self.subjectLabel.frame = CGRectMake(0, 0, self.contentView.frame.size.width - (2 * self.contentPadding), 0)
-        self.subjectLabel.sizeToFit()
-        self.subjectLabel.frame = CGRectMake(self.contentPadding,
-                                             ceil(self.priorityPillSection.bottom + (self.contentPadding / 2)),
-                                             self.subjectLabel.frame.size.width,
-                                             self.subjectLabel.frame.size.height)
-
-        let bottomRowElementSpacing: CGFloat = 8.0
-        let bottomRowElementYOffset: CGFloat = ceil(self.subjectLabel.bottom + (self.contentPadding / 2))
-        let bottomRowElementHeight: CGFloat = 16.0
-
-        if !self.assigneeNameLabel.hidden {
-
-            self.assigneeAvatarImageView.frame = CGRectMake(self.contentPadding,
-                                                            bottomRowElementYOffset,
-                                                            bottomRowElementHeight,
-                                                            bottomRowElementHeight)
-
-            self.assigneeNameLabel.sizeToFit()
-            self.assigneeNameLabel.frame = CGRectMake(ceil(self.contentPadding + bottomRowElementHeight + bottomRowElementSpacing),
-                                                      bottomRowElementYOffset,
-                                                      self.assigneeNameLabel.frame.size.width,
-                                                      bottomRowElementHeight)
-
-
-        }
-
-        if !self.dueDateLabel.hidden {
-            self.dueDateLabel.sizeToFit()
-
-            if self.assigneeAvatarImageView.hidden {
-                self.dueDateLabel.frame = CGRectMake(self.contentPadding,
-                                                     bottomRowElementYOffset,
-                                                     self.dueDateLabel.frame.size.width,
-                                                     bottomRowElementHeight)
-            } else {
-                self.dueDateLabel.frame = CGRectMake(ceil(self.assigneeNameLabel.right + bottomRowElementSpacing),
-                                                     bottomRowElementYOffset,
-                                                     self.dueDateLabel.frame.size.width,
-                                                     bottomRowElementHeight)
-            }
-        }
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//
+//        self.priorityPillSection.sizeToFit()
+//        self.priorityPillSection.frame = CGRectMake(self.contentPadding,
+//                                              self.contentPadding,
+//                                              ceil(self.priorityPillSection.frame.size.width + 6),
+//                                              ceil(self.priorityPillSection.frame.size.height + 4))
+//
+//        self.statusPillSection.sizeToFit()
+//        self.statusPillSection.frame = CGRectMake(floor(self.priorityPillSection.right),
+//                                            self.priorityPillSection.top,
+//                                            ceil(self.statusPillSection.frame.size.width + 6),
+//                                            self.priorityPillSection.frame.size.height)
+//
+//        self.issueNumberLabel.sizeToFit()
+//        self.issueNumberLabel.frame = CGRectMake(ceil(self.statusPillSection.right + (self.contentPadding / 2)),
+//                                                 self.statusPillSection.top,
+//                                                 self.issueNumberLabel.frame.size.width,
+//                                                 self.priorityPillSection.frame.size.height)
+//
+//        self.subjectLabel.frame = CGRectMake(0, 0, self.contentView.frame.size.width - (2 * self.contentPadding), 0)
+//        self.subjectLabel.sizeToFit()
+//        self.subjectLabel.frame = CGRectMake(self.contentPadding,
+//                                             ceil(self.priorityPillSection.bottom + (self.contentPadding / 2)),
+//                                             self.subjectLabel.frame.size.width,
+//                                             self.subjectLabel.frame.size.height)
+//
+//        let bottomRowElementSpacing: CGFloat = 8.0
+//        let bottomRowElementYOffset: CGFloat = ceil(self.subjectLabel.bottom + (self.contentPadding / 2))
+//        let bottomRowElementHeight: CGFloat = 16.0
+//
+//        if !self.assigneeNameLabel.hidden {
+//
+//            self.assigneeAvatarImageView.frame = CGRectMake(self.contentPadding,
+//                                                            bottomRowElementYOffset,
+//                                                            bottomRowElementHeight,
+//                                                            bottomRowElementHeight)
+//
+//            self.assigneeNameLabel.sizeToFit()
+//            self.assigneeNameLabel.frame = CGRectMake(ceil(self.contentPadding + bottomRowElementHeight + bottomRowElementSpacing),
+//                                                      bottomRowElementYOffset,
+//                                                      self.assigneeNameLabel.frame.size.width,
+//                                                      bottomRowElementHeight)
+//
+//
+//        }
+//
+//        if !self.dueDateLabel.hidden {
+//            self.dueDateLabel.sizeToFit()
+//
+//            if self.assigneeAvatarImageView.hidden {
+//                self.dueDateLabel.frame = CGRectMake(self.contentPadding,
+//                                                     bottomRowElementYOffset,
+//                                                     self.dueDateLabel.frame.size.width,
+//                                                     bottomRowElementHeight)
+//            } else {
+//                self.dueDateLabel.frame = CGRectMake(ceil(self.assigneeNameLabel.right + bottomRowElementSpacing),
+//                                                     bottomRowElementYOffset,
+//                                                     self.dueDateLabel.frame.size.width,
+//                                                     bottomRowElementHeight)
+//            }
+//        }
+//    }
 
     override func layoutSublayersOfLayer(layer: CALayer) {
         super.layoutSublayersOfLayer(layer)

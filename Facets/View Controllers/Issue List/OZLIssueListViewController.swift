@@ -32,6 +32,9 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 100.0
+
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: OZLContentPadding, bottom: 0, right: OZLContentPadding)
 
         self.tableView.delegate = self
@@ -216,14 +219,14 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         return self.viewModel.issues.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let issue = self.viewModel.issues[indexPath.row];
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        let issue = self.viewModel.issues[indexPath.row];
+//
+//        return OZLIssueTableViewCell.heightWithWidth(tableView.frame.size.width,
+//                                                     issue: issue,
+//                                                     contentPadding: OZLContentPadding)
+//    }
 
-        return OZLIssueTableViewCell.heightWithWidth(tableView.frame.size.width,
-                                                     issue: issue,
-                                                     contentPadding: OZLContentPadding)
-    }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(IssueCellReuseIdentifier)
 

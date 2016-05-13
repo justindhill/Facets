@@ -1,70 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="163" id="ey8-O7-Dgj" customClass="OZLIssueTableViewCell" customModule="Facets" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="163" id="ey8-O7-Dgj" customClass="OZLIssueTableViewCell" customModule="Facets" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="163"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ey8-O7-Dgj" id="ksQ-2i-LcY">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="ey8-O7-Dgj" id="ksQ-2i-LcY">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="162.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#19025" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h6E-G0-d7v" userLabel="Issue number label">
-                        <rect key="frame" x="185" y="9" width="37" height="12"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#19025" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6E-G0-d7v" userLabel="Issue number label">
+                        <rect key="frame" x="179" y="12" width="37" height="12"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sZZ-7j-w0Y" userLabel="Issue subject label">
-                        <rect key="frame" x="8" y="23" width="304" height="111"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZZ-7j-w0Y" userLabel="Issue subject label">
+                        <rect key="frame" x="15" y="34" width="290" height="95"/>
                         <string key="text">[iOS][Analytics] "outbrain_server_request", "outbrain_server_response" and "view_outbrain" for Outbrain Recommendation is not appearing on the Segment Debugger.</string>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JUSTIN HILL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dDb-e7-uZd" userLabel="Assignee name label">
-                        <rect key="frame" x="244" y="128" width="68" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JUSTIN HILL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDb-e7-uZd" userLabel="Assignee name label">
+                        <rect key="frame" x="39" y="139" width="64" height="12"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="RKh-uC-fdV" userLabel="Assignee avatar image view">
-                        <rect key="frame" x="220" y="130" width="16" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RKh-uC-fdV" userLabel="Assignee avatar image view">
+                        <rect key="frame" x="15" y="137" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="16" id="5jo-lk-KZ4"/>
+                            <constraint firstAttribute="height" constant="16" id="7KJ-Kg-AH7"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DUE IN 2 DAYS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g2u-iv-VTp" userLabel="Due data label">
-                        <rect key="frame" x="140" y="132" width="72" height="12"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="in1-7r-IeP" userLabel="Priority button">
-                        <rect key="frame" x="8" y="1" width="70" height="24"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="in1-7r-IeP" userLabel="Priority button">
+                        <rect key="frame" x="15" y="10" width="76" height="16"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                        <inset key="contentEdgeInsets" minX="5" minY="2" maxX="5" maxY="2"/>
                         <state key="normal" title="P1 - URGENT">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="x2e-mW-UWT">
-                        <rect key="frame" x="86" y="-2" width="70" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x2e-mW-UWT">
+                        <rect key="frame" x="91" y="10" width="80" height="16"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
+                        <inset key="contentEdgeInsets" minX="5" minY="2" maxX="5" maxY="2"/>
                         <state key="normal" title="IN PROGRESS">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DUE IN 2 DAYS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2u-iv-VTp" userLabel="Due data label">
+                        <rect key="frame" x="111" y="139" width="72" height="12"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="g2u-iv-VTp" firstAttribute="centerY" secondItem="dDb-e7-uZd" secondAttribute="centerY" id="0PY-Fz-xxN"/>
+                    <constraint firstItem="in1-7r-IeP" firstAttribute="leading" secondItem="ksQ-2i-LcY" secondAttribute="leadingMargin" id="4Xj-iV-SFF"/>
+                    <constraint firstItem="h6E-G0-d7v" firstAttribute="leading" secondItem="x2e-mW-UWT" secondAttribute="trailing" constant="8" id="76J-mq-3gk"/>
+                    <constraint firstItem="x2e-mW-UWT" firstAttribute="leading" secondItem="in1-7r-IeP" secondAttribute="trailing" id="HXO-yg-kEv"/>
+                    <constraint firstItem="RKh-uC-fdV" firstAttribute="top" secondItem="sZZ-7j-w0Y" secondAttribute="bottom" constant="8" id="Hz2-px-Cid"/>
+                    <constraint firstItem="dDb-e7-uZd" firstAttribute="leading" secondItem="RKh-uC-fdV" secondAttribute="trailing" constant="8" id="Py0-qs-1HY"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="RKh-uC-fdV" secondAttribute="bottom" id="WBZ-es-FO9"/>
+                    <constraint firstItem="sZZ-7j-w0Y" firstAttribute="top" secondItem="in1-7r-IeP" secondAttribute="bottom" constant="8" id="dzy-Yc-b7S"/>
+                    <constraint firstItem="g2u-iv-VTp" firstAttribute="leading" secondItem="dDb-e7-uZd" secondAttribute="trailing" constant="8" id="ede-ig-q55"/>
+                    <constraint firstItem="dDb-e7-uZd" firstAttribute="centerY" secondItem="RKh-uC-fdV" secondAttribute="centerY" id="fKO-Rf-7Dh"/>
+                    <constraint firstItem="sZZ-7j-w0Y" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="ksQ-2i-LcY" secondAttribute="trailingMargin" id="gZb-V1-Boh"/>
+                    <constraint firstItem="x2e-mW-UWT" firstAttribute="centerY" secondItem="in1-7r-IeP" secondAttribute="centerY" id="gs3-pO-lxY"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="sZZ-7j-w0Y" secondAttribute="leading" id="ibH-jF-7Rr"/>
+                    <constraint firstItem="in1-7r-IeP" firstAttribute="top" secondItem="ksQ-2i-LcY" secondAttribute="topMargin" id="mVc-jy-FBx"/>
+                    <constraint firstItem="RKh-uC-fdV" firstAttribute="leading" secondItem="sZZ-7j-w0Y" secondAttribute="leading" id="vzG-rO-uI0"/>
+                    <constraint firstItem="h6E-G0-d7v" firstAttribute="centerY" secondItem="x2e-mW-UWT" secondAttribute="centerY" id="zgX-nL-KxU"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="assigneeAvatarImageView" destination="RKh-uC-fdV" id="7is-av-eL8"/>
