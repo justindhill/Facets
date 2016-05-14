@@ -11,16 +11,16 @@ PODS:
   - JGProgressHUD (1.3.1)
   - JVFloatLabeledTextField (1.1.0)
   - RaptureXML@Frankly (1.0.3)
-  - Realm (0.101.0):
-    - Realm/Headers (= 0.101.0)
-  - Realm/Headers (0.101.0)
+  - Realm (0.102.1):
+    - Realm/Headers (= 0.102.1)
+  - Realm/Headers (0.102.1)
   - Reveal-iOS-SDK (1.6.2)
   - SDWebImage (3.7.6):
     - SDWebImage/Core (= 3.7.6)
   - SDWebImage/Core (3.7.6)
   - SnapKit (0.21.0)
   - SORelativeDateTransformer (1.1.10)
-  - TTTAttributedLabel (1.13.4)
+  - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
   - 1PasswordExtension
@@ -51,11 +51,11 @@ SPEC CHECKSUMS:
   JGProgressHUD: 153053a21d81208cb5f659691996bcefce6a9885
   JVFloatLabeledTextField: ea4a3d8387ddd43724c472bb2b8ab39b79af05d4
   RaptureXML@Frankly: 2cf369025bd8b7f7401365170c263dc2efb902c5
-  Realm: b21596d6d7e1c054f6fae967d27263d2593ca309
+  Realm: 5254be610db3e5024879684717bf038990bb59ec
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
-  TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
 COCOAPODS: 0.39.0
