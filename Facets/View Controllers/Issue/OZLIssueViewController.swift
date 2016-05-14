@@ -144,6 +144,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
             if let cell = cell as? OZLIssueAttachmentCell {
                 cell.attachmentTitleLabel.text = self.viewModel.issueModel.attachments?[indexPath.row].name
                 cell.userNameLabel.text = self.viewModel.issueModel.attachments?[indexPath.row].attacher.name
+                cell.downloadButton.addTarget(self, action: #selector(downloadAttachmentAction(_:)), forControlEvents: .TouchUpInside)
             }
         } else if sectionName == OZLIssueViewModel.SectionDescription {
             cell = tableView.dequeueReusableCellWithIdentifier(DescriptionReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
@@ -305,6 +306,17 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         nav.modalPresentationStyle = .FormSheet
 
         self.presentViewController(nav, animated: true, completion: nil)
+    }
+
+    func downloadAttachmentAction(button: UIButton) {
+        let convertedFrame = self.tableView.convertRect(button.frame, fromView: button.superview)
+
+        if let indexPath = self.tableView.indexPathForRowAtPoint(convertedFrame.origin) {
+            if let attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
+                // WARNING: Actually download the attachment
+                print(attachment)
+            }
+        }
     }
 
     // MARK: - View model delegate

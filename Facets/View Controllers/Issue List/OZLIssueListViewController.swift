@@ -60,27 +60,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         }
 
         if self.viewModel.shouldShowComposeButton && self.composeButton?.superview == nil {
-            self.composeButton = UIButton(type: .System)
-
-            self.composeButton!.setImage(UIImage.ozl_imageNamed("icon-plus", maskedWithColor: UIColor.whiteColor()), forState:.Normal)
-            self.composeButton!.titleLabel?.font = UIFont.systemFontOfSize(28)
-            self.composeButton!.contentHorizontalAlignment = .Center
-            self.composeButton!.contentVerticalAlignment = .Center
-            
-            self.composeButton!.layer.shadowColor = UIColor.blackColor().CGColor
-            self.composeButton!.layer.shadowOpacity = 0.2
-            self.composeButton!.layer.shadowOffset = CGSizeMake(0.0, 2.0)
-            
-            self.composeButton!.frame = CGRectMake(0, 0, self.IssueListComposeButtonHeight, self.IssueListComposeButtonHeight)
-            self.composeButton!.layer.cornerRadius = (IssueListComposeButtonHeight / 2.0)
-            self.composeButton!.addTarget(self, action: #selector(OZLIssueListViewController.composeButtonAction(_:)), forControlEvents:.TouchUpInside)
-
-            self.composeButton!.setBackgroundImage(
-                UIColor.blackColor().circularImageWithDiameter(self.IssueListComposeButtonHeight).imageWithRenderingMode(.AlwaysTemplate),
-                forState: .Normal
-            )
-
-            self.view.addSubview(self.composeButton!)
+            self.addComposeButton()
             
         } else if !self.viewModel.shouldShowComposeButton && self.composeButton?.superview != nil {
             self.composeButton?.removeFromSuperview()
@@ -110,17 +90,39 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         self.isFirstAppearance = false
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    // MARK: - Behavior
+    func addComposeButton() {
+        let composeButton = UIButton(type: .System)
+        self.composeButton = composeButton
+
+        composeButton.setImage(UIImage.ozl_imageNamed("icon-plus", maskedWithColor: UIColor.whiteColor()), forState:.Normal)
+        composeButton.titleLabel?.font = UIFont.systemFontOfSize(28)
+        composeButton.contentHorizontalAlignment = .Center
+        composeButton.contentVerticalAlignment = .Center
         
-        if let composeButton = self.composeButton {
-            let newOrigin = CGPointMake(self.view.frame.size.width - OZLContentPadding - composeButton.frame.size.width,
-                self.view.frame.size.height - OZLContentPadding - composeButton.frame.size.height - self.bottomLayoutGuide.length);
-            
-            self.composeButton?.frame.origin = newOrigin
+        composeButton.layer.shadowColor = UIColor.blackColor().CGColor
+        composeButton.layer.shadowOpacity = 0.2
+        composeButton.layer.shadowOffset = CGSizeMake(0.0, 2.0)
+        
+        composeButton.frame = CGRectMake(0, 0, self.IssueListComposeButtonHeight, self.IssueListComposeButtonHeight)
+        composeButton.layer.cornerRadius = (IssueListComposeButtonHeight / 2.0)
+        composeButton.addTarget(self, action: #selector(OZLIssueListViewController.composeButtonAction(_:)), forControlEvents:.TouchUpInside)
+
+        composeButton.setBackgroundImage(
+            UIColor.blackColor().circularImageWithDiameter(self.IssueListComposeButtonHeight).imageWithRenderingMode(.AlwaysTemplate),
+            forState: .Normal
+        )
+
+        self.view.addSubview(composeButton)
+
+        composeButton.snp_makeConstraints { (make) in
+            make.bottom.equalTo(self.view).offset(-OZLContentPadding)
+            make.trailing.equalTo(self.view.snp_trailing).offset(-OZLContentPadding)
+            make.width.equalTo(IssueListComposeButtonHeight)
+            make.height.equalTo(IssueListComposeButtonHeight)
         }
     }
-    
+
     // MARK: - Button actions
     func filterAction(sender: UIButton?) {
         let sortAndFilter = OZLSortAndFilterViewController()

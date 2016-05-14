@@ -1,5 +1,6 @@
 PODS:
   - 1PasswordExtension (1.8.1)
+  - DFCache (4.0.0)
   - DRPLoadingSpinner (0.1.0)
   - DRPSlidingTabView (0.2.2)
   - GTMNSStringHTMLAdditions (0.2.1)
@@ -23,10 +24,11 @@ PODS:
 
 DEPENDENCIES:
   - 1PasswordExtension
+  - DFCache
   - DRPLoadingSpinner
-  - DRPSlidingTabView (~> 0.2)
+  - DRPSlidingTabView
   - GTMNSStringHTMLAdditions
-  - HockeySDK (~> 4.0.0)
+  - HockeySDK
   - ISO8601
   - JGProgressHUD
   - JVFloatLabeledTextField
@@ -40,6 +42,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   1PasswordExtension: 00d6f4caae77c19ba33045b8569fbeb9689f0d1d
+  DFCache: 6a2d16adb3c12e79feb993380ace4340cc5ae34b
   DRPLoadingSpinner: 47cb1c2e47ae2617c87c8340075a24d94a48d879
   DRPSlidingTabView: b8a48b3d7a4848feaf755673344ce9cd3c622681
   GTMNSStringHTMLAdditions: 4bfc402b1b17165360728083156cae0a74ecb308

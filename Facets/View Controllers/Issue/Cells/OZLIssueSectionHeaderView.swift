@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 @objc class OZLIssueSectionHeaderView: UIView {
 
@@ -18,6 +19,8 @@ import UIKit
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        self.preservesSuperviewLayoutMargins = true
         
         self.titleLabel.font = UIFont.systemFontOfSize(14)
         self.titleLabel.textColor = UIColor.grayColor()
@@ -25,28 +28,26 @@ import UIKit
         self.disclosureButton.titleLabel?.font = UIFont.systemFontOfSize(12)
         self.disclosureButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
         self.disclosureButton.contentVerticalAlignment = .Bottom
+
+        self.addSubview(self.titleLabel)
+        self.addSubview(self.disclosureButton)
+
+        self.installConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    override func layoutSubviews() {
-        if self.isFirstLayout {
-            self.addSubview(self.titleLabel)
-            self.addSubview(self.disclosureButton)
-            self.isFirstLayout = false
+
+    func installConstraints() {
+        self.titleLabel.snp_makeConstraints { (make) in
+            make.leading.equalTo(self.snp_leadingMargin)
+            make.bottom.equalTo(self)
         }
-        
-        self.titleLabel.sizeToFit()
-        self.disclosureButton.sizeToFit()
-        
-        self.titleLabel.frame.origin.x = ceil(self.contentPadding)
-        self.titleLabel.frame.origin.y = ceil(self.frame.size.height - self.titleLabel.frame.size.height)
-        
-        self.disclosureButton.frame.origin.x = ceil(self.frame.size.width - self.disclosureButton.frame.size.width - self.contentPadding)
-        
-        // Magic numbers suck, but 5 points further down because UIButton doesn't allow text to butt against edges
-        self.disclosureButton.frame.origin.y = ceil(self.frame.size.height - self.disclosureButton.frame.size.height + 5)
+
+        self.disclosureButton.snp_makeConstraints { (make) in
+            make.trailing.equalTo(self.snp_trailingMargin)
+            make.baseline.equalTo(self.titleLabel)
+        }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class OZLIssueDetailsSectionFooter: UIView {
     let leftButton = UIButton(type: .System)
@@ -18,23 +19,20 @@ class OZLIssueDetailsSectionFooter: UIView {
 
         self.preservesSuperviewLayoutMargins = true
 
+        self.addSubview(self.leftButton)
+
         self.leftButton.titleLabel?.font = UIFont.systemFontOfSize(FontSize)
+        self.installConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        if self.leftButton.superview == nil {
-            self.addSubview(self.leftButton)
+    func installConstraints() {
+        self.leftButton.snp_makeConstraints { (make) in
+            make.leading.equalTo(self.snp_leadingMargin)
+            make.bottom.equalTo(self.snp_bottomMargin)
         }
-
-        self.leftButton.sizeToFit()
-
-        self.leftButton.frame.origin = CGPointMake(self.layoutMargins.left,
-                                                   self.frame.size.height - self.leftButton.frame.size.height - self.layoutMargins.bottom)
     }
 }

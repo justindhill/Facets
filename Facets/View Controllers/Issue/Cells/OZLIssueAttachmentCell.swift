@@ -16,13 +16,13 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
     let userNameLabel = UILabel()
     let timeIconImageView = UIImageView()
     let timeLabel = UILabel()
+    let downloadButton = UIButton(type: .System)
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        self.preservesSuperviewLayoutMargins = false
-        self.contentView.preservesSuperviewLayoutMargins = false
-        self.contentView.layoutMargins = UIEdgeInsetsMake(5, OZLContentPadding, 5, OZLContentPadding)
+        self.preservesSuperviewLayoutMargins = true
+        self.contentView.preservesSuperviewLayoutMargins = true
 
         self.userIconImageView.contentMode = .Center
         self.userIconImageView.image = UIImage(named: "icon-user")
@@ -30,6 +30,9 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
         self.attachmentTypeImageView.image = UIImage(named: "icon-filetype-photo")
         self.timeIconImageView.contentMode = .Center
         self.timeIconImageView.image = UIImage(named: "icon-clock")
+
+        self.downloadButton.setImage(UIImage(named: "icon-download"), forState: .Normal)
+        self.downloadButton.imageView?.contentMode = .Center
 
         self.userIconImageView.tintColor = UIColor.grayColor()
         self.attachmentTypeImageView.tintColor = UIColor.darkGrayColor()
@@ -46,6 +49,14 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
         self.attachmentTitleLabel.text = "NotificationCounterNotUpdated.mp4"
         self.userNameLabel.text = "Timur Rahmanov"
         self.timeLabel.text = "3d"
+
+        self.contentView.addSubview(self.attachmentTypeImageView)
+        self.contentView.addSubview(self.attachmentTitleLabel)
+        self.contentView.addSubview(self.userIconImageView)
+        self.contentView.addSubview(self.userNameLabel)
+        self.contentView.addSubview(self.timeIconImageView)
+        self.contentView.addSubview(self.timeLabel)
+        self.contentView.addSubview(self.downloadButton)
 
         self.installConstraints()
     }
@@ -65,13 +76,6 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
         let verticalElementSpacing = 3.0
         let intraItemHorizontalSpacing = 3.0
 
-        self.contentView.addSubview(self.attachmentTypeImageView)
-        self.contentView.addSubview(self.attachmentTitleLabel)
-        self.contentView.addSubview(self.userIconImageView)
-        self.contentView.addSubview(self.userNameLabel)
-        self.contentView.addSubview(self.timeIconImageView)
-        self.contentView.addSubview(self.timeLabel)
-
         self.attachmentTypeImageView.snp_makeConstraints { (make) in
             make.top.equalTo(self.contentView)
             make.bottom.equalTo(self.contentView)
@@ -79,10 +83,17 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
             make.width.equalTo(28.0)
         }
 
+        self.downloadButton.snp_makeConstraints { (make) in
+            make.trailing.equalTo(self.contentView.snp_trailingMargin)
+            make.top.equalTo(self.contentView)
+            make.bottom.equalTo(self.contentView)
+            make.width.equalTo(30.0)
+        }
+
         self.attachmentTitleLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(self.contentView.snp_topMargin)
+            make.top.equalTo(self.contentView.snp_top).offset(5)
             make.leading.equalTo(self.attachmentTypeImageView.snp_trailing).offset(horizontalElementSpacing)
-            make.trailing.lessThanOrEqualTo(self.contentView.snp_trailingMargin)
+            make.trailing.lessThanOrEqualTo(self.downloadButton.snp_leading)
         }
 
         self.userIconImageView.snp_makeConstraints { (make) in
@@ -97,7 +108,7 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
         self.userNameLabel.snp_makeConstraints { (make) in
             make.leading.equalTo(self.userIconImageView.snp_trailing).offset(intraItemHorizontalSpacing)
             make.top.equalTo(self.attachmentTitleLabel.snp_bottom).offset(verticalElementSpacing)
-            make.bottom.lessThanOrEqualTo(self.contentView.snp_bottomMargin)
+            make.bottom.lessThanOrEqualTo(self.contentView.snp_bottom).offset(-5)
         }
 
         self.timeIconImageView.snp_makeConstraints { (make) in
@@ -109,7 +120,7 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
 
         self.timeLabel.snp_makeConstraints { (make) in
             make.leading.equalTo(self.timeIconImageView.snp_trailing).offset(intraItemHorizontalSpacing)
-            make.trailing.lessThanOrEqualTo(self.contentView.snp_trailingMargin)
+            make.trailing.lessThanOrEqualTo(self.downloadButton.snp_leading)
             make.top.equalTo(self.attachmentTitleLabel.snp_bottom).offset(verticalElementSpacing)
         }
     }

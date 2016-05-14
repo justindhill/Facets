@@ -1,8 +1,8 @@
 def all_pods
 	use_frameworks!
 
-	pod 'HockeySDK', '~> 4.0.0'
-	pod 'DRPSlidingTabView', '~> 0.2'
+	pod 'HockeySDK'
+	pod 'DRPSlidingTabView'
 	pod 'DRPLoadingSpinner'
 	pod 'TTTAttributedLabel'
 	pod 'RaptureXML@Frankly'
@@ -15,6 +15,7 @@ def all_pods
 	pod 'JGProgressHUD'
 	pod '1PasswordExtension'
 	pod 'SnapKit'
+	pod 'DFCache'
 
 	pod 'Reveal-iOS-SDK', :configuration => ['Debug']
 end
