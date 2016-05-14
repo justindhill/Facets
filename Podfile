@@ -5,7 +5,6 @@ def all_pods
 	pod 'DRPSlidingTabView', '~> 0.2'
 	pod 'DRPLoadingSpinner'
 	pod 'TTTAttributedLabel'
-	pod 'JTSImageViewController'
 	pod 'RaptureXML@Frankly'
 	pod 'SDWebImage'
 	pod 'ISO8601'
@@ -15,6 +14,7 @@ def all_pods
 	pod 'SORelativeDateTransformer'
 	pod 'JGProgressHUD'
 	pod '1PasswordExtension'
+	pod 'SnapKit'
 
 	pod 'Reveal-iOS-SDK', :configuration => ['Debug']
 end

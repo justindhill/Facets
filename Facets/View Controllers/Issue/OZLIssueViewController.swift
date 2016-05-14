@@ -184,11 +184,13 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
                 return 0.0
             }
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
-            return OZLIssueAttachmentCell.heightForWidth(self.tableView.frame.size.width,
-                                                         model: self.viewModel.issueModel.attachments?[indexPath.row],
-                                                         layoutMargins: self.tableView.layoutMargins)
+            return UITableViewAutomaticDimension
         }
 
+        return 44.0
+    }
+
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 44.0
     }
 
