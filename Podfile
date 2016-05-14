@@ -6,7 +6,6 @@ def all_pods
 	pod 'DRPLoadingSpinner'
 	pod 'TTTAttributedLabel'
 	pod 'RaptureXML@Frankly'
-	pod 'SDWebImage'
 	pod 'ISO8601'
 	pod 'GTMNSStringHTMLAdditions'
 	pod 'Realm'

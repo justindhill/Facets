@@ -15,9 +15,6 @@ PODS:
     - Realm/Headers (= 0.102.1)
   - Realm/Headers (0.102.1)
   - Reveal-iOS-SDK (1.6.2)
-  - SDWebImage (3.7.6):
-    - SDWebImage/Core (= 3.7.6)
-  - SDWebImage/Core (3.7.6)
   - SnapKit (0.21.0)
   - SORelativeDateTransformer (1.1.10)
   - TTTAttributedLabel (2.0.0)
@@ -35,7 +32,6 @@ DEPENDENCIES:
   - RaptureXML@Frankly
   - Realm
   - Reveal-iOS-SDK
-  - SDWebImage
   - SnapKit
   - SORelativeDateTransformer
   - TTTAttributedLabel
@@ -53,7 +49,6 @@ SPEC CHECKSUMS:
   RaptureXML@Frankly: 2cf369025bd8b7f7401365170c263dc2efb902c5
   Realm: 5254be610db3e5024879684717bf038990bb59ec
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
-  SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
