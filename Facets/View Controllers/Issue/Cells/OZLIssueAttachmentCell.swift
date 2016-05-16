@@ -38,10 +38,6 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
         self.attachmentTypeImageView.tintColor = UIColor.darkGrayColor()
         self.timeIconImageView.tintColor = UIColor.grayColor()
 
-        self.attachmentTitleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
-        self.userNameLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
-        self.timeLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
-
         self.attachmentTitleLabel.textColor = UIColor.darkGrayColor()
         self.userNameLabel.textColor = UIColor.grayColor()
         self.timeLabel.textColor = UIColor.grayColor()
@@ -58,17 +54,14 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
         self.contentView.addSubview(self.timeLabel)
         self.contentView.addSubview(self.downloadButton)
 
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(preferredContentSizeCategoryDidChange), name: UIContentSizeCategoryDidChangeNotification, object: nil)
+        self.preferredContentSizeCategoryDidChange()
+
         self.installConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        print("before: \(NSStringFromUIEdgeInsets(self.layoutMargins))")
-        super.layoutSubviews()
-        print("after: \(NSStringFromUIEdgeInsets(self.layoutMargins))")
     }
 
     func installConstraints() {
@@ -120,8 +113,15 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
 
         self.timeLabel.snp_makeConstraints { (make) in
             make.leading.equalTo(self.timeIconImageView.snp_trailing).offset(intraItemHorizontalSpacing)
-            make.trailing.lessThanOrEqualTo(self.downloadButton.snp_leading)
+            make.trailing.lessThanOrEqualTo(self.downloadButton.snp_leading).offset(-horizontalElementSpacing)
             make.top.equalTo(self.attachmentTitleLabel.snp_bottom).offset(verticalElementSpacing)
         }
+    }
+
+    func preferredContentSizeCategoryDidChange() {
+        self.attachmentTitleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
+        self.userNameLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
+        self.timeLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
+        self.setNeedsLayout()
     }
 }
