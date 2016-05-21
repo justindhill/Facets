@@ -20,7 +20,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 
 @property (strong) NSURLSession *urlSession;
 @property NSOperationQueue *taskCallbackQueue;
-@property (nonatomic, assign) NSInteger activeRequestCount;
 @property NSObject *requestCountSyncToken;
 
 @end

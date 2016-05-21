@@ -71,6 +71,7 @@ import DFCache
         let downloadTask = self.urlSession().downloadTaskWithURL(contentUrl)
 
         self.taskAssociations[downloadTask.taskIdentifier] = (attachment, progress, completion)
+        self.networkManager.activeRequestCount += 1
 
         downloadTask.resume()
     }
@@ -90,6 +91,7 @@ import DFCache
         }
 
         defer {
+            self.networkManager.activeRequestCount -= 1
             self.taskAssociations.removeValueForKey(task.taskIdentifier)
         }
 
@@ -126,6 +128,7 @@ import DFCache
                 completion(data: data, error: nil)
             })
 
+            self.networkManager.activeRequestCount -= 1
             self.taskAssociations.removeValueForKey(downloadTask.taskIdentifier)
         }
     }
