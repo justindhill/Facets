@@ -47,6 +47,21 @@
     return nil;
 }
 
+- (NSString *)fileTypeIconImageName {
+    if ([self.contentType containsString:@"image"]) {
+        return @"icon-filetype-image";
+    } else if ([self.contentType containsString:@"video"] ||
+               [self.contentType containsString:@"mp4"]) {
+        return @"icon-filetype-video";
+    } else if ([self.contentType containsString:@"audio"]) {
+        return @"icon-filetype-audio";
+    } else if ([self.contentType containsString:@"text"]) {
+        return @"icon-filetype-text";
+    }
+
+    return @"icon-filetype-unknown";
+}
+
 - (NSString *)description {
     return [NSString stringWithFormat:@"<OZLModelAttachment: %p> name: %@, attacher: %@", self, self.name, self.attacher.name];
 }

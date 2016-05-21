@@ -4,6 +4,7 @@ def all_pods
 	pod 'HockeySDK'
 	pod 'DRPSlidingTabView'
 	pod 'DRPLoadingSpinner'
+	pod 'CircleProgressView'
 	pod 'TTTAttributedLabel'
 	pod 'RaptureXML@Frankly'
 	pod 'ISO8601'

@@ -68,7 +68,6 @@
 		D05AF7871C2C6971007911EA /* OZLModelMembership.m in Sources */ = {isa = PBXBuildFile; fileRef = D05AF7861C2C6971007911EA /* OZLModelMembership.m */; };
 		D05E08071C1FB6F400509501 /* OZLQuickAssignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E08061C1FB6F400509501 /* OZLQuickAssignView.swift */; };
 		D096EF221C98EE3800563610 /* OZLTextViewFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D096EF211C98EE3800563610 /* OZLTextViewFormField.swift */; };
-		D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */; };
 		D0987ABC1C07818500D55DEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0987ABB1C07818500D55DEB /* Images.xcassets */; };
 		D0987AD31C0801E000D55DEB /* OZLModelJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD21C0801E000D55DEB /* OZLModelJournal.swift */; };
 		D0987AD51C0904C200D55DEB /* OZLIssueSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0987AD41C0904C200D55DEB /* OZLIssueSectionHeaderView.swift */; };
@@ -827,7 +826,6 @@
 				D0F10F401C3710F900A0AE94 /* OZLMainTabControllerViewController.swift in Sources */,
 				D0F2F1AD1CE7D4170055E21C /* OZLAttachmentManager.swift in Sources */,
 				D0BCD0EC1C14C70F00B0DC6D /* UIImage+OZLExtensions.m in Sources */,
-				D0987AB61C07720F00D55DEB /* OZLAsyncImageView.swift in Sources */,
 				D0BFAA621CDFDA3400F51483 /* OZLIssueDetailsSectionFooter.swift in Sources */,
 				D5DB80C217931C8B0081662A /* OZLModelProject.m in Sources */,
 				D000B1DE1BF96BBA00CA2845 /* OZLWebViewController.m in Sources */,

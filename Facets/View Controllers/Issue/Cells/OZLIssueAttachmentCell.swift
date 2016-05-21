@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import CircleProgressView
+import SORelativeDateTransformer
 
 class OZLIssueAttachmentCell: OZLTableViewCell {
     let attachmentTypeImageView = UIImageView()
@@ -17,6 +19,7 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
     let timeIconImageView = UIImageView()
     let timeLabel = UILabel()
     let downloadButton = UIButton(type: .System)
+    let progressView = CircleProgressView(frame: CGRectMake(0, 0, 23, 23))
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,12 +30,19 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
         self.userIconImageView.contentMode = .Center
         self.userIconImageView.image = UIImage(named: "icon-user")
         self.attachmentTypeImageView.contentMode = .Center
-        self.attachmentTypeImageView.image = UIImage(named: "icon-filetype-photo")
+        self.attachmentTypeImageView.image = UIImage(named: "icon-filetype-unknown")
         self.timeIconImageView.contentMode = .Center
         self.timeIconImageView.image = UIImage(named: "icon-clock")
 
+        self.progressView.trackWidth = 1.0
+        self.progressView.centerFillColor = UIColor.whiteColor()
+        self.progressView.backgroundColor = UIColor.clearColor()
+        self.progressView.trackBackgroundColor = UIColor.lightGrayColor()
+
         self.downloadButton.setImage(UIImage(named: "icon-download"), forState: .Normal)
         self.downloadButton.imageView?.contentMode = .Center
+        self.downloadButton.sizeToFit()
+        self.accessoryView = self.downloadButton
 
         self.userIconImageView.tintColor = UIColor.grayColor()
         self.attachmentTypeImageView.tintColor = UIColor.darkGrayColor()
@@ -52,7 +62,6 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
         self.contentView.addSubview(self.userNameLabel)
         self.contentView.addSubview(self.timeIconImageView)
         self.contentView.addSubview(self.timeLabel)
-        self.contentView.addSubview(self.downloadButton)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(preferredContentSizeCategoryDidChange), name: UIContentSizeCategoryDidChangeNotification, object: nil)
         self.preferredContentSizeCategoryDidChange()
@@ -76,17 +85,10 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
             make.width.equalTo(28.0)
         }
 
-        self.downloadButton.snp_makeConstraints { (make) in
-            make.trailing.equalTo(self.contentView.snp_trailingMargin)
-            make.top.equalTo(self.contentView)
-            make.bottom.equalTo(self.contentView)
-            make.width.equalTo(30.0)
-        }
-
         self.attachmentTitleLabel.snp_makeConstraints { (make) in
             make.top.equalTo(self.contentView.snp_top).offset(5)
             make.leading.equalTo(self.attachmentTypeImageView.snp_trailing).offset(horizontalElementSpacing)
-            make.trailing.lessThanOrEqualTo(self.downloadButton.snp_leading)
+            make.trailing.lessThanOrEqualTo(self.contentView.snp_trailingMargin)
         }
 
         self.userIconImageView.snp_makeConstraints { (make) in
@@ -113,9 +115,19 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
 
         self.timeLabel.snp_makeConstraints { (make) in
             make.leading.equalTo(self.timeIconImageView.snp_trailing).offset(intraItemHorizontalSpacing)
-            make.trailing.lessThanOrEqualTo(self.downloadButton.snp_leading).offset(-horizontalElementSpacing)
+            make.trailing.lessThanOrEqualTo(self.contentView.snp_trailingMargin).offset(-horizontalElementSpacing)
             make.top.equalTo(self.attachmentTitleLabel.snp_bottom).offset(verticalElementSpacing)
         }
+    }
+
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        self.progressView.trackFillColor = self.tintColor
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.accessoryView = self.downloadButton
     }
 
     func preferredContentSizeCategoryDidChange() {
@@ -123,5 +135,16 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
         self.userNameLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
         self.timeLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
         self.setNeedsLayout()
+    }
+
+    func applyAttachmentModel(attachment: OZLModelAttachment) {
+        self.attachmentTitleLabel.text = attachment.name
+        self.userNameLabel.text = attachment.attacher.name
+
+        if let relativeDate = SORelativeDateTransformer.registeredTransformer().transformedValue(attachment.creationDate) as? String {
+            self.timeLabel.text = relativeDate
+        }
+
+        self.attachmentTypeImageView.image = UIImage(named: attachment.fileTypeIconImageName)
     }
 }

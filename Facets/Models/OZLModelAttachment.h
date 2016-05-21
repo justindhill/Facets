@@ -58,4 +58,10 @@
  */
 @property (readonly) NSString *thumbnailURL;
 
+
+/**
+ *  @brief The name of the icon associated with the contentType of the attachment.
+ */
+@property (readonly) NSString *fileTypeIconImageName;
+
 @end

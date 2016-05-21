@@ -7,11 +7,13 @@
 #import "OZLSingleton.h"
 #import "OZLConstants.h"
 #import "OZLNetwork.h"
+#import "Facets-Swift.h"
 
 @interface OZLSingleton ()
 
 @property (strong) OZLServerSync *serverSync;
 @property NSTimer *sessionRefreshTimer;
+@property (strong) OZLAttachmentManager *attachmentManager;
 
 @end
 
@@ -39,6 +41,7 @@ NSString * const USER_DEFAULTS_REDMINE_COOKIE = @"USER_DEFAULTS_REDMINE_COOKIE";
     if (self = [super init]) {
         
         self.serverSync = [[OZLServerSync alloc] init];
+        self.attachmentManager = [[OZLAttachmentManager alloc] initWithNetworkManager:[OZLNetwork sharedInstance]];
         
         NSDictionary *dic = @{
             USER_DEFAULTS_REDMINE_HOME_URL:   @"https://redmine.franklychat.com",

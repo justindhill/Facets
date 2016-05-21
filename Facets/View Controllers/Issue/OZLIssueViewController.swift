@@ -19,6 +19,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     var contentPadding: CGFloat = OZLContentPadding
     var viewModel: OZLIssueViewModel
     var header = OZLIssueHeaderView()
+    var attachmentManager = OZLSingleton.sharedInstance().attachmentManager
 
     weak var previewQuickAssignDelegate: OZLQuickAssignDelegate?
 
@@ -141,9 +142,8 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
             cell = tableView.dequeueReusableCellWithIdentifier(AttachmentReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
 
-            if let cell = cell as? OZLIssueAttachmentCell {
-                cell.attachmentTitleLabel.text = self.viewModel.issueModel.attachments?[indexPath.row].name
-                cell.userNameLabel.text = self.viewModel.issueModel.attachments?[indexPath.row].attacher.name
+            if let cell = cell as? OZLIssueAttachmentCell, attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
+                cell.applyAttachmentModel(attachment)
                 cell.downloadButton.addTarget(self, action: #selector(downloadAttachmentAction(_:)), forControlEvents: .TouchUpInside)
             }
         } else if sectionName == OZLIssueViewModel.SectionDescription {
@@ -313,7 +313,20 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
         if let indexPath = self.tableView.indexPathForRowAtPoint(convertedFrame.origin) {
             if let attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
-                // WARNING: Actually download the attachment
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? OZLIssueAttachmentCell
+                cell?.accessoryView = cell?.progressView
+
+                self.attachmentManager.downloadAttachment(attachment,
+                    progress: { (attachment, totalBytesDownloaded, totalBytesExpected) in
+                        let ratio = Double(totalBytesDownloaded) / Double(attachment.size)
+                        cell?.progressView.progress = ratio
+                        print("Progress for \(attachment): \(ratio))")
+                    }, completion: { (data, error) in
+                        cell?.accessoryType = .DisclosureIndicator
+                        cell?.accessoryView = nil
+                        print("Finished downloading \(attachment)")
+                })
+
                 print(attachment)
             }
         }

@@ -14,23 +14,35 @@ import DFCache
     case UnacceptableStatusCode
 }
 
-@objc class OZLAttachmentManager: NSObject {
+@objc class OZLAttachmentManager: NSObject, NSURLSessionDownloadDelegate {
     static let ErrorDomain = "OZLAttachmentManagerErrorDomain"
 
     private static let CacheIdentifier = "facets.attachments"
     private let cache = DFCache(name: OZLAttachmentManager.CacheIdentifier, memoryCache: nil)
     private let networkManager: OZLNetwork
 
+    // key: taskIdentifier, value: (attachment, progressHandler, completionHandler)
+    private var taskAssociations: [Int: (OZLModelAttachment, ((attachment: OZLModelAttachment, bytesDownloaded: Int64, totalBytesExpected: Int64) -> Void)?, (data: NSData?, error: NSError?) -> Void)] = [:]
+
+    private lazy var urlSession: () -> NSURLSession = {
+        return NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: nil)
+    }
+
     init(networkManager: OZLNetwork) {
         self.networkManager = networkManager
         super.init()
     }
 
+
     func isAttachmentCached(attachment: OZLModelAttachment) -> Bool {
         return self.cache.metadataForKey(String(attachment.attachmentID)) != nil
     }
 
-    func downloadAttachment(attachment: OZLModelAttachment, completion: (data: NSData?, error: NSError?) -> Void) {
+    func downloadAttachment(
+        attachment: OZLModelAttachment,
+        progress: ((attachment: OZLModelAttachment, totalBytesDownloaded: Int64, totalBytesExpected: Int64) -> Void)?,
+        completion: (data: NSData?, error: NSError?) -> Void) {
+
         if let cachedData = self.cache.cachedDataForKey(String(attachment.attachmentID)) {
             dispatch_async(dispatch_get_main_queue(), { 
                 completion(data: cachedData, error: nil)
@@ -40,51 +52,90 @@ import DFCache
         }
 
         guard let contentUrl = NSURL(string: attachment.contentURL) else {
-            completion(
-                data: nil,
-                error: NSError(
-                    domain: OZLAttachmentManager.ErrorDomain,
-                    code: OZLAttachmentManagerError.InvalidOrMissingContentURL.rawValue,
-                    userInfo: [
-                        NSLocalizedDescriptionKey: "The attachment's content URL was missing or invalid."
-                    ]
+            dispatch_async(dispatch_get_main_queue(), { 
+                completion(
+                    data: nil,
+                    error: NSError(
+                        domain: OZLAttachmentManager.ErrorDomain,
+                        code: OZLAttachmentManagerError.InvalidOrMissingContentURL.rawValue,
+                        userInfo: [
+                            NSLocalizedDescriptionKey: "The attachment's content URL was missing or invalid."
+                        ]
+                    )
                 )
-            )
+            })
 
             return
         }
 
-        let downloadTask = self.networkManager.urlSession.downloadTaskWithURL(contentUrl) { (fileUrl, response, error) in
-            guard let fileUrl = fileUrl else {
-                completion(data: nil, error: error)
-                return
-            }
+        let downloadTask = self.urlSession().downloadTaskWithURL(contentUrl)
 
-            guard let r = response as? NSHTTPURLResponse where 200..<300 ~= r.statusCode else {
-                let error = NSError(
-                    domain: OZLAttachmentManager.ErrorDomain,
-                    code: OZLAttachmentManagerError.UnacceptableStatusCode.rawValue,
-                    userInfo: [ NSLocalizedDescriptionKey: "Expected a status code between 200 and 300. Response: \(response)"]
-                )
-
-                completion(data: nil, error: error)
-                return
-            }
-
-            guard let data = NSData(contentsOfURL: fileUrl) else {
-                completion(data: nil, error: nil)
-                return
-            }
-
-            completion(data: data, error: nil)
-        }
+        self.taskAssociations[downloadTask.taskIdentifier] = (attachment, progress, completion)
 
         downloadTask.resume()
     }
 
-    func fetchLocalAttachmentWithId(attachmentId: Int, completion: (data: NSData?) -> Void) {
-        self.cache.cachedDataForKey(String(attachmentId)) { (data) in
-            completion(data: data)
+    func fetchLocalAttachment(attachment: OZLModelAttachment, completion: (data: NSData?) -> Void) {
+        self.cache.cachedDataForKey(String(attachment.attachmentID)) { (data) in
+            dispatch_async(dispatch_get_main_queue(), {
+                completion(data: data)
+            })
+        }
+    }
+
+    // NSURLSessionDelegate
+    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+        guard let (_, _, completion) = self.taskAssociations[task.taskIdentifier] else {
+            return
+        }
+
+        defer {
+            self.taskAssociations.removeValueForKey(task.taskIdentifier)
+        }
+
+        if let error = error {
+            dispatch_async(dispatch_get_main_queue(), {
+                completion(data: nil, error: error)
+            })
+
+            return
+        }
+
+        guard let r = task.response as? NSHTTPURLResponse where 200..<300 ~= r.statusCode else {
+            let error = NSError(
+                domain: OZLAttachmentManager.ErrorDomain,
+                code: OZLAttachmentManagerError.UnacceptableStatusCode.rawValue,
+                userInfo: [ NSLocalizedDescriptionKey: "Expected a status code between 200 and 300. Response: \(task.response)"]
+            )
+
+            dispatch_async(dispatch_get_main_queue(), {
+                completion(data: nil, error: error)
+            })
+
+            return
+        }
+    }
+
+    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+        guard let (_, _, completion) = self.taskAssociations[downloadTask.taskIdentifier] else {
+            return
+        }
+
+        if let data = NSData(contentsOfURL: location) {
+            dispatch_async(dispatch_get_main_queue(), {
+                completion(data: data, error: nil)
+            })
+
+            self.taskAssociations.removeValueForKey(downloadTask.taskIdentifier)
+        }
+    }
+
+    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+
+        if let (attachment, progressHandler, _) = self.taskAssociations[downloadTask.taskIdentifier] {
+            dispatch_async(dispatch_get_main_queue(), {
+                progressHandler?(attachment: attachment, bytesDownloaded: totalBytesWritten, totalBytesExpected: totalBytesExpectedToWrite)
+            })
         }
     }
 }
