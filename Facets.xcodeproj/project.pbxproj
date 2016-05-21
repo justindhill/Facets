@@ -197,7 +197,6 @@
 		D05E08061C1FB6F400509501 /* OZLQuickAssignView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQuickAssignView.swift; sourceTree = "<group>"; };
 		D06D51101C2F10F700180B89 /* OZLNavigationChildChangeListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLNavigationChildChangeListener.h; sourceTree = "<group>"; };
 		D096EF211C98EE3800563610 /* OZLTextViewFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLTextViewFormField.swift; sourceTree = "<group>"; };
-		D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLAsyncImageView.swift; sourceTree = "<group>"; };
 		D0987AB81C0772BA00D55DEB /* Facets-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Facets-Bridging-Header.h"; sourceTree = "<group>"; };
 		D0987ABB1C07818500D55DEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D0987AD21C0801E000D55DEB /* OZLModelJournal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLModelJournal.swift; sourceTree = "<group>"; };
@@ -324,7 +323,6 @@
 				D01F9BE21BEC8BDD005B2ED0 /* UIView+OZLExtensions.m */,
 				D01F9C121BEDABB8005B2ED0 /* UIColor+OZLExtensions.h */,
 				D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */,
-				D0987AB51C07720F00D55DEB /* OZLAsyncImageView.swift */,
 				D0BCD0EA1C14C70F00B0DC6D /* UIImage+OZLExtensions.h */,
 				D0BCD0EB1C14C70F00B0DC6D /* UIImage+OZLExtensions.m */,
 				D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */,
