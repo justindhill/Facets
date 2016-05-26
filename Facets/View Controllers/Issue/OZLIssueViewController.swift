@@ -6,6 +6,7 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
+import Foundation
 import AVFoundation
 import AVKit
 
@@ -44,7 +45,6 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         super.viewDidLoad()
 
         self.tableView.backgroundColor = UIColor.whiteColor()
-        self.tableView.separatorStyle = .None
 
         self.header.contentPadding = OZLContentPadding;
         self.header.assignButton.addTarget(self, action: #selector(quickAssignAction), forControlEvents: .TouchUpInside)
@@ -55,6 +55,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.tableView.registerClass(OZLJournalCell.self, forCellReuseIdentifier: RecentActivityReuseIdentifier)
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(editButtonAction(_:)))
+        self.tableView.separatorStyle = .None
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -364,8 +365,14 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
                 let tmpUrl = NSURL.fileURLWithPath(cachesDir)
 
                 do {
-                    if NSFileManager.defaultManager().fileExistsAtPath(cachesDir) {
-                        try NSFileManager.defaultManager().removeItemAtURL(tmpUrl)
+                    do {
+                        if try NSFileManager.defaultManager().attributesOfItemAtPath(cachesDir)[NSFileType] as? String == NSFileTypeSymbolicLink {
+                            try NSFileManager.defaultManager().removeItemAtURL(tmpUrl)
+                        }
+                    } catch let error as NSError {
+                        if error.domain != NSCocoaErrorDomain || error.code != 260 {
+                            return
+                        }
                     }
 
                     try NSFileManager.defaultManager().createSymbolicLinkAtURL(tmpUrl, withDestinationURL: url)
