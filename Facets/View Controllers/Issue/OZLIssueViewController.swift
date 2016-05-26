@@ -364,7 +364,10 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
                 let tmpUrl = NSURL.fileURLWithPath(cachesDir)
 
                 do {
-                    try NSFileManager.defaultManager().removeItemAtURL(tmpUrl)
+                    if NSFileManager.defaultManager().fileExistsAtPath(cachesDir) {
+                        try NSFileManager.defaultManager().removeItemAtURL(tmpUrl)
+                    }
+
                     try NSFileManager.defaultManager().createSymbolicLinkAtURL(tmpUrl, withDestinationURL: url)
                 } catch {
                     return
