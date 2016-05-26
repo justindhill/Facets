@@ -145,6 +145,6 @@ class OZLIssueAttachmentCell: OZLTableViewCell {
             self.timeLabel.text = relativeDate
         }
 
-        self.attachmentTypeImageView.image = UIImage(named: attachment.fileTypeIconImageName)
+        self.attachmentTypeImageView.image = UIImage(named: attachment.fileClassificationImageName)
     }
 }

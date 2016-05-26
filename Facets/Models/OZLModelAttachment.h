@@ -9,6 +9,14 @@
 @import Foundation;
 #import "OZLModelUser.h"
 
+typedef NS_ENUM(NSInteger, OZLAttachmentFileType) {
+    OZLAttachmentFileTypeUnknown,
+    OZLAttachmentFileTypeText,
+    OZLAttachmentFileTypeImage,
+    OZLAttachmentFileTypeVideo,
+    OZLAttachmentFileTypeAudio
+};
+
 @interface OZLModelAttachment : NSObject
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
@@ -21,7 +29,7 @@
 /**
  *  @brief The mime type of the attachment
  */
-@property (strong) NSString *contentType;
+@property (strong) NSString *mimeType;
 
 /**
  *  @brief The URL at which the attachment can be accessed
@@ -58,10 +66,20 @@
  */
 @property (readonly) NSString *thumbnailURL;
 
+/**
+ *  @brief The key used to cache this attachment locally.
+ */
+@property (readonly) NSString *cacheKey;
 
 /**
- *  @brief The name of the icon associated with the contentType of the attachment.
+ *  @brief The classification of the attachment based on its mimeType; for instance, an attachment with 
+ *         mimeType video/mp4 would return OZLAttachmentFileTypeVideo.
  */
-@property (readonly) NSString *fileTypeIconImageName;
+@property (readonly) OZLAttachmentFileType fileClassification;
+
+/**
+ *  @brief The name of the icon associated with the fileClassification of the attachment.
+ */
+@property (readonly) NSString *fileClassificationImageName;
 
 @end

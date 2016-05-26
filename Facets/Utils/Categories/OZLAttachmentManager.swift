@@ -35,7 +35,7 @@ import DFCache
 
 
     func isAttachmentCached(attachment: OZLModelAttachment) -> Bool {
-        return self.cache.metadataForKey(String(attachment.attachmentID)) != nil
+        return self.cache.isValueCachedForKey(attachment.cacheKey)
     }
 
     func downloadAttachment(
@@ -43,7 +43,7 @@ import DFCache
         progress: ((attachment: OZLModelAttachment, totalBytesDownloaded: Int64, totalBytesExpected: Int64) -> Void)?,
         completion: (data: NSData?, error: NSError?) -> Void) {
 
-        if let cachedData = self.cache.cachedDataForKey(String(attachment.attachmentID)) {
+        if let cachedData = self.cache.cachedDataForKey(attachment.cacheKey) {
             dispatch_async(dispatch_get_main_queue(), { 
                 completion(data: cachedData, error: nil)
             })
@@ -76,8 +76,16 @@ import DFCache
         downloadTask.resume()
     }
 
+    func fetchURLForLocalAttachment(attachment: OZLModelAttachment) -> NSURL? {
+        return self.cache.diskCache?.URLForKey(attachment.cacheKey)
+    }
+
+    func fetchLocalAttachment(attachment: OZLModelAttachment) -> NSData? {
+        return self.cache.cachedDataForKey(attachment.cacheKey)
+    }
+
     func fetchLocalAttachment(attachment: OZLModelAttachment, completion: (data: NSData?) -> Void) {
-        self.cache.cachedDataForKey(String(attachment.attachmentID)) { (data) in
+        self.cache.cachedDataForKey(String(attachment.cacheKey)) { (data) in
             dispatch_async(dispatch_get_main_queue(), {
                 completion(data: data)
             })
@@ -119,11 +127,13 @@ import DFCache
     }
 
     func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
-        guard let (_, _, completion) = self.taskAssociations[downloadTask.taskIdentifier] else {
+        guard let (attachment, _, completion) = self.taskAssociations[downloadTask.taskIdentifier] else {
             return
         }
 
         if let data = NSData(contentsOfURL: location) {
+            self.cache.storeData(data, forKey: attachment.cacheKey)
+
             dispatch_async(dispatch_get_main_queue(), {
                 completion(data: data, error: nil)
             })

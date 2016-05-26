@@ -27,7 +27,7 @@
         self.attacher = [[OZLModelUser alloc] initWithAttributeDictionary:attacherDict];
     }
     
-    self.contentType = dict[@"content_type"];
+    self.mimeType = dict[@"content_type"];
     self.contentURL = dict[@"content_url"];
     self.creationDate = [NSDate dateWithISO8601String:dict[@"created_on"]];
     self.detailDescription = dict[@"description"];
@@ -37,7 +37,7 @@
 }
 
 - (NSString *)thumbnailURL {
-    if ([self.contentType hasPrefix:@"image"]) {
+    if ([self.mimeType hasPrefix:@"image"]) {
         NSURLComponents *c = [NSURLComponents componentsWithString:self.contentURL];
         c.path = [NSString stringWithFormat:@"/attachments/thumbnail/%ld", (long)self.attachmentID];
         
@@ -47,19 +47,35 @@
     return nil;
 }
 
-- (NSString *)fileTypeIconImageName {
-    if ([self.contentType containsString:@"image"]) {
-        return @"icon-filetype-image";
-    } else if ([self.contentType containsString:@"video"] ||
-               [self.contentType containsString:@"mp4"]) {
-        return @"icon-filetype-video";
-    } else if ([self.contentType containsString:@"audio"]) {
-        return @"icon-filetype-audio";
-    } else if ([self.contentType containsString:@"text"]) {
-        return @"icon-filetype-text";
+- (OZLAttachmentFileType)fileClassification {
+    if ([self.mimeType containsString:@"image"]) {
+        return OZLAttachmentFileTypeImage;
+    } else if ([self.mimeType containsString:@"video"] ||
+               [self.mimeType containsString:@"mp4"]) {
+        return OZLAttachmentFileTypeVideo;
+    } else if ([self.mimeType containsString:@"audio"]) {
+        return OZLAttachmentFileTypeAudio;
+    } else if ([self.mimeType containsString:@"text"]) {
+        return OZLAttachmentFileTypeText;
     }
 
-    return @"icon-filetype-unknown";
+    return OZLAttachmentFileTypeUnknown;
+}
+
+- (NSString *)fileClassificationImageName {
+    switch (self.fileClassification) {
+        case OZLAttachmentFileTypeText: return @"icon-filetype-text";
+        case OZLAttachmentFileTypeImage: return @"icon-filetype-image";
+        case OZLAttachmentFileTypeAudio: return @"icon-filetype-audio";
+        case OZLAttachmentFileTypeVideo: return @"icon-filetype-video";
+
+        default: return @"icon-filetype-unknown";
+    }
+}
+
+- (NSString *)cacheKey {
+#warning Revisit this choice of cache key before shipping
+    return self.contentURL;
 }
 
 - (NSString *)description {

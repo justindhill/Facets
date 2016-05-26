@@ -6,6 +6,9 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
+import AVFoundation
+import AVKit
+
 class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate, UIViewControllerTransitioningDelegate {
 
     private let DetailReuseIdentifier = "DetailReuseIdentifier"
@@ -144,6 +147,14 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
             if let cell = cell as? OZLIssueAttachmentCell, attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
                 cell.applyAttachmentModel(attachment)
+
+                if OZLSingleton.sharedInstance().attachmentManager.isAttachmentCached(attachment) {
+                    cell.accessoryView = nil
+                    cell.accessoryType = .DisclosureIndicator
+                } else {
+                    cell.accessoryView = cell.downloadButton
+                }
+
                 cell.downloadButton.addTarget(self, action: #selector(downloadAttachmentAction(_:)), forControlEvents: .TouchUpInside)
             }
         } else if sectionName == OZLIssueViewModel.SectionDescription {
@@ -259,6 +270,12 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
             return true
         }
 
+        if sectionName == OZLIssueViewModel.SectionAttachments {
+            if let attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
+                return OZLSingleton.sharedInstance().attachmentManager.isAttachmentCached(attachment)
+            }
+        }
+
         return false
     }
 
@@ -270,6 +287,12 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         if sectionName == OZLIssueViewModel.SectionDetail && self.viewModel.showAllDetails {
             self.viewModel.togglePinningForDetailAtIndex(indexPath.row)
             tableView.reloadRowsAtIndexPaths([ indexPath ], withRowAnimation: .Fade)
+        }
+
+        if sectionName == OZLIssueViewModel.SectionAttachments {
+            if let attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
+                self.cachedAttachmentTapAction(attachment)
+            }
         }
     }
 
@@ -328,6 +351,33 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
                 })
 
                 print(attachment)
+            }
+        }
+    }
+
+    func cachedAttachmentTapAction(attachment: OZLModelAttachment) {
+        if attachment.fileClassification == .Video {
+            if let url = self.attachmentManager.fetchURLForLocalAttachment(attachment) {
+                var cachesDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .AllDomainsMask, true).first!
+                cachesDir = cachesDir.stringByAppendingString("/tmp.mp4")
+
+                let tmpUrl = NSURL.fileURLWithPath(cachesDir)
+
+                do {
+                    try NSFileManager.defaultManager().removeItemAtURL(tmpUrl)
+                    try NSFileManager.defaultManager().createSymbolicLinkAtURL(tmpUrl, withDestinationURL: url)
+                } catch {
+                    return
+                }
+
+                let player = AVPlayer(URL: tmpUrl)
+
+                let vc = AVPlayerViewController()
+                vc.player = player
+
+                self.presentViewController(vc, animated: true, completion: { 
+                    vc.player?.play()
+                })
             }
         }
     }
