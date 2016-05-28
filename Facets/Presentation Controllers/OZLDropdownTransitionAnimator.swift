@@ -37,22 +37,31 @@ class OZLDropdownTransitionAnimator: NSObject, UIViewControllerAnimatedTransitio
             return
         }
 
-        let collapsedFrame = CGRectMake(0, self.presentedOriginY, self.navigationController.view.frame.size.width, 0)
-
+        toViewController.view.clipsToBounds = true
+        let expandedFrame = transitionContext.finalFrameForViewController(toViewController)
         if self.presenting {
             transitionContext.containerView()?.addSubview(toViewController.view)
-            toViewController.view.frame = collapsedFrame
+            toViewController.view.frame = expandedFrame
+            toViewController.view.bounds.origin = CGPointMake(0, expandedFrame.size.height)
         }
 
-        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: [ .CurveEaseOut ], animations: { 
-
-                if self.presenting {
-                    toViewController.view.frame = transitionContext.finalFrameForViewController(toViewController)
-                } else {
-                    fromViewController.view.frame = collapsedFrame
-                }
-            }) { (finished) in
-                transitionContext.completeTransition(true)
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            transitionContext.completeTransition(true)
         }
+
+        let positionAnim = CABasicAnimation(keyPath: "bounds.origin")
+        positionAnim.fromValue = NSValue(CGPoint: self.presenting ? CGPointMake(0, 2 * expandedFrame.size.height) : CGPointMake(0, fromViewController.view.frame.size.height))
+        positionAnim.toValue = NSValue(CGPoint: self.presenting ? CGPointMake(0, expandedFrame.size.height) : CGPointMake(0, 2 * fromViewController.view.frame.size.height))
+        positionAnim.duration = self.transitionDuration(transitionContext)
+        positionAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+
+        if self.presenting {
+            toViewController.view.layer.addAnimation(positionAnim, forKey: nil)
+        } else {
+            fromViewController.view.layer.addAnimation(positionAnim, forKey: nil)
+        }
+
+        CATransaction.commit()
     }
 }
