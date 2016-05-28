@@ -273,9 +273,11 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             OZLSingleton.sharedInstance().currentProjectID = project.projectId
             viewModel.projectId = project.projectId
 
-            if let titleButton = self.navigationItem.titleView as? UIButton {
-                titleButton.setTitle(project.name, forState: .Normal)
+            if let titleButton = self.navigationItem.titleView as? OZLDownChevronTitleView {
+                titleButton.title = project.name
+                self.navigationItem.titleView = nil
                 titleButton.sizeToFit()
+                self.navigationItem.titleView = titleButton
             }
 
             self.tableView.reloadData()
