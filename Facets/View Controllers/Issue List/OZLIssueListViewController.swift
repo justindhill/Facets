@@ -51,11 +51,15 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         
         self.viewModel?.projectId = OZLSingleton.sharedInstance().currentProjectID
 
-        let titleButton = UIButton(type: .System)
-        titleButton.setTitle(self.viewModel?.title, forState: .Normal)
-        titleButton.addTarget(self, action: #selector(showProjectSelector), forControlEvents: .TouchUpInside)
-        titleButton.titleLabel?.font = UIFont.systemFontOfSize(17.0)
-        self.navigationItem.titleView = titleButton
+        if self.viewModel.shouldShowProjectSelector && self.isFirstAppearance {
+            let titleButton = OZLDownChevronTitleView()
+            titleButton.title = self.viewModel.title
+            titleButton.addTarget(self, action: #selector(showProjectSelector), forControlEvents: .TouchUpInside)
+            titleButton.sizeToFit()
+            self.navigationItem.titleView = titleButton
+        } else {
+            self.navigationItem.title = self.viewModel.title
+        }
         
         if self.isFirstAppearance {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-filter"), style: .Done, target: self, action: #selector(OZLIssueListViewController.filterAction(_:)))

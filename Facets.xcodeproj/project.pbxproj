@@ -33,6 +33,7 @@
 		D00EA2411CF934C80090B401 /* OZLDropdownPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00EA2401CF934C80090B401 /* OZLDropdownPresentationController.swift */; };
 		D00EA2431CF94EEB0090B401 /* OZLDropdownTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00EA2421CF94EEB0090B401 /* OZLDropdownTransitionAnimator.swift */; };
 		D00EA2461CF961830090B401 /* OZLListSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00EA2451CF961830090B401 /* OZLListSelectorViewController.swift */; };
+		D00EA2481CFA072B0090B401 /* OZLDownChevronTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00EA2471CFA072B0090B401 /* OZLDownChevronTitleView.swift */; };
 		D014C2B11C95D37E00D381A9 /* NSDate+OZLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */; };
 		D014C2B31C95DD8D00D381A9 /* OZLTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B21C95DD8D00D381A9 /* OZLTableViewController.swift */; };
 		D014C2B61C96151A00D381A9 /* OZLFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014C2B51C96151A00D381A9 /* OZLFormViewController.swift */; };
@@ -143,6 +144,7 @@
 		D00EA2401CF934C80090B401 /* OZLDropdownPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLDropdownPresentationController.swift; sourceTree = "<group>"; };
 		D00EA2421CF94EEB0090B401 /* OZLDropdownTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLDropdownTransitionAnimator.swift; sourceTree = "<group>"; };
 		D00EA2451CF961830090B401 /* OZLListSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLListSelectorViewController.swift; sourceTree = "<group>"; };
+		D00EA2471CFA072B0090B401 /* OZLDownChevronTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLDownChevronTitleView.swift; sourceTree = "<group>"; };
 		D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+OZLExtensions.swift"; sourceTree = "<group>"; };
 		D014C2B21C95DD8D00D381A9 /* OZLTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLTableViewController.swift; sourceTree = "<group>"; };
 		D014C2B51C96151A00D381A9 /* OZLFormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLFormViewController.swift; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 				D0A53D2E1C38300300E424F0 /* OZLIssueListViewController.swift */,
 				D0DD77831C94A8EF008DC65D /* OZLIssueTableViewCell.swift */,
 				D0DD77851C94A90A008DC65D /* OZLIssueTableViewCell.xib */,
+				D00EA2471CFA072B0090B401 /* OZLDownChevronTitleView.swift */,
 			);
 			path = "Issue List";
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */,
 				D00EA1F51CD53597002210E0 /* UIColor+OZLExtensions.swift in Sources */,
 				D0BCD0E11C14C33E00B0DC6D /* OZLIssueComposerViewController.swift in Sources */,
+				D00EA2481CFA072B0090B401 /* OZLDownChevronTitleView.swift in Sources */,
 				D01F9C0D1BED9ABC005B2ED0 /* OZLTableViewCell.m in Sources */,
 				D0BFA9121C6FE50300F4D1FB /* OZLJournalViewerViewModel.swift in Sources */,
 				D0987AD51C0904C200D55DEB /* OZLIssueSectionHeaderView.swift in Sources */,
@@ -903,7 +907,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -928,7 +932,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
 				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
@@ -968,7 +972,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -996,7 +1000,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1020,7 +1024,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
 				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
@@ -1049,7 +1053,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
 				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;

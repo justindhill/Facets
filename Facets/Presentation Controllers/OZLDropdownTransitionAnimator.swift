@@ -55,6 +55,8 @@ class OZLDropdownTransitionAnimator: NSObject, UIViewControllerAnimatedTransitio
         positionAnim.toValue = NSValue(CGPoint: self.presenting ? CGPointMake(0, expandedFrame.size.height) : CGPointMake(0, 2 * fromViewController.view.frame.size.height))
         positionAnim.duration = self.transitionDuration(transitionContext)
         positionAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        positionAnim.fillMode = kCAFillModeForwards
+        positionAnim.removedOnCompletion = false
 
         if self.presenting {
             toViewController.view.layer.addAnimation(positionAnim, forKey: nil)
