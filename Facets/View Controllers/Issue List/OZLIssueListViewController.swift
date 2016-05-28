@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLSortAndFilterViewControllerDelegate, OZLNavigationChildChangeListener {
+class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLSortAndFilterViewControllerDelegate, OZLNavigationChildChangeListener, UIViewControllerTransitioningDelegate {
     
     private let IssueListComposeButtonHeight: CGFloat = 56.0
     private let ZeroHeightFooterTag = -1
@@ -276,6 +276,15 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     
 
     // MARK: - Behavior
+    func showProjectSelector() {
+        let vc = UIViewController()
+        vc.view.backgroundColor = UIColor.whiteColor()
+        vc.modalPresentationStyle = .Custom
+        vc.transitioningDelegate = self
+
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
+
     func refreshProjectSelector() {
         if self.viewModel.shouldShowProjectSelector {
             var titlesArray: Array<String> = []
@@ -288,27 +297,31 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             // BTNavigationDropdownMenu must be initialized with its items, so we have to re-initialize it every 
             // time we want to change the items. Blech.
             if let nav = self.navigationController {
-                let dropdown = BTNavigationDropdownMenu(navigationController: nav, title: self.viewModel.title, items: titlesArray)
-                dropdown.cellTextLabelFont = UIFont.OZLMediumSystemFontOfSize(17.0)
-                
-                // use the parent view controller's tint color. BTNavigationDropdownMenu doesn't properly
-                // respond to tintColorDidChange, so using this view's tint color won't do any good, as
-                // we're not added to the window yet.
-                dropdown.tintColor = self.parentViewController?.view.tintColor
-                dropdown.cellBackgroundColor = UIColor(red:(249 / 255), green:(249 / 255), blue:(249 / 255), alpha:1)
-                dropdown.cellSeparatorColor = UIColor.lightGrayColor()
-                dropdown.cellTextLabelColor = UIColor.darkGrayColor()
-                dropdown.cellSelectionColor = UIColor.OZLVeryLightGrayColor()
-                dropdown.arrowImage = dropdown.arrowImage.imageWithRenderingMode(.AlwaysTemplate)
-                dropdown.checkMarkImage = nil;
-                
-                weak var weakSelf = self
-                
-                dropdown.didSelectItemAtIndexHandler = { (index: Int) in
-                    weakSelf?.didSelectProjectAtIndex(index)
-                }
-                
-                self.navigationItem.titleView = dropdown;
+                let titleButton = UIButton(type: .System)
+                titleButton.setTitle(self.viewModel.title, forState: .Normal)
+                titleButton.addTarget(self, action: #selector(showProjectSelector), forControlEvents: .TouchUpInside)
+                self.navigationItem.titleView = titleButton
+//                let dropdown = BTNavigationDropdownMenu(navigationController: nav, title: self.viewModel.title, items: titlesArray)
+//                dropdown.cellTextLabelFont = UIFont.OZLMediumSystemFontOfSize(17.0)
+//                
+//                // use the parent view controller's tint color. BTNavigationDropdownMenu doesn't properly
+//                // respond to tintColorDidChange, so using this view's tint color won't do any good, as
+//                // we're not added to the window yet.
+//                dropdown.tintColor = self.parentViewController?.view.tintColor
+//                dropdown.cellBackgroundColor = UIColor(red:(249 / 255), green:(249 / 255), blue:(249 / 255), alpha:1)
+//                dropdown.cellSeparatorColor = UIColor.lightGrayColor()
+//                dropdown.cellTextLabelColor = UIColor.darkGrayColor()
+//                dropdown.cellSelectionColor = UIColor.OZLVeryLightGrayColor()
+//                dropdown.arrowImage = dropdown.arrowImage.imageWithRenderingMode(.AlwaysTemplate)
+//                dropdown.checkMarkImage = nil;
+//                
+//                weak var weakSelf = self
+//                
+//                dropdown.didSelectItemAtIndexHandler = { (index: Int) in
+//                    weakSelf?.didSelectProjectAtIndex(index)
+//                }
+//                
+//                self.navigationItem.titleView = dropdown;
             }
         }
     }
@@ -355,5 +368,31 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     func hideFooterActivityIndicator() {
         self.tableView.tableFooterView = UIView(frame: CGRectMake(0, 0, 0, CGFloat.min))
         self.tableView.tableFooterView!.tag = ZeroHeightFooterTag
+    }
+
+    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
+        if let nav = self.navigationController {
+            return OZLDropdownPresentationController(presentedViewController: presented,
+                                                     presentingViewController: presenting,
+                                                     navigationController: nav)
+        }
+
+        return nil
+    }
+
+    var transitionAnimator: OZLDropdownTransitionAnimator?
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if let nav = source.navigationController {
+            self.transitionAnimator = OZLDropdownTransitionAnimator(navigationController:nav)
+            return self.transitionAnimator
+        }
+
+        return nil
+    }
+
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        self.transitionAnimator?.presenting = false
+
+        return self.transitionAnimator
     }
 }
