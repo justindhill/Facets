@@ -19,6 +19,8 @@ protocol OZLListSelectorDelegate: AnyObject {
 
 class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTransitioningDelegate {
 
+    private let layoutMargin: CGFloat = 20.0
+
     weak var delegate: OZLListSelectorDelegate?
     private(set) var items: [OZLListSelectorItem] = []
     private(set) var selectedItem: OZLListSelectorItem?
@@ -43,11 +45,13 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ReuseIdentifier)
-        self.tableView.rowHeight = 44.0
+        self.tableView.rowHeight = 50.0
         self.tableView.scrollEnabled = false
         self.tableView.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
         self.view.backgroundColor = UIColor.clearColor()
         self.tableView.backgroundColor = UIColor.clearColor()
+
+        self.tableView.separatorInset = UIEdgeInsets(top: 0, left: self.layoutMargin, bottom: 0, right: self.layoutMargin)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -65,6 +69,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         cell.textLabel?.text = item.title
         cell.textLabel?.textColor = UIColor.darkGrayColor()
         cell.backgroundColor = UIColor.clearColor()
+        cell.layoutMargins = UIEdgeInsets(top: 0, left: self.layoutMargin, bottom: 0, right: self.layoutMargin)
 
         let selectedBgView = UIView()
         selectedBgView.backgroundColor = UIColor.OZLVeryLightGrayColor()
