@@ -1,6 +1,0 @@
-[submodule "Libs/OptionsMenu"]
-	path = Libs/OptionsMenu
-	url = https://github.com/justindhill/OptionsMenu.git
-[submodule "Libs/BTNavigationDropdownMenu"]
-	path = Libs/BTNavigationDropdownMenu
-	url = https://github.com/justindhill/BTNavigationDropdownMenu.git

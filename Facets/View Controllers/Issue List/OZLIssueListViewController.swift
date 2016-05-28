@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLSortAndFilterViewControllerDelegate, OZLNavigationChildChangeListener, UIViewControllerTransitioningDelegate {
+class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLSortAndFilterViewControllerDelegate, OZLNavigationChildChangeListener, OZLListSelectorDelegate {
     
     private let IssueListComposeButtonHeight: CGFloat = 56.0
     private let ZeroHeightFooterTag = -1
@@ -32,6 +32,8 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
 
+        self.definesPresentationContext = true
+
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: OZLContentPadding, bottom: 0, right: OZLContentPadding)
 
         self.tableView.delegate = self
@@ -48,11 +50,14 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         super.viewWillAppear(animated)
         
         self.viewModel?.projectId = OZLSingleton.sharedInstance().currentProjectID
-        self.title = self.viewModel?.title
+
+        let titleButton = UIButton(type: .System)
+        titleButton.setTitle(self.viewModel?.title, forState: .Normal)
+        titleButton.addTarget(self, action: #selector(showProjectSelector), forControlEvents: .TouchUpInside)
+        titleButton.titleLabel?.font = UIFont.systemFontOfSize(17.0)
+        self.navigationItem.titleView = titleButton
         
         if self.isFirstAppearance {
-            self.refreshProjectSelector()
-            
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-filter"), style: .Done, target: self, action: #selector(OZLIssueListViewController.filterAction(_:)))
             
             self.showFooterActivityIndicator()
@@ -82,11 +87,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
                 self.registerForPreviewingWithDelegate(self, sourceView: self.view)
             }
         }
-        
-        if !self.isFirstAppearance {
-            self.refreshProjectSelector()
-        }
-        
+
         self.isFirstAppearance = false
     }
 
@@ -154,19 +155,6 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     
     func dismissComposerAction(sender: UIButton?) {
         self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    // MARK: - Project selector
-    func didSelectProjectAtIndex(index: Int) {
-        
-        if let project = viewModel.projects[UInt(index)] as? OZLModelProject where viewModel.projectId != project.projectId {
-            self.showFooterActivityIndicator()
-            OZLSingleton.sharedInstance().currentProjectID = project.projectId
-            viewModel.projectId = project.projectId
-            
-            self.tableView.reloadData()
-            self.reloadProjectData()
-        }
     }
     
     // MARK: - OZLSortAndFilterViewControllerDelegate
@@ -273,57 +261,43 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
                 })
         }
     }
-    
+
+    // MARK: - List selector delegate
+    func selector(selector: OZLListSelectorViewController, didSelectItem item: OZLListSelectorItem) {
+        if let project = item as? OZLModelProject {
+            self.showFooterActivityIndicator()
+            OZLSingleton.sharedInstance().currentProjectID = project.projectId
+            viewModel.projectId = project.projectId
+
+            if let titleButton = self.navigationItem.titleView as? UIButton {
+                titleButton.setTitle(project.name, forState: .Normal)
+                titleButton.sizeToFit()
+            }
+
+            self.tableView.reloadData()
+            self.reloadProjectData()
+        }
+    }
 
     // MARK: - Behavior
     func showProjectSelector() {
-        let vc = UIViewController()
-        vc.view.backgroundColor = UIColor.whiteColor()
-        vc.modalPresentationStyle = .Custom
-        vc.transitioningDelegate = self
+        var projects: Array<OZLModelProject> = []
+        var currentProject: OZLModelProject?
 
-        self.presentViewController(vc, animated: true, completion: nil)
-    }
+        for i in 0..<self.viewModel.projects.count {
+            if let project = self.viewModel.projects[i] as? OZLModelProject {
+                projects.append(project)
 
-    func refreshProjectSelector() {
-        if self.viewModel.shouldShowProjectSelector {
-            var titlesArray: Array<String> = []
-            
-            for i in 0..<self.viewModel.projects.count {
-                let project = self.viewModel.projects[i]
-                titlesArray.append(project.name)
-            }
-            
-            // BTNavigationDropdownMenu must be initialized with its items, so we have to re-initialize it every 
-            // time we want to change the items. Blech.
-            if let nav = self.navigationController {
-                let titleButton = UIButton(type: .System)
-                titleButton.setTitle(self.viewModel.title, forState: .Normal)
-                titleButton.addTarget(self, action: #selector(showProjectSelector), forControlEvents: .TouchUpInside)
-                self.navigationItem.titleView = titleButton
-//                let dropdown = BTNavigationDropdownMenu(navigationController: nav, title: self.viewModel.title, items: titlesArray)
-//                dropdown.cellTextLabelFont = UIFont.OZLMediumSystemFontOfSize(17.0)
-//                
-//                // use the parent view controller's tint color. BTNavigationDropdownMenu doesn't properly
-//                // respond to tintColorDidChange, so using this view's tint color won't do any good, as
-//                // we're not added to the window yet.
-//                dropdown.tintColor = self.parentViewController?.view.tintColor
-//                dropdown.cellBackgroundColor = UIColor(red:(249 / 255), green:(249 / 255), blue:(249 / 255), alpha:1)
-//                dropdown.cellSeparatorColor = UIColor.lightGrayColor()
-//                dropdown.cellTextLabelColor = UIColor.darkGrayColor()
-//                dropdown.cellSelectionColor = UIColor.OZLVeryLightGrayColor()
-//                dropdown.arrowImage = dropdown.arrowImage.imageWithRenderingMode(.AlwaysTemplate)
-//                dropdown.checkMarkImage = nil;
-//                
-//                weak var weakSelf = self
-//                
-//                dropdown.didSelectItemAtIndexHandler = { (index: Int) in
-//                    weakSelf?.didSelectProjectAtIndex(index)
-//                }
-//                
-//                self.navigationItem.titleView = dropdown;
+                if project.projectId == self.viewModel.projectId {
+                    currentProject = project
+                }
             }
         }
+
+        let vc = OZLListSelectorViewController(items: projects.map({$0 as OZLListSelectorItem}), selectedItem: currentProject)
+        vc.delegate = self
+
+        self.presentViewController(vc, animated: true, completion: nil)
     }
 
     func reloadProjectData() {
@@ -369,30 +343,15 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         self.tableView.tableFooterView = UIView(frame: CGRectMake(0, 0, 0, CGFloat.min))
         self.tableView.tableFooterView!.tag = ZeroHeightFooterTag
     }
+}
 
-    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-        if let nav = self.navigationController {
-            return OZLDropdownPresentationController(presentedViewController: presented,
-                                                     presentingViewController: presenting,
-                                                     navigationController: nav)
-        }
-
-        return nil
+// MARK: - Project selector model extension
+extension OZLModelProject: OZLListSelectorItem {
+    var title: String {
+        return self.name
     }
 
-    var transitionAnimator: OZLDropdownTransitionAnimator?
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if let nav = source.navigationController {
-            self.transitionAnimator = OZLDropdownTransitionAnimator(navigationController:nav)
-            return self.transitionAnimator
-        }
-
-        return nil
-    }
-
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        self.transitionAnimator?.presenting = false
-
-        return self.transitionAnimator
+    var comparator: String {
+        return String(self.projectId)
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OZLDropdownPresentationController: UIPresentationController {
+class OZLDropdownPresentationController: UIPresentationController, UIGestureRecognizerDelegate {
     private(set) var dimmingLayer = CAShapeLayer()
     private var backgroundTapRecognizer: UITapGestureRecognizer?
     private(set) var navigationController: UINavigationController
@@ -24,10 +24,14 @@ class OZLDropdownPresentationController: UIPresentationController {
         super.init(presentedViewController: presentedViewController, presentingViewController: presentingViewController)
     }
 
+    override func shouldPresentInFullscreen() -> Bool {
+        return false
+    }
+
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animateAlongsideTransition({ (context) in
             UIView.performWithoutAnimation({ 
-                self.updateDimmingLayerPath()
+                self.dimmingLayer.path = self.computeDimmingLayerPath(CGSizeMake(self.navigationController.view.frame.size.width, self.presentedOriginY + self.presentedViewController.preferredContentSize.height))
                 self.presentedViewController.view.frame = CGRectMake(0, self.presentedOriginY, self.navigationController.view.frame.size.width, 400)
             })
 
@@ -41,11 +45,17 @@ class OZLDropdownPresentationController: UIPresentationController {
             self.dimmingLayer.opacity = 0.8
             self.dimmingLayer.fillRule = kCAFillRuleEvenOdd
 
-            self.updateDimmingLayerPath()
+            let initialPath = self.computeDimmingLayerPath(CGSizeMake(self.navigationController.view.frame.size.width, self.presentedOriginY))
+            self.dimmingLayer.path = initialPath
+
+            self.presentedViewController.viewWillAppear(true)
+
+            let finalPath = self.computeDimmingLayerPath(CGSizeMake(self.navigationController.view.frame.size.width, self.presentedOriginY + self.presentedViewController.preferredContentSize.height))
 
             containerView.userInteractionEnabled = true
 
             self.backgroundTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(backgroundTapAction))
+            self.backgroundTapRecognizer?.delegate = self
             containerView.addGestureRecognizer(self.backgroundTapRecognizer!)
             containerView.layer.addSublayer(self.dimmingLayer)
 
@@ -54,18 +64,27 @@ class OZLDropdownPresentationController: UIPresentationController {
                 CATransaction.begin()
                 CATransaction.setCompletionBlock({
                     self.dimmingLayer.fillColor = UIColor.blackColor().CGColor
+                    self.dimmingLayer.path = finalPath
                     self.dimmingLayer.removeAllAnimations()
                 })
 
-                let anim = CABasicAnimation(keyPath: "fillColor")
-                anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-                anim.fromValue = UIColor.clearColor().CGColor
-                anim.toValue = UIColor.blackColor().CGColor
-                anim.duration = context.transitionDuration()
-                anim.fillMode = kCAFillModeForwards
-                anim.removedOnCompletion = false
+                let group = CAAnimationGroup()
+                group.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+                group.duration = context.transitionDuration()
+                group.fillMode = kCAFillModeForwards
+                group.removedOnCompletion = false
 
-                self.dimmingLayer.addAnimation(anim, forKey: nil)
+                let fillColorAnim = CABasicAnimation(keyPath: "fillColor")
+                fillColorAnim.fromValue = UIColor.clearColor().CGColor
+                fillColorAnim.toValue = UIColor.blackColor().CGColor
+
+                let pathAnim = CABasicAnimation(keyPath: "path")
+                pathAnim.fromValue = initialPath
+                pathAnim.toValue = finalPath
+
+                group.animations = [fillColorAnim, pathAnim]
+
+                self.dimmingLayer.addAnimation(group, forKey: nil)
 
                 CATransaction.commit()
             }, completion: nil)
@@ -81,28 +100,41 @@ class OZLDropdownPresentationController: UIPresentationController {
                     self.dimmingLayer.removeAllAnimations()
                 })
 
-                let anim = CABasicAnimation(keyPath: "fillColor")
-                anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-                anim.fromValue = UIColor.blackColor().CGColor
-                anim.toValue = UIColor.clearColor().CGColor
-                anim.duration = context.transitionDuration()
-                anim.fillMode = kCAFillModeForwards
-                anim.removedOnCompletion = false
+                let initialPath = self.dimmingLayer.path
+                let finalPath = self.computeDimmingLayerPath(CGSizeMake(self.navigationController.view.frame.size.width, self.presentedOriginY))
 
-                self.dimmingLayer.addAnimation(anim, forKey: nil)
+                let group = CAAnimationGroup()
+                group.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+                group.duration = context.transitionDuration()
+                group.fillMode = kCAFillModeForwards
+                group.removedOnCompletion = false
+
+                let fillColorAnim = CABasicAnimation(keyPath: "fillColor")
+                fillColorAnim.fromValue = UIColor.blackColor().CGColor
+                fillColorAnim.toValue = UIColor.clearColor().CGColor
+
+                let pathAnim = CABasicAnimation(keyPath: "path")
+                pathAnim.fromValue = initialPath
+                pathAnim.toValue = finalPath
+
+                group.animations = [fillColorAnim, pathAnim]
+
+                self.dimmingLayer.addAnimation(group, forKey: nil)
 
                 CATransaction.commit()
 
             }, completion: nil)
     }
 
-    func updateDimmingLayerPath() {
+    func computeDimmingLayerPath(cutoutSize: CGSize) -> CGPath {
         let screenBounds = UIScreen.mainScreen().bounds
         let sideLen = max(screenBounds.size.height, screenBounds.size.width)
         let path = UIBezierPath(rect: CGRectMake(0, 0, sideLen, sideLen))
         path.usesEvenOddFillRule = true
-        path.appendPath(UIBezierPath(rect: CGRectMake(0, 0, self.navigationController.view.frame.size.width, self.presentedOriginY)))
-        self.dimmingLayer.path = path.CGPath
+
+        path.appendPath(UIBezierPath(rect: CGRectMake(0, 0, cutoutSize.width, cutoutSize.height)))
+
+        return path.CGPath
     }
 
     func backgroundTapAction() {
@@ -110,6 +142,14 @@ class OZLDropdownPresentationController: UIPresentationController {
     }
 
     override func frameOfPresentedViewInContainerView() -> CGRect {
-        return CGRectMake(0, self.presentedOriginY, self.navigationController.view.frame.size.width, 400)
+        return CGRectMake(0, self.presentedOriginY, self.navigationController.view.frame.size.width, self.presentedViewController.preferredContentSize.height)
+    }
+
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        if self.containerView?.hitTest(touch.locationInView(self.containerView), withEvent: nil) != self.containerView {
+            return false
+        }
+
+        return true
     }
 }

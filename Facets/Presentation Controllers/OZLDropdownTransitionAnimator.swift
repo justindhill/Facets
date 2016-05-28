@@ -44,7 +44,8 @@ class OZLDropdownTransitionAnimator: NSObject, UIViewControllerAnimatedTransitio
             toViewController.view.frame = collapsedFrame
         }
 
-        UIView.animateWithDuration(self.transitionDuration(transitionContext), animations: {
+        UIView.animateWithDuration(self.transitionDuration(transitionContext), delay: 0, options: [ .CurveEaseOut ], animations: { 
+
                 if self.presenting {
                     toViewController.view.frame = transitionContext.finalFrameForViewController(toViewController)
                 } else {
