@@ -42,7 +42,7 @@ class OZLDropdownPresentationController: UIPresentationController, UIGestureReco
         if let containerView = self.containerView {
             self.dimmingLayer.frame = containerView.bounds
             self.dimmingLayer.fillColor = UIColor.clearColor().CGColor
-            self.dimmingLayer.opacity = 0.8
+            self.dimmingLayer.opacity = 0.3
             self.dimmingLayer.fillRule = kCAFillRuleEvenOdd
 
             let initialPath = self.computeDimmingLayerPath(CGSizeMake(self.navigationController.view.frame.size.width, self.presentedOriginY))

@@ -55,9 +55,9 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             let titleButton = OZLDownChevronTitleView()
             titleButton.title = self.viewModel.title
             titleButton.addTarget(self, action: #selector(showProjectSelector), forControlEvents: .TouchUpInside)
-            titleButton.sizeToFit()
+            titleButton.shrinkwrapContent()
             self.navigationItem.titleView = titleButton
-        } else {
+        } else if !self.viewModel.shouldShowProjectSelector {
             self.navigationItem.title = self.viewModel.title
         }
         
@@ -276,7 +276,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             if let titleButton = self.navigationItem.titleView as? OZLDownChevronTitleView {
                 titleButton.title = project.name
                 self.navigationItem.titleView = nil
-                titleButton.sizeToFit()
+                titleButton.shrinkwrapContent()
                 self.navigationItem.titleView = titleButton
             }
 

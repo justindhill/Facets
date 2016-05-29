@@ -50,13 +50,14 @@ class OZLDownChevronTitleView: UIControl {
         self.chevronImageView.frame.origin = CGPointMake(ceil((self.frame.size.width - self.chevronImageView.frame.size.width) / 2.0), self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height)
     }
 
-    override func sizeThatFits(size: CGSize) -> CGSize {
-        self.frame.size = size
+
+    func shrinkwrapContent() {
+        self.frame.size.width = UIScreen.mainScreen().bounds.size.width
         self.layoutSubviews()
 
         let newSize = CGSizeMake(self.titleLabel.frame.size.width, self.chevronImageView.frame.origin.y + self.chevronImageView.frame.size.height)
 
-        return newSize
+        self.frame.size = newSize
     }
 
     convenience init() {
