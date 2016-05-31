@@ -32,7 +32,7 @@ class OZLIssueDetailsSectionFooter: UIView {
     func installConstraints() {
         self.leftButton.snp_makeConstraints { (make) in
             make.leading.equalTo(self.snp_leadingMargin)
-            make.bottom.equalTo(self.snp_bottomMargin)
+            make.top.equalTo(self)
         }
     }
 }

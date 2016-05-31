@@ -49,7 +49,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.header.contentPadding = OZLContentPadding;
         self.header.assignButton.addTarget(self, action: #selector(quickAssignAction), forControlEvents: .TouchUpInside)
 
-        self.tableView.registerClass(OZLTableViewCell.self, forCellReuseIdentifier: DetailReuseIdentifier)
+        self.tableView.registerClass(OZLIssueDetailCell.self, forCellReuseIdentifier: DetailReuseIdentifier)
         self.tableView.registerClass(OZLIssueAttachmentCell.self, forCellReuseIdentifier: AttachmentReuseIdentifier)
         self.tableView.registerClass(OZLIssueDescriptionCell.self, forCellReuseIdentifier: DescriptionReuseIdentifier)
         self.tableView.registerClass(OZLJournalCell.self, forCellReuseIdentifier: RecentActivityReuseIdentifier)
@@ -140,9 +140,25 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
         if sectionName == OZLIssueViewModel.SectionDetail {
             cell = tableView.dequeueReusableCellWithIdentifier(DetailReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
-            let (name, value, isPinned) = self.viewModel.detailAtIndex(indexPath.row)
-            cell?.textLabel?.text = "\(name) - \(value)"
-            cell?.accessoryType = (isPinned && self.viewModel.showAllDetails) ? .Checkmark : .None
+
+            if let cell = cell as? OZLIssueDetailCell {
+                let (name, value, isPinned) = self.viewModel.detailAtIndex(indexPath.row)
+                cell.detailNameLabel.text = "\(name) - \(value)"
+                cell.accessoryImageView.image = (isPinned && self.viewModel.showAllDetails) ? UIImage(named: "icon-checkmark") : nil
+
+                cell.pinned = isPinned
+                cell.pinnedBackgroundColor = UIColor.OZLVeryLightGrayColor()
+                cell.unpinnedBackgroundColor = UIColor.whiteColor()
+
+                if indexPath.row == 0 {
+                    cell.cellPosition = .Top
+                } else if indexPath.row == self.viewModel.numberOfDetails() - 1 {
+                    cell.cellPosition = .Bottom
+                } else {
+                    cell.cellPosition = .Middle
+                }
+            }
+
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
             cell = tableView.dequeueReusableCellWithIdentifier(AttachmentReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
 
@@ -188,14 +204,6 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
             return OZLJournalCell.heightWithWidth(self.view.frame.size.width,
                                                   contentPadding: self.contentPadding,
                                                   journalModel: self.viewModel.recentActivityAtIndex(indexPath.row))
-        } else if sectionName == OZLIssueViewModel.SectionDetail {
-            let (_, _, isPinned) = self.viewModel.detailAtIndex(indexPath.row)
-
-            if self.viewModel.showAllDetails || isPinned {
-                return 44.0
-            } else {
-                return 0.0
-            }
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
             return UITableViewAutomaticDimension
         }
@@ -245,7 +253,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
             return CGFloat.min
         }
 
-        return 40.0
+        return 30.0
     }
 
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -281,13 +289,11 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-
         let sectionName = self.viewModel.currentSectionNames[indexPath.section]
 
         if sectionName == OZLIssueViewModel.SectionDetail && self.viewModel.showAllDetails {
             self.viewModel.togglePinningForDetailAtIndex(indexPath.row)
-            tableView.reloadRowsAtIndexPaths([ indexPath ], withRowAnimation: .Fade)
+            tableView.reloadRowsAtIndexPaths([ indexPath ], withRowAnimation: .None)
         }
 
         if sectionName == OZLIssueViewModel.SectionAttachments {
@@ -295,6 +301,8 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
                 self.cachedAttachmentTapAction(attachment)
             }
         }
+
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 
     // MARK: - Button actions

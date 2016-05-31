@@ -35,6 +35,7 @@ enum OZLIssueCompleteness: Int {
     var showAllDetails = false {
         didSet(oldValue) {
             if self.showAllDetails != oldValue {
+                self.refreshVisibleDetails()
                 self.delegate?.viewModelDetailDisplayModeDidChange(self)
             }
         }
@@ -42,6 +43,7 @@ enum OZLIssueCompleteness: Int {
 
     // (identifier, displayName, displayValue)
     private var details: [(String, String, String)] = []
+    private var visibleDetails: [(String, String, String)] = []
 
     weak var delegate: OZLIssueViewModelDelegate?
     var successfullyFetchedIssue = false
@@ -67,6 +69,7 @@ enum OZLIssueCompleteness: Int {
 
         self.updateSectionNames()
         self.refreshDetails()
+        self.refreshVisibleDetails()
     }
 
     func targetedPinnedIdentifiersDefaultsKeypath() -> String {
@@ -185,12 +188,24 @@ enum OZLIssueCompleteness: Int {
         self.details = details
     }
 
+    func refreshVisibleDetails() {
+        var visibleDetails: [(String, String, String)] = []
+
+        for (index, (identifier, _, _)) in self.details.enumerate() {
+            if self.pinnedDetailIdentifiers.contains(identifier) || self.showAllDetails {
+                visibleDetails.append(self.details[index])
+            }
+        }
+
+        self.visibleDetails = visibleDetails
+    }
+
     func numberOfDetails() -> Int {
-        return self.details.count
+        return self.visibleDetails.count
     }
 
     func detailAtIndex(index: Int) -> (String, String, Bool) {
-        let (identifier, name, value) = self.details[index]
+        let (identifier, name, value) = self.visibleDetails[index]
 
         return (name, value, self.pinnedDetailIdentifiers.contains(identifier))
     }

@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="facets-icon-grayscale" translatesAutoresizingMaskIntoConstraints="NO" id="7p5-pq-cSR">
+                <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-facets-grayscale" translatesAutoresizingMaskIntoConstraints="NO" id="7p5-pq-cSR">
                     <rect key="frame" x="172" y="172" width="256" height="256"/>
                 </imageView>
             </subviews>
@@ -27,6 +27,6 @@
         </view>
     </objects>
     <resources>
-        <image name="facets-icon-grayscale" width="256" height="256"/>
+        <image name="icon-facets-grayscale" width="256" height="256"/>
     </resources>
 </document>
