@@ -6,13 +6,9 @@
 //  Copyright © 2015 Justin Hill. All rights reserved.
 //
 
-#import "OZLTableViewCell.h"
-
-@interface OZLIssueDescriptionCell : OZLTableViewCell
+@interface OZLIssueDescriptionCell : UITableViewCell
 
 @property (nonatomic, strong) NSString *descriptionPreviewString;
 @property (readonly, strong) UIButton *showMoreButton;
-
-+ (CGFloat)heightWithWidth:(CGFloat)width description:(NSString *)description contentPadding:(CGFloat)padding;
 
 @end

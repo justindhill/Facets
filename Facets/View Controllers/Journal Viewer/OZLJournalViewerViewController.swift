@@ -23,7 +23,8 @@
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Activity"
-        
+
+        self.tableView.estimatedRowHeight = 88
         self.tableView.allowsSelection = false
         self.tableView.separatorStyle = .None
         self.tableView.registerClass(OZLJournalCell.self, forCellReuseIdentifier:self.JournalCellReuseIdentifier)
@@ -34,11 +35,7 @@
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        guard let journal = self.viewModel.journalAtIndex(indexPath.row) else {
-            return 0
-        }
-        
-        return OZLJournalCell.heightWithWidth(self.view.frame.size.width, contentPadding: OZLContentPadding, journalModel: journal)
+        return UITableViewAutomaticDimension
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -53,7 +50,6 @@
         }
         
         cell.journal = journal
-        cell.contentPadding = OZLContentPadding
         
         return cell
     }

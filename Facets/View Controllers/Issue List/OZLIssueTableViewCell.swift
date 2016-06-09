@@ -164,23 +164,23 @@ class OZLIssueTableViewCell: UITableViewCell {
         self.assigneeAvatarImageView.layer.cornerRadius = (self.assigneeAvatarImageView.frame.size.width / 2.0)
     }
 
-    private static let sizingInstance = OZLIssueTableViewCell.cell()
-    class func heightWithWidth(width: CGFloat, issue: OZLModelIssue, contentPadding: CGFloat) -> CGFloat {
-        let instance = OZLIssueTableViewCell.sizingInstance
-        instance.frame = CGRectMake(0, 0, width, 0)
-        instance.contentPadding = contentPadding
-        instance.applyIssueModel(issue)
-        instance.layoutSubviews()
+    override func systemLayoutSizeFittingSize(targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
 
-        if !instance.dueDateLabel.hidden {
-            return instance.dueDateLabel.bottom + contentPadding
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
 
-        } else if !instance.assigneeAvatarImageView.hidden {
-            return instance.assigneeAvatarImageView.bottom + contentPadding
+        var bottom: CGFloat = 0
+        if !self.dueDateLabel.hidden {
+            bottom = self.dueDateLabel.bottom + self.layoutMargins.bottom
+
+        } else if !self.assigneeAvatarImageView.hidden {
+            bottom = self.assigneeAvatarImageView.bottom + self.layoutMargins.bottom
 
         } else {
-            return instance.subjectLabel.bottom + contentPadding
+            bottom = self.subjectLabel.bottom + self.layoutMargins.bottom
         }
+
+        return CGSizeMake(targetSize.width, bottom)
     }
 
     // MARK: - Private

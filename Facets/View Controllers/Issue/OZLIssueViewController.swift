@@ -143,12 +143,12 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: OZLTableViewCell?
+        var cell: UITableViewCell?
 
         let sectionName = self.viewModel.currentSectionNames[indexPath.section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
-            cell = tableView.dequeueReusableCellWithIdentifier(DetailReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(DetailReuseIdentifier, forIndexPath: indexPath)
 
             if let cell = cell as? OZLIssueDetailCell {
                 let (name, value, isPinned) = self.viewModel.detailAtIndex(indexPath.row)
@@ -169,7 +169,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
             }
 
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
-            cell = tableView.dequeueReusableCellWithIdentifier(AttachmentReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(AttachmentReuseIdentifier, forIndexPath: indexPath)
 
             if let cell = cell as? OZLIssueAttachmentCell, attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
                 cell.applyAttachmentModel(attachment)
@@ -184,40 +184,24 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
                 cell.downloadButton.addTarget(self, action: #selector(downloadAttachmentAction(_:)), forControlEvents: .TouchUpInside)
             }
         } else if sectionName == OZLIssueViewModel.SectionDescription {
-            cell = tableView.dequeueReusableCellWithIdentifier(DescriptionReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(DescriptionReuseIdentifier, forIndexPath: indexPath)
 
             if let cell = cell as? OZLIssueDescriptionCell {
                 cell.descriptionPreviewString = self.viewModel.issueModel.issueDescription
             }
         } else if sectionName == OZLIssueViewModel.SectionRecentActivity {
-            cell = tableView.dequeueReusableCellWithIdentifier(RecentActivityReuseIdentifier, forIndexPath: indexPath) as? OZLTableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(RecentActivityReuseIdentifier, forIndexPath: indexPath)
 
             if let cell = cell as? OZLJournalCell {
                 cell.journal = self.viewModel.recentActivityAtIndex(indexPath.row)
             }
         }
 
-        cell?.contentPadding = self.contentPadding
-
         return cell ?? UITableViewCell()
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let sectionName = self.viewModel.currentSectionNames[indexPath.section]
-
-        if sectionName == OZLIssueViewModel.SectionDescription {
-            return OZLIssueDescriptionCell.heightWithWidth(self.view.frame.size.width,
-                                                           description: self.viewModel.issueModel.issueDescription,
-                                                           contentPadding: self.contentPadding)
-        } else if sectionName == OZLIssueViewModel.SectionRecentActivity {
-            return OZLJournalCell.heightWithWidth(self.view.frame.size.width,
-                                                  contentPadding: self.contentPadding,
-                                                  journalModel: self.viewModel.recentActivityAtIndex(indexPath.row))
-        } else if sectionName == OZLIssueViewModel.SectionAttachments {
-            return UITableViewAutomaticDimension
-        }
-
-        return 44.0
+        return UITableViewAutomaticDimension
     }
 
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

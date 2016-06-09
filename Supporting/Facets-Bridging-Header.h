@@ -10,7 +10,6 @@
 #import "OZLModelIssueCategory.h"
 #import "OZLModelIssuePriority.h"
 #import "OZLModelUser.h"
-#import "OZLTableViewCell.h"
 #import "OZLNetwork.h"
 #import "OZLLoadingView.h"
 

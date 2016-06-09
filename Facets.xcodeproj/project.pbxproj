@@ -44,7 +44,6 @@
 		D01F9BAE1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9BAD1BEBC4FD005B2ED0 /* UIFont+OZLExtensions.m */; };
 		D01F9BE01BEC84A3005B2ED0 /* OZLIssueHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9BDF1BEC84A3005B2ED0 /* OZLIssueHeaderView.m */; };
 		D01F9BE31BEC8BDD005B2ED0 /* UIView+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9BE21BEC8BDD005B2ED0 /* UIView+OZLExtensions.m */; };
-		D01F9C0D1BED9ABC005B2ED0 /* OZLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C0C1BED9ABC005B2ED0 /* OZLTableViewCell.m */; };
 		D01F9C111BED9B15005B2ED0 /* OZLIssueDescriptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */; };
 		D01F9C141BEDABB8005B2ED0 /* UIColor+OZLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F9C131BEDABB8005B2ED0 /* UIColor+OZLExtensions.m */; };
 		D01FB6E51CD86CA700A351AB /* OZLIssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01FB6E41CD86CA700A351AB /* OZLIssueViewController.swift */; };
@@ -160,8 +159,6 @@
 		D01F9BDF1BEC84A3005B2ED0 /* OZLIssueHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueHeaderView.m; sourceTree = "<group>"; };
 		D01F9BE11BEC8BDD005B2ED0 /* UIView+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+OZLExtensions.h"; sourceTree = "<group>"; };
 		D01F9BE21BEC8BDD005B2ED0 /* UIView+OZLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+OZLExtensions.m"; sourceTree = "<group>"; };
-		D01F9C0B1BED9ABC005B2ED0 /* OZLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLTableViewCell.h; sourceTree = "<group>"; };
-		D01F9C0C1BED9ABC005B2ED0 /* OZLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLTableViewCell.m; sourceTree = "<group>"; };
 		D01F9C0F1BED9B15005B2ED0 /* OZLIssueDescriptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLIssueDescriptionCell.h; sourceTree = "<group>"; };
 		D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLIssueDescriptionCell.m; sourceTree = "<group>"; };
 		D01F9C121BEDABB8005B2ED0 /* UIColor+OZLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+OZLExtensions.h"; sourceTree = "<group>"; };
@@ -356,8 +353,6 @@
 		D01F9C0E1BED9AC6005B2ED0 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				D01F9C0B1BED9ABC005B2ED0 /* OZLTableViewCell.h */,
-				D01F9C0C1BED9ABC005B2ED0 /* OZLTableViewCell.m */,
 				D01F9C0F1BED9B15005B2ED0 /* OZLIssueDescriptionCell.h */,
 				D01F9C101BED9B15005B2ED0 /* OZLIssueDescriptionCell.m */,
 				D0987AD41C0904C200D55DEB /* OZLIssueSectionHeaderView.swift */,
@@ -849,7 +844,6 @@
 				D00EA1F51CD53597002210E0 /* UIColor+OZLExtensions.swift in Sources */,
 				D0BCD0E11C14C33E00B0DC6D /* OZLIssueComposerViewController.swift in Sources */,
 				D00EA2481CFA072B0090B401 /* OZLDownChevronTitleView.swift in Sources */,
-				D01F9C0D1BED9ABC005B2ED0 /* OZLTableViewCell.m in Sources */,
 				D0BFA9121C6FE50300F4D1FB /* OZLJournalViewerViewModel.swift in Sources */,
 				D0987AD51C0904C200D55DEB /* OZLIssueSectionHeaderView.swift in Sources */,
 				D01F9BE01BEC84A3005B2ED0 /* OZLIssueHeaderView.m in Sources */,

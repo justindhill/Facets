@@ -55,27 +55,18 @@
         self.descriptionPreviewLabel.attributedText = attr;
     }
     
-    CGSize descSize = [self.descriptionPreviewLabel sizeThatFits:CGSizeMake(self.frame.size.width - (self.contentPadding * 2), CGFLOAT_MAX)];
+    CGSize descSize = [self.descriptionPreviewLabel sizeThatFits:CGSizeMake(self.frame.size.width - (self.layoutMargins.left + self.layoutMargins.right), CGFLOAT_MAX)];
     
-    self.descriptionPreviewLabel.frame = (CGRect){{self.contentPadding, 6.}, descSize};
+    self.descriptionPreviewLabel.frame = (CGRect){{self.layoutMargins.left, 6.}, descSize};
     
     self.isFirstLayout = NO;
 }
 
-+ (CGFloat)heightWithWidth:(CGFloat)width description:(NSString *)description contentPadding:(CGFloat)padding {
-    static OZLIssueDescriptionCell * sizingCell;
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sizingCell = [[self alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    });
-    
-    sizingCell.bounds = CGRectMake(0, 0, width, 0);
-    sizingCell.separatorInset = UIEdgeInsetsMake(0, padding, 0, padding);
-    sizingCell.descriptionPreviewLabel.text = description;
-    [sizingCell layoutSubviews];
-    
-    return sizingCell.descriptionPreviewLabel.bottom + sizingCell.contentPadding;
+- (CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize withHorizontalFittingPriority:(UILayoutPriority)horizontalFittingPriority verticalFittingPriority:(UILayoutPriority)verticalFittingPriority {
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+
+    return CGSizeMake(targetSize.width, self.descriptionPreviewLabel.bottom + self.layoutMargins.bottom);
 }
 
 - (NSString *)transformStringForDisplay:(NSString *)string {

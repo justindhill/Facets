@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OZLJournalCell: OZLTableViewCell {
+class OZLJournalCell: UITableViewCell {
 
     private static let profileSideLen: CGFloat = 28.0
     private static let dateFormatter = NSDateFormatter()
@@ -76,8 +76,8 @@ class OZLJournalCell: OZLTableViewCell {
             self.isFirstLayout = false
         }
         
-        self.profileImageView.frame = CGRectMake(ceil(self.contentPadding),
-            ceil(self.contentPadding / 2.0),
+        self.profileImageView.frame = CGRectMake(self.layoutMargins.left,
+            self.layoutMargins.top,
             OZLJournalCell.profileSideLen,
             OZLJournalCell.profileSideLen)
         
@@ -90,7 +90,7 @@ class OZLJournalCell: OZLTableViewCell {
         self.dateLabel.frame.origin.x = self.usernameLabel.left
         self.dateLabel.frame.origin.y = ceil(self.usernameLabel.bottom + 2.0)
         
-        self.commentLabel.frame.size.width = self.frame.size.width - self.profileImageView.right - self.contentPadding - 6.0
+        self.commentLabel.frame.size.width = self.frame.size.width - self.profileImageView.right - self.layoutMargins.right - 6.0
         self.commentLabel.sizeToFit()
         self.commentLabel.frame.origin.x = dateLabel.left
         self.commentLabel.frame.origin.y = ceil(dateLabel.bottom + 6.0)
@@ -180,22 +180,19 @@ class OZLJournalCell: OZLTableViewCell {
         
         return str
     }
-    
-    private static let sizingCell = OZLJournalCell(frame: CGRectZero)
-    @objc class func heightWithWidth(width: CGFloat, contentPadding: CGFloat, journalModel: OZLModelJournal) -> CGFloat {
-        sizingCell.frame.size.width = width
-        
-        if journalModel.notes?.characters.count > 0 || journalModel.details.count > 0 {
-            sizingCell.contentPadding = contentPadding
-            sizingCell.journal = journalModel
-            sizingCell.layoutSubviews()
-            
-            return sizingCell.commentLabel.bottom + contentPadding
-            
+
+    override func systemLayoutSizeFittingSize(targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+
+        var bottom: CGFloat = 0
+
+        if self.commentLabel.text?.characters.count > 0 {
+            bottom = self.commentLabel.bottom + self.layoutMargins.bottom
         } else {
-            sizingCell.layoutSubviews()
-            
-            return sizingCell.profileImageView.bottom + contentPadding
+            bottom = self.profileImageView.bottom + self.layoutMargins.bottom
         }
+
+        return CGSizeMake(targetSize.width, bottom)
     }
 }

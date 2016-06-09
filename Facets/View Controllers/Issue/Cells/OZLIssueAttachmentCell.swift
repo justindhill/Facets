@@ -11,7 +11,7 @@ import SnapKit
 import CircleProgressView
 import SORelativeDateTransformer
 
-class OZLIssueAttachmentCell: OZLTableViewCell {
+class OZLIssueAttachmentCell: UITableViewCell {
     let attachmentTypeImageView = UIImageView()
     let attachmentTitleLabel = UILabel()
     let userIconImageView = UIImageView()

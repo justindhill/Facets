@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OZLIssueDetailCell: OZLTableViewCell {
+class OZLIssueDetailCell: UITableViewCell {
 
     enum CellPosition {
         case Top
