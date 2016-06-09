@@ -72,7 +72,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         cell.layoutMargins = UIEdgeInsets(top: 0, left: self.layoutMargin, bottom: 0, right: self.layoutMargin)
 
         let selectedBgView = UIView()
-        selectedBgView.backgroundColor = UIColor.OZLVeryLightGrayColor()
+        selectedBgView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.05)
         cell.selectedBackgroundView = selectedBgView
 
         if item.comparator == self.selectedItem?.comparator {

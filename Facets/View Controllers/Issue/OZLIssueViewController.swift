@@ -147,8 +147,8 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
                 cell.accessoryImageView.image = (isPinned && self.viewModel.showAllDetails) ? UIImage(named: "icon-checkmark") : nil
 
                 cell.pinned = isPinned
-                cell.pinnedBackgroundColor = UIColor.OZLVeryLightGrayColor()
-                cell.unpinnedBackgroundColor = UIColor.whiteColor()
+                cell.unpinnedBackgroundColor = UIColor.OZLVeryLightGrayColor()
+                cell.pinnedBackgroundColor = UIColor.whiteColor()
 
                 if indexPath.row == 0 {
                     cell.cellPosition = .Top
