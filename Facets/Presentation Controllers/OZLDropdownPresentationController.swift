@@ -32,7 +32,7 @@ class OZLDropdownPresentationController: UIPresentationController, UIGestureReco
         coordinator.animateAlongsideTransition({ (context) in
             UIView.performWithoutAnimation({ 
                 self.dimmingLayer.path = self.computeDimmingLayerPath(CGSizeMake(self.navigationController.view.frame.size.width, self.presentedOriginY + self.presentedViewController.preferredContentSize.height))
-                self.presentedViewController.view.frame = CGRectMake(0, self.presentedOriginY, self.navigationController.view.frame.size.width, 400)
+                self.presentedViewController.view.frame = CGRectMake(0, self.presentedOriginY, self.navigationController.view.frame.size.width, self.presentedViewController.preferredContentSize.height)
             })
 
         }, completion: nil)
