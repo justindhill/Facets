@@ -43,7 +43,9 @@ import UIKit
     
     override func viewDidLoad() {
         if let view = self.view as? OZLQuickAssignView {
-            self.preferredContentSize = CGSizeMake(320, 350)
+            if self.popoverPresentationController?.sourceView == nil {
+                self.preferredContentSize = CGSizeMake(320, 350)
+            }
             
             view.cancelButton.addTarget(self, action: #selector(OZLQuickAssignViewController.dismiss), forControlEvents: .TouchUpInside)
             view.backgroundColor = UIColor.whiteColor()
@@ -79,10 +81,16 @@ import UIKit
                 if notification.name == UIKeyboardWillShowNotification && view.filterField.isFirstResponder() {
                     let tableBottomOffset = view.frame.size.height - view.tableView.bottom
                     view.tableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardFrame.size.height - tableBottomOffset, 0)
-                    self.preferredContentSize = CGSizeMake(320, 450)
+
+                    if self.popoverPresentationController?.sourceView == nil {
+                        self.preferredContentSize = CGSizeMake(320, 450)
+                    }
                 } else {
                     view.tableView.contentInset = UIEdgeInsetsZero
-                    self.preferredContentSize = CGSizeMake(320, 350)
+
+                    if self.popoverPresentationController?.sourceView == nil {
+                        self.preferredContentSize = CGSizeMake(320, 350)
+                    }
                 }
             }
         }

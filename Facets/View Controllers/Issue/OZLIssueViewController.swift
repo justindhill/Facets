@@ -77,10 +77,19 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.tableView.reloadData()
     }
 
-    func quickAssignAction() {
+    func quickAssignAction(sender: UIControl) {
         let vc = OZLQuickAssignViewController(issueModel: self.viewModel.issueModel)
-        vc.modalPresentationStyle = .Custom
-        vc.transitioningDelegate = self
+
+        if self.traitCollection.userInterfaceIdiom == .Pad {
+            vc.modalPresentationStyle = .Popover
+            vc.popoverPresentationController?.sourceView = sender.superview
+            vc.popoverPresentationController?.sourceRect = sender.frame
+            vc.preferredContentSize = CGSizeMake(320, 370)
+        } else {
+            vc.modalPresentationStyle = .Custom
+            vc.transitioningDelegate = self
+        }
+
         vc.delegate = self.viewModel
 
         self.presentViewController(vc, animated: true, completion: nil)
