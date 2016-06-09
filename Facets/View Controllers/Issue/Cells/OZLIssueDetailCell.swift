@@ -102,8 +102,6 @@ class OZLIssueDetailCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        print(self.layoutMargins)
-
         let contentBounds = self.contentView.bounds
 
         var maxLabelWidth = contentBounds.size.width - self.layoutMargins.left - self.layoutMargins.right - (2 * self.supplementalIndent)

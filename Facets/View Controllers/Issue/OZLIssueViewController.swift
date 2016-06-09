@@ -56,6 +56,9 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(editButtonAction(_:)))
         self.tableView.separatorStyle = .None
+
+        self.tableViewController.refreshControl = UIRefreshControl()
+        self.tableViewController.refreshControl?.addTarget(self, action: #selector(pullToRefreshTriggered(_:)), forControlEvents: .ValueChanged)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -406,8 +409,16 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         }
     }
 
+    func pullToRefreshTriggered(sender: UIRefreshControl) {
+        self.viewModel.loadIssueData()
+    }
+
     // MARK: - View model delegate
     func viewModel(viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?) {
+        if (self.tableViewController.refreshControl?.refreshing ?? false) {
+            self.tableViewController.refreshControl?.endRefreshing()
+        }
+
         self.applyViewModel(viewModel)
     }
 
