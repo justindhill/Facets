@@ -342,7 +342,6 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         let nav = UINavigationController(rootViewController: composer)
         nav.navigationBar.translucent = false
         nav.navigationBar.barTintColor = UIColor.whiteColor()
-        nav.modalPresentationStyle = .FormSheet
 
         self.presentViewController(nav, animated: true, completion: nil)
     }

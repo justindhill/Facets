@@ -64,13 +64,13 @@ class OZLSwitchFormFieldCell: OZLFormFieldCell {
         }
 
         self.switchControl.sizeToFit()
-        self.switchControl.frame = CGRectMake(self.contentView.frame.size.width - self.contentPadding - self.switchControl.frame.size.width,
+        self.switchControl.frame = CGRectMake(self.contentView.frame.size.width - self.layoutMargins.right - self.switchControl.frame.size.width,
                                               (self.contentView.frame.size.height - self.switchControl.frame.size.height) / 2.0,
                                               self.switchControl.frame.size.width,
                                               self.switchControl.frame.size.height)
 
         self.titleLabel.sizeToFit()
-        self.titleLabel.frame = CGRectMake(self.contentPadding,
+        self.titleLabel.frame = CGRectMake(self.layoutMargins.left,
                                            (self.contentView.frame.size.height - self.titleLabel.frame.size.height) / 2.0,
                                            self.titleLabel.frame.size.width,
                                            self.titleLabel.frame.size.height)

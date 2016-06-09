@@ -103,8 +103,8 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
         }
 
         self.textField.frame = self.contentView.bounds
-        self.textField.frame.origin.x = self.contentPadding
-        self.textField.frame.size.width -= 2 * self.contentPadding
+        self.textField.frame.origin.x = self.layoutMargins.left
+        self.textField.frame.size.width -= (self.layoutMargins.left + self.layoutMargins.right)
 
         self.textField.floatingLabelYPadding = 7.0
         self.textField.floatingLabelTextColor = self.tintColor

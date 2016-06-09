@@ -92,7 +92,7 @@ class OZLButtonFormFieldCell: OZLFormFieldCell {
         }
 
         self.buttonControl.frame = self.contentView.bounds
-        self.buttonControl.titleEdgeInsets = UIEdgeInsetsMake(0, self.contentPadding, 0, self.contentPadding)
+        self.buttonControl.titleEdgeInsets = UIEdgeInsetsMake(0, self.layoutMargins.left, 0, self.layoutMargins.right)
     }
 
     private func setTitleColor(titleColor: UIColor) {

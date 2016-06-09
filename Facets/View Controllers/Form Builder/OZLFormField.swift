@@ -50,8 +50,4 @@ class OZLFormFieldCell: UITableViewCell {
     class func registerOnTableViewIfNeeded(tableView: UITableView) {
         tableView.registerClass(OZLFormFieldCell.self, forCellReuseIdentifier: String(OZLFormFieldCell.self))
     }
-
-    class func heightForWidth(width: CGFloat) -> CGFloat {
-        return 44.0
-    }
 }

@@ -57,8 +57,8 @@ class OZLTextViewFormFieldCell: OZLFormFieldCell, UITextViewDelegate {
         }
 
         self.textView.frame = self.contentView.bounds
-        self.textView.frame.origin.x += self.contentPadding
-        self.textView.frame.size.width -= (2 * self.contentPadding)
+        self.textView.frame.origin.x += self.layoutMargins.left
+        self.textView.frame.size.width -= (self.layoutMargins.left + self.layoutMargins.right)
         self.textView.floatingLabelYPadding = 8
         self.textView.layoutSubviews()
     }
