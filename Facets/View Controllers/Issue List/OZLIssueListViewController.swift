@@ -216,15 +216,27 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(IssueCellReuseIdentifier)
+        let cell = tableView.dequeueReusableCellWithIdentifier(IssueCellReuseIdentifier, forIndexPath: indexPath)
 
         if let cell = cell as? OZLIssueTableViewCell {
             let issue = self.viewModel.issues[indexPath.row]
             cell.applyIssueModel(issue)
             cell.contentPadding = OZLContentPadding
+
+            if #available(iOS 9.0, *) {
+                // intentionally empty body
+            } else if cell.superview == nil {
+                cell.frame.size.width = self.tableView.frame.size.width
+
+                if self.traitCollection.userInterfaceIdiom == .Pad {
+                    cell.layoutMargins = UIEdgeInsetsMake(10, 20, 10, 20)
+                } else {
+                    cell.layoutMargins = UIEdgeInsetsMake(11, 16, 11, 16)
+                }
+            }
         }
-        
-        return cell!
+
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

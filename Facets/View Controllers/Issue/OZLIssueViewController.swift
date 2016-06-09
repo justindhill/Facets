@@ -197,6 +197,20 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
             }
         }
 
+        if let cell = cell {
+            if #available(iOS 9.0, *) {
+                // intentionally empty body
+            } else if cell.superview == nil {
+                cell.frame.size.width = self.tableView.frame.size.width
+
+                if self.traitCollection.userInterfaceIdiom == .Pad {
+                    cell.layoutMargins = UIEdgeInsetsMake(10, 20, 10, 20)
+                } else {
+                    cell.layoutMargins = UIEdgeInsetsMake(11, 16, 11, 16)
+                }
+            }
+        }
+
         return cell ?? UITableViewCell()
     }
 

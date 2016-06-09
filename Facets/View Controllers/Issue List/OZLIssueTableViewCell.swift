@@ -34,6 +34,8 @@ class OZLIssueTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        self.preservesSuperviewLayoutMargins = false
+
         self.contentView.layer.shouldRasterize = true
         self.contentView.layer.rasterizationScale = UIScreen.mainScreen().scale
 
