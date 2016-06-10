@@ -28,3 +28,8 @@
 #import "OZLIssueHeaderView.h"
 #import "OZLIssueDescriptionCell.h"
 #import "OZLIssueFullDescriptionViewController.h"
+
+// Helpshift
+#import <Helpshift/HelpshiftAll.h>
+#import <Helpshift/HelpshiftSupport.h>
+#import <Helpshift/HelpshiftCore.h>

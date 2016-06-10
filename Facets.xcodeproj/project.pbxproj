@@ -24,6 +24,7 @@
 		D000B1DB1BF816D400CA2845 /* OZLURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = D000B1DA1BF816D400CA2845 /* OZLURLProtocol.m */; };
 		D000B1DE1BF96BBA00CA2845 /* OZLWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */; };
 		D000B1E01BF96EC600CA2845 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D000B1DF1BF96EC600CA2845 /* WebKit.framework */; };
+		D0052BC71D0A51A90059B2E1 /* OZLThirdPartyIntegrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0052BC61D0A51A90059B2E1 /* OZLThirdPartyIntegrations.swift */; };
 		D00793961CC87F100050FF48 /* OZLDateFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00793951CC87F100050FF48 /* OZLDateFormField.swift */; };
 		D00793981CC8A8310050FF48 /* SORelativeDateTransformer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */; };
 		D00793A01CC9AA290050FF48 /* (null) in Resources */ = {isa = PBXBuildFile; };
@@ -136,6 +137,7 @@
 		D000B1DC1BF96BBA00CA2845 /* OZLWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLWebViewController.h; sourceTree = "<group>"; };
 		D000B1DD1BF96BBA00CA2845 /* OZLWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLWebViewController.m; sourceTree = "<group>"; };
 		D000B1DF1BF96EC600CA2845 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		D0052BC61D0A51A90059B2E1 /* OZLThirdPartyIntegrations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLThirdPartyIntegrations.swift; sourceTree = "<group>"; };
 		D00793951CC87F100050FF48 /* OZLDateFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLDateFormField.swift; sourceTree = "<group>"; };
 		D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SORelativeDateTransformer.bundle; sourceTree = "<group>"; };
 		D007AF8F1CDD9E6F00CE48C4 /* OZLIssueViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueViewModel.swift; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 				D0C9F0481C30585100976B06 /* Presentation Controllers */,
 				D5DB80A81792F4E40081662A /* View Controllers */,
 				D0F10F3D1C370E0600A0AE94 /* OZLAppDelegate.swift */,
+				D0052BC61D0A51A90059B2E1 /* OZLThirdPartyIntegrations.swift */,
 			);
 			path = Facets;
 			sourceTree = "<group>";
@@ -628,7 +631,6 @@
 				D035A4AE1C0A09400057AA48 /* Generate Swift warnings */,
 				BDD032F8871803A3E6C91C65 /* 📦 Embed Pods Frameworks */,
 				091F20306B17708E501E5362 /* 📦 Copy Pods Resources */,
-				FC3955D83423A8D209CDDBE5 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -753,21 +755,6 @@
 			shellPath = /bin/sh;
 			shellScript = "TAGS=\"WARNING:\"\necho \"searching ${SRCROOT}/Facets for ${TAGS}\"\nfind \"${SRCROOT}/Facets\" \\( -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"";
 		};
-		FC3955D83423A8D209CDDBE5 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Facets/Pods-Facets-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		OBJCLEANCUSTOMRUNSCRIPTT /* Objective-Clean Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -866,6 +853,7 @@
 				D0F10F431C371FD300A0AE94 /* OZLIssueListViewModel.swift in Sources */,
 				D00EA2411CF934C80090B401 /* OZLDropdownPresentationController.swift in Sources */,
 				D022D6DF1C9B3B480035ABF5 /* OZLSwitchFormField.swift in Sources */,
+				D0052BC71D0A51A90059B2E1 /* OZLThirdPartyIntegrations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

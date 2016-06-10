@@ -13,11 +13,19 @@ class OZLAppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        #if !DEBUG
-            BITHockeyManager.sharedHockeyManager().configureWithIdentifier("8d240e4921f15253d040d9347ad7d9ac")
-            BITHockeyManager.sharedHockeyManager().startManager()
-            BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
-        #endif
+        if OZLThirdPartyIntegrations.Enabled {
+            #if !DEBUG
+                BITHockeyManager.sharedHockeyManager().configureWithIdentifier(OZLThirdPartyIntegrations.HockeyApp.AppKey)
+                BITHockeyManager.sharedHockeyManager().startManager()
+                BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
+            #endif
+
+            HelpshiftCore.initializeWithProvider(HelpshiftAll.sharedInstance())
+            HelpshiftCore.installForApiKey(OZLThirdPartyIntegrations.Helpshift.APIKey,
+                domainName: OZLThirdPartyIntegrations.Helpshift.Domain,
+                appID: OZLThirdPartyIntegrations.Helpshift.AppId
+            )
+        }
 
         OZLNetwork.sharedInstance()
         OZLSingleton.sharedInstance()

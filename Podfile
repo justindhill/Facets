@@ -16,6 +16,7 @@ def all_pods
 	pod '1PasswordExtension'
 	pod 'SnapKit'
 	pod 'DFCache'
+	pod 'Helpshift'
 
 	pod 'Reveal-iOS-SDK', :configuration => ['Debug']
 end

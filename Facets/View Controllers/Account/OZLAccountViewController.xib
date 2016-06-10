@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -10,6 +10,7 @@
                 <outlet property="onePasswordButton" destination="ShG-yD-1Qx" id="QJ5-Jk-9Wa"/>
                 <outlet property="password" destination="14" id="17"/>
                 <outlet property="redmineHomeURL" destination="4" id="9"/>
+                <outlet property="supportButton" destination="Mvv-F0-dh1" id="Yui-Py-cuO"/>
                 <outlet property="username" destination="12" id="16"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -73,6 +74,11 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ShG-yD-1Qx">
                             <rect key="frame" x="138" y="334" width="44" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Mvv-F0-dh1">
+                            <rect key="frame" x="132" y="231" width="56" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Support"/>
                         </button>
                     </subviews>
                 </scrollView>

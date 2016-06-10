@@ -50,3 +50,6 @@ proguard/
 
 # CocoaPods
 Pods/
+
+# Third party SDK credentials
+OZLThirdPartyIntegrations.swift

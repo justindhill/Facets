@@ -10,12 +10,15 @@
 #import "OZLNetwork.h"
 #import "OZLModelProject.h"
 
+#import <Helpshift/HelpshiftSupport.h>
+
 @import JGProgressHUD;
 @import OnePasswordExtension;
 
 @interface OZLAccountViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *onePasswordButton;
+@property (weak, nonatomic) IBOutlet UIButton *supportButton;
 @property JGProgressHUD *hud;
 
 @end
@@ -40,6 +43,8 @@
     [self.onePasswordButton setImage:onePasswordImage forState:UIControlStateNormal];
     self.onePasswordButton.hidden = ![[OnePasswordExtension sharedExtension] isAppExtensionAvailable];
     [self.onePasswordButton addTarget:self action:@selector(onePasswordButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.supportButton addTarget:self action:@selector(supportButtonAction:) forControlEvents:UIControlEventTouchUpInside];
 
     UITapGestureRecognizer *tapper = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped)];
     [self.view addGestureRecognizer:tapper];
@@ -88,6 +93,10 @@
         weakSelf.password.text = loginDictionary[AppExtensionPasswordKey];
         [weakSelf saveButtonAction:nil];
     }];
+}
+
+- (void)supportButtonAction:(UIButton *)sender {
+    [HelpshiftSupport showConversation:self withOptions:nil];
 }
 
 - (void)startSync {
