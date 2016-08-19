@@ -30,11 +30,26 @@ class OZLDropdownPresentationController: UIPresentationController, UIGestureReco
 
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animateAlongsideTransition({ (context) in
-            UIView.performWithoutAnimation({ 
-                self.dimmingLayer.path = self.computeDimmingLayerPath(CGSizeMake(self.navigationController.view.frame.size.width, self.presentedOriginY + self.presentedViewController.preferredContentSize.height))
-                self.presentedViewController.view.frame = CGRectMake(0, self.presentedOriginY, self.navigationController.view.frame.size.width, self.presentedViewController.preferredContentSize.height)
-            })
+            self.presentedViewController.view.frame = CGRectMake(0, self.presentedOriginY, self.navigationController.view.frame.size.width, self.presentedViewController.preferredContentSize.height)
 
+            let toPath = self.computeDimmingLayerPath(CGSizeMake(self.navigationController.view.frame.size.width, self.presentedOriginY + self.presentedViewController.preferredContentSize.height))
+
+            let AnimKey = "pathAnim"
+
+            CATransaction.begin()
+            CATransaction.setCompletionBlock {
+                self.dimmingLayer.path = toPath
+                self.dimmingLayer.removeAnimationForKey(AnimKey)
+            }
+            CATransaction.setAnimationDuration(coordinator.transitionDuration())
+            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
+
+            let anim = CABasicAnimation(keyPath: "path")
+            anim.toValue = toPath
+            anim.fillMode = kCAFillModeForwards
+            anim.removedOnCompletion = false
+            
+            self.dimmingLayer.addAnimation(anim, forKey: AnimKey)
         }, completion: nil)
     }
 
