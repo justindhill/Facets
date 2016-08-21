@@ -188,17 +188,18 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         let translatedPoint = CGPointMake(location.x, self.tableView.contentOffset.y + location.y)
         let indexPath = self.tableView.indexPathForRowAtPoint(translatedPoint)
-        
-        if let indexPath = indexPath {
-            let issue = self.viewModel.issues[indexPath.row]
-            let viewModel = OZLIssueViewModel(issueModel: issue)
-            
-            let issueVC = OZLIssueViewController(viewModel: viewModel)
-            issueVC.previewQuickAssignDelegate = self.viewModel
 
-            return issueVC
-        }
-        
+        // WARNING: Previewing doesn't work
+//        if let indexPath = indexPath {
+//            let issue = self.viewModel.issues[indexPath.row]
+//            let viewModel = OZLIssueViewModel(issueModel: issue)
+//            
+//            let issueVC = OZLIssueViewController(viewModel: viewModel)
+//            issueVC.previewQuickAssignDelegate = self.viewModel
+//
+//            return issueVC
+//        }
+
         return nil
     }
     
@@ -240,12 +241,13 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let issueModel = self.viewModel.issues[indexPath.row]
-        let viewModel = OZLIssueViewModel(issueModel: issueModel)
-
-        let issueVC = OZLIssueViewController(viewModel: viewModel)
-
-        self.splitViewController?.showViewController(issueVC, sender: self)
+        // WARNING: issue selection
+//        let issueModel = self.viewModel.issues[indexPath.row]
+//        let viewModel = OZLIssueViewModel(issueModel: issueModel)
+//
+//        let issueVC = OZLIssueViewController(viewModel: viewModel)
+//
+//        self.splitViewController?.showViewController(issueVC, sender: self)
     }
     
     // MARK - UIScrollViewDelegate

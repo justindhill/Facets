@@ -93,19 +93,20 @@ class OZLQueryListViewController: OZLTableViewController {
         weak var weakSelf = self
         let projectId = OZLSingleton.sharedInstance().currentProjectID
 
-        OZLNetwork.sharedInstance().getQueryListForProject(projectId, params: nil) { (result, error) in
-            if error != nil {
-                weakSelf?.loadingView.endLoadingWithErrorMessage("There was a problem loading the query list. Please check your connection and try again.")
-            } else {
-                let count = result?.count ?? 0
-                weakSelf?.loadingView.endLoadingWithErrorMessage(count > 0 ? nil : "Nothing to see here.")
-                weakSelf?.displayedProjectId = projectId
-                weakSelf?.queries = result as? [OZLModelQuery] ?? []
-            }
-
-            weakSelf?.loadingView.hidden = ((error == nil) && weakSelf?.queries.count > 0)
-            weakSelf?.tableView.reloadData()
-            weakSelf?.tableViewController.refreshControl?.endRefreshing()
-        }
+        // WARNING: query list fetching
+//        OZLNetwork.sharedInstance().getQueryListForProject(projectId, params: nil) { (result, error) in
+//            if error != nil {
+//                weakSelf?.loadingView.endLoadingWithErrorMessage("There was a problem loading the query list. Please check your connection and try again.")
+//            } else {
+//                let count = result?.count ?? 0
+//                weakSelf?.loadingView.endLoadingWithErrorMessage(count > 0 ? nil : "Nothing to see here.")
+//                weakSelf?.displayedProjectId = projectId
+//                weakSelf?.queries = result as? [OZLModelQuery] ?? []
+//            }
+//
+//            weakSelf?.loadingView.hidden = ((error == nil) && weakSelf?.queries.count > 0)
+//            weakSelf?.tableView.reloadData()
+//            weakSelf?.tableViewController.refreshControl?.endRefreshing()
+//        }
     }
 }

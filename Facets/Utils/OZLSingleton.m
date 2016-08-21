@@ -9,22 +9,21 @@
 #import "OZLNetwork.h"
 #import "Facets-Swift.h"
 
+@import Jiramazing;
+
 @interface OZLSingleton ()
 
 @property (strong) OZLServerSync *serverSync;
-@property NSTimer *sessionRefreshTimer;
 @property (strong) OZLAttachmentManager *attachmentManager;
 
 @end
 
 @implementation OZLSingleton
 
-NSString * const USER_DEFAULTS_REDMINE_HOME_URL = @"USER_DEFAULTS_REDMINE_HOME_URL";
-NSString * const USER_DEFAULTS_REDMINE_USER_KEY = @"USER_DEFAULTS_REDMINE_USER_KEY";
+NSString * const USER_DEFAULTS_BASE_URL = @"USER_DEFAULTS_BASE_URL";
 NSString * const USER_DEFAULTS_LAST_PROJECT_ID = @"USER_DEFAULTS_LAST_PROJECT_ID";
-NSString * const USER_DEFAULTS_REDMINE_USER_NAME = @"USER_DEFAULTS_REDMINE_USER_NAME";
-NSString * const USER_DEFAULTS_REDMINE_PASSWORD = @"USER_DEFAULTS_REDMINE_PASSWORD";
-NSString * const USER_DEFAULTS_REDMINE_COOKIE = @"USER_DEFAULTS_REDMINE_COOKIE";
+NSString * const USER_DEFAULTS_USERNAME = @"USER_DEFAULTS_USERNAME";
+NSString * const USER_DEFAULTS_PASSWORD = @"USER_DEFAULTS_PASSWORD";
 
 + (OZLSingleton *)sharedInstance {
     static OZLSingleton * _sharedInstance = nil;
@@ -44,57 +43,37 @@ NSString * const USER_DEFAULTS_REDMINE_COOKIE = @"USER_DEFAULTS_REDMINE_COOKIE";
         self.attachmentManager = [[OZLAttachmentManager alloc] initWithNetworkManager:[OZLNetwork sharedInstance]];
         
         NSDictionary *dic = @{
-            USER_DEFAULTS_REDMINE_HOME_URL:   @"https://redmine.franklychat.com",
-            USER_DEFAULTS_REDMINE_USER_KEY:   @"",
+            USER_DEFAULTS_BASE_URL:   @"https://worldnow.atlassian.net",
             USER_DEFAULTS_LAST_PROJECT_ID:    @(NSNotFound),
-            USER_DEFAULTS_REDMINE_USER_NAME:  @"",
-            USER_DEFAULTS_REDMINE_PASSWORD:   @""
+            USER_DEFAULTS_USERNAME:  @"",
+            USER_DEFAULTS_PASSWORD:   @""
         };
         
         [[NSUserDefaults standardUserDefaults] registerDefaults:dic];
-        
-        [OZLNetwork sharedInstance].baseURL = [NSURL URLWithString:self.redmineHomeURL];
-        [self updateAuthHeader];
-        
-        if (self.isUserLoggedIn) {
-            [[OZLNetwork sharedInstance] updateSessionCookieWithHost:self.redmineHomeURL
-                                                        cookieHeader:self.redmineCookie];
-        }
+
+        [Jiramazing sharedInstance].baseUrl = [NSURL URLWithString:self.baseUrl];
+        [Jiramazing sharedInstance].username = self.username;
+        [Jiramazing sharedInstance].password = self.password;
     }
     
     return self;
 }
 
 - (BOOL)isUserLoggedIn {
-    return (self.redmineUserName.length > 0 && self.redminePassword.length > 0 && self.redmineCookie.length > 0);
+    return (self.username.length > 0 && self.password.length > 0);
 }
 
 #pragma mark - Accessors
-- (NSString *)redmineHomeURL {
+- (NSString *)baseUrl {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     
-    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_HOME_URL];
+    return [userdefaults objectForKey:USER_DEFAULTS_BASE_URL];
 }
 
-- (void)setRedmineHomeURL:(NSString *)redmineHomeURL {
+- (void)setBaseUrl:(NSString *)baseUrl {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:redmineHomeURL forKey:USER_DEFAULTS_REDMINE_HOME_URL];
+    [userdefaults setObject:baseUrl forKey:USER_DEFAULTS_BASE_URL];
     [userdefaults synchronize];
-    
-    NSURL *url = [NSURL URLWithString:redmineHomeURL];
-    [OZLNetwork sharedInstance].baseURL = url;
-}
-
-- (NSString *)redmineUserKey {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    
-    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_USER_KEY];
-}
-
-- (void)setRedmineUserKey:(NSString *)redmineUserKey {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:redmineUserKey forKey:USER_DEFAULTS_REDMINE_USER_KEY];
-    [userdefaults synchronize];    
 }
 
 - (NSInteger)currentProjectID {
@@ -110,95 +89,28 @@ NSString * const USER_DEFAULTS_REDMINE_COOKIE = @"USER_DEFAULTS_REDMINE_COOKIE";
     [userdefaults synchronize];
 }
 
-- (NSString *)redmineUserName {
+- (NSString *)username {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     
-    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_USER_NAME];
+    return [userdefaults objectForKey:USER_DEFAULTS_USERNAME];
 }
 
-- (void)setRedmineUserName:(NSString *)redmineUserName {
+- (void)setUsername:(NSString *)username {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:redmineUserName forKey:USER_DEFAULTS_REDMINE_USER_NAME];
+    [userdefaults setObject:username forKey:USER_DEFAULTS_USERNAME];
     [userdefaults synchronize];
-    [self updateAuthHeader];
 }
 
-- (NSString *)redminePassword {
+- (NSString *)password {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     
-    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_PASSWORD];
+    return [userdefaults objectForKey:USER_DEFAULTS_PASSWORD];
 }
 
-- (void)setRedminePassword:(NSString *)redminePassword {
+- (void)setPassword:(NSString *)password {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:redminePassword forKey:USER_DEFAULTS_REDMINE_PASSWORD];
+    [userdefaults setObject:password forKey:USER_DEFAULTS_PASSWORD];
     [userdefaults synchronize];
-    [self updateAuthHeader];
-}
-
-- (NSString *)redmineCookie {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    
-    return [userdefaults objectForKey:USER_DEFAULTS_REDMINE_COOKIE];
-}
-
-- (void)setRedmineCookie:(NSString *)redmineCookie {
-    NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
-    [userdefaults setObject:redmineCookie forKey:USER_DEFAULTS_REDMINE_COOKIE];
-    [userdefaults synchronize];
-    [self updateAuthHeader];
-}
-
-- (void)updateAuthHeader {
-    
-    NSURLCredential *credential = [NSURLCredential credentialWithUser:self.redmineUserName
-                                                             password:self.redminePassword
-                                                          persistence:NSURLCredentialPersistenceForSession];
-    
-    NSURLComponents *components = [NSURLComponents componentsWithString:self.redmineHomeURL];
-    NSInteger port;
-    if (components.port) {
-        port = [components.port integerValue];
-    } else if ([components.scheme isEqualToString:@"https"]) {
-        port = 443;
-    } else {
-        port = 80;
-    }
-    
-    NSURLProtectionSpace *protectionSpace = [[NSURLProtectionSpace alloc]
-                                             initWithHost:components.host
-                                             port:port
-                                             protocol:components.scheme
-                                             realm:@"Redmine API"
-                                             authenticationMethod:NSURLAuthenticationMethodHTTPBasic];
-    
-    
-    [[NSURLCredentialStorage sharedCredentialStorage] setDefaultCredential:credential
-                                                        forProtectionSpace:protectionSpace];
-}
-
-- (void)startSessionUpkeep {
-    if (!self.sessionRefreshTimer) {
-        [self refreshSession];
-
-        self.sessionRefreshTimer = [NSTimer timerWithTimeInterval:(3 * 60) target:self selector:@selector(refreshSession) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:self.sessionRefreshTimer forMode:NSRunLoopCommonModes];
-    }
-}
-
-- (void)suspendSessionUpkeep {
-    if (self.sessionRefreshTimer) {
-        [self.sessionRefreshTimer invalidate];
-        self.sessionRefreshTimer = nil;
-    }
-}
-
-- (void)refreshSession {
-    if (self.isUserLoggedIn) {
-        [[OZLNetwork sharedInstance] authenticateCredentialsWithURL:[NSURL URLWithString:self.redmineHomeURL] username:self.redmineUserName password:self.redminePassword completion:^(NSError * _Nullable error) {
-            [self.serverSync startSyncCompletion:nil];
-        }];
-    }
 }
 
 @end

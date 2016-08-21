@@ -121,23 +121,24 @@ import UIKit
                 view.showLoadingOverlay()
                 
                 weak var weakSelf = self
-                
-                OZLNetwork.sharedInstance().updateIssue(issueModel, withParams: nil, completion: { (success, error) -> Void in
-                    view.hideLoadingOverlay()
-                    
-                    if let weakSelf = weakSelf where error == nil {
-                        weakSelf.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-                        weakSelf.delegate?.quickAssignController(weakSelf, didChangeAssigneeInIssue: issueModel, from: oldAssignee, to: newAssignee.user)
-                        
-                    } else {
-                        let alert = UIAlertController(title: "Error", message: "Couldn't set assignee.", preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-                            weakSelf?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-                        }))
-                        
-                        weakSelf?.presentViewController(alert, animated: true, completion: nil)
-                    }
-                })
+
+                // WARNING: Quick assign issue update
+//                OZLNetwork.sharedInstance().updateIssue(issueModel, withParams: nil, completion: { (success, error) -> Void in
+//                    view.hideLoadingOverlay()
+//                    
+//                    if let weakSelf = weakSelf where error == nil {
+//                        weakSelf.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+//                        weakSelf.delegate?.quickAssignController(weakSelf, didChangeAssigneeInIssue: issueModel, from: oldAssignee, to: newAssignee.user)
+//                        
+//                    } else {
+//                        let alert = UIAlertController(title: "Error", message: "Couldn't set assignee.", preferredStyle: .Alert)
+//                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+//                            weakSelf?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+//                        }))
+//                        
+//                        weakSelf?.presentViewController(alert, animated: true, completion: nil)
+//                    }
+//                })
             }
             
         }

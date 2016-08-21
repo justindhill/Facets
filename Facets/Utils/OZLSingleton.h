@@ -22,18 +22,14 @@
 
 //network
 #warning Wowwww... move this sensitive information to the keychain.
-@property (nonatomic, strong) NSString *redmineHomeURL;
-@property (nonatomic, strong) NSString *redmineUserKey;
-@property (nonatomic, strong) NSString *redmineUserName;
-@property (nonatomic, strong) NSString *redminePassword;
-@property (nonatomic, strong) NSString *redmineCookie;
+@property (nonatomic, strong) NSString *baseUrl;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *password;
+@property (nonatomic, strong) NSString *cookie;
 
 //app status
 @property (readonly, strong) OZLAttachmentManager *attachmentManager;
 @property (nonatomic) NSInteger currentProjectID;// last viewed project id
 @property (readonly) BOOL isUserLoggedIn;
-
-- (void)startSessionUpkeep;
-- (void)suspendSessionUpkeep;
 
 @end

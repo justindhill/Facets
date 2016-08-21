@@ -75,11 +75,12 @@ class OZLIssueComposerViewController: OZLFormViewController {
             }
         }
 
-        if self.issue.index > 0 {
-            OZLNetwork.sharedInstance().getCustomFieldsForIssue(self.issue.index, completion: completion)
-        } else {
-            OZLNetwork.sharedInstance().getCustomFieldsForProject(self.currentProject.projectId, completion: completion)
-        }
+        // warning: Custom field fetching
+//        if self.issue.index > 0 {
+//            OZLNetwork.sharedInstance().getCustomFieldsForIssue(self.issue.index, completion: completion)
+//        } else {
+//            OZLNetwork.sharedInstance().getCustomFieldsForProject(self.currentProject.projectId, completion: completion)
+//        }
     }
 
     init(currentProjectID: Int) {
@@ -323,11 +324,12 @@ class OZLIssueComposerViewController: OZLFormViewController {
             }
         }
 
-        if self.editMode == .New {
-            OZLNetwork.sharedInstance().createIssue(self.issue, withParams: [:], completion: completion)
-        } else if self.editMode == .Existing {
-            OZLNetwork.sharedInstance().updateIssue(self.issue, withParams: nil, completion: completion)
-        }
+        // WARNING: Create or update issue
+//        if self.editMode == .New {
+//            OZLNetwork.sharedInstance().createIssue(self.issue, withParams: [:], completion: completion)
+//        } else if self.editMode == .Existing {
+//            OZLNetwork.sharedInstance().updateIssue(self.issue, withParams: nil, completion: completion)
+//        }
     }
 
     func dismissAction() {

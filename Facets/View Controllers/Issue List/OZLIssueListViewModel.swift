@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Jiramazing
 
 @objc protocol OZLIssueListViewModelDelegate {
     func viewModelIssueListContentDidChange(viewModel: OZLIssueListViewModel)
@@ -49,7 +50,7 @@ import UIKit
     }
     
     let projects = OZLModelProject.allObjects()
-    var issues: Array<OZLModelIssue> = []
+    var issues = [Issue]()
 
     var shouldShowProjectSelector = false
     var shouldShowComposeButton = false
@@ -66,8 +67,9 @@ import UIKit
         
         self.isLoading = true
         let params = self.sortAndFilterOptions.requestParameters()
-        OZLNetwork.sharedInstance().getIssueListForQueryId(self.queryId, projectId: self.projectId, offset: 0, limit: 25, params: params) { (result, totalCount, error) -> Void in
-            
+
+        Jiramazing.instance.searchIssuesWithJQLString("project = MAPP") { (issues, total, error) in
+
             weakSelf?.isLoading = false
             
             if let error = error {
@@ -75,9 +77,9 @@ import UIKit
                 return
             }
             
-            if let weakSelf = weakSelf, let result = result as? Array<OZLModelIssue> {
-                weakSelf.issues = result
-                weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
+            if let weakSelf = weakSelf, let issues = issues {
+                weakSelf.issues = issues
+                weakSelf.moreIssuesAvailable = (weakSelf.issues.count < total);
                 completion(error: error)
             }
         }
@@ -92,8 +94,8 @@ import UIKit
         
         self.isLoading = true
         let params = self.sortAndFilterOptions.requestParameters()
-        OZLNetwork.sharedInstance().getIssueListForQueryId(self.queryId, projectId: self.projectId, offset: self.issues.count, limit: 25, params: params) { (result, totalCount, error) -> Void in
-            
+
+        Jiramazing.instance.searchIssuesWithJQLString("project = MAPP", offset: self.issues.count) { (issues, total, error) in
             weakSelf?.isLoading = false
             
             if let error = error {
@@ -101,24 +103,25 @@ import UIKit
                 return
             }
             
-            if let weakSelf = weakSelf, let result = result as? Array<OZLModelIssue> {
-                weakSelf.issues.appendContentsOf(result)
-                weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
+            if let weakSelf = weakSelf, let issues = issues {
+                weakSelf.issues.appendContentsOf(issues)
+                weakSelf.moreIssuesAvailable = (weakSelf.issues.count < total);
                 completion(error: error)
             }
         }
     }
     
     func processUpdatedIssue(issue: OZLModelIssue) {
-        let existingIndex = self.issues.indexOf { (issueElement) -> Bool in
-            return (issueElement.index == issue.index)
-        }
-        
-        if let existingIndex = existingIndex {
-            self.issues.replaceRange(existingIndex...existingIndex, with: [ issue ])
-        }
-        
-        self.delegate?.viewModelIssueListContentDidChange(self)
+        // WARNING: Issues aren't being processed
+//        let existingIndex = self.issues.indexOf { (issueElement) -> Bool in
+//            return (issueElement.index == issue.index)
+//        }
+//        
+//        if let existingIndex = existingIndex {
+//            self.issues.replaceRange(existingIndex...existingIndex, with: [ issue ])
+//        }
+//        
+//        self.delegate?.viewModelIssueListContentDidChange(self)
     }
     
     func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?) {

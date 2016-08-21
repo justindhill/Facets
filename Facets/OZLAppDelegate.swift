@@ -8,6 +8,8 @@
 
 import UIKit
 import HockeySDK
+import Jiramazing
+import SDWebImage
 
 class OZLAppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -30,8 +32,6 @@ class OZLAppDelegate: UIResponder, UIApplicationDelegate {
         OZLNetwork.sharedInstance()
         OZLSingleton.sharedInstance()
 
-        NSURLProtocol.registerClass(OZLURLProtocol.self)
-
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.tintColor = UIColor.facetsBrandColor()
         self.window?.backgroundColor = UIColor.whiteColor()
@@ -40,14 +40,8 @@ class OZLAppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = vc
         self.window?.makeKeyAndVisible()
 
+        SDWebImageDownloader.sharedDownloader().setValue("Basic anVzdGluOlZlWlFZcSR0VVFBeGtVbnpoZnpzTmhyOFY=", forHTTPHeaderField: "Authorization")
+
         return true
-    }
-
-    func applicationDidBecomeActive(application: UIApplication) {
-        OZLSingleton.sharedInstance().startSessionUpkeep()
-    }
-
-    func applicationDidEnterBackground(application: UIApplication) {
-        OZLSingleton.sharedInstance().suspendSessionUpkeep()
     }
 }

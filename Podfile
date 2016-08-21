@@ -17,6 +17,8 @@ def all_pods
 	pod 'SnapKit'
 	pod 'DFCache'
 	pod 'Helpshift'
+	pod 'Jiramazing', :path => "Dependencies/Jiramazing/Jiramazing.podspec"
+	pod 'SDWebImage'
 
 	pod 'Reveal-iOS-SDK', :configuration => ['Debug']
 end

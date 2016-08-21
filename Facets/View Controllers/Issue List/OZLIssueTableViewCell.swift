@@ -8,6 +8,8 @@
 
 import UIKit
 import SORelativeDateTransformer
+import Jiramazing
+import SDWebImage
 
 class OZLIssueTableViewCell: UITableViewCell {
 
@@ -54,18 +56,19 @@ class OZLIssueTableViewCell: UITableViewCell {
         self.statusPillSection.setBackgroundImage(rightBgImage, forState: .Normal)
     }
 
-    func applyIssueModel(issue: OZLModelIssue) {
-        self.priorityPillSection.setTitle(issue.priority?.name.uppercaseString, forState: .Normal)
-        self.statusPillSection.setTitle(issue.status?.name.uppercaseString, forState: .Normal)
-        self.issueNumberLabel.text = String(format: "#%d", issue.index)
-        self.subjectLabel.text = issue.subject
+    func applyIssueModel(issue: Issue) {
+        self.priorityPillSection.setTitle(issue.priority?.name?.uppercaseString, forState: .Normal)
+        self.statusPillSection.setTitle(issue.status?.name?.uppercaseString, forState: .Normal)
+        self.issueNumberLabel.text = issue.key
+        self.subjectLabel.text = issue.summary
 
-        self.assigneeNameLabel.hidden = (issue.assignedTo == nil)
-        self.assigneeAvatarImageView.hidden = (issue.assignedTo == nil)
+        self.assigneeNameLabel.hidden = (issue.assignee == nil)
+        self.assigneeAvatarImageView.hidden = (issue.assignee == nil)
         self.dueDateLabel.hidden = (issue.dueDate == nil)
 
-        if let assignee = issue.assignedTo {
-            self.assigneeNameLabel.text = assignee.name.uppercaseString
+        if let assignee = issue.assignee {
+            self.assigneeNameLabel.text = assignee.displayName?.uppercaseString
+            self.assigneeAvatarImageView.sd_setImageWithURL(issue.assignee?.avatarUrls?[.Medium])
         }
 
         if let dueDate = issue.dueDate {
@@ -217,5 +220,10 @@ class OZLIssueTableViewCell: UITableViewCell {
         }
 
         return image
+    }
+
+    override func prepareForReuse() {
+        self.assigneeAvatarImageView.sd_cancelCurrentImageLoad()
+        self.assigneeAvatarImageView.image = nil
     }
 }

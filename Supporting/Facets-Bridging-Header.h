@@ -16,7 +16,6 @@
 #import "OZLConstants.h"
 
 #import "OZLSingleton.h"
-#import "OZLURLProtocol.h"
 #import "OZLAccountViewController.h"
 #import "OZLNavigationChildChangeListener.h"
 

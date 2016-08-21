@@ -125,16 +125,17 @@ enum OZLIssueCompleteness: Int {
         weak var weakSelf = self
 
         let params = [ "include": "attachments,journals,relations" ]
-        OZLNetwork.sharedInstance().getDetailForIssue(self.issueModel.index, withParams: params) { (issue, error) in
-            if let weakSelf = weakSelf {
-                if let issue = issue {
-                    weakSelf.successfullyFetchedIssue = true
-                    weakSelf.issueModel = issue
-                }
-
-                weakSelf.delegate?.viewModel(weakSelf, didFinishLoadingIssueWithError: error)
-            }
-        }
+        // WARNING: issue detail fetching
+//        OZLNetwork.sharedInstance().getDetailForIssue(self.issueModel.index, withParams: params) { (issue, error) in
+//            if let weakSelf = weakSelf {
+//                if let issue = issue {
+//                    weakSelf.successfullyFetchedIssue = true
+//                    weakSelf.issueModel = issue
+//                }
+//
+//                weakSelf.delegate?.viewModel(weakSelf, didFinishLoadingIssueWithError: error)
+//            }
+//        }
     }
 
     // MARK: - Details

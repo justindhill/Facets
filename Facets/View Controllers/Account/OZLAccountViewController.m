@@ -14,6 +14,7 @@
 
 @import JGProgressHUD;
 @import OnePasswordExtension;
+@import Jiramazing;
 
 @interface OZLAccountViewController ()
 
@@ -30,10 +31,9 @@
     
     self.title = @"Settings";
 
-    self.redmineHomeURL.text = [[OZLSingleton sharedInstance] redmineHomeURL];
-    self.redmineUserKey.text = [[OZLSingleton sharedInstance] redmineUserKey];
-    self.username.text = [[OZLSingleton sharedInstance] redmineUserName];
-    self.password.text = [[OZLSingleton sharedInstance] redminePassword];
+    self.redmineHomeURL.text = [[OZLSingleton sharedInstance] baseUrl];
+    self.username.text = [[OZLSingleton sharedInstance] username];
+    self.password.text = [[OZLSingleton sharedInstance] password];
 
     NSBundle *opBundle = [NSBundle bundleForClass:[OnePasswordExtension class]];
     NSBundle *opResBundle = [NSBundle bundleWithPath:[opBundle.bundlePath stringByAppendingPathComponent:@"OnePasswordExtensionResources.bundle"]];
@@ -58,22 +58,24 @@
     [hud showInView:self.view];
     self.hud = hud;
 
-    NSURL *baseURL = [NSURL URLWithString:_redmineHomeURL.text];
-    [[OZLNetwork sharedInstance] authenticateCredentialsWithURL:baseURL username:_username.text password:_password.text completion:^(NSError *error) {
-        if (error) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Couldn't validate credentials" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    [Jiramazing sharedInstance].baseUrl = [NSURL URLWithString:self.redmineHomeURL.text];
+    [Jiramazing sharedInstance].username = self.username.text;
+    [Jiramazing sharedInstance].password = self.password.text;
+
+    [[Jiramazing sharedInstance] validateSession:^(BOOL success) {
+        if (success) {
+            [[OZLSingleton sharedInstance] setBaseUrl:self.redmineHomeURL.text];
+            [[OZLSingleton sharedInstance] setUsername:self.username.text];
+            [[OZLSingleton sharedInstance] setPassword:self.password.text];
+
+            [weakSelf startSync];
+        } else {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Couldn't validate credentials" message:nil preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-            
+
             [weakSelf presentViewController:alert animated:YES completion:nil];
             [hud dismissAnimated:YES];
             weakSelf.hud = nil;
-        } else {
-            [[OZLSingleton sharedInstance] setRedmineUserKey:_redmineUserKey.text];
-            [[OZLSingleton sharedInstance] setRedmineHomeURL:_redmineHomeURL.text];
-            [[OZLSingleton sharedInstance] setRedmineUserName:_username.text];
-            [[OZLSingleton sharedInstance] setRedminePassword:_password.text];
-            
-            [weakSelf startSync];
         }
     }];
 }
