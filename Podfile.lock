@@ -39,7 +39,7 @@ DEPENDENCIES:
   - HockeySDK
   - ISO8601
   - JGProgressHUD
-  - Jiramazing (from `~/Development/Jiramazing/Jiramazing.podspec`)
+  - Jiramazing (from `Dependencies/Jiramazing/Jiramazing.podspec`)
   - JVFloatLabeledTextField
   - RaptureXML@Frankly
   - Realm
@@ -51,7 +51,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Jiramazing:
-    :path: ~/Development/Jiramazing/Jiramazing.podspec
+    :path: Dependencies/Jiramazing/Jiramazing.podspec
 
 SPEC CHECKSUMS:
   1PasswordExtension: 8757dc3302353731dd3e678e63b5023a708783cb
@@ -75,6 +75,6 @@ SPEC CHECKSUMS:
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: a49d9e243ef741368a05a3d26c062fa2a7b8db19
+PODFILE CHECKSUM: 210bb93829fe4de91c6ae49d237e4561b399fcdf
 
 COCOAPODS: 1.0.1

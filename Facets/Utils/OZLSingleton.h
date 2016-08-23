@@ -13,11 +13,13 @@
 #import "OZLServerSync.h"
 
 @class OZLAttachmentManager;
+@class JRAProject;
 
 @interface OZLSingleton : NSObject
 
 + (OZLSingleton *)sharedInstance;
 
+@property (strong) NSArray<JRAProject *> *projects;
 @property (readonly) OZLServerSync *serverSync;
 
 //network

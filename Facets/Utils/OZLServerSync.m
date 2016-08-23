@@ -28,7 +28,24 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
 }
 
 - (void)startSyncCompletion:(void(^)(NSError *error))completion {
-    completion(nil);
+
+    [[Jiramazing sharedInstance] getProjects:^(NSArray<JRAProject *> * _Nullable projects, NSError * _Nullable error) {
+        if (error) {
+            completion(error);
+            return;
+        }
+
+        [OZLSingleton sharedInstance].projects = projects;
+
+        NSString *documentsDirectoryPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSAllDomainsMask, YES).firstObject;
+
+        if (documentsDirectoryPath) {
+            NSString *projectsPath = [documentsDirectoryPath stringByAppendingPathComponent:@"projects.plist"];
+            [NSKeyedArchiver archiveRootObject:projectsPath toFile:projectsPath];
+        }
+
+        completion(nil);
+    }];
 }
 
 @end
