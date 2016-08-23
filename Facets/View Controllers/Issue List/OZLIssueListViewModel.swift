@@ -18,7 +18,7 @@ import Jiramazing
     var queryId = 0
     
     weak var delegate: OZLIssueListViewModelDelegate?
-    var projectId: Int = 0 {
+    var projectId: String? = nil {
         willSet(newValue) {
             if newValue != self.projectId {
                 self.issues = []
@@ -31,9 +31,9 @@ import Jiramazing
         get {
             if let explicitTitle = self.explicitTitle {
                 return explicitTitle
-            } else {
-                return OZLModelProject(forPrimaryKey: self.projectId)?.name ?? ""
             }
+
+            return ""
         }
         
         set(newValue) {
@@ -41,15 +41,7 @@ import Jiramazing
         }
     }
     
-    var sortAndFilterOptions: OZLSortAndFilterOptions = OZLSortAndFilterOptions() {
-        willSet(newValue) {
-            if newValue != self.sortAndFilterOptions {
-                self.issues = []
-            }
-        }
-    }
-    
-    let projects = OZLModelProject.allObjects()
+    let projects = [Project]()
     var issues = [Issue]()
 
     var shouldShowProjectSelector = false
@@ -66,7 +58,6 @@ import Jiramazing
         weak var weakSelf = self
         
         self.isLoading = true
-        let params = self.sortAndFilterOptions.requestParameters()
 
         Jiramazing.instance.searchIssuesWithJQLString("project = MAPP") { (issues, total, error) in
 
@@ -93,8 +84,7 @@ import Jiramazing
         weak var weakSelf = self
         
         self.isLoading = true
-        let params = self.sortAndFilterOptions.requestParameters()
-
+        
         Jiramazing.instance.searchIssuesWithJQLString("project = MAPP", offset: self.issues.count) { (issues, total, error) in
             weakSelf?.isLoading = false
             
@@ -111,7 +101,7 @@ import Jiramazing
         }
     }
     
-    func processUpdatedIssue(issue: OZLModelIssue) {
+    func processUpdatedIssue(issue: Issue) {
         // WARNING: Issues aren't being processed
 //        let existingIndex = self.issues.indexOf { (issueElement) -> Bool in
 //            return (issueElement.index == issue.index)
@@ -124,7 +114,7 @@ import Jiramazing
 //        self.delegate?.viewModelIssueListContentDidChange(self)
     }
     
-    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?) {
+    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: Issue, from: User?, to: User?) {
         self.processUpdatedIssue(issue)
     }
 }

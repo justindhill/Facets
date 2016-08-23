@@ -17,9 +17,6 @@ PODS:
     - ISO8601
   - JVFloatLabeledTextField (1.1.1)
   - RaptureXML@Frankly (1.0.4)
-  - Realm (1.0.2):
-    - Realm/Headers (= 1.0.2)
-  - Realm/Headers (1.0.2)
   - Reveal-iOS-SDK (1.6.2)
   - SDWebImage (3.8.1):
     - SDWebImage/Core (= 3.8.1)
@@ -42,7 +39,6 @@ DEPENDENCIES:
   - Jiramazing (from `Dependencies/Jiramazing/Jiramazing.podspec`)
   - JVFloatLabeledTextField
   - RaptureXML@Frankly
-  - Realm
   - Reveal-iOS-SDK
   - SDWebImage
   - SnapKit
@@ -68,13 +64,12 @@ SPEC CHECKSUMS:
   Jiramazing: 1e71689cbdee8692bae017eda2d812e3a7146c88
   JVFloatLabeledTextField: 0e5524b097f102036214dd8279edc8ecf08b5e18
   RaptureXML@Frankly: 585df7d229c6a6a3f5a202d7664c2dd0aba9ef38
-  Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
   Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 210bb93829fe4de91c6ae49d237e4561b399fcdf
+PODFILE CHECKSUM: 26262ee2baf80a6d23f4dcb07382af31912b1454
 
 COCOAPODS: 1.0.1

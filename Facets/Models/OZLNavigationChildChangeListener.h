@@ -10,6 +10,6 @@
 
 @protocol OZLNavigationChildChangeListener <NSObject>
 
-- (void)navigationChild:(UIViewController *)navigationChild didModifyIssue:(OZLModelIssue *)issue;
+//- (void)navigationChild:(UIViewController *)navigationChild didModifyIssue:(OZLModelIssue *)issue;
 
 @end

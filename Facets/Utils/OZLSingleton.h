@@ -5,11 +5,6 @@
 //  Created by Lee Zhijie on 7/15/13.
 
 @import Foundation;
-#import "OZLModelTracker.h"
-#import "OZLModelUser.h"
-#import "OZLModelIssueStatus.h"
-#import "OZLModelIssuePriority.h"
-#import "OZLModelQuery.h"
 #import "OZLServerSync.h"
 
 @class OZLAttachmentManager;
@@ -31,7 +26,7 @@
 
 //app status
 @property (readonly, strong) OZLAttachmentManager *attachmentManager;
-@property (nonatomic) NSInteger currentProjectID;// last viewed project id
+@property (nonatomic) NSString *currentProjectID;// last viewed project id
 @property (readonly) BOOL isUserLoggedIn;
 
 @end

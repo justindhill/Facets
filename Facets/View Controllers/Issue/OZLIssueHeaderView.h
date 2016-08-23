@@ -7,6 +7,7 @@
 //
 
 @import UIKit;
+@import Jiramazing;
 
 @class OZLModelIssue;
 
@@ -18,6 +19,6 @@
 @property (assign) CGFloat contentPadding;
 @property (strong) UIButton *assignButton;
 
-- (void)applyIssueModel:(OZLModelIssue *)issue;
+- (void)applyIssueModel:(JRAIssue *)issue;
 
 @end

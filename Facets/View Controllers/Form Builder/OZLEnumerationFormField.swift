@@ -17,28 +17,6 @@ class OZLEnumerationFormField: OZLFormField {
     var possibleValues: [AnyObject]?
     var currentValue: String?
 
-    init(keyPath: String, placeholder: String, currentValue: String?, possibleRealmValues: RLMCollection) {
-        super.init(keyPath: keyPath, placeholder: placeholder)
-
-        self.currentValue = currentValue
-
-        if possibleRealmValues.count > 0 {
-            var values = [OZLEnumerationFormFieldValue]()
-
-            for index in 0..<possibleRealmValues.count {
-                if let value = possibleRealmValues[index] as? OZLEnumerationFormFieldValue {
-                    values.append(value)
-                } else {
-                    fatalError("Passed an RLMArray whose object type doesn't conform to OZLEnumerationFormFieldValue")
-                }
-            }
-
-            self.possibleValues = values
-        }
-        
-        self.setup()
-    }
-
     init(keyPath: String, placeholder: String, currentValue: String?, possibleValues: [OZLEnumerationFormFieldValue]) {
         super.init(keyPath: keyPath, placeholder: placeholder)
 

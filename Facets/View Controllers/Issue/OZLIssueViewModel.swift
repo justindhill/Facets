@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Jiramazing
 
 protocol OZLIssueViewModelDelegate: AnyObject {
     func viewModel(viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?)
@@ -49,15 +50,14 @@ enum OZLIssueCompleteness: Int {
     var successfullyFetchedIssue = false
     var currentSectionNames: [String] = []
 
-    var issueModel: OZLModelIssue {
+    var issueModel: Issue {
         didSet {
             self.updateSectionNames()
-            self.refreshDetails()
         }
     }
 
     // MARK: - Life cycle
-    init(issueModel: OZLModelIssue) {
+    init(issueModel: Issue) {
         self.issueModel = issueModel
         
         super.init()
@@ -68,12 +68,11 @@ enum OZLIssueCompleteness: Int {
         }
 
         self.updateSectionNames()
-        self.refreshDetails()
         self.refreshVisibleDetails()
     }
 
     func targetedPinnedIdentifiersDefaultsKeypath() -> String {
-        return "\(OZLIssueViewModel.PinnedIdentifiersDefaultsKeypath).\(self.issueModel.projectId)"
+        return "\(OZLIssueViewModel.PinnedIdentifiersDefaultsKeypath).\(self.issueModel.id)"
     }
 
     // MARK: - Behavior
@@ -88,17 +87,13 @@ enum OZLIssueCompleteness: Int {
             sectionNames.append(OZLIssueViewModel.SectionAttachments)
         }
 
-        if self.issueModel.journals?.count ?? 0 > 0 {
-            sectionNames.append(OZLIssueViewModel.SectionRecentActivity)
-        }
-
         self.currentSectionNames = sectionNames
     }
 
     func completeness() -> OZLIssueCompleteness {
         if self.successfullyFetchedIssue {
             return .All
-        } else if self.issueModel.subject != nil {
+        } else if self.issueModel.summary != nil {
             return .Some
         } else {
             return .None
@@ -138,57 +133,6 @@ enum OZLIssueCompleteness: Int {
 //        }
     }
 
-    // MARK: - Details
-    func refreshDetails() {
-        var details = [(String, String, String)]()
-
-        if let status = self.issueModel.status?.name {
-            details.append(("status_id", OZLModelIssue.displayNameForAttributeName("status_id"), status))
-        }
-
-        if let priority = self.issueModel.priority?.name {
-            details.append(("priority_id", OZLModelIssue.displayNameForAttributeName("priority_id"), priority))
-        }
-
-        if let author = self.issueModel.author?.name {
-            details.append(("author", OZLModelIssue.displayNameForAttributeName("author"), author))
-        }
-
-        if let startDate = self.issueModel.startDate {
-            details.append(("start_date", OZLModelIssue.displayNameForAttributeName("start_date"), String(startDate)))
-        }
-
-        if let category = self.issueModel.category {
-            details.append(("category_id", OZLModelIssue.displayNameForAttributeName("category_id"), category.name))
-        }
-
-        if let targetVersion = self.issueModel.targetVersion {
-            details.append(("fixed_version_id", OZLModelIssue.displayNameForAttributeName("fixed_version_id"), targetVersion.name))
-        }
-
-        if let doneRatio = self.issueModel.doneRatio {
-            details.append(("done_ratio", OZLModelIssue.displayNameForAttributeName("done_ratio"), String(doneRatio)))
-        }
-
-        if let spentHours = self.issueModel.spentHours {
-            details.append(("spent_hours", OZLModelIssue.displayNameForAttributeName("spent_hours"), String(spentHours)))
-        }
-
-        for field in self.issueModel.customFields ?? [] where field.value != nil {
-            let cachedField = OZLModelCustomField(forPrimaryKey: field.fieldId)
-            
-            details.append(
-                (
-                    String(field.fieldId),
-                    field.name ?? "",
-                    OZLModelCustomField.displayValueForCustomFieldType(cachedField?.type ?? field.type, attributeId: field.fieldId, attributeValue: field.value ?? "")
-                )
-            )
-        }
-
-        self.details = details
-    }
-
     func refreshVisibleDetails() {
         var visibleDetails: [(String, String, String)] = []
 
@@ -225,32 +169,22 @@ enum OZLIssueCompleteness: Int {
 
     // MARK: - Recent activity
     func recentActivityCount() -> Int {
-        return min(self.issueModel.journals?.count ?? 0, 3)
+        return min(self.issueModel.comments?.count ?? 0, 3)
     }
 
-    func recentActivityAtIndex(index: Int) -> OZLModelJournal {
-        if let journals = self.issueModel.journals {
-            return journals[journals.count - index - 1]
+    func recentActivityAtIndex(index: Int) -> Comment {
+        if let comments = self.issueModel.comments {
+            return comments[comments.count - index - 1]
         }
 
         fatalError("Journals array doesn't exist")
     }
 
     // MARK: - Quick assign delegate
-    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?) {
+    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: Issue, from: User?, to: User?) {
         self.issueModel = issue
 
-        let journal = OZLModelJournal()
-        journal.creationDate = NSDate()
-
-        let detail = OZLModelJournalDetail()
-        detail.type = .Attribute
-        detail.oldValue = String(from?.userId)
-        detail.newValue = String(to?.userId)
-        detail.name = "assigned_to_id"
-
-        journal.details = [ detail ]
-        issue.journals?.append(journal)
+        // WARNING: handle quick assign changes!
 
         self.delegate?.viewModelIssueContentDidChange(self)
     }

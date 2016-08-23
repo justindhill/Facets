@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Jiramazing
 
-class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLSortAndFilterViewControllerDelegate, OZLNavigationChildChangeListener, OZLListSelectorDelegate {
+class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLNavigationChildChangeListener, OZLListSelectorDelegate {
     
     private let IssueListComposeButtonHeight: CGFloat = 56.0
     private let ZeroHeightFooterTag = -1
@@ -131,51 +132,39 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
 
     // MARK: - Button actions
     func filterAction(sender: UIButton?) {
-        let sortAndFilter = OZLSortAndFilterViewController()
-        sortAndFilter.delegate = self
-        sortAndFilter.options = self.viewModel.sortAndFilterOptions
-        
-        let nav = UINavigationController(rootViewController: sortAndFilter)
-
-        if let rightBarButtonItem = self.navigationItem.rightBarButtonItem {
-            if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-                let popover = UIPopoverController(contentViewController: nav)
-                popover.presentPopoverFromBarButtonItem(rightBarButtonItem, permittedArrowDirections: .Any, animated: true)
-            } else {
-                nav.modalPresentationStyle = .FormSheet
-                self.presentViewController(nav, animated: true, completion: nil)
-            }
-        }
+//        let sortAndFilter = OZLSortAndFilterViewController()
+//        sortAndFilter.delegate = self
+//        sortAndFilter.options = self.viewModel.sortAndFilterOptions
+//        
+//        let nav = UINavigationController(rootViewController: sortAndFilter)
+//
+//        if let rightBarButtonItem = self.navigationItem.rightBarButtonItem {
+//            if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+//                let popover = UIPopoverController(contentViewController: nav)
+//                popover.presentPopoverFromBarButtonItem(rightBarButtonItem, permittedArrowDirections: .Any, animated: true)
+//            } else {
+//                nav.modalPresentationStyle = .FormSheet
+//                self.presentViewController(nav, animated: true, completion: nil)
+//            }
+//        }
     }
     
     func composeButtonAction(sender: UIButton?) {
-        let composer = OZLIssueComposerViewController(currentProjectID: OZLSingleton.sharedInstance().currentProjectID)
-        composer.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(OZLIssueListViewController.dismissComposerAction(_:)))
-        
-        let nav = UINavigationController(rootViewController: composer)
-        nav.modalPresentationStyle = .FormSheet
-        
-        self.presentViewController(nav, animated: true, completion: nil)
+//        let composer = OZLIssueComposerViewController(currentProjectID: OZLSingleton.sharedInstance().currentProjectID)
+//        composer.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(OZLIssueListViewController.dismissComposerAction(_:)))
+//        
+//        let nav = UINavigationController(rootViewController: composer)
+//        nav.modalPresentationStyle = .FormSheet
+//        
+//        self.presentViewController(nav, animated: true, completion: nil)
     }
     
     func dismissComposerAction(sender: UIButton?) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    // MARK: - OZLSortAndFilterViewControllerDelegate
-    func sortAndFilter(sortAndFilter: OZLSortAndFilterViewController, shouldDismissWithNewOptions newOptions: OZLSortAndFilterOptions?) {
-        if let newOptions = newOptions where self.viewModel.sortAndFilterOptions != newOptions {
-            self.viewModel!.sortAndFilterOptions = newOptions
-            self.tableView.reloadData()
-            self.showFooterActivityIndicator()
-            self.reloadProjectData()
-        }
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     // MARK: - OZLNavigationChildChangeListener
-    func navigationChild(navigationChild: UIViewController!, didModifyIssue issue: OZLModelIssue!) {
+    func navigationChild(navigationChild: UIViewController!, didModifyIssue issue: Issue!) {
         self.viewModel.processUpdatedIssue(issue)
     }
     
@@ -279,10 +268,10 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
 
     // MARK: - List selector delegate
     func selector(selector: OZLListSelectorViewController, didSelectItem item: OZLListSelectorItem) {
-        if let project = item as? OZLModelProject {
+        if let project = item as? Project {
             self.showFooterActivityIndicator()
-            OZLSingleton.sharedInstance().currentProjectID = project.projectId
-            viewModel.projectId = project.projectId
+            OZLSingleton.sharedInstance().currentProjectID = project.id
+            viewModel.projectId = project.id
 
             if let titleButton = self.navigationItem.titleView as? OZLDownChevronTitleView {
                 titleButton.title = project.name
@@ -298,16 +287,15 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
 
     // MARK: - Behavior
     func showProjectSelector() {
-        var projects: Array<OZLModelProject> = []
-        var currentProject: OZLModelProject?
+        var projects = [Project]()
+        var currentProject: Project?
 
         for i in 0..<self.viewModel.projects.count {
-            if let project = self.viewModel.projects[i] as? OZLModelProject {
-                projects.append(project)
+            let project = self.viewModel.projects[i]
+            projects.append(project)
 
-                if project.projectId == self.viewModel.projectId {
-                    currentProject = project
-                }
+            if project.id == self.viewModel.projectId {
+                currentProject = project
             }
         }
 
@@ -363,12 +351,12 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
 }
 
 // MARK: - Project selector model extension
-extension OZLModelProject: OZLListSelectorItem {
+extension Project: OZLListSelectorItem {
     var title: String {
-        return self.name
+        return self.name ?? ""
     }
 
     var comparator: String {
-        return String(self.projectId)
+        return self.id ?? ""
     }
 }

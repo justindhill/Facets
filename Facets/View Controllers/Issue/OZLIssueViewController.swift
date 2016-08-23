@@ -9,6 +9,7 @@
 import Foundation
 import AVFoundation
 import AVKit
+import Jiramazing
 
 class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate, UIViewControllerTransitioningDelegate {
 
@@ -52,7 +53,6 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.tableView.registerClass(OZLIssueDetailCell.self, forCellReuseIdentifier: DetailReuseIdentifier)
         self.tableView.registerClass(OZLIssueAttachmentCell.self, forCellReuseIdentifier: AttachmentReuseIdentifier)
         self.tableView.registerClass(OZLIssueDescriptionCell.self, forCellReuseIdentifier: DescriptionReuseIdentifier)
-        self.tableView.registerClass(OZLJournalCell.self, forCellReuseIdentifier: RecentActivityReuseIdentifier)
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(editButtonAction(_:)))
         self.tableView.separatorStyle = .None
@@ -72,8 +72,8 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     }
 
     func applyViewModel(viewModel: OZLIssueViewModel) {
-        if let trackerName = viewModel.issueModel.tracker?.name {
-            self.title = "\(trackerName) #\(viewModel.issueModel.index)"
+        if let trackerName = viewModel.issueModel.issueType?.name {
+            self.title = "\(trackerName) #\(viewModel.issueModel.id)"
         }
 
         self.header.applyIssueModel(viewModel.issueModel)
@@ -104,7 +104,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         var items = [UIPreviewActionItem]()
 
         items.append(UIPreviewAction(title: "Quick Assign", style: .Default, handler: { (action, previewViewController) in
-            if let issueCopy = self.viewModel.issueModel.copy() as? OZLModelIssue {
+            if let issueCopy = self.viewModel.issueModel.copy() as? Issue {
                 let vc = OZLQuickAssignViewController(issueModel: issueCopy)
                 vc.transitioningDelegate = self
                 vc.modalPresentationStyle = .Custom
@@ -114,12 +114,12 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
             }
         }))
 
-        items.append(UIPreviewAction(title: "Edit", style: .Default, handler: { (action, previewViewController) in
-            let vc = OZLIssueComposerViewController(issue: self.viewModel.issueModel)
-            let nav = UINavigationController(rootViewController: vc)
-
-            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
-        }))
+//        items.append(UIPreviewAction(title: "Edit", style: .Default, handler: { (action, previewViewController) in
+//            let vc = OZLIssueComposerViewController(issue: self.viewModel.issueModel)
+//            let nav = UINavigationController(rootViewController: vc)
+//
+//            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
+//        }))
 
         return items
     }
@@ -191,12 +191,6 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
             if let cell = cell as? OZLIssueDescriptionCell {
                 cell.descriptionPreviewString = self.viewModel.issueModel.issueDescription
-            }
-        } else if sectionName == OZLIssueViewModel.SectionRecentActivity {
-            cell = tableView.dequeueReusableCellWithIdentifier(RecentActivityReuseIdentifier, forIndexPath: indexPath)
-
-            if let cell = cell as? OZLJournalCell {
-                cell.journal = self.viewModel.recentActivityAtIndex(indexPath.row)
             }
         }
 
@@ -317,10 +311,6 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
     // MARK: - Button actions
     func showAllActivityAction() {
-        let vm = OZLJournalViewerViewModel(issue: self.viewModel.issueModel)
-        let vc = OZLJournalViewerViewController(viewModel: vm)
-
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     func showFullDescriptionAction() {
@@ -340,13 +330,13 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     }
 
     func editButtonAction(button: UIButton) {
-        let composer = OZLIssueComposerViewController(issue: self.viewModel.issueModel)
-
-        let nav = UINavigationController(rootViewController: composer)
-        nav.navigationBar.translucent = false
-        nav.navigationBar.barTintColor = UIColor.whiteColor()
-
-        self.presentViewController(nav, animated: true, completion: nil)
+//        let composer = OZLIssueComposerViewController(issue: self.viewModel.issueModel)
+//
+//        let nav = UINavigationController(rootViewController: composer)
+//        nav.navigationBar.translucent = false
+//        nav.navigationBar.barTintColor = UIColor.whiteColor()
+//
+//        self.presentViewController(nav, animated: true, completion: nil)
     }
 
     func downloadAttachmentAction(button: UIButton) {
@@ -359,7 +349,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
                 self.attachmentManager.downloadAttachment(attachment,
                     progress: { (attachment, totalBytesDownloaded, totalBytesExpected) in
-                        let ratio = Double(totalBytesDownloaded) / Double(attachment.size)
+                        let ratio = Double(totalBytesDownloaded) / Double(totalBytesExpected)
                         cell?.progressView.progress = ratio
                         print("Progress for \(attachment): \(ratio))")
                     }, completion: { (data, error) in
@@ -373,40 +363,40 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         }
     }
 
-    func cachedAttachmentTapAction(attachment: OZLModelAttachment) {
-        if attachment.fileClassification == .Video {
-            if let url = self.attachmentManager.fetchURLForLocalAttachment(attachment) {
-                var cachesDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .AllDomainsMask, true).first!
-                cachesDir = cachesDir.stringByAppendingString("/tmp.mp4")
-
-                let tmpUrl = NSURL.fileURLWithPath(cachesDir)
-
-                do {
-                    do {
-                        if try NSFileManager.defaultManager().attributesOfItemAtPath(cachesDir)[NSFileType] as? String == NSFileTypeSymbolicLink {
-                            try NSFileManager.defaultManager().removeItemAtURL(tmpUrl)
-                        }
-                    } catch let error as NSError {
-                        if error.domain != NSCocoaErrorDomain || error.code != 260 {
-                            return
-                        }
-                    }
-
-                    try NSFileManager.defaultManager().createSymbolicLinkAtURL(tmpUrl, withDestinationURL: url)
-                } catch {
-                    return
-                }
-
-                let player = AVPlayer(URL: tmpUrl)
-
-                let vc = AVPlayerViewController()
-                vc.player = player
-
-                self.presentViewController(vc, animated: true, completion: { 
-                    vc.player?.play()
-                })
-            }
-        }
+    func cachedAttachmentTapAction(attachment: Attachment) {
+//        if attachment.fileClassification == .Video {
+//            if let url = self.attachmentManager.fetchURLForLocalAttachment(attachment) {
+//                var cachesDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .AllDomainsMask, true).first!
+//                cachesDir = cachesDir.stringByAppendingString("/tmp.mp4")
+//
+//                let tmpUrl = NSURL.fileURLWithPath(cachesDir)
+//
+//                do {
+//                    do {
+//                        if try NSFileManager.defaultManager().attributesOfItemAtPath(cachesDir)[NSFileType] as? String == NSFileTypeSymbolicLink {
+//                            try NSFileManager.defaultManager().removeItemAtURL(tmpUrl)
+//                        }
+//                    } catch let error as NSError {
+//                        if error.domain != NSCocoaErrorDomain || error.code != 260 {
+//                            return
+//                        }
+//                    }
+//
+//                    try NSFileManager.defaultManager().createSymbolicLinkAtURL(tmpUrl, withDestinationURL: url)
+//                } catch {
+//                    return
+//                }
+//
+//                let player = AVPlayer(URL: tmpUrl)
+//
+//                let vc = AVPlayerViewController()
+//                vc.player = player
+//
+//                self.presentViewController(vc, animated: true, completion: { 
+//                    vc.player?.play()
+//                })
+//            }
+//        }
     }
 
     func pullToRefreshTriggered(sender: UIRefreshControl) {

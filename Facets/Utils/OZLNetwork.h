@@ -5,16 +5,6 @@
 //  Created by Lee Zhijie on 7/14/13.
 
 @import Foundation;
-#import "OZLModelProject.h"
-#import "OZLModelIssuePriority.h"
-#import "OZLModelIssueStatus.h"
-#import "OZLModelTracker.h"
-#import "OZLModelUser.h"
-#import "OZLModelTimeEntries.h"
-#import "OZLModelTimeEntryActivity.h"
-#import "OZLModelCustomField.h"
-#import "OZLModelVersion.h"
-#import "OZLModelMembership.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

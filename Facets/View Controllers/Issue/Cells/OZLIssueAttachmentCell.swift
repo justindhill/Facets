@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import CircleProgressView
 import SORelativeDateTransformer
+import Jiramazing
 
 class OZLIssueAttachmentCell: UITableViewCell {
     let attachmentTypeImageView = UIImageView()
@@ -137,14 +138,14 @@ class OZLIssueAttachmentCell: UITableViewCell {
         self.setNeedsLayout()
     }
 
-    func applyAttachmentModel(attachment: OZLModelAttachment) {
-        self.attachmentTitleLabel.text = attachment.name
-        self.userNameLabel.text = attachment.attacher.name
+    func applyAttachmentModel(attachment: Attachment) {
+        self.attachmentTitleLabel.text = attachment.fileName
+        self.userNameLabel.text = attachment.author?.name
 
         if let relativeDate = SORelativeDateTransformer.registeredTransformer().transformedValue(attachment.creationDate) as? String {
             self.timeLabel.text = relativeDate
         }
 
-        self.attachmentTypeImageView.image = UIImage(named: attachment.fileClassificationImageName)
+//        self.attachmentTypeImageView.image = UIImage(named: attachment.fileClassificationImageName)
     }
 }

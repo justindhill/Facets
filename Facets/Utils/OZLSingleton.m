@@ -76,10 +76,10 @@ NSString * const USER_DEFAULTS_PASSWORD = @"USER_DEFAULTS_PASSWORD";
     [userdefaults synchronize];
 }
 
-- (NSInteger)currentProjectID {
+- (NSString *)currentProjectID {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     
-    return [userdefaults integerForKey:USER_DEFAULTS_LAST_PROJECT_ID];
+    return [userdefaults stringForKey:USER_DEFAULTS_LAST_PROJECT_ID];
 }
 
 - (void)setCurrentProjectID:(NSInteger)projectid {

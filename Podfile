@@ -9,7 +9,6 @@ def all_pods
 	pod 'RaptureXML@Frankly'
 	pod 'ISO8601'
 	pod 'GTMNSStringHTMLAdditions'
-	pod 'Realm'
 	pod 'JVFloatLabeledTextField'
 	pod 'SORelativeDateTransformer'
 	pod 'JGProgressHUD'

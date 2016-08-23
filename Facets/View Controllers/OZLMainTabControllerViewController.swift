@@ -11,11 +11,9 @@ import UIKit
 class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewControllerDelegate, UITabBarControllerDelegate {
     
     let projectIssuesVC = OZLIssueListViewController(style: .Plain)
-    let queryListVC = OZLQueryListViewController(style: .Plain)
     let settingsVC = OZLAccountViewController(nibName: "OZLAccountViewController", bundle: nil)
     
     let projectSplitView = OZLMainTabControllerViewController.customizedSplitViewController()
-    let queryListSplitView = OZLMainTabControllerViewController.customizedSplitViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +34,6 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
         self.projectSplitView.masterNavigationController.viewControllers = [ self.projectIssuesVC ]
         self.projectSplitView.tabBarItem = UITabBarItem(title: "Issues", image: UIImage(named: "icon-list"), tag: 0)
         
-        self.queryListSplitView.masterNavigationController.viewControllers = [ self.queryListVC ]
-        self.queryListSplitView.tabBarItem = UITabBarItem(title:"Queries", image: UIImage(named: "icon-search"), tag:0)
-        
         let settingsNav = UINavigationController(rootViewController: self.settingsVC)
         settingsNav.navigationBar.translucent = false
         settingsNav.navigationBar.barTintColor = UIColor.whiteColor()
@@ -52,9 +47,9 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
         watchingNav.navigationBar.barTintColor = UIColor.whiteColor()
         watchingNav.tabBarItem = UITabBarItem(title: "Watching", image: UIImage(named: "icon-eye"), tag: 0)
         
-        self.viewControllers = [ self.projectSplitView, self.queryListSplitView, watchingNav, settingsNav ]
+        self.viewControllers = [ self.projectSplitView, watchingNav, settingsNav ]
         
-        if OZLSingleton.sharedInstance().isUserLoggedIn && OZLSingleton.sharedInstance().currentProjectID != NSNotFound {
+        if OZLSingleton.sharedInstance().isUserLoggedIn && OZLSingleton.sharedInstance().currentProjectID != nil {
             self.projectIssuesVC.viewModel.projectId = OZLSingleton.sharedInstance().currentProjectID
             self.selectedViewController = self.projectSplitView
         } else {

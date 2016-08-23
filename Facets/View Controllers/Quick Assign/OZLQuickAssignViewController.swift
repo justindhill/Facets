@@ -7,26 +7,27 @@
 //
 
 import UIKit
+import Jiramazing
 
 @objc protocol OZLQuickAssignDelegate {
-    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?)
+    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: Issue, from: User?, to: User?)
 }
 
 @objc class OZLQuickAssignViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     let CellReuseIdentifier = "reuseIdentifier"
-    var canonicalMemberships: RLMResults?
-    var filteredMemberships: RLMResults?
-    var issueModel: OZLModelIssue?
+    var canonicalMemberships: [User] = []
+    var filteredMemberships: [User] = []
+    var issueModel: Issue?
     weak var delegate: OZLQuickAssignDelegate?
     
-    convenience init(issueModel: OZLModelIssue) {
+    convenience init(issueModel: Issue) {
         self.init(nibName: nil, bundle: nil)
         self.issueModel = issueModel
         
         // Reset the change dictionary in case it has already been modified
-        self.issueModel?.modelDiffingEnabled = false
-        self.issueModel?.modelDiffingEnabled = true
+//        self.issueModel?.modelDiffingEnabled = false
+//        self.issueModel?.modelDiffingEnabled = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -59,12 +60,12 @@ import UIKit
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: UIKeyboardWillShowNotification, object: nil)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     
-            guard let issueModel = self.issueModel, projectId = issueModel.projectId else {
+            guard let issueModel = self.issueModel, projectId = issueModel.id else {
                 assertionFailure("Issue model wasn't set on OZLQuickAssignViewController before its view was loaded.");
                 return
             }
             
-            self.canonicalMemberships = OZLModelMembership.objectsWithPredicate(NSPredicate(format: "%K = %ld", "projectId", projectId))
+            self.canonicalMemberships = []
             self.filteredMemberships = self.canonicalMemberships
         }
     }
@@ -97,50 +98,45 @@ import UIKit
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let memberships = self.filteredMemberships {
-            return Int(memberships.count)
-        }
-        
-        return 0
+        return self.filteredMemberships.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseIdentifier, forIndexPath: indexPath)
-        if let membership = self.filteredMemberships?[UInt(indexPath.row)] as? OZLModelMembership {
-            cell.textLabel?.text = membership.user.name
-        }
-        
+
+        let user = self.filteredMemberships[indexPath.row]
+        cell.textLabel?.text = user.name
+
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let view = self.view as? OZLQuickAssignView, let issueModel = self.issueModel {
-            if let newAssignee = self.filteredMemberships?.objectAtIndex(UInt(indexPath.row)) as? OZLModelMembership {
-                let oldAssignee = issueModel.assignedTo
-                issueModel.assignedTo = newAssignee.user
-                view.showLoadingOverlay()
+            let newAssignee = self.filteredMemberships[indexPath.row]
+            let oldAssignee = issueModel.assignee
+            issueModel.assignee = newAssignee
+            view.showLoadingOverlay()
                 
-                weak var weakSelf = self
+            weak var weakSelf = self
 
                 // WARNING: Quick assign issue update
-//                OZLNetwork.sharedInstance().updateIssue(issueModel, withParams: nil, completion: { (success, error) -> Void in
-//                    view.hideLoadingOverlay()
+//            OZLNetwork.sharedInstance().updateIssue(issueModel, withParams: nil, completion: { (success, error) -> Void in
+//                view.hideLoadingOverlay()
+//                
+//                if let weakSelf = weakSelf where error == nil {
+//                    weakSelf.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+//                    weakSelf.delegate?.quickAssignController(weakSelf, didChangeAssigneeInIssue: issueModel, from: oldAssignee, to: newAssignee.user)
 //                    
-//                    if let weakSelf = weakSelf where error == nil {
-//                        weakSelf.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-//                        weakSelf.delegate?.quickAssignController(weakSelf, didChangeAssigneeInIssue: issueModel, from: oldAssignee, to: newAssignee.user)
-//                        
-//                    } else {
-//                        let alert = UIAlertController(title: "Error", message: "Couldn't set assignee.", preferredStyle: .Alert)
-//                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-//                            weakSelf?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-//                        }))
-//                        
-//                        weakSelf?.presentViewController(alert, animated: true, completion: nil)
-//                    }
-//                })
-            }
-            
+//                } else {
+//                    let alert = UIAlertController(title: "Error", message: "Couldn't set assignee.", preferredStyle: .Alert)
+//                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+//                        weakSelf?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+//                    }))
+//                    
+//                    weakSelf?.presentViewController(alert, animated: true, completion: nil)
+//                }
+//            })
+
         }
     }
     
@@ -150,7 +146,10 @@ import UIKit
         } else if let view = self.view as? OZLQuickAssignView,
             let resultString = (textField.text as NSString?)?.stringByReplacingCharactersInRange(range, withString: string) {
                 
-            self.filteredMemberships = self.canonicalMemberships?.objectsWithPredicate(NSPredicate(format: "%K CONTAINS[c] %@", "user.name", resultString))
+            self.filteredMemberships = self.canonicalMemberships.filter({ (user) -> Bool in
+                return user.name?.containsString(resultString) ?? false
+            })
+
             view.tableView.reloadData()
         }
         

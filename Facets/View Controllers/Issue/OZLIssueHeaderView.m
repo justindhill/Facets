@@ -89,12 +89,12 @@ const CGFloat assigneeTextSize = 14.;
 }
 
 #pragma mark - Modeling
-- (void)applyIssueModel:(OZLModelIssue *)issue {
-    self.titleLabel.attributedText = [self applyTitleAttributesToText:issue.subject];
+- (void)applyIssueModel:(JRAIssue *)issue {
+    self.titleLabel.attributedText = [self applyTitleAttributesToText:issue.summary];
     
-    if (issue.assignedTo) {
+    if (issue.assignee) {
         self.assigneeDisplayNameLabel.font = [UIFont systemFontOfSize:assigneeTextSize];
-        self.assigneeDisplayNameLabel.text = issue.assignedTo.name;
+        self.assigneeDisplayNameLabel.text = issue.assignee.name;
         self.assigneeDisplayNameLabel.textColor = [UIColor blackColor];
         
     } else {

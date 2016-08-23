@@ -8,7 +8,6 @@
 #import "OZLSingleton.h"
 #import "OZLConstants.h"
 #import "OZLNetwork.h"
-#import "OZLModelProject.h"
 
 #import <Helpshift/HelpshiftSupport.h>
 
