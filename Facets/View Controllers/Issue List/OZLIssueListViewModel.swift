@@ -18,9 +18,9 @@ import Jiramazing
     var queryId = 0
     
     weak var delegate: OZLIssueListViewModelDelegate?
-    var projectId: String? = nil {
+    var project: Project? = OZLSingleton.sharedInstance().serverInfo.currentProject {
         willSet(newValue) {
-            if newValue != self.projectId {
+            if newValue != self.project {
                 self.issues = []
             }
         }
@@ -33,7 +33,7 @@ import Jiramazing
                 return explicitTitle
             }
 
-            return ""
+            return self.project?.name ?? ""
         }
         
         set(newValue) {
@@ -41,7 +41,7 @@ import Jiramazing
         }
     }
     
-    let projects = [Project]()
+    var projects = OZLSingleton.sharedInstance().serverInfo.projects
     var issues = [Issue]()
 
     var shouldShowProjectSelector = false
@@ -49,6 +49,12 @@ import Jiramazing
     
     var moreIssuesAvailable: Bool = false
     var isLoading: Bool = false
+
+    override init() {
+        super.init()
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(serverInfoDidChange(_:)), name: OZLServerSyncDidEndNotification, object: nil)
+    }
     
     func loadIssuesCompletion(completion: (error: NSError?) -> Void) {
         if self.isLoading {
@@ -59,7 +65,7 @@ import Jiramazing
         
         self.isLoading = true
 
-        Jiramazing.instance.searchIssuesWithJQLString("project = MAPP") { (issues, total, error) in
+        Jiramazing.instance.searchIssuesWithJQLString("project = \(self.project?.key ?? "")", maxResults: 25) { (issues, total, error) in
 
             weakSelf?.isLoading = false
             
@@ -80,12 +86,12 @@ import Jiramazing
         if self.isLoading {
             return
         }
-        
+
         weak var weakSelf = self
         
         self.isLoading = true
-        
-        Jiramazing.instance.searchIssuesWithJQLString("project = MAPP", offset: self.issues.count) { (issues, total, error) in
+
+        Jiramazing.instance.searchIssuesWithJQLString("project = \(project?.key ?? "")", offset: self.issues.count, maxResults: 25) { (issues, total, error) in
             weakSelf?.isLoading = false
             
             if let error = error {
@@ -116,5 +122,9 @@ import Jiramazing
     
     func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: Issue, from: User?, to: User?) {
         self.processUpdatedIssue(issue)
+    }
+
+    func serverInfoDidChange(notification: NSNotification) {
+        self.projects = OZLSingleton.sharedInstance().serverInfo.projects
     }
 }

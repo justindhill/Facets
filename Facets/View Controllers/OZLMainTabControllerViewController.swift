@@ -50,7 +50,6 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
         self.viewControllers = [ self.projectSplitView, watchingNav, settingsNav ]
         
         if OZLSingleton.sharedInstance().isUserLoggedIn && OZLSingleton.sharedInstance().currentProjectID != nil {
-            self.projectIssuesVC.viewModel.projectId = OZLSingleton.sharedInstance().currentProjectID
             self.selectedViewController = self.projectSplitView
         } else {
             self.selectedViewController = self.settingsVC.navigationController

@@ -8,6 +8,7 @@
 #import "OZLSingleton.h"
 #import "OZLConstants.h"
 #import "OZLNetwork.h"
+#import "OZLServerInfo.h"
 
 #import <Helpshift/HelpshiftSupport.h>
 
@@ -103,7 +104,7 @@
 - (void)startSync {
     __weak OZLAccountViewController *weakSelf = self;
     
-    [[OZLSingleton sharedInstance].serverSync startSyncCompletion:^(NSError *error) {
+    [[OZLSingleton sharedInstance].serverInfo startSyncCompletion:^(NSError *error) {
         [weakSelf.delegate accountViewControllerDidSuccessfullyAuthenticate:weakSelf shouldTransitionToIssues:weakSelf.isFirstLogin];
         weakSelf.isFirstLogin = NO;
         [weakSelf.hud dismissAnimated:YES];

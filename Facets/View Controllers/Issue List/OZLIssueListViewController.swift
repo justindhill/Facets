@@ -51,8 +51,6 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.viewModel?.projectId = OZLSingleton.sharedInstance().currentProjectID
-
         if self.viewModel.shouldShowProjectSelector && self.isFirstAppearance {
             let titleButton = OZLDownChevronTitleView()
             titleButton.title = self.viewModel.title
@@ -271,7 +269,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         if let project = item as? Project {
             self.showFooterActivityIndicator()
             OZLSingleton.sharedInstance().currentProjectID = project.id
-            viewModel.projectId = project.id
+            viewModel.project = project
 
             if let titleButton = self.navigationItem.titleView as? OZLDownChevronTitleView {
                 titleButton.title = project.name
@@ -294,7 +292,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             let project = self.viewModel.projects[i]
             projects.append(project)
 
-            if project.id == self.viewModel.projectId {
+            if project.id == self.viewModel.project?.id {
                 currentProject = project
             }
         }

@@ -5,8 +5,8 @@
 //  Created by Lee Zhijie on 7/15/13.
 
 @import Foundation;
-#import "OZLServerSync.h"
 
+@class OZLServerInfo;
 @class OZLAttachmentManager;
 @class JRAProject;
 
@@ -14,8 +14,7 @@
 
 + (OZLSingleton *)sharedInstance;
 
-@property (strong) NSArray<JRAProject *> *projects;
-@property (readonly) OZLServerSync *serverSync;
+@property (readonly) OZLServerInfo *serverInfo;
 
 //network
 #warning Wowwww... move this sensitive information to the keychain.

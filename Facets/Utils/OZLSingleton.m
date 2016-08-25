@@ -7,13 +7,14 @@
 #import "OZLSingleton.h"
 #import "OZLConstants.h"
 #import "OZLNetwork.h"
+#import "OZLServerInfo.h"
 #import "Facets-Swift.h"
 
 @import Jiramazing;
 
 @interface OZLSingleton ()
 
-@property (strong) OZLServerSync *serverSync;
+@property (strong) OZLServerInfo *serverInfo;
 @property (strong) OZLAttachmentManager *attachmentManager;
 
 @end
@@ -38,9 +39,8 @@ NSString * const USER_DEFAULTS_PASSWORD = @"USER_DEFAULTS_PASSWORD";
 
 - (instancetype)init {
     if (self = [super init]) {
-        
-        self.serverSync = [[OZLServerSync alloc] init];
-        self.attachmentManager = [[OZLAttachmentManager alloc] initWithNetworkManager:[OZLNetwork sharedInstance]];
+
+        NSString *storagePath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSAllDomainsMask, YES).firstObject;
         
         NSDictionary *dic = @{
             USER_DEFAULTS_BASE_URL:   @"https://worldnow.atlassian.net",
@@ -54,6 +54,9 @@ NSString * const USER_DEFAULTS_PASSWORD = @"USER_DEFAULTS_PASSWORD";
         [Jiramazing sharedInstance].baseUrl = [NSURL URLWithString:self.baseUrl];
         [Jiramazing sharedInstance].username = self.username;
         [Jiramazing sharedInstance].password = self.password;
+
+        self.serverInfo = [[OZLServerInfo alloc] initWithStoragePath:storagePath];
+        self.attachmentManager = [[OZLAttachmentManager alloc] initWithNetworkManager:[OZLNetwork sharedInstance]];
     }
     
     return self;
@@ -82,10 +85,10 @@ NSString * const USER_DEFAULTS_PASSWORD = @"USER_DEFAULTS_PASSWORD";
     return [userdefaults stringForKey:USER_DEFAULTS_LAST_PROJECT_ID];
 }
 
-- (void)setCurrentProjectID:(NSInteger)projectid {
+- (void)setCurrentProjectID:(NSString *)projectid {
     NSUserDefaults *userdefaults = [NSUserDefaults standardUserDefaults];
     
-    [userdefaults setInteger:projectid forKey:USER_DEFAULTS_LAST_PROJECT_ID];
+    [userdefaults setObject:projectid forKey:USER_DEFAULTS_LAST_PROJECT_ID];
     [userdefaults synchronize];
 }
 
