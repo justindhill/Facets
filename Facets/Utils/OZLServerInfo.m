@@ -95,6 +95,7 @@ NSString * const OZLServerInfoCurrentServerHostUserDefaultsKey = @"com.facetsapp
         [NSKeyedArchiver archiveRootObject:projects toFile:projectsPath];
 
         completion(nil);
+        [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidEndNotification object:nil];
     }];
 }
 

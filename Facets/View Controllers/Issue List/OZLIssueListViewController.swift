@@ -354,6 +354,10 @@ extension Project: OZLListSelectorItem {
         return self.name ?? ""
     }
 
+    var imageUrl: NSURL? {
+        return self.avatarUrls?[.Large]
+    }
+
     var comparator: String {
         return self.id ?? ""
     }

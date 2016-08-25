@@ -11,6 +11,7 @@ import UIKit
 protocol OZLListSelectorItem {
     var title: String { get }
     var comparator: String { get }
+    var imageUrl: NSURL? { get }
 }
 
 protocol OZLListSelectorDelegate: AnyObject {
@@ -25,6 +26,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
     private(set) var items: [OZLListSelectorItem] = []
     private(set) var selectedItem: OZLListSelectorItem?
     private var transitionAnimator: OZLDropdownTransitionAnimator?
+    private var selectedItemIndex: Int = NSNotFound
 
     private let ReuseIdentifier = "ReuseIdentifier"
 
@@ -33,6 +35,10 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         self.items = items
         self.selectedItem = selectedItem
         super.init(style: .Plain)
+
+        self.selectedItemIndex = items.indexOf { (item) -> Bool in
+            item.comparator == self.selectedItem?.comparator
+        } ?? NSNotFound
 
         self.modalPresentationStyle = .Custom
         self.transitioningDelegate = self
@@ -46,7 +52,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         super.viewDidLoad()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ReuseIdentifier)
         self.tableView.rowHeight = 50.0
-        self.tableView.scrollEnabled = false
+        self.tableView.alwaysBounceVertical = false
         self.tableView.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
         self.view.backgroundColor = UIColor.clearColor()
         self.tableView.backgroundColor = UIColor.clearColor()
@@ -58,7 +64,18 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         super.viewWillAppear(animated)
 
         self.tableView.reloadData()
-        self.preferredContentSize = CGSizeMake(self.view.frame.size.width, self.tableView.contentSize.height)
+
+        let maxRows = Int(self.view.frame.size.height * (2/3)) / Int(self.tableView.rowHeight)
+        let contentHeight = min(self.tableView.contentSize.height, CGFloat(maxRows) * self.tableView.rowHeight)
+        self.preferredContentSize = CGSizeMake(self.view.frame.size.width, contentHeight)
+
+        // viewWillLayoutSubviews will pick up the height change during the normal layout pass, but the height needs
+        // to be adjusted immediately so the scroll offset is correct here.
+        self.tableView.frame.size.height = contentHeight
+
+        if self.selectedItemIndex != NSNotFound {
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.selectedItemIndex, inSection: 0), atScrollPosition: .Middle, animated: false)
+        }
     }
 
     // MARK: UITableViewDelegate/DataSource
@@ -70,10 +87,18 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         cell.textLabel?.textColor = UIColor.darkGrayColor()
         cell.backgroundColor = UIColor.clearColor()
         cell.layoutMargins = UIEdgeInsets(top: 0, left: self.layoutMargin, bottom: 0, right: self.layoutMargin)
+        cell.imageView?.layer.masksToBounds = true
+        cell.imageView?.layer.cornerRadius = 25
 
         let selectedBgView = UIView()
         selectedBgView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.05)
         cell.selectedBackgroundView = selectedBgView
+
+        if let imageUrl = item.imageUrl {
+            cell.imageView?.sd_setImageWithURL(imageUrl, placeholderImage: UIImage(), options: [])
+        } else {
+            cell.imageView?.image = nil
+        }
 
         if item.comparator == self.selectedItem?.comparator {
             cell.accessoryType = .Checkmark
