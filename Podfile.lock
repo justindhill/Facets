@@ -1,15 +1,14 @@
 PODS:
-  - 1PasswordExtension (1.8.3)
+  - 1PasswordExtension (1.8.4)
   - CircleProgressView (1.0.11)
   - DFCache (4.0.1)
-  - DRPLoadingSpinner (0.1.0)
-  - DRPSlidingTabView (0.2.2)
+  - DRPLoadingSpinner (1.0.1)
   - GTMNSStringHTMLAdditions (0.2.1)
-  - Helpshift (5.6.2)
+  - Helpshift (5.8.0)
   - HexColors (4.0.0)
-  - HockeySDK (4.0.2):
-    - HockeySDK/AllFeaturesLib (= 4.0.2)
-  - HockeySDK/AllFeaturesLib (4.0.2)
+  - HockeySDK (4.1.2):
+    - HockeySDK/DefaultLib (= 4.1.2)
+  - HockeySDK/DefaultLib (4.1.2)
   - ISO8601 (0.6.0)
   - JGProgressHUD (1.4)
   - Jiramazing (0.0.1):
@@ -17,20 +16,19 @@ PODS:
     - ISO8601
   - JVFloatLabeledTextField (1.1.1)
   - RaptureXML@Frankly (1.0.4)
-  - Reveal-iOS-SDK (1.6.2)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
+  - Reveal-SDK (2)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - SnapKit (0.22.0)
   - SORelativeDateTransformer (1.1.10)
   - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
   - 1PasswordExtension
-  - CircleProgressView
+  - CircleProgressView (= 1.0.11)
   - DFCache
   - DRPLoadingSpinner
-  - DRPSlidingTabView
   - GTMNSStringHTMLAdditions
   - Helpshift
   - HockeySDK
@@ -39,9 +37,9 @@ DEPENDENCIES:
   - Jiramazing (from `Dependencies/Jiramazing/Jiramazing.podspec`)
   - JVFloatLabeledTextField
   - RaptureXML@Frankly
-  - Reveal-iOS-SDK
+  - Reveal-SDK
   - SDWebImage
-  - SnapKit
+  - SnapKit (= 0.22.0)
   - SORelativeDateTransformer
   - TTTAttributedLabel
 
@@ -50,26 +48,25 @@ EXTERNAL SOURCES:
     :path: Dependencies/Jiramazing/Jiramazing.podspec
 
 SPEC CHECKSUMS:
-  1PasswordExtension: 8757dc3302353731dd3e678e63b5023a708783cb
+  1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
   CircleProgressView: 3e7e26454ad9a93e310fe9cd612af6d779deb0c1
   DFCache: db3bc28ceaa6f8838b1183607cb37924e488f070
-  DRPLoadingSpinner: 47cb1c2e47ae2617c87c8340075a24d94a48d879
-  DRPSlidingTabView: b8a48b3d7a4848feaf755673344ce9cd3c622681
+  DRPLoadingSpinner: df4aefbd5d9572cef9e32a9d270c65b13936ff47
   GTMNSStringHTMLAdditions: 4bfc402b1b17165360728083156cae0a74ecb308
-  Helpshift: aadcbbe47f67deb96552503333774b29bdda19d5
+  Helpshift: 0fec6a13c2f30ce9a40e14b74f0aca0d6263f66b
   HexColors: 5f95843ef89aff6a72e1fd3a8ebabf205cc43379
-  HockeySDK: ebaabf41808b4e4ea85b4d5266d425aef0d19c88
+  HockeySDK: c7523379550a4305cefc1cdfa7b5f9a5a3538180
   ISO8601: d3ea3ba9b752820cf92c6b47a9ee327e9f0e13fc
   JGProgressHUD: 1617b0940cf80bb53e8f7d6f0fd69252ea45d6d4
   Jiramazing: 1e71689cbdee8692bae017eda2d812e3a7146c88
   JVFloatLabeledTextField: 0e5524b097f102036214dd8279edc8ecf08b5e18
   RaptureXML@Frankly: 585df7d229c6a6a3f5a202d7664c2dd0aba9ef38
-  Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  Reveal-SDK: 4d36a47c7091843eee525b72219e005b90bbac0b
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 26262ee2baf80a6d23f4dcb07382af31912b1454
+PODFILE CHECKSUM: b017b662b806f6c9f2b583584683ca3ed8df7acb
 
 COCOAPODS: 1.1.1

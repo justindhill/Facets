@@ -134,7 +134,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
     func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController?, sourceViewController source: UIViewController) -> UIPresentationController? {
         if let nav = source.navigationController {
             return OZLDropdownPresentationController(presentedViewController: presented,
-                                                     presentingViewController: presenting!,
+                                                     presentingViewController: presenting,
                                                      navigationController: nav)
         }
 

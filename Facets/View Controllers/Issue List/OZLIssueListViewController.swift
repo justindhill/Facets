@@ -8,6 +8,7 @@
 
 import UIKit
 import Jiramazing
+import DRPLoadingSpinner
 
 class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLNavigationChildChangeListener, OZLListSelectorDelegate {
     
@@ -18,6 +19,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     
     private var isFirstAppearance = true
     private var composeButton: UIButton?
+    private let refreshControl = DRPRefreshControl.facetsBranded()
     
     var viewModel: OZLIssueListViewModel! {
         willSet(newValue) {
@@ -44,8 +46,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         self.tableView.registerNib(UINib(nibName: "OZLIssueTableViewCell", bundle: NSBundle.mainBundle()),
                                    forCellReuseIdentifier: IssueCellReuseIdentifier)
 
-        self.tableViewController.refreshControl = UIRefreshControl()
-        self.tableViewController.refreshControl?.addTarget(self, action: #selector(reloadProjectData), forControlEvents: .ValueChanged)
+        self.refreshControl.addToTableViewController(self.tableViewController, target: self, selector: #selector(reloadProjectData))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -251,14 +252,11 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         
         if self.viewModel.moreIssuesAvailable && distanceFromBottom <= 44.0 &&
             self.tableView.contentSize.height > self.tableView.frame.size.height {
-                
+                self.showFooterActivityIndicator()
                 self.viewModel.loadMoreIssuesCompletion({ (error) -> Void in
                     if let weakSelf = weakSelf {
                         weakSelf.tableView.reloadData()
-                        
-                        if (!weakSelf.viewModel.moreIssuesAvailable) {
-                            weakSelf.hideFooterActivityIndicator()
-                        }
+                        weakSelf.hideFooterActivityIndicator()
                     }
                 })
         }
@@ -308,7 +306,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         
         self.viewModel.loadIssuesCompletion({ (error) -> Void in
 
-            if let refreshControl = weakSelf?.tableViewController.refreshControl where refreshControl.refreshing {
+            if let refreshControl = weakSelf?.refreshControl {
                 refreshControl.endRefreshing()
             }
 

@@ -2,9 +2,8 @@ def all_pods
 	use_frameworks!
 
 	pod 'HockeySDK'
-	pod 'DRPSlidingTabView'
 	pod 'DRPLoadingSpinner'
-	pod 'CircleProgressView'
+	pod 'CircleProgressView', '1.0.11'
 	pod 'TTTAttributedLabel'
 	pod 'RaptureXML@Frankly'
 	pod 'ISO8601'
@@ -13,13 +12,13 @@ def all_pods
 	pod 'SORelativeDateTransformer'
 	pod 'JGProgressHUD'
 	pod '1PasswordExtension'
-	pod 'SnapKit'
+	pod 'SnapKit', '0.22.0'
 	pod 'DFCache'
 	pod 'Helpshift'
 	pod 'Jiramazing', :path => "Dependencies/Jiramazing/Jiramazing.podspec"
 	pod 'SDWebImage'
 
-	pod 'Reveal-iOS-SDK', :configuration => ['Debug']
+	pod 'Reveal-SDK', :configuration => ['Debug']
 end
 
 target 'Facets' do

@@ -10,6 +10,7 @@ import Foundation
 import AVFoundation
 import AVKit
 import Jiramazing
+import DRPLoadingSpinner
 
 class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate, UIViewControllerTransitioningDelegate {
 
@@ -18,6 +19,8 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     private let DescriptionReuseIdentifier = "DescriptionReuseIdentifier"
     private let RecentActivityReuseIdentifier = "RecentActivityReuseIdentifier"
 
+    private let refreshControl = DRPRefreshControl.facetsBranded()
+    
     let ShowAllDetailsString = "Show all"
     let HideUnpinnedDetailsString = "Hide unpinned details"
 
@@ -57,8 +60,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(editButtonAction(_:)))
         self.tableView.separatorStyle = .None
 
-        self.tableViewController.refreshControl = UIRefreshControl()
-        self.tableViewController.refreshControl?.addTarget(self, action: #selector(pullToRefreshTriggered(_:)), forControlEvents: .ValueChanged)
+        self.refreshControl.addToTableViewController(self.tableViewController, target: self, selector: #selector(pullToRefreshTriggered(_:)))
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -399,16 +401,13 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 //        }
     }
 
-    func pullToRefreshTriggered(sender: UIRefreshControl) {
+    func pullToRefreshTriggered(sender: DRPRefreshControl) {
         self.viewModel.loadIssueData()
     }
 
     // MARK: - View model delegate
     func viewModel(viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?) {
-        if (self.tableViewController.refreshControl?.refreshing ?? false) {
-            self.tableViewController.refreshControl?.endRefreshing()
-        }
-
+        self.refreshControl.endRefreshing()
         self.applyViewModel(viewModel)
     }
 

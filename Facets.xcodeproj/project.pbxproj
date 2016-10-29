@@ -18,6 +18,7 @@
 		D000B1E01BF96EC600CA2845 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D000B1DF1BF96EC600CA2845 /* WebKit.framework */; };
 		D002F6751D6A93FF00C9F89F /* OZLProjectInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D002F6741D6A93FF00C9F89F /* OZLProjectInfoManager.swift */; };
 		D0052BC71D0A51A90059B2E1 /* OZLThirdPartyIntegrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0052BC61D0A51A90059B2E1 /* OZLThirdPartyIntegrations.swift */; };
+		D00690A31DC5097F004E46D7 /* DRPRefreshControl+FacetsBranding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00690A21DC5097F004E46D7 /* DRPRefreshControl+FacetsBranding.swift */; };
 		D00793961CC87F100050FF48 /* OZLDateFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00793951CC87F100050FF48 /* OZLDateFormField.swift */; };
 		D00793981CC8A8310050FF48 /* SORelativeDateTransformer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */; };
 		D00793A01CC9AA290050FF48 /* (null) in Resources */ = {isa = PBXBuildFile; };
@@ -98,6 +99,7 @@
 		D000B1DF1BF96EC600CA2845 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		D002F6741D6A93FF00C9F89F /* OZLProjectInfoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLProjectInfoManager.swift; sourceTree = "<group>"; };
 		D0052BC61D0A51A90059B2E1 /* OZLThirdPartyIntegrations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLThirdPartyIntegrations.swift; sourceTree = "<group>"; };
+		D00690A21DC5097F004E46D7 /* DRPRefreshControl+FacetsBranding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DRPRefreshControl+FacetsBranding.swift"; sourceTree = "<group>"; };
 		D00793951CC87F100050FF48 /* OZLDateFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLDateFormField.swift; sourceTree = "<group>"; };
 		D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SORelativeDateTransformer.bundle; sourceTree = "<group>"; };
 		D007AF8F1CDD9E6F00CE48C4 /* OZLIssueViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueViewModel.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */,
 				D0F2F1AC1CE7D4170055E21C /* OZLAttachmentManager.swift */,
 				D0AF78DB1CF217C400F1A46C /* DFCache+CacheChecking.swift */,
+				D00690A21DC5097F004E46D7 /* DRPRefreshControl+FacetsBranding.swift */,
 			);
 			name = Categories;
 			path = Utils/Categories;
@@ -685,6 +688,7 @@
 				D022D6E11C9B49930035ABF5 /* OZLButtonFormField.swift in Sources */,
 				D01F9BE31BEC8BDD005B2ED0 /* UIView+OZLExtensions.m in Sources */,
 				D0C9F0531C30742400976B06 /* OZLSplitViewPlaceholderPane.swift in Sources */,
+				D00690A31DC5097F004E46D7 /* DRPRefreshControl+FacetsBranding.swift in Sources */,
 				D00EA2461CF961830090B401 /* OZLListSelectorViewController.swift in Sources */,
 				D096EF221C98EE3800563610 /* OZLTextViewFormField.swift in Sources */,
 				D0F10F431C371FD300A0AE94 /* OZLIssueListViewModel.swift in Sources */,
