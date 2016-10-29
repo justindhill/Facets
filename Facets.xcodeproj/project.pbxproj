@@ -530,7 +530,7 @@
 				ORGANIZATIONNAME = "Justin Hill";
 				TargetAttributes = {
 					D5DB80551792F2BF0081662A = {
-						DevelopmentTeam = 5K3CGZPRYC;
+						DevelopmentTeam = AJ5Q7E6DM4;
 						LastSwiftMigration = 0810;
 					};
 				};
@@ -762,6 +762,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = AJ5Q7E6DM4;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -771,7 +772,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
-				PROVISIONING_PROFILE = "d998376d-8fe7-42be-878c-a9e880c1fbd5";
+				PROVISIONING_PROFILE_SPECIFIER = "Facets AdHoc";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -877,6 +878,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = AJ5Q7E6DM4;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
@@ -885,7 +887,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
-				PROVISIONING_PROFILE = "8dccb32b-97de-4411-a2f4-ad210727eb6c";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
@@ -906,6 +907,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = AJ5Q7E6DM4;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -915,7 +917,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
-				PROVISIONING_PROFILE = "d998376d-8fe7-42be-878c-a9e880c1fbd5";
+				PROVISIONING_PROFILE_SPECIFIER = "Facets AdHoc";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
