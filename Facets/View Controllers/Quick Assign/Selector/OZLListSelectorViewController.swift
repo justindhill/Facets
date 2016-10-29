@@ -95,7 +95,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         cell.selectedBackgroundView = selectedBgView
 
         if let imageUrl = item.imageUrl {
-            cell.imageView?.sd_setImageWithURL(imageUrl, placeholderImage: UIImage(), options: [])
+            cell.imageView?.sd_setImageWithURL(imageUrl, placeholderImage: UIImage(named: "placeholder"), options: [])
         } else {
             cell.imageView?.image = nil
         }

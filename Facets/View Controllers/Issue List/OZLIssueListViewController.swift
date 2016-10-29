@@ -230,12 +230,12 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // WARNING: issue selection
-//        let issueModel = self.viewModel.issues[indexPath.row]
-//        let viewModel = OZLIssueViewModel(issueModel: issueModel)
-//
-//        let issueVC = OZLIssueViewController(viewModel: viewModel)
-//
-//        self.splitViewController?.showViewController(issueVC, sender: self)
+        let issueModel = self.viewModel.issues[indexPath.row]
+        let viewModel = OZLIssueViewModel(issueModel: issueModel)
+
+        let issueVC = OZLIssueViewController(viewModel: viewModel)
+
+        self.splitViewController?.showViewController(issueVC, sender: self)
     }
     
     // MARK - UIScrollViewDelegate

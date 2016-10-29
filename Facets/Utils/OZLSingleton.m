@@ -11,6 +11,7 @@
 #import "Facets-Swift.h"
 
 @import Jiramazing;
+@import SDWebImage;
 
 @interface OZLSingleton ()
 
@@ -54,6 +55,8 @@ NSString * const USER_DEFAULTS_PASSWORD = @"USER_DEFAULTS_PASSWORD";
         [Jiramazing sharedInstance].baseUrl = [NSURL URLWithString:self.baseUrl];
         [Jiramazing sharedInstance].username = self.username;
         [Jiramazing sharedInstance].password = self.password;
+        
+        [[SDWebImageDownloader sharedDownloader] setValue:[NSString jiramazing_basicAuthEncodedString:self.username password:self.password] forHTTPHeaderField:@"Authorization"];
 
         self.serverInfo = [[OZLServerInfo alloc] initWithStoragePath:storagePath];
         self.attachmentManager = [[OZLAttachmentManager alloc] initWithNetworkManager:[OZLNetwork sharedInstance]];

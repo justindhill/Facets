@@ -31,7 +31,7 @@ class OZLAppDelegate: UIResponder, UIApplicationDelegate {
 
         OZLNetwork.sharedInstance()
         OZLSingleton.sharedInstance()
-
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.tintColor = UIColor.facetsBrandColor()
         self.window?.backgroundColor = UIColor.whiteColor()
@@ -39,8 +39,6 @@ class OZLAppDelegate: UIResponder, UIApplicationDelegate {
         let vc = OZLMainTabControllerViewController()
         self.window?.rootViewController = vc
         self.window?.makeKeyAndVisible()
-
-        SDWebImageDownloader.sharedDownloader().setValue("Basic anVzdGluOlZlWlFZcSR0VVFBeGtVbnpoZnpzTmhyOFY=", forHTTPHeaderField: "Authorization")
 
         return true
     }

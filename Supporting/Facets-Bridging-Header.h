@@ -15,7 +15,6 @@
 #import "UIColor+OZLExtensions.h"
 #import "UIImage+OZLExtensions.h"
 
-#import "OZLIssueHeaderView.h"
 #import "OZLIssueDescriptionCell.h"
 #import "OZLIssueFullDescriptionViewController.h"
 

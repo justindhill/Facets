@@ -15,6 +15,7 @@
 @import JGProgressHUD;
 @import OnePasswordExtension;
 @import Jiramazing;
+@import SDWebImage;
 
 @interface OZLAccountViewController ()
 
@@ -67,6 +68,7 @@
             [[OZLSingleton sharedInstance] setBaseUrl:self.redmineHomeURL.text];
             [[OZLSingleton sharedInstance] setUsername:self.username.text];
             [[OZLSingleton sharedInstance] setPassword:self.password.text];
+            [[SDWebImageDownloader sharedDownloader] setValue:[NSString jiramazing_basicAuthEncodedString:self.username.text password:self.password.text] forHTTPHeaderField:@"Authorization"];
 
             [weakSelf startSync];
         } else {
