@@ -9,6 +9,7 @@
 import Foundation
 import AVFoundation
 import AVKit
+import DRPLoadingSpinner
 
 class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate, UIViewControllerTransitioningDelegate {
 
@@ -17,6 +18,8 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     fileprivate let DescriptionReuseIdentifier = "DescriptionReuseIdentifier"
     fileprivate let RecentActivityReuseIdentifier = "RecentActivityReuseIdentifier"
 
+    private let refreshControl = DRPRefreshControl.facetsBranded()
+    
     let ShowAllDetailsString = "Show all"
     let HideUnpinnedDetailsString = "Hide unpinned details"
 
@@ -57,8 +60,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonAction(_:)))
         self.tableView.separatorStyle = .none
 
-        self.tableViewController.refreshControl = UIRefreshControl()
-        self.tableViewController.refreshControl?.addTarget(self, action: #selector(pullToRefreshTriggered(_:)), for: .valueChanged)
+        self.refreshControl.add(to: self.tableViewController, target: self, selector: #selector(pullToRefreshTriggered(_:)))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -409,16 +411,13 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         }
     }
 
-    func pullToRefreshTriggered(_ sender: UIRefreshControl) {
+    func pullToRefreshTriggered(_ sender: DRPRefreshControl) {
         self.viewModel.loadIssueData()
     }
 
     // MARK: - View model delegate
     func viewModel(_ viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?) {
-        if (self.tableViewController.refreshControl?.isRefreshing ?? false) {
-            self.tableViewController.refreshControl?.endRefreshing()
-        }
-
+        self.refreshControl.endRefreshing()
         self.applyViewModel(viewModel)
     }
 

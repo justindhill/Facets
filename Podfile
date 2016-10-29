@@ -2,7 +2,6 @@ def all_pods
 	use_frameworks!
 
 	pod 'HockeySDK'
-	pod 'DRPSlidingTabView'
 	pod 'DRPLoadingSpinner'
 	pod 'CircleProgressView'
 	pod 'TTTAttributedLabel'

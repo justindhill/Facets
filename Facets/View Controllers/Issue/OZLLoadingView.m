@@ -38,12 +38,9 @@
 - (void)setup {
     self.backgroundColor = [UIColor whiteColor];
 
-    self.loadingSpinner = [[DRPLoadingSpinner alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
+    self.loadingSpinner = [[DRPLoadingSpinner alloc] init];
     self.loadingSpinner.colorSequence = @[ [UIColor lightGrayColor] ];
-    self.loadingSpinner.minimumArcLength = (M_PI / 3.);
-    self.loadingSpinner.lineWidth = 1.;
-    self.loadingSpinner.drawCycleDuration = .75;
-    self.loadingSpinner.rotationCycleDuration = 1.5;
+    self.loadingSpinner.lineWidth = 2.;
 
     self.errorMessageLabel = [[UILabel alloc] init];
     self.errorMessageLabel.textColor = [UIColor lightGrayColor];

@@ -19,7 +19,7 @@ class OZLDropdownPresentationController: UIPresentationController, UIGestureReco
         return navBar.frame.origin.y + navBar.frame.size.height + (1 / self.traitCollection.displayScale)
     }
 
-    init(presentedViewController: UIViewController, presentingViewController: UIViewController, navigationController: UINavigationController) {
+    init(presentedViewController: UIViewController, presentingViewController: UIViewController?, navigationController: UINavigationController) {
         self.navigationController = navigationController
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
