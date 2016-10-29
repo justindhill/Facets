@@ -40,7 +40,7 @@ class OZLDropdownTransitionAnimator: NSObject, UIViewControllerAnimatedTransitio
         toViewController.view.clipsToBounds = true
         let expandedFrame = transitionContext.finalFrameForViewController(toViewController)
         if self.presenting {
-            transitionContext.containerView()?.addSubview(toViewController.view)
+            transitionContext.containerView().addSubview(toViewController.view)
             toViewController.view.frame = expandedFrame
             toViewController.view.bounds.origin = CGPointMake(0, expandedFrame.size.height)
         }

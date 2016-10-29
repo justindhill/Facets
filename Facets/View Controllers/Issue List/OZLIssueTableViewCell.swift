@@ -208,18 +208,18 @@ class OZLIssueTableViewCell: UITableViewCell {
 
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSizeMake(cornerRadius, cornerRadius)).CGPath
         color.setFill()
-        CGContextAddPath(ctx, path)
-        CGContextFillPath(ctx)
+        CGContextAddPath(ctx!, path)
+        CGContextFillPath(ctx!)
 
         var image = UIGraphicsGetImageFromCurrentImageContext()
 
         if side == .Left {
-            image = image.resizableImageWithCapInsets(UIEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, 1))
+            image = image!.resizableImageWithCapInsets(UIEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, 1))
         } else {
-            image = image.resizableImageWithCapInsets(UIEdgeInsetsMake(cornerRadius, 1, cornerRadius, cornerRadius))
+            image = image!.resizableImageWithCapInsets(UIEdgeInsetsMake(cornerRadius, 1, cornerRadius, cornerRadius))
         }
 
-        return image
+        return image!
     }
 
     override func prepareForReuse() {

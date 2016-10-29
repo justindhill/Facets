@@ -81,7 +81,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     }
 
     func quickAssignAction(sender: UIControl) {
-        let vc = OZLQuickAssignViewController(issueModel: self.viewModel.issueModel)
+        let vc = OZLQuickAssignViewController(issue: self.viewModel.issueModel)
 
         if self.traitCollection.userInterfaceIdiom == .Pad {
             vc.modalPresentationStyle = .Popover
@@ -427,7 +427,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     }
 
     // MARK: - Transitioning delegate
-    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
+    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController?, sourceViewController source: UIViewController) -> UIPresentationController? {
         return OZLSheetPresentationController(presentedViewController: presented, presentingViewController: presenting)
     }
 }

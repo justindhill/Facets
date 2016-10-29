@@ -18,11 +18,11 @@ extension UIColor {
         let ctx = UIGraphicsGetCurrentContext()
 
         self.setFill()
-        CGContextFillEllipseInRect(ctx, containingRect)
+        CGContextFillEllipseInRect(ctx!, containingRect)
 
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        return image
+        return image!
     }
 }

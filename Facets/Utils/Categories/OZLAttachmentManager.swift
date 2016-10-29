@@ -36,8 +36,8 @@ import Jiramazing
 
 
     func isAttachmentCached(attachment: Attachment) -> Bool {
-        if let url = attachment.url {
-            return self.cache.isValueCachedForKey(url.absoluteString)
+        if let urlString = attachment.url?.absoluteString {
+            return self.cache.isValueCachedForKey(urlString)
         }
 
         return false
@@ -48,7 +48,7 @@ import Jiramazing
         progress: ((attachment: Attachment, totalBytesDownloaded: Int64, totalBytesExpected: Int64) -> Void)?,
         completion: (data: NSData?, error: NSError?) -> Void) {
 
-        if let url = attachment.url, let cachedData = self.cache.cachedDataForKey(url.absoluteString) {
+        if let urlString = attachment.url?.absoluteString, let cachedData = self.cache.cachedDataForKey(urlString) {
             dispatch_async(dispatch_get_main_queue(), { 
                 completion(data: cachedData, error: nil)
             })
@@ -82,24 +82,24 @@ import Jiramazing
     }
 
     func fetchURLForLocalAttachment(attachment: Attachment) -> NSURL? {
-        if let url = attachment.url {
-            return self.cache.diskCache?.URLForKey(url.absoluteString)
+        if let urlString = attachment.url?.absoluteString {
+            return self.cache.diskCache?.URLForKey(urlString)
         }
 
         return nil
     }
 
     func fetchLocalAttachment(attachment: Attachment) -> NSData? {
-        if let url = attachment.url {
-            return self.cache.cachedDataForKey(url.absoluteString)
+        if let urlString = attachment.url?.absoluteString {
+            return self.cache.cachedDataForKey(urlString)
         }
 
         return nil
     }
 
     func fetchLocalAttachment(attachment: Attachment, completion: (data: NSData?) -> Void) {
-        if let url = attachment.url {
-            self.cache.cachedDataForKey(url.absoluteString) { (data) in
+        if let urlString = attachment.url?.absoluteString {
+            self.cache.cachedDataForKey(urlString) { (data) in
                 dispatch_async(dispatch_get_main_queue(), {
                     completion(data: data)
                 })
@@ -148,8 +148,8 @@ import Jiramazing
             return
         }
 
-        if let url = attachment.url, let data = NSData(contentsOfURL: location) {
-            self.cache.storeData(data, forKey: url.absoluteString)
+        if let urlString = attachment.url?.absoluteString, let data = NSData(contentsOfURL: location) {
+            self.cache.storeData(data, forKey: urlString)
 
             dispatch_async(dispatch_get_main_queue(), {
                 completion(data: data, error: nil)

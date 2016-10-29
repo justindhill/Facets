@@ -38,6 +38,11 @@ import Jiramazing
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
+    convenience init(issue: Issue) {
+        self.init(nibName: nil, bundle: nil)
+        self.issueModel = issue
+    }
+    
     override func loadView() {
         self.view = OZLQuickAssignView(frame: CGRectMake(0, 0, 320, 568))
     }
