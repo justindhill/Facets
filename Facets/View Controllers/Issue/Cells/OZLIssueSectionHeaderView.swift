@@ -12,22 +12,22 @@ import SnapKit
 @objc class OZLIssueSectionHeaderView: UIView {
 
     let titleLabel = UILabel()
-    let disclosureButton = UIButton(type: .Custom)
+    let disclosureButton = UIButton(type: .custom)
     
     var contentPadding: CGFloat = 0.0
-    private var isFirstLayout = true
+    fileprivate var isFirstLayout = true
     
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         self.preservesSuperviewLayoutMargins = true
         
-        self.titleLabel.font = UIFont.systemFontOfSize(14)
-        self.titleLabel.textColor = UIColor.grayColor()
+        self.titleLabel.font = UIFont.systemFont(ofSize: 14)
+        self.titleLabel.textColor = UIColor.gray
         
-        self.disclosureButton.titleLabel?.font = UIFont.systemFontOfSize(12)
-        self.disclosureButton.setTitleColor(UIColor.grayColor(), forState: .Normal)
-        self.disclosureButton.contentVerticalAlignment = .Bottom
+        self.disclosureButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        self.disclosureButton.setTitleColor(UIColor.gray, for: UIControlState())
+        self.disclosureButton.contentVerticalAlignment = .bottom
 
         self.addSubview(self.titleLabel)
         self.addSubview(self.disclosureButton)
@@ -40,14 +40,14 @@ import SnapKit
     }
 
     func installConstraints() {
-        self.titleLabel.snp_makeConstraints { (make) in
-            make.leading.equalTo(self.snp_leadingMargin)
+        self.titleLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(self.snp.leadingMargin)
             make.bottom.equalTo(self)
         }
 
-        self.disclosureButton.snp_makeConstraints { (make) in
-            make.trailing.equalTo(self.snp_trailingMargin)
-            make.baseline.equalTo(self.titleLabel)
+        self.disclosureButton.snp.makeConstraints { (make) in
+            make.trailing.equalTo(self.snp.trailingMargin)
+            make.lastBaseline.equalTo(self.titleLabel)
         }
     }
 }

@@ -10,9 +10,9 @@ import UIKit
 import SnapKit
 
 class OZLIssueDetailsSectionFooter: UIView {
-    let leftButton = UIButton(type: .System)
+    let leftButton = UIButton(type: .system)
 
-    private let FontSize: CGFloat = 12.0
+    fileprivate let FontSize: CGFloat = 12.0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,7 +21,7 @@ class OZLIssueDetailsSectionFooter: UIView {
 
         self.addSubview(self.leftButton)
 
-        self.leftButton.titleLabel?.font = UIFont.systemFontOfSize(FontSize)
+        self.leftButton.titleLabel?.font = UIFont.systemFont(ofSize: FontSize)
         self.installConstraints()
     }
     
@@ -30,8 +30,8 @@ class OZLIssueDetailsSectionFooter: UIView {
     }
 
     func installConstraints() {
-        self.leftButton.snp_makeConstraints { (make) in
-            make.leading.equalTo(self.snp_leadingMargin)
+        self.leftButton.snp.makeConstraints { (make) in
+            make.leading.equalTo(self.snp.leadingMargin)
             make.top.equalTo(self)
         }
     }

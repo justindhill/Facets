@@ -23,7 +23,7 @@ class OZLTextViewFormField: OZLFormField {
 
 class OZLTextViewFormFieldCell: OZLFormFieldCell, UITextViewDelegate {
     var textView = JVFloatLabeledTextView()
-    private var valueBeforeEditing: String?
+    fileprivate var valueBeforeEditing: String?
 
     required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,7 +37,7 @@ class OZLTextViewFormFieldCell: OZLFormFieldCell, UITextViewDelegate {
         self.textView.delegate = self
     }
 
-    override func applyFormField(field: OZLFormField) {
+    override func applyFormField(_ field: OZLFormField) {
         super.applyFormField(field)
         
         guard let field = field as? OZLTextViewFormField else {
@@ -63,19 +63,19 @@ class OZLTextViewFormFieldCell: OZLFormFieldCell, UITextViewDelegate {
         self.textView.layoutSubviews()
     }
 
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         self.valueBeforeEditing = textView.text
         self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: textView)
 
         return true
     }
 
-    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         if textView.text != self.valueBeforeEditing {
             let oldValue = self.valueBeforeEditing != "" ? self.valueBeforeEditing : nil
             let newValue = textView.text != "" ? textView.text : nil
 
-            self.delegate?.formFieldCell(self, valueChangedFrom: oldValue, toValue: newValue, atKeyPath: self.keyPath, userInfo: self.userInfo)
+            self.delegate?.formFieldCell(self, valueChangedFrom: oldValue as AnyObject?, toValue: newValue as AnyObject?, atKeyPath: self.keyPath, userInfo: self.userInfo)
         }
         
         return true

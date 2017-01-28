@@ -12,16 +12,16 @@ import HockeySDK
 class OZLAppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if OZLThirdPartyIntegrations.Enabled {
             #if !DEBUG
-                BITHockeyManager.sharedHockeyManager().configureWithIdentifier(OZLThirdPartyIntegrations.HockeyApp.AppKey)
-                BITHockeyManager.sharedHockeyManager().startManager()
-                BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
+                BITHockeyManager.shared().configure(withIdentifier: OZLThirdPartyIntegrations.HockeyApp.AppKey)
+                BITHockeyManager.shared().start()
+                BITHockeyManager.shared().authenticator.authenticateInstallation()
             #endif
 
-            HelpshiftCore.initializeWithProvider(HelpshiftAll.sharedInstance())
-            HelpshiftCore.installForApiKey(OZLThirdPartyIntegrations.Helpshift.APIKey,
+            HelpshiftCore.initialize(with: HelpshiftAll.sharedInstance())
+            HelpshiftCore.install(forApiKey: OZLThirdPartyIntegrations.Helpshift.APIKey,
                 domainName: OZLThirdPartyIntegrations.Helpshift.Domain,
                 appID: OZLThirdPartyIntegrations.Helpshift.AppId
             )
@@ -30,11 +30,11 @@ class OZLAppDelegate: UIResponder, UIApplicationDelegate {
         OZLNetwork.sharedInstance()
         OZLSingleton.sharedInstance()
 
-        NSURLProtocol.registerClass(OZLURLProtocol.self)
+        URLProtocol.registerClass(OZLURLProtocol.self)
 
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.window?.tintColor = UIColor.facetsBrandColor()
-        self.window?.backgroundColor = UIColor.whiteColor()
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.tintColor = UIColor.facetsBrand()
+        self.window?.backgroundColor = UIColor.white
 
         let vc = OZLMainTabControllerViewController()
         self.window?.rootViewController = vc
@@ -43,11 +43,11 @@ class OZLAppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         OZLSingleton.sharedInstance().startSessionUpkeep()
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         OZLSingleton.sharedInstance().suspendSessionUpkeep()
     }
 }

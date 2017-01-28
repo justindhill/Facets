@@ -9,20 +9,20 @@
 import UIKit
 
 @objc enum OZLModelJournalDetailType: Int {
-    case Unknown
-    case Attribute
-    case CustomField
-    case Attachment
+    case unknown
+    case attribute
+    case customField
+    case attachment
 }
 
 @objc class OZLModelJournalDetail: NSObject {
-    var type: OZLModelJournalDetailType = .Unknown
+    var type: OZLModelJournalDetailType = .unknown
     var oldValue: String? = nil
     var newValue: String? = nil
     
     var name: String? = nil
     
-    private lazy var customField: OZLModelCustomField? = {
+    fileprivate lazy var customField: OZLModelCustomField? = {
         if let id = self.name {
             if let intId = Int(id) {
                 return OZLModelCustomField(forPrimaryKey: intId)
@@ -34,9 +34,9 @@ import UIKit
     
     var displayName: String? {
         get {
-            if self.type == .CustomField, let customField = self.customField {
+            if self.type == .customField, let customField = self.customField {
                 return customField.name
-            } else if self.type == .Attribute, let name = self.name {
+            } else if self.type == .attribute, let name = self.name {
                 return OZLModelIssue.displayNameForAttributeName(name)
             }
             
@@ -73,13 +73,13 @@ import UIKit
         
         if let type = attributes["property"] as? String {
             if type == "attr" {
-                self.type = .Attribute
+                self.type = .attribute
             } else if type == "cf" {
-                self.type = .CustomField
+                self.type = .customField
             } else if type == "attachment" {
-                self.type = .Attachment
+                self.type = .attachment
             } else {
-                self.type = .Unknown
+                self.type = .unknown
             }
         }
         
@@ -98,14 +98,14 @@ import UIKit
         }
     }
     
-    private func displayValueForAttributeValue(attributeValue: String) -> String {
+    fileprivate func displayValueForAttributeValue(_ attributeValue: String) -> String {
         if let attributeId = Int(attributeValue) {
-            if self.type == .Attribute {
+            if self.type == .attribute {
                 return OZLModelIssue.displayValueForAttributeName(self.name, attributeId: attributeId) ?? attributeValue
                 
-            } else if self.type == .CustomField {
+            } else if self.type == .customField {
                 if let field = self.customField {
-                    return OZLModelCustomField.displayValueForCustomFieldType(field.type, attributeId: attributeId, attributeValue: attributeValue)
+                    return OZLModelCustomField.displayValue(for: field.type, attributeId: attributeId, attributeValue: attributeValue)
                 }
             }
         }
@@ -115,7 +115,7 @@ import UIKit
     
     override var description: String {
         get {
-            return "<OZLModelJournalDetail: \(unsafeAddressOf(self)) type: \(self.type), name: \(self.name), oldValue: \(self.oldValue), newValue: \(self.newValue))"
+            return "<OZLModelJournalDetail: \(Unmanaged.passUnretained(self).toOpaque()) type: \(self.type), name: \(self.name), oldValue: \(self.oldValue), newValue: \(self.newValue))"
         }
     }
 }

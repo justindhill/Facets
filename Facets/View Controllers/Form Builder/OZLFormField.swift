@@ -7,8 +7,8 @@
 //
 
 protocol OZLFormFieldDelegate {
-    func formFieldCell(formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath: String, userInfo: [String: AnyObject])
-    func formFieldCellWillBeginEditing(formCell: OZLFormFieldCell, firstResponder: UIResponder?)
+    func formFieldCell(_ formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath: String, userInfo: [String: AnyObject])
+    func formFieldCellWillBeginEditing(_ formCell: OZLFormFieldCell, firstResponder: UIResponder?)
 }
 
 class OZLFormField: NSObject {
@@ -42,12 +42,12 @@ class OZLFormFieldCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    func applyFormField(field: OZLFormField) {
+    func applyFormField(_ field: OZLFormField) {
         self.keyPath = field.keyPath
         self.userInfo = field.userInfo
     }
 
-    class func registerOnTableViewIfNeeded(tableView: UITableView) {
-        tableView.registerClass(OZLFormFieldCell.self, forCellReuseIdentifier: String(OZLFormFieldCell.self))
+    class func registerOnTableViewIfNeeded(_ tableView: UITableView) {
+        tableView.register(OZLFormFieldCell.self, forCellReuseIdentifier: String(describing: OZLFormFieldCell.self))
     }
 }

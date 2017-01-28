@@ -10,9 +10,9 @@ import JVFloatLabeledTextField
 
 class OZLDateFormField: OZLFormField {
 
-    var currentValue: NSDate?
+    var currentValue: Date?
 
-    init(keyPath: String, placeholder: String, currentValue: NSDate? = nil) {
+    init(keyPath: String, placeholder: String, currentValue: Date? = nil) {
         super.init(keyPath: keyPath, placeholder: placeholder)
         self.currentValue = currentValue
         self.setup()
@@ -26,7 +26,7 @@ class OZLDateFormField: OZLFormField {
 
 class OZLDateFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
 
-    static var dateFormatter = NSDateFormatter()
+    static var dateFormatter = DateFormatter()
 
     override var inputView: UIView? {
         get {
@@ -34,8 +34,8 @@ class OZLDateFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
         }
     }
 
-    override func canBecomeFirstResponder() -> Bool {
-        return true
+    override var canBecomeFirstResponder: Bool {
+        get { return true }
     }
 
     let datePicker = UIDatePicker()
@@ -56,21 +56,18 @@ class OZLDateFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
         self.setup()
     }
 
-    private var setupOnceToken = dispatch_once_t()
     func setup() {
-        dispatch_once(&setupOnceToken) {
-            OZLDateFormFieldCell.dateFormatter.dateFormat = "M/d/yyyy"
-        }
+        OZLDateFormFieldCell.dateFormatter.dateFormat = "M/d/yyyy"
 
-        self.datePicker.backgroundColor = UIColor.whiteColor()
-        self.datePicker.datePickerMode = .Date
-        self.datePicker.addTarget(self, action: #selector(dateChanged), forControlEvents: .ValueChanged)
+        self.datePicker.backgroundColor = UIColor.white
+        self.datePicker.datePickerMode = .date
+        self.datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
 
-        self.textField.userInteractionEnabled = false
+        self.textField.isUserInteractionEnabled = false
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
     }
 
-    override func applyFormField(field: OZLFormField) {
+    override func applyFormField(_ field: OZLFormField) {
         super.applyFormField(field)
 
         guard let field = field as? OZLDateFormField else {
@@ -80,7 +77,7 @@ class OZLDateFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
 
         self.textField.placeholder = field.placeholder
         if let currentValue = field.currentValue {
-            self.textField.text = OZLDateFormFieldCell.dateFormatter.stringFromDate(currentValue)
+            self.textField.text = OZLDateFormFieldCell.dateFormatter.string(from: currentValue as Date)
         }
     }
 
@@ -107,7 +104,7 @@ class OZLDateFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
     }
 
     func dateChanged() {
-        self.textField.text = OZLDateFormFieldCell.dateFormatter.stringFromDate(self.datePicker.date)
-        self.delegate?.formFieldCell(self, valueChangedFrom: nil, toValue: self.datePicker.date, atKeyPath: self.keyPath, userInfo: [:])
+        self.textField.text = OZLDateFormFieldCell.dateFormatter.string(from: self.datePicker.date)
+        self.delegate?.formFieldCell(self, valueChangedFrom: nil, toValue: self.datePicker.date as AnyObject?, atKeyPath: self.keyPath, userInfo: [:])
     }
 }

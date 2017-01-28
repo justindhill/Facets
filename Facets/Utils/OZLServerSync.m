@@ -64,7 +64,7 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         }
         
         if (updateCurrentProjectId) {
-            OZLModelProject *newCurrentProject = [[OZLModelProject allObjects] sortedResultsUsingProperty:@"name" ascending:YES].firstObject;
+            OZLModelProject *newCurrentProject = [[OZLModelProject allObjects] sortedResultsUsingKeyPath:@"name" ascending:YES].firstObject;
             [OZLSingleton sharedInstance].currentProjectID = newCurrentProject ? newCurrentProject.projectId : NSNotFound;
         }
         

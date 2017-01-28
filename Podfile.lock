@@ -1,23 +1,25 @@
 PODS:
-  - 1PasswordExtension (1.8.3)
-  - CircleProgressView (1.0.11)
+  - 1PasswordExtension (1.8.4)
+  - CircleProgressView (1.0.13)
   - DFCache (4.0.1)
-  - DRPLoadingSpinner (0.1.0)
+  - DRPLoadingSpinner (1.0.1)
   - DRPSlidingTabView (0.2.2)
   - GTMNSStringHTMLAdditions (0.2.1)
-  - Helpshift (5.6.2)
-  - HockeySDK (4.0.2):
-    - HockeySDK/AllFeaturesLib (= 4.0.2)
-  - HockeySDK/AllFeaturesLib (4.0.2)
-  - ISO8601 (0.6.0)
+  - Helpshift (5.9.1)
+  - HockeySDK (4.1.3):
+    - HockeySDK/DefaultLib (= 4.1.3)
+  - HockeySDK/DefaultLib (4.1.3)
+  - ISO8601 (0.5.0)
   - JGProgressHUD (1.4)
   - JVFloatLabeledTextField (1.1.1)
   - RaptureXML@Frankly (1.0.4)
-  - Realm (1.0.2):
-    - Realm/Headers (= 1.0.2)
-  - Realm/Headers (1.0.2)
-  - Reveal-iOS-SDK (1.6.2)
-  - SnapKit (0.22.0)
+  - Realm (2.4.1):
+    - Realm/Headers (= 2.4.1)
+  - Realm/Headers (2.4.1)
+  - RealmSwift (2.4.1):
+    - Realm (= 2.4.1)
+  - Reveal-SDK (6)
+  - SnapKit (3.1.2)
   - SORelativeDateTransformer (1.1.10)
   - TTTAttributedLabel (2.0.0)
 
@@ -30,35 +32,46 @@ DEPENDENCIES:
   - GTMNSStringHTMLAdditions
   - Helpshift
   - HockeySDK
-  - ISO8601
+  - ISO8601 (from `https://github.com/soffes/ISO8601`, branch `swift3`)
   - JGProgressHUD
   - JVFloatLabeledTextField
   - RaptureXML@Frankly
-  - Realm
-  - Reveal-iOS-SDK
+  - RealmSwift
+  - Reveal-SDK
   - SnapKit
   - SORelativeDateTransformer
   - TTTAttributedLabel
 
+EXTERNAL SOURCES:
+  ISO8601:
+    :branch: swift3
+    :git: https://github.com/soffes/ISO8601
+
+CHECKOUT OPTIONS:
+  ISO8601:
+    :commit: 90f7df1bbb91ff470b3061bd5e3706df6541be16
+    :git: https://github.com/soffes/ISO8601
+
 SPEC CHECKSUMS:
-  1PasswordExtension: 8757dc3302353731dd3e678e63b5023a708783cb
-  CircleProgressView: 3e7e26454ad9a93e310fe9cd612af6d779deb0c1
+  1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
+  CircleProgressView: 65283c9f23483889421c6e3c89f5e1a9b0e0ff19
   DFCache: db3bc28ceaa6f8838b1183607cb37924e488f070
-  DRPLoadingSpinner: 47cb1c2e47ae2617c87c8340075a24d94a48d879
+  DRPLoadingSpinner: df4aefbd5d9572cef9e32a9d270c65b13936ff47
   DRPSlidingTabView: b8a48b3d7a4848feaf755673344ce9cd3c622681
   GTMNSStringHTMLAdditions: 4bfc402b1b17165360728083156cae0a74ecb308
-  Helpshift: aadcbbe47f67deb96552503333774b29bdda19d5
-  HockeySDK: ebaabf41808b4e4ea85b4d5266d425aef0d19c88
-  ISO8601: d3ea3ba9b752820cf92c6b47a9ee327e9f0e13fc
+  Helpshift: 7697d455edc1539f3cd5975fb3eafd4d2269b89b
+  HockeySDK: 7dd8d7f5a4d71b7a5eebb320c8515cb22e99221b
+  ISO8601: ddefd7454c859b1279b6da7a54e63743c5df9079
   JGProgressHUD: 1617b0940cf80bb53e8f7d6f0fd69252ea45d6d4
   JVFloatLabeledTextField: 0e5524b097f102036214dd8279edc8ecf08b5e18
   RaptureXML@Frankly: 585df7d229c6a6a3f5a202d7664c2dd0aba9ef38
-  Realm: 9d5c46a4d7d27958530a8dfc58f63a99e5c2cba3
-  Reveal-iOS-SDK: e2250b3c155bcfac53ae223ddc1f76d08f206c33
-  SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
+  Realm: 37a5198a197598d9ec0e4d1ae2f64924c86eeb9a
+  RealmSwift: d69e431b79a41acdf14c404b868ae1c2458916e1
+  Reveal-SDK: 67460e58f93711c7b18631d12c2b5de7740e48b5
+  SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: b349a7b6956f4fea55037316ebec8df2f88df97a
+PODFILE CHECKSUM: 55ff0480acfadcc74b29bf179e1f4d1525480c07
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.2.0

@@ -19,8 +19,8 @@ class OZLIssueTableViewCell: UITableViewCell {
     @IBOutlet weak var assigneeAvatarImageView: UIImageView!
     @IBOutlet weak var dueDateLabel: UILabel!
 
-    private class func cell() -> OZLIssueTableViewCell {
-        let instance = UINib(nibName: "OZLIssueTableViewCell", bundle: NSBundle.mainBundle()).instantiateWithOwner(nil, options: nil).first
+    fileprivate class func cell() -> OZLIssueTableViewCell {
+        let instance = UINib(nibName: "OZLIssueTableViewCell", bundle: Bundle.main).instantiate(withOwner: nil, options: nil).first
 
         return instance as! OZLIssueTableViewCell
     }
@@ -37,61 +37,61 @@ class OZLIssueTableViewCell: UITableViewCell {
         self.preservesSuperviewLayoutMargins = false
 
         self.contentView.layer.shouldRasterize = true
-        self.contentView.layer.rasterizationScale = UIScreen.mainScreen().scale
+        self.contentView.layer.rasterizationScale = UIScreen.main.scale
 
-        self.priorityPillSection.userInteractionEnabled = false
-        self.statusPillSection.userInteractionEnabled = false
+        self.priorityPillSection.isUserInteractionEnabled = false
+        self.statusPillSection.isUserInteractionEnabled = false
 
         self.assigneeAvatarImageView.layer.masksToBounds = true
 
-        self.priorityPillSection.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        self.assigneeAvatarImageView.backgroundColor = UIColor.lightGrayColor()
+        self.priorityPillSection.setTitleColor(UIColor.white, for: UIControlState())
+        self.assigneeAvatarImageView.backgroundColor = UIColor.lightGray
 
-        let leftBgImage = self.cappedImageWithRoundedCorners(.Left, cornerRadius: 2.0, height: 16.0).imageWithRenderingMode(.AlwaysTemplate)
-        self.priorityPillSection.setBackgroundImage(leftBgImage, forState: .Normal)
+        let leftBgImage = self.cappedImageWithRoundedCorners(.left, cornerRadius: 2.0, height: 16.0).withRenderingMode(.alwaysTemplate)
+        self.priorityPillSection.setBackgroundImage(leftBgImage, for: UIControlState())
 
-        let rightBgImage = self.cappedImageWithRoundedCorners(.Right, cornerRadius: 2.0, height: 16.0, color: UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1))
-        self.statusPillSection.setBackgroundImage(rightBgImage, forState: .Normal)
+        let rightBgImage = self.cappedImageWithRoundedCorners(.right, cornerRadius: 2.0, height: 16.0, color: UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1))
+        self.statusPillSection.setBackgroundImage(rightBgImage, for: UIControlState())
     }
 
-    func applyIssueModel(issue: OZLModelIssue) {
-        self.priorityPillSection.setTitle(issue.priority?.name.uppercaseString, forState: .Normal)
-        self.statusPillSection.setTitle(issue.status?.name.uppercaseString, forState: .Normal)
+    func applyIssueModel(_ issue: OZLModelIssue) {
+        self.priorityPillSection.setTitle(issue.priority?.name.uppercased(), for: .normal)
+        self.statusPillSection.setTitle(issue.status?.name.uppercased(), for: .normal)
         self.issueNumberLabel.text = String(format: "#%d", issue.index)
         self.subjectLabel.text = issue.subject
 
-        self.assigneeNameLabel.hidden = (issue.assignedTo == nil)
-        self.assigneeAvatarImageView.hidden = (issue.assignedTo == nil)
-        self.dueDateLabel.hidden = (issue.dueDate == nil)
+        self.assigneeNameLabel.isHidden = (issue.assignedTo == nil)
+        self.assigneeAvatarImageView.isHidden = (issue.assignedTo == nil)
+        self.dueDateLabel.isHidden = (issue.dueDate == nil)
 
         if let assignee = issue.assignedTo {
-            self.assigneeNameLabel.text = assignee.name.uppercaseString
+            self.assigneeNameLabel.text = assignee.name.uppercased()
         }
 
         if let dueDate = issue.dueDate {
             let relativeDate = SORelativeDateTransformer.registeredTransformer().transformedValue(dueDate.inSystemTimeZone())
 
             if let relativeDate = relativeDate {
-                self.dueDateLabel.text = "due \(relativeDate)".uppercaseString
+                self.dueDateLabel.text = "due \(relativeDate)".uppercased()
             }
         }
 
         self.setNeedsLayout()
     }
 
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         if highlighted {
-            self.contentView.backgroundColor = UIColor.OZLVeryLightGrayColor()
+            self.contentView.backgroundColor = UIColor.ozlVeryLightGray()
         } else {
-            self.contentView.backgroundColor = UIColor.whiteColor()
+            self.contentView.backgroundColor = UIColor.white
         }
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         if selected {
-            self.contentView.backgroundColor = UIColor.OZLVeryLightGrayColor()
+            self.contentView.backgroundColor = UIColor.ozlVeryLightGray()
         } else {
-            self.contentView.backgroundColor = UIColor.whiteColor()
+            self.contentView.backgroundColor = UIColor.white
         }
     }
 
@@ -99,123 +99,123 @@ class OZLIssueTableViewCell: UITableViewCell {
         super.layoutSubviews()
 
         self.priorityPillSection.sizeToFit()
-        self.priorityPillSection.frame = CGRectMake(self.contentPadding,
-                                              self.contentPadding,
-                                              ceil(self.priorityPillSection.frame.size.width + 6),
-                                              ceil(self.priorityPillSection.frame.size.height + 4))
+        self.priorityPillSection.frame = CGRect(x: self.contentPadding,
+                                              y: self.contentPadding,
+                                              width: ceil(self.priorityPillSection.frame.size.width + 6),
+                                              height: ceil(self.priorityPillSection.frame.size.height + 4))
 
         self.statusPillSection.sizeToFit()
-        self.statusPillSection.frame = CGRectMake(floor(self.priorityPillSection.right),
-                                            self.priorityPillSection.top,
-                                            ceil(self.statusPillSection.frame.size.width + 6),
-                                            self.priorityPillSection.frame.size.height)
+        self.statusPillSection.frame = CGRect(x: floor(self.priorityPillSection.right),
+                                            y: self.priorityPillSection.top,
+                                            width: ceil(self.statusPillSection.frame.size.width + 6),
+                                            height: self.priorityPillSection.frame.size.height)
 
         self.issueNumberLabel.sizeToFit()
-        self.issueNumberLabel.frame = CGRectMake(ceil(self.statusPillSection.right + (self.contentPadding / 2)),
-                                                 self.statusPillSection.top,
-                                                 self.issueNumberLabel.frame.size.width,
-                                                 self.priorityPillSection.frame.size.height)
+        self.issueNumberLabel.frame = CGRect(x: ceil(self.statusPillSection.right + (self.contentPadding / 2)),
+                                                 y: self.statusPillSection.top,
+                                                 width: self.issueNumberLabel.frame.size.width,
+                                                 height: self.priorityPillSection.frame.size.height)
 
-        self.subjectLabel.frame = CGRectMake(0, 0, self.contentView.frame.size.width - (2 * self.contentPadding), 0)
+        self.subjectLabel.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.size.width - (2 * self.contentPadding), height: 0)
         self.subjectLabel.sizeToFit()
-        self.subjectLabel.frame = CGRectMake(self.contentPadding,
-                                             ceil(self.priorityPillSection.bottom + (self.contentPadding / 2)),
-                                             self.subjectLabel.frame.size.width,
-                                             self.subjectLabel.frame.size.height)
+        self.subjectLabel.frame = CGRect(x: self.contentPadding,
+                                             y: ceil(self.priorityPillSection.bottom + (self.contentPadding / 2)),
+                                             width: self.subjectLabel.frame.size.width,
+                                             height: self.subjectLabel.frame.size.height)
 
         let bottomRowElementSpacing: CGFloat = 8.0
         let bottomRowElementYOffset: CGFloat = ceil(self.subjectLabel.bottom + (self.contentPadding / 2))
         let bottomRowElementHeight: CGFloat = 16.0
 
-        if !self.assigneeNameLabel.hidden {
+        if !self.assigneeNameLabel.isHidden {
 
-            self.assigneeAvatarImageView.frame = CGRectMake(self.contentPadding,
-                                                            bottomRowElementYOffset,
-                                                            bottomRowElementHeight,
-                                                            bottomRowElementHeight)
+            self.assigneeAvatarImageView.frame = CGRect(x: self.contentPadding,
+                                                            y: bottomRowElementYOffset,
+                                                            width: bottomRowElementHeight,
+                                                            height: bottomRowElementHeight)
 
             self.assigneeNameLabel.sizeToFit()
-            self.assigneeNameLabel.frame = CGRectMake(ceil(self.contentPadding + bottomRowElementHeight + bottomRowElementSpacing),
-                                                      bottomRowElementYOffset,
-                                                      self.assigneeNameLabel.frame.size.width,
-                                                      bottomRowElementHeight)
+            self.assigneeNameLabel.frame = CGRect(x: ceil(self.contentPadding + bottomRowElementHeight + bottomRowElementSpacing),
+                                                      y: bottomRowElementYOffset,
+                                                      width: self.assigneeNameLabel.frame.size.width,
+                                                      height: bottomRowElementHeight)
 
 
         }
 
-        if !self.dueDateLabel.hidden {
+        if !self.dueDateLabel.isHidden {
             self.dueDateLabel.sizeToFit()
 
-            if self.assigneeAvatarImageView.hidden {
-                self.dueDateLabel.frame = CGRectMake(self.contentPadding,
-                                                     bottomRowElementYOffset,
-                                                     self.dueDateLabel.frame.size.width,
-                                                     bottomRowElementHeight)
+            if self.assigneeAvatarImageView.isHidden {
+                self.dueDateLabel.frame = CGRect(x: self.contentPadding,
+                                                     y: bottomRowElementYOffset,
+                                                     width: self.dueDateLabel.frame.size.width,
+                                                     height: bottomRowElementHeight)
             } else {
-                self.dueDateLabel.frame = CGRectMake(ceil(self.assigneeNameLabel.right + bottomRowElementSpacing),
-                                                     bottomRowElementYOffset,
-                                                     self.dueDateLabel.frame.size.width,
-                                                     bottomRowElementHeight)
+                self.dueDateLabel.frame = CGRect(x: ceil(self.assigneeNameLabel.right + bottomRowElementSpacing),
+                                                     y: bottomRowElementYOffset,
+                                                     width: self.dueDateLabel.frame.size.width,
+                                                     height: bottomRowElementHeight)
             }
         }
     }
 
-    override func layoutSublayersOfLayer(layer: CALayer) {
-        super.layoutSublayersOfLayer(layer)
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
 
         self.assigneeAvatarImageView.layer.cornerRadius = (self.assigneeAvatarImageView.frame.size.width / 2.0)
     }
 
-    override func systemLayoutSizeFittingSize(targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
 
         self.setNeedsLayout()
         self.layoutIfNeeded()
 
         var bottom: CGFloat = 0
-        if !self.dueDateLabel.hidden {
+        if !self.dueDateLabel.isHidden {
             bottom = self.dueDateLabel.bottom + self.layoutMargins.bottom
 
-        } else if !self.assigneeAvatarImageView.hidden {
+        } else if !self.assigneeAvatarImageView.isHidden {
             bottom = self.assigneeAvatarImageView.bottom + self.layoutMargins.bottom
 
         } else {
             bottom = self.subjectLabel.bottom + self.layoutMargins.bottom
         }
 
-        return CGSizeMake(targetSize.width, bottom)
+        return CGSize(width: targetSize.width, height: bottom)
     }
 
     // MARK: - Private
-    private enum RoundedImageSide {
-        case Left
-        case Right
+    fileprivate enum RoundedImageSide {
+        case left
+        case right
     }
 
-    private func cappedImageWithRoundedCorners(side: RoundedImageSide, cornerRadius: CGFloat, height: CGFloat, color: UIColor = UIColor.blackColor()) -> UIImage {
-        let rect = CGRectMake(0, 0, cornerRadius + 1, max(height - (2 * cornerRadius), 2 * cornerRadius) + 1)
+    fileprivate func cappedImageWithRoundedCorners(_ side: RoundedImageSide, cornerRadius: CGFloat, height: CGFloat, color: UIColor = UIColor.black) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: cornerRadius + 1, height: max(height - (2 * cornerRadius), 2 * cornerRadius) + 1)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
         let ctx = UIGraphicsGetCurrentContext()
 
         var corners: UIRectCorner!
-        if side == .Left {
-            corners = [.TopLeft, .BottomLeft]
+        if side == .left {
+            corners = [.topLeft, .bottomLeft]
         } else {
-            corners = [.TopRight, .BottomRight]
+            corners = [.topRight, .bottomRight]
         }
 
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSizeMake(cornerRadius, cornerRadius)).CGPath
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)).cgPath
         color.setFill()
-        CGContextAddPath(ctx, path)
-        CGContextFillPath(ctx)
+        ctx?.addPath(path)
+        ctx?.fillPath()
 
         var image = UIGraphicsGetImageFromCurrentImageContext()
 
-        if side == .Left {
-            image = image.resizableImageWithCapInsets(UIEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, 1))
+        if side == .left {
+            image = image?.resizableImage(withCapInsets: UIEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, 1))
         } else {
-            image = image.resizableImageWithCapInsets(UIEdgeInsetsMake(cornerRadius, 1, cornerRadius, cornerRadius))
+            image = image?.resizableImage(withCapInsets: UIEdgeInsetsMake(cornerRadius, 1, cornerRadius, cornerRadius))
         }
 
-        return image
+        return image!
     }
 }

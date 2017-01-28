@@ -6,9 +6,9 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
-extension NSDate {
-    func inSystemTimeZone() -> NSDate {
-        let tzOffset: NSTimeInterval = Double(NSTimeZone.systemTimeZone().secondsFromGMT)
-        return NSDate(timeIntervalSince1970: self.timeIntervalSince1970 - tzOffset)
+extension Date {
+    func inSystemTimeZone() -> Date {
+        let tzOffset: TimeInterval = Double(NSTimeZone.system.secondsFromGMT())
+        return Date(timeIntervalSince1970: self.timeIntervalSince1970 - tzOffset)
     }
 }

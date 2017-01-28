@@ -25,7 +25,7 @@ import UIKit
         self.init(displayName: displayName, serverName: serverName, value: nil)
     }
     
-    override func isEqual(object: AnyObject?) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
         if let object = object as? OZLSortAndFilterField {
             return (object.displayName == self.displayName &&
                 object.serverName == self.serverName &&

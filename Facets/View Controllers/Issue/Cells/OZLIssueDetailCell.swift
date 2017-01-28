@@ -11,9 +11,9 @@ import UIKit
 class OZLIssueDetailCell: UITableViewCell {
 
     enum CellPosition {
-        case Top
-        case Middle
-        case Bottom
+        case top
+        case middle
+        case bottom
     }
 
     override var frame: CGRect {
@@ -22,35 +22,35 @@ class OZLIssueDetailCell: UITableViewCell {
         }
     }
 
-    private(set) var detailNameLabel = UILabel()
-    private(set) var accessoryImageView = UIImageView()
-    private(set) var backdropLayer = CAShapeLayer()
+    fileprivate(set) var detailNameLabel = UILabel()
+    fileprivate(set) var accessoryImageView = UIImageView()
+    fileprivate(set) var backdropLayer = CAShapeLayer()
 
     var pinned = false {
         didSet {
-            self.backdropLayer.fillColor = pinned ? self.pinnedBackgroundColor.CGColor : self.unpinnedBackgroundColor.CGColor
+            self.backdropLayer.fillColor = pinned ? self.pinnedBackgroundColor.cgColor : self.unpinnedBackgroundColor.cgColor
         }
     }
 
-    private let supplementalIndent: CGFloat = 16.0
+    fileprivate let supplementalIndent: CGFloat = 16.0
 
-    var unpinnedBackgroundColor: UIColor = UIColor.whiteColor() {
+    var unpinnedBackgroundColor: UIColor = UIColor.white {
         didSet {
             if !self.pinned {
-                self.backdropLayer.fillColor = unpinnedBackgroundColor.CGColor
+                self.backdropLayer.fillColor = unpinnedBackgroundColor.cgColor
             }
         }
     }
 
-    var pinnedBackgroundColor: UIColor = UIColor.OZLVeryLightGrayColor() {
+    var pinnedBackgroundColor: UIColor = UIColor.ozlVeryLightGray() {
         didSet {
             if self.pinned {
-                self.backdropLayer.fillColor = pinnedBackgroundColor.CGColor
+                self.backdropLayer.fillColor = pinnedBackgroundColor.cgColor
             }
         }
     }
 
-    var cellPosition: CellPosition = .Top {
+    var cellPosition: CellPosition = .top {
         didSet {
             self.updateCornerRadiiForCellPosition(cellPosition)
         }
@@ -59,13 +59,13 @@ class OZLIssueDetailCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        self.backdropLayer.strokeColor = UIColor.lightGrayColor().CGColor
-        self.backdropLayer.fillColor = self.unpinnedBackgroundColor.CGColor
+        self.backdropLayer.strokeColor = UIColor.lightGray.cgColor
+        self.backdropLayer.fillColor = self.unpinnedBackgroundColor.cgColor
 
-        self.detailNameLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
-        self.detailNameLabel.backgroundColor = UIColor.clearColor()
+        self.detailNameLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+        self.detailNameLabel.backgroundColor = UIColor.clear
 
-        self.contentView.layer.insertSublayer(self.backdropLayer, atIndex: 0)
+        self.contentView.layer.insertSublayer(self.backdropLayer, at: 0)
         self.contentView.addSubview(self.detailNameLabel)
         self.contentView.addSubview(self.accessoryImageView)
     }
@@ -74,29 +74,29 @@ class OZLIssueDetailCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func updateCornerRadiiForCellPosition(cellPosition: CellPosition) {
+    func updateCornerRadiiForCellPosition(_ cellPosition: CellPosition) {
         var corners: UIRectCorner!
 
         switch cellPosition {
-            case .Top: corners = [.TopLeft, .TopRight]
-            case .Middle: corners = UIRectCorner()
-            case .Bottom: corners = [.BottomLeft, .BottomRight]
+            case .top: corners = [.topLeft, .topRight]
+            case .middle: corners = UIRectCorner()
+            case .bottom: corners = [.bottomLeft, .bottomRight]
         }
 
         let realWidth = self.layer.bounds.size.width - self.layoutMargins.left - self.layoutMargins.right
 
-        let pathRect = CGRectMake(
-            self.layoutMargins.left,
-            0,
-            realWidth,
-            self.bounds.size.height
+        let pathRect = CGRect(
+            x: self.layoutMargins.left,
+            y: 0,
+            width: realWidth,
+            height: self.bounds.size.height
         )
 
         backdropLayer.path = UIBezierPath(
             roundedRect: pathRect,
             byRoundingCorners: corners,
-            cornerRadii: CGSizeMake(3.0, 3.0)
-        ).CGPath
+            cornerRadii: CGSize(width: 3.0, height: 3.0)
+        ).cgPath
     }
 
     override func layoutSubviews() {
@@ -106,9 +106,9 @@ class OZLIssueDetailCell: UITableViewCell {
 
         var maxLabelWidth = contentBounds.size.width - self.layoutMargins.left - self.layoutMargins.right - (2 * self.supplementalIndent)
 
-        self.accessoryImageView.hidden = (self.accessoryImageView.image == nil)
+        self.accessoryImageView.isHidden = (self.accessoryImageView.image == nil)
 
-        if !self.accessoryImageView.hidden {
+        if !self.accessoryImageView.isHidden {
             self.accessoryImageView.sizeToFit()
             self.accessoryImageView.frame.origin.x = contentBounds.size.width - self.layoutMargins.right - self.accessoryImageView.frame.size.width - self.supplementalIndent
             self.accessoryImageView.frame.origin.y = (contentBounds.size.height - self.accessoryImageView.frame.size.height) / 2.0
@@ -124,18 +124,18 @@ class OZLIssueDetailCell: UITableViewCell {
         self.detailNameLabel.frame.size.width = min(self.detailNameLabel.frame.size.width, maxLabelWidth)
     }
 
-    override func layoutSublayersOfLayer(layer: CALayer) {
-        super.layoutSublayersOfLayer(layer)
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
 
         self.backdropLayer.lineWidth = (1.0 / self.traitCollection.displayScale)
         self.backdropLayer.frame = self.contentView.bounds
     }
 
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
-        self.backdropLayer.fillColor = (highlighted || self.pinned) ? self.pinnedBackgroundColor.CGColor : self.unpinnedBackgroundColor.CGColor
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        self.backdropLayer.fillColor = (highlighted || self.pinned) ? self.pinnedBackgroundColor.cgColor : self.unpinnedBackgroundColor.cgColor
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         self.setHighlighted(selected, animated: animated)
     }
 }

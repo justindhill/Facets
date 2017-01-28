@@ -13,7 +13,7 @@ class OZLSplitViewPlaceholderPane: UIViewController {
         self.init(nibName: "OZLSplitViewPlaceholderPane", bundle: nil)
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 

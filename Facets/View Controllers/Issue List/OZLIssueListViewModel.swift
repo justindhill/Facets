@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol OZLIssueListViewModelDelegate {
-    func viewModelIssueListContentDidChange(viewModel: OZLIssueListViewModel)
+    func viewModelIssueListContentDidChange(_ viewModel: OZLIssueListViewModel)
 }
 
 @objc class OZLIssueListViewModel: NSObject, OZLQuickAssignDelegate {
@@ -25,7 +25,7 @@ import UIKit
         }
     }
     
-    private var explicitTitle: String?
+    fileprivate var explicitTitle: String?
     var title: String {
         get {
             if let explicitTitle = self.explicitTitle {
@@ -57,7 +57,7 @@ import UIKit
     var moreIssuesAvailable: Bool = false
     var isLoading: Bool = false
     
-    func loadIssuesCompletion(completion: (error: NSError?) -> Void) {
+    func loadIssuesCompletion(_ completion: @escaping (_ error: NSError?) -> Void) {
         if self.isLoading {
             return
         }
@@ -66,24 +66,24 @@ import UIKit
         
         self.isLoading = true
         let params = self.sortAndFilterOptions.requestParameters()
-        OZLNetwork.sharedInstance().getIssueListForQueryId(self.queryId, projectId: self.projectId, offset: 0, limit: 25, params: params) { (result, totalCount, error) -> Void in
+        OZLNetwork.sharedInstance().getIssueList(forQueryId: self.queryId, projectId: self.projectId, offset: 0, limit: 25, params: params) { (result, totalCount, error) -> Void in
             
             weakSelf?.isLoading = false
             
             if let error = error {
-                completion(error: error)
+                completion(error as NSError?)
                 return
             }
             
             if let weakSelf = weakSelf, let result = result as? Array<OZLModelIssue> {
                 weakSelf.issues = result
                 weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
-                completion(error: error)
+                completion(error as NSError?)
             }
         }
     }
     
-    func loadMoreIssuesCompletion(completion: (error: NSError?) -> Void) {
+    func loadMoreIssuesCompletion(_ completion: @escaping (_ error: NSError?) -> Void) {
         if self.isLoading {
             return
         }
@@ -92,36 +92,36 @@ import UIKit
         
         self.isLoading = true
         let params = self.sortAndFilterOptions.requestParameters()
-        OZLNetwork.sharedInstance().getIssueListForQueryId(self.queryId, projectId: self.projectId, offset: self.issues.count, limit: 25, params: params) { (result, totalCount, error) -> Void in
+        OZLNetwork.sharedInstance().getIssueList(forQueryId: self.queryId, projectId: self.projectId, offset: self.issues.count, limit: 25, params: params) { (result, totalCount, error) -> Void in
             
             weakSelf?.isLoading = false
             
             if let error = error {
-                completion(error: error)
+                completion(error as NSError?)
                 return
             }
             
             if let weakSelf = weakSelf, let result = result as? Array<OZLModelIssue> {
-                weakSelf.issues.appendContentsOf(result)
+                weakSelf.issues.append(contentsOf: result)
                 weakSelf.moreIssuesAvailable = (weakSelf.issues.count < totalCount);
-                completion(error: error)
+                completion(error as NSError?)
             }
         }
     }
     
-    func processUpdatedIssue(issue: OZLModelIssue) {
-        let existingIndex = self.issues.indexOf { (issueElement) -> Bool in
+    func processUpdatedIssue(_ issue: OZLModelIssue) {
+        let existingIndex = self.issues.index { (issueElement) -> Bool in
             return (issueElement.index == issue.index)
         }
         
         if let existingIndex = existingIndex {
-            self.issues.replaceRange(existingIndex...existingIndex, with: [ issue ])
+            self.issues.replaceSubrange(existingIndex...existingIndex, with: [ issue ])
         }
         
         self.delegate?.viewModelIssueListContentDidChange(self)
     }
     
-    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?) {
+    func quickAssignController(_ quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?) {
         self.processUpdatedIssue(issue)
     }
 }

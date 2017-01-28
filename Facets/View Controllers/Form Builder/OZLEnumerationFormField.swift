@@ -54,7 +54,7 @@ class OZLEnumerationFormField: OZLFormField {
         super.init(keyPath: keyPath, placeholder: placeholder)
 
         self.currentValue = currentValue
-        self.possibleValues = possibleStringValues
+        self.possibleValues = possibleStringValues as [AnyObject]?
 
         self.setup()
     }
@@ -82,7 +82,7 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
         self.textField.delegate = self
     }
 
-    override func applyFormField(field: OZLFormField) {
+    override func applyFormField(_ field: OZLFormField) {
         super.applyFormField(field)
 
         guard let field = field as? OZLEnumerationFormField else {
@@ -112,25 +112,25 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
         self.textField.layoutSubviews()
     }
 
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
 
-        var closestVC = self.nextResponder()
+        var closestVC = self.next
 
         while !(closestVC is UIViewController) && closestVC != nil {
-            closestVC = closestVC?.nextResponder()
+            closestVC = closestVC?.next
         }
 
         weak var weakSelf = self
 
         if let closestVC = closestVC as? UIViewController{
-            let sheet = UIAlertController(title: self.textField.placeholder, message: nil, preferredStyle: .ActionSheet)
+            let sheet = UIAlertController(title: self.textField.placeholder, message: nil, preferredStyle: .actionSheet)
 
             for val in self.possibleValues {
                 if val is String {
                     let val = val as! String
-                    sheet.addAction(UIAlertAction(title: val, style: .Default, handler: { (action) in
-                        if let weakSelf = weakSelf where weakSelf.textField.text != val {
-                            weakSelf.delegate?.formFieldCell(weakSelf, valueChangedFrom: weakSelf.textField.text, toValue: val, atKeyPath: weakSelf.keyPath, userInfo: weakSelf.userInfo)
+                    sheet.addAction(UIAlertAction(title: val, style: .default, handler: { (action) in
+                        if let weakSelf = weakSelf, weakSelf.textField.text != val {
+                            weakSelf.delegate?.formFieldCell(weakSelf, valueChangedFrom: weakSelf.textField.text as AnyObject?, toValue: val as AnyObject?, atKeyPath: weakSelf.keyPath, userInfo: weakSelf.userInfo)
                         }
 
                         weakSelf?.textField.text = val
@@ -138,8 +138,8 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
                 } else if val is OZLEnumerationFormFieldValue {
                     let val = val as! OZLEnumerationFormFieldValue
 
-                    sheet.addAction(UIAlertAction(title: val.stringValue(), style: .Default, handler: { (action) in
-                        if let weakSelf = weakSelf where weakSelf.textField.text != val.stringValue() {
+                    sheet.addAction(UIAlertAction(title: val.stringValue(), style: .default, handler: { (action) in
+                        if let weakSelf = weakSelf, weakSelf.textField.text != val.stringValue() {
                             weakSelf.delegate?.formFieldCell(weakSelf, valueChangedFrom: nil, toValue: val, atKeyPath: weakSelf.keyPath, userInfo: weakSelf.userInfo)
                         }
 
@@ -148,10 +148,10 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
                 }
             }
 
-            sheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: nil))
+            sheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
 
             self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: nil)
-            closestVC.presentViewController(sheet, animated: true, completion: nil)
+            closestVC.present(sheet, animated: true, completion: nil)
         }
 
         return false

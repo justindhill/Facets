@@ -7,16 +7,45 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class OZLJournalCell: UITableViewCell {
 
-    private static let profileSideLen: CGFloat = 28.0
-    private static let dateFormatter = NSDateFormatter()
+    private static var __once: () = { () -> Void in
+            OZLJournalCell.dateFormatter.dateStyle = .short
+            OZLJournalCell.dateFormatter.timeStyle = .short
+        }()
+
+    fileprivate static let profileSideLen: CGFloat = 28.0
+    fileprivate static let dateFormatter = DateFormatter()
     
-    private static let detailFont = UIFont.italicSystemFontOfSize(12.0)
-    private static let commentFont = UIFont.systemFontOfSize(12.0)
-    private static let dateFont = UIFont.systemFontOfSize(10.0)
-    private static let authorFont = UIFont.OZLMediumSystemFontOfSize(12.0)
+    fileprivate static let detailFont = UIFont.italicSystemFont(ofSize: 12.0)
+    fileprivate static let commentFont = UIFont.systemFont(ofSize: 12.0)
+    fileprivate static let dateFont = UIFont.systemFont(ofSize: 10.0)
+    fileprivate static let authorFont = UIFont.ozlMediumSystemFont(ofSize: 12.0)
     
     let profileImageView = UIImageView()
     let usernameLabel = UILabel()
@@ -42,26 +71,23 @@ class OZLJournalCell: UITableViewCell {
         self.setup()
     }
     
-    private static var dateOnceToken: dispatch_once_t = 0
-    private func setup() {
-        dispatch_once(&OZLJournalCell.dateOnceToken) { () -> Void in
-            OZLJournalCell.dateFormatter.dateStyle = .ShortStyle
-            OZLJournalCell.dateFormatter.timeStyle = .ShortStyle
-        }
+    fileprivate static var dateOnceToken: Int = 0
+    fileprivate func setup() {
+        _ = OZLJournalCell.__once
         
         self.profileImageView.layer.cornerRadius = OZLJournalCell.profileSideLen / 2.0
         self.profileImageView.layer.masksToBounds = true
-        self.profileImageView.backgroundColor = UIColor.lightGrayColor()
+        self.profileImageView.backgroundColor = UIColor.lightGray
         
         self.usernameLabel.font = OZLJournalCell.authorFont
-        self.usernameLabel.textColor = UIColor.darkGrayColor()
+        self.usernameLabel.textColor = UIColor.darkGray
         
         self.dateLabel.font = OZLJournalCell.dateFont
-        self.dateLabel.textColor = UIColor.lightGrayColor()
+        self.dateLabel.textColor = UIColor.lightGray
         
         self.commentLabel.font = OZLJournalCell.commentFont
         self.commentLabel.numberOfLines = 0
-        self.commentLabel.textColor = UIColor.darkGrayColor()
+        self.commentLabel.textColor = UIColor.darkGray
     }
     
     override func layoutSubviews() {
@@ -76,10 +102,10 @@ class OZLJournalCell: UITableViewCell {
             self.isFirstLayout = false
         }
         
-        self.profileImageView.frame = CGRectMake(self.layoutMargins.left,
-            self.layoutMargins.top,
-            OZLJournalCell.profileSideLen,
-            OZLJournalCell.profileSideLen)
+        self.profileImageView.frame = CGRect(x: self.layoutMargins.left,
+            y: self.layoutMargins.top,
+            width: OZLJournalCell.profileSideLen,
+            height: OZLJournalCell.profileSideLen)
         
         self.usernameLabel.sizeToFit()
         self.dateLabel.sizeToFit()
@@ -96,11 +122,11 @@ class OZLJournalCell: UITableViewCell {
         self.commentLabel.frame.origin.y = ceil(dateLabel.bottom + 6.0)
     }
     
-    private func applyJournalModel(journal: OZLModelJournal) {
+    fileprivate func applyJournalModel(_ journal: OZLModelJournal) {
         self.usernameLabel.text = journal.author?.name
         
         if let date = journal.creationDate {
-            self.dateLabel.text = OZLJournalCell.dateFormatter.stringFromDate(date)
+            self.dateLabel.text = OZLJournalCell.dateFormatter.string(from: date as Date)
         } else {
             self.dateLabel.text = nil
         }
@@ -112,76 +138,76 @@ class OZLJournalCell: UITableViewCell {
         }
     }
     
-    private func composeDetails(details: Array<OZLModelJournalDetail>, note: String?) -> NSAttributedString {
+    fileprivate func composeDetails(_ details: Array<OZLModelJournalDetail>, note: String?) -> NSAttributedString {
         let str = NSMutableAttributedString()
         
         let detailPara = NSMutableParagraphStyle()
         detailPara.lineHeightMultiple = 1.15
-        detailPara.lineBreakMode = .ByWordWrapping
+        detailPara.lineBreakMode = .byWordWrapping
         
         let detailAttributes = [
-            NSForegroundColorAttributeName: UIColor.darkGrayColor(),
+            NSForegroundColorAttributeName: UIColor.darkGray,
             NSFontAttributeName: OZLJournalCell.detailFont,
             NSParagraphStyleAttributeName: detailPara
         ]
         
-        for (index, detail) in details.enumerate() {
+        for (index, detail) in details.enumerated() {
             var detailString: String!
             
             if let name = detail.displayName, let old = detail.displayOldValue, let new = detail.displayNewValue {
                 if old.characters.count > 20 || new.characters.count > 20 {
-                    detailString  = "Updated \(name.lowercaseString)"
+                    detailString  = "Updated \(name.lowercased())"
                 } else {
-                    detailString = "Changed \(name.lowercaseString): \(old) → \(new)"
+                    detailString = "Changed \(name.lowercased()): \(old) → \(new)"
                 }
                 
             } else if let name = detail.displayName, let new = detail.displayNewValue {
-                if detail.type == .Attachment {
+                if detail.type == .attachment {
                     detailString  = "Added attachment (\(new))"
                 } else {
                     if (new.characters.count > 20) {
-                        detailString = "Set \(name.lowercaseString) (value too long to be displayed)"
+                        detailString = "Set \(name.lowercased()) (value too long to be displayed)"
                     } else {
-                        detailString = "Set \(name.lowercaseString) to \(new)"
+                        detailString = "Set \(name.lowercased()) to \(new)"
                     }
                 }
                 
             } else if let oldValue = detail.oldValue, let name = detail.displayName {
-                if detail.type == .Attachment {
+                if detail.type == .attachment {
                     detailString = "Removed attachment (\(oldValue))"
                 } else {
-                    detailString  = "Removed \(name.lowercaseString)"
+                    detailString  = "Removed \(name.lowercased())"
                 }
             } else {
                 // This should never happen, but let's cover our bases.
                 detailString = ""
             }
             
-            str.appendAttributedString(NSAttributedString(string: detailString, attributes:  detailAttributes))
+            str.append(NSAttributedString(string: detailString, attributes:  detailAttributes))
             
             if index < details.count - 1 || (index == details.count - 1 && note?.characters.count > 0) {
-                str.appendAttributedString(NSAttributedString(string: "\n", attributes: detailAttributes))
+                str.append(NSAttributedString(string: "\n", attributes: detailAttributes))
             }
         }
         
         if let note = note {
             let commentPara = NSMutableParagraphStyle()
             commentPara.lineHeightMultiple = 1.15
-            commentPara.lineBreakMode = .ByWordWrapping
+            commentPara.lineBreakMode = .byWordWrapping
             
             let noteAttributes = [
-                NSForegroundColorAttributeName: UIColor.darkGrayColor(),
+                NSForegroundColorAttributeName: UIColor.darkGray,
                 NSFontAttributeName: OZLJournalCell.commentFont,
                 NSParagraphStyleAttributeName: commentPara
             ]
             
-            str.appendAttributedString(NSAttributedString(string: note, attributes: noteAttributes))
+            str.append(NSAttributedString(string: note, attributes: noteAttributes))
         }
         
         return str
     }
 
-    override func systemLayoutSizeFittingSize(targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         self.setNeedsLayout()
         self.layoutIfNeeded()
 
@@ -193,6 +219,6 @@ class OZLJournalCell: UITableViewCell {
             bottom = self.profileImageView.bottom + self.layoutMargins.bottom
         }
 
-        return CGSizeMake(targetSize.width, bottom)
+        return CGSize(width: targetSize.width, height: bottom)
     }
 }

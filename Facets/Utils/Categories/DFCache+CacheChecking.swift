@@ -9,11 +9,11 @@
 import DFCache
 
 extension DFCache {
-    func isValueCachedForKey(key: String) -> Bool {
-        if self.memoryCache?.valueForKey(key) != nil {
+    func isValueCachedForKey(_ key: String) -> Bool {
+        if self.memoryCache?.value(forKey: key) != nil {
             return true
-        } else if let path = self.diskCache?.pathForKey(key) {
-            if NSFileManager.defaultManager().fileExistsAtPath(path) {
+        } else if let path = self.diskCache?.path(forKey: key) {
+            if FileManager.default.fileExists(atPath: path) {
                 return true
             }
         }
@@ -21,9 +21,9 @@ extension DFCache {
         return false
     }
 
-    func urlForCacheKey(key: String) -> NSURL? {
+    func urlForCacheKey(_ key: String) -> URL? {
         if self.isValueCachedForKey(key) {
-            return self.diskCache?.URLForKey(key)
+            return self.diskCache?.url(forKey: key)
         }
 
         return nil

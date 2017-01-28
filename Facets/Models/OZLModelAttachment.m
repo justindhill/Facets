@@ -10,6 +10,12 @@
 
 #import "OZLModelAttachment.h"
 
+@interface OZLModelAttachment ()
+
+@property NSString *fileExtension;
+
+@end
+
 @implementation OZLModelAttachment
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
@@ -28,6 +34,7 @@
     }
     
     self.mimeType = dict[@"content_type"];
+    self.fileExtension = [[[dict[@"content_url"] componentsSeparatedByString:@"."] lastObject] lowercaseString];
     self.contentURL = dict[@"content_url"];
     self.creationDate = [NSDate dateWithISO8601String:dict[@"created_on"]];
     self.detailDescription = dict[@"description"];
@@ -39,24 +46,30 @@
 - (NSString *)thumbnailURL {
     if ([self.mimeType hasPrefix:@"image"]) {
         NSURLComponents *c = [NSURLComponents componentsWithString:self.contentURL];
-        c.path = [NSString stringWithFormat:@"/attachments/thumbnail/%ld", (long)self.attachmentID];
+        c.path = [[NSString stringWithFormat:@"/attachments/thumbnail/%ld", (long)self.attachmentID] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
         
-        return [c.URL.absoluteString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        return c.URL.absoluteString;
     }
     
     return nil;
 }
 
 - (OZLAttachmentFileType)fileClassification {
-    if ([self.mimeType containsString:@"image"]) {
-        return OZLAttachmentFileTypeImage;
-    } else if ([self.mimeType containsString:@"video"] ||
-               [self.mimeType containsString:@"mp4"]) {
-        return OZLAttachmentFileTypeVideo;
-    } else if ([self.mimeType containsString:@"audio"]) {
-        return OZLAttachmentFileTypeAudio;
-    } else if ([self.mimeType containsString:@"text"]) {
-        return OZLAttachmentFileTypeText;
+    if (self.mimeType) {
+        if ([self.mimeType containsString:@"image"]) {
+            return OZLAttachmentFileTypeImage;
+        } else if ([self.mimeType containsString:@"video"] ||
+                   [self.mimeType containsString:@"mp4"]) {
+            return OZLAttachmentFileTypeVideo;
+        } else if ([self.mimeType containsString:@"audio"]) {
+            return OZLAttachmentFileTypeAudio;
+        } else if ([self.mimeType containsString:@"text"]) {
+            return OZLAttachmentFileTypeText;
+        }
+    } else if (self.fileExtension) {
+        if ([self.fileExtension isEqualToString:@"png"]) {
+            return OZLAttachmentFileTypeImage;
+        }
     }
 
     return OZLAttachmentFileTypeUnknown;

@@ -15,7 +15,7 @@ class OZLButtonFormField: OZLFormField {
     var accessoryType: UITableViewCellAccessoryType
 
     init(keyPath: String, title: String, titleColor: UIColor? = nil, highlightBackgroundColor: UIColor? = nil,
-         accessoryType: UITableViewCellAccessoryType = .None, target: AnyObject, action: Selector) {
+         accessoryType: UITableViewCellAccessoryType = .none, target: AnyObject, action: Selector) {
 
         self.title = title
         self.titleColor = titleColor
@@ -50,16 +50,16 @@ class OZLButtonFormFieldCell: OZLFormFieldCell {
     }
 
     func setup() {
-        self.buttonControl.addTarget(self, action: #selector(buttonActionInternal(_:)), forControlEvents: .TouchUpInside)
+        self.buttonControl.addTarget(self, action: #selector(buttonActionInternal(_:)), for: .touchUpInside)
     }
 
-    func buttonActionInternal(sender: UIButton?) {
+    func buttonActionInternal(_ sender: UIButton?) {
         if let target = self.buttonTarget, let action = self.buttonAction {
-            target.performSelector(action, withObject: self.keyPath)
+            target.perform(action, with: self.keyPath)
         }
     }
 
-    override func applyFormField(field: OZLFormField) {
+    override func applyFormField(_ field: OZLFormField) {
         super.applyFormField(field)
 
         guard let field = field as? OZLButtonFormField else {
@@ -79,9 +79,9 @@ class OZLButtonFormFieldCell: OZLFormFieldCell {
         self.buttonAction = field.action
 
         self.accessoryType = field.accessoryType
-        self.buttonControl.titleLabel?.font = UIFont.systemFontOfSize(17.0)
-        self.buttonControl.contentHorizontalAlignment = .Left
-        self.buttonControl.setTitle(field.title, forState: .Normal)
+        self.buttonControl.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+        self.buttonControl.contentHorizontalAlignment = .left
+        self.buttonControl.setTitle(field.title, for: .normal)
     }
 
     override func layoutSubviews() {
@@ -95,9 +95,9 @@ class OZLButtonFormFieldCell: OZLFormFieldCell {
         self.buttonControl.titleEdgeInsets = UIEdgeInsetsMake(0, self.layoutMargins.left, 0, self.layoutMargins.right)
     }
 
-    private func setTitleColor(titleColor: UIColor) {
-        self.buttonControl.setTitleColor(titleColor, forState: .Normal)
-        self.buttonControl.setTitleColor(titleColor.colorWithAlphaComponent(0.75), forState: .Highlighted)
+    fileprivate func setTitleColor(_ titleColor: UIColor) {
+        self.buttonControl.setTitleColor(titleColor, for: .normal)
+        self.buttonControl.setTitleColor(titleColor.withAlphaComponent(0.75), for: .highlighted)
     }
 
     override func tintColorDidChange() {

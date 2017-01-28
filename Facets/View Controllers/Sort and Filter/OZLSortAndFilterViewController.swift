@@ -9,19 +9,19 @@
 import UIKit
 
 @objc enum OZLSortOrder: Int {
-    case Ascending
-    case Descending
+    case ascending
+    case descending
 }
 
 @objc class OZLSortAndFilterOptions: NSObject, NSCopying {
-    var sortOrder: OZLSortOrder = .Descending
+    var sortOrder: OZLSortOrder = .descending
     var sortField: OZLSortAndFilterField = OZLSortAndFilterField(displayName: "Last Updated", serverName: "updated_on")
     
     func requestParameters() -> Dictionary<String, String> {
         var params: Dictionary<String, String> = Dictionary<String, String>()
         var sortValue = self.sortField.serverName
         
-        if (self.sortOrder == .Descending) {
+        if (self.sortOrder == .descending) {
             sortValue += ":desc"
         }
         
@@ -30,15 +30,15 @@ import UIKit
         return params
     }
     
-    override func isEqual(object: AnyObject?) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
         if let object = object {
-            return (object.sortOrder == self.sortOrder && object.sortField.isEqual(self.sortField))
+            return ((object as AnyObject).sortOrder == self.sortOrder && (object as AnyObject).sortField.isEqual(self.sortField))
         }
         
         return false
     }
     
-    func copyWithZone(zone: NSZone) -> AnyObject {
+    func copy(with zone: NSZone?) -> Any {
         let options = OZLSortAndFilterOptions()
         options.sortOrder = self.sortOrder
         options.sortField = self.sortField
@@ -48,7 +48,7 @@ import UIKit
 }
 
 @objc protocol OZLSortAndFilterViewControllerDelegate {
-    func sortAndFilter(sortAndFilter: OZLSortAndFilterViewController, shouldDismissWithNewOptions newOptions: OZLSortAndFilterOptions?)
+    func sortAndFilter(_ sortAndFilter: OZLSortAndFilterViewController, shouldDismissWithNewOptions newOptions: OZLSortAndFilterOptions?)
 }
 
 class OZLSortAndFilterViewController: UITableViewController {
@@ -57,21 +57,21 @@ class OZLSortAndFilterViewController: UITableViewController {
     
     @NSCopying var options = OZLSortAndFilterOptions()
     
-    private let SortFieldSection = 0;
-    private let SortOrderSection = 1
-    private let FiltersSection = 2
+    fileprivate let SortFieldSection = 0;
+    fileprivate let SortOrderSection = 1
+    fileprivate let FiltersSection = 2
     
-    private let TextReuseIdentifier = "TextReuseIdentifier"
+    fileprivate let TextReuseIdentifier = "TextReuseIdentifier"
     
     convenience init() {
-        self.init(style: .Grouped)
+        self.init(style: .grouped)
     }
     
     override init(style: UITableViewStyle) {
         super.init(style: style)
     }
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
@@ -84,8 +84,8 @@ class OZLSortAndFilterViewController: UITableViewController {
         super.viewDidLoad()
         self.title = "Sort and Filter"
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(OZLSortAndFilterViewController.cancelAction))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: #selector(OZLSortAndFilterViewController.saveAction))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(OZLSortAndFilterViewController.cancelAction))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(OZLSortAndFilterViewController.saveAction))
     }
     
     // MARK: Button actions
@@ -98,11 +98,11 @@ class OZLSortAndFilterViewController: UITableViewController {
     }
 
     // MARK: - UITableViewDelegate/DataSource
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == SortFieldSection {
             return 1
         } else if section == SortOrderSection {
@@ -114,29 +114,29 @@ class OZLSortAndFilterViewController: UITableViewController {
         return 0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(TextReuseIdentifier)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: TextReuseIdentifier)
         
         if (cell == nil) {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: TextReuseIdentifier)
+            cell = UITableViewCell(style: .default, reuseIdentifier: TextReuseIdentifier)
         }
         
-        cell?.textLabel?.textColor = UIColor.blackColor()
+        cell?.textLabel?.textColor = UIColor.black
         
         if indexPath.section == SortFieldSection {
             cell?.textLabel?.text = self.options.sortField.displayName
-            cell?.accessoryType = .DisclosureIndicator
+            cell?.accessoryType = .disclosureIndicator
         } else if indexPath.section == SortOrderSection {
             if (indexPath.row == 0) {
                 cell?.textLabel?.text = "Ascending"
-                cell?.accessoryType = self.options.sortOrder == .Ascending ? .Checkmark : .None
+                cell?.accessoryType = self.options.sortOrder == .ascending ? .checkmark : .none
             } else if (indexPath.row == 1) {
                 cell?.textLabel?.text = "Descending"
-                cell?.accessoryType = self.options.sortOrder == .Descending ? .Checkmark : .None
+                cell?.accessoryType = self.options.sortOrder == .descending ? .checkmark : .none
             }
             
         } else if indexPath.section == FiltersSection {
-            cell?.accessoryType = .None
+            cell?.accessoryType = .none
             cell?.textLabel?.textColor = self.view.tintColor
             cell?.textLabel?.text = "Add a filter"
         }
@@ -144,7 +144,7 @@ class OZLSortAndFilterViewController: UITableViewController {
         return cell!
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == SortOrderSection {
             return "Sort Order"
         } else if section == SortFieldSection {
@@ -156,7 +156,7 @@ class OZLSortAndFilterViewController: UITableViewController {
         return nil
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == SortFieldSection {
             let fieldSelector = OZLFieldSelectorViewController()
@@ -164,25 +164,25 @@ class OZLSortAndFilterViewController: UITableViewController {
             weak var weakSelf = self
             fieldSelector.selectionChangeHandler = { (field: OZLSortAndFilterField) -> Void in
                 weakSelf?.options.sortField = field
-                weakSelf?.tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: .None)
+                weakSelf?.tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
             }
             
             self.navigationController?.pushViewController(fieldSelector, animated: true)
             
         } else if indexPath.section == SortOrderSection {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
             
             if indexPath.row == 0 {
-                self.options.sortOrder = .Ascending
+                self.options.sortOrder = .ascending
             } else {
-                self.options.sortOrder = .Descending
+                self.options.sortOrder = .descending
             }
             
-            let ascendingCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: SortOrderSection))
-            ascendingCell?.accessoryType = self.options.sortOrder == .Ascending ? .Checkmark : .None
+            let ascendingCell = tableView.cellForRow(at: IndexPath(row: 0, section: SortOrderSection))
+            ascendingCell?.accessoryType = self.options.sortOrder == .ascending ? .checkmark : .none
             
-            let descendingCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: SortOrderSection))
-            descendingCell?.accessoryType = self.options.sortOrder == .Descending ? .Checkmark : .None
+            let descendingCell = tableView.cellForRow(at: IndexPath(row: 1, section: SortOrderSection))
+            descendingCell?.accessoryType = self.options.sortOrder == .descending ? .checkmark : .none
         }
         
     }

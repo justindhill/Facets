@@ -10,22 +10,24 @@ import Foundation
 import DFCache
 
 @objc enum OZLAttachmentManagerError: Int {
-    case InvalidOrMissingContentURL
-    case UnacceptableStatusCode
+    case invalidOrMissingContentURL
+    case unacceptableStatusCode
 }
 
-@objc class OZLAttachmentManager: NSObject, NSURLSessionDownloadDelegate {
+@objc class OZLAttachmentManager: NSObject, URLSessionDownloadDelegate {
     static let ErrorDomain = "OZLAttachmentManagerErrorDomain"
 
-    private static let CacheIdentifier = "facets.attachments"
-    private let cache = DFCache(name: OZLAttachmentManager.CacheIdentifier, memoryCache: nil)
-    private let networkManager: OZLNetwork
+    fileprivate static let CacheIdentifier = "facets.attachments"
+    fileprivate let cache = DFCache(name: OZLAttachmentManager.CacheIdentifier, memoryCache: nil)
+    fileprivate let networkManager: OZLNetwork
 
     // key: taskIdentifier, value: (attachment, progressHandler, completionHandler)
-    private var taskAssociations: [Int: (OZLModelAttachment, ((attachment: OZLModelAttachment, bytesDownloaded: Int64, totalBytesExpected: Int64) -> Void)?, (data: NSData?, error: NSError?) -> Void)] = [:]
+    fileprivate var taskAssociations: [Int: (OZLModelAttachment,
+                                            ((_ attachment: OZLModelAttachment, _ bytesDownloaded: Int64, _ totalBytesExpected: Int64) -> Void)?,
+                                            (_ data: Data?, _ error: NSError?) -> Void)] = [:]
 
-    private lazy var urlSession: () -> NSURLSession = {
-        return NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: self, delegateQueue: nil)
+    fileprivate lazy var urlSession: () -> Foundation.URLSession = {
+        return Foundation.URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
     }
 
     init(networkManager: OZLNetwork) {
@@ -34,30 +36,30 @@ import DFCache
     }
 
 
-    func isAttachmentCached(attachment: OZLModelAttachment) -> Bool {
+    func isAttachmentCached(_ attachment: OZLModelAttachment) -> Bool {
         return self.cache.isValueCachedForKey(attachment.cacheKey)
     }
 
     func downloadAttachment(
-        attachment: OZLModelAttachment,
-        progress: ((attachment: OZLModelAttachment, totalBytesDownloaded: Int64, totalBytesExpected: Int64) -> Void)?,
-        completion: (data: NSData?, error: NSError?) -> Void) {
+        _ attachment: OZLModelAttachment,
+        progress: ((_ attachment: OZLModelAttachment, _ totalBytesDownloaded: Int64, _ totalBytesExpected: Int64) -> Void)?,
+        completion: @escaping (_ data: Data?, _ error: NSError?) -> Void) {
 
-        if let cachedData = self.cache.cachedDataForKey(attachment.cacheKey) {
-            dispatch_async(dispatch_get_main_queue(), { 
-                completion(data: cachedData, error: nil)
+        if let cachedData = self.cache.cachedData(forKey: attachment.cacheKey) {
+            DispatchQueue.main.async(execute: { 
+                completion(cachedData, nil)
             })
 
             return
         }
 
-        guard let contentUrl = NSURL(string: attachment.contentURL) else {
-            dispatch_async(dispatch_get_main_queue(), { 
+        guard let contentUrl = URL(string: attachment.contentURL) else {
+            DispatchQueue.main.async(execute: { 
                 completion(
-                    data: nil,
-                    error: NSError(
+                    nil,
+                    NSError(
                         domain: OZLAttachmentManager.ErrorDomain,
-                        code: OZLAttachmentManagerError.InvalidOrMissingContentURL.rawValue,
+                        code: OZLAttachmentManagerError.invalidOrMissingContentURL.rawValue,
                         userInfo: [
                             NSLocalizedDescriptionKey: "The attachment's content URL was missing or invalid."
                         ]
@@ -68,7 +70,7 @@ import DFCache
             return
         }
 
-        let downloadTask = self.urlSession().downloadTaskWithURL(contentUrl)
+        let downloadTask = self.urlSession().downloadTask(with: contentUrl)
 
         self.taskAssociations[downloadTask.taskIdentifier] = (attachment, progress, completion)
         self.networkManager.activeRequestCount += 1
@@ -76,78 +78,84 @@ import DFCache
         downloadTask.resume()
     }
 
-    func fetchURLForLocalAttachment(attachment: OZLModelAttachment) -> NSURL? {
-        return self.cache.diskCache?.URLForKey(attachment.cacheKey)
+    func fetchURLForLocalAttachment(_ attachment: OZLModelAttachment) -> URL? {
+        return self.cache.diskCache?.url(forKey: attachment.cacheKey)
     }
 
-    func fetchLocalAttachment(attachment: OZLModelAttachment) -> NSData? {
-        return self.cache.cachedDataForKey(attachment.cacheKey)
+    func fetchLocalAttachment(_ attachment: OZLModelAttachment) -> Data? {
+        return self.cache.cachedData(forKey: attachment.cacheKey)
     }
 
-    func fetchLocalAttachment(attachment: OZLModelAttachment, completion: (data: NSData?) -> Void) {
-        self.cache.cachedDataForKey(String(attachment.cacheKey)) { (data) in
-            dispatch_async(dispatch_get_main_queue(), {
-                completion(data: data)
-            })
+    func fetchLocalAttachment(_ attachment: OZLModelAttachment, completion: @escaping (_ data: Data?) -> Void) {
+        self.cache.cachedData(forKey: attachment.cacheKey) { (data) in
+            dispatchMain(completion(data))
+//            DispatchQueue.main.async {
+//                completion(data: dataaaa)
+//            }
+//            DispatchQueue.main.async(execute: {
+//            })
         }
+//        self.cache.cachedData(forKey: "asdf", completion: { (data) in
+
+//        })
     }
 
     // NSURLSessionDelegate
-    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let (_, _, completion) = self.taskAssociations[task.taskIdentifier] else {
             return
         }
 
         defer {
             self.networkManager.activeRequestCount -= 1
-            self.taskAssociations.removeValueForKey(task.taskIdentifier)
+            self.taskAssociations.removeValue(forKey: task.taskIdentifier)
         }
 
         if let error = error {
-            dispatch_async(dispatch_get_main_queue(), {
-                completion(data: nil, error: error)
+            DispatchQueue.main.async(execute: {
+                completion(nil, error as NSError?)
             })
 
             return
         }
 
-        guard let r = task.response as? NSHTTPURLResponse where 200..<300 ~= r.statusCode else {
+        guard let r = task.response as? HTTPURLResponse, 200..<300 ~= r.statusCode else {
             let error = NSError(
                 domain: OZLAttachmentManager.ErrorDomain,
-                code: OZLAttachmentManagerError.UnacceptableStatusCode.rawValue,
+                code: OZLAttachmentManagerError.unacceptableStatusCode.rawValue,
                 userInfo: [ NSLocalizedDescriptionKey: "Expected a status code between 200 and 300. Response: \(task.response)"]
             )
 
-            dispatch_async(dispatch_get_main_queue(), {
-                completion(data: nil, error: error)
+            DispatchQueue.main.async(execute: {
+                completion(nil, error)
             })
 
             return
         }
     }
 
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         guard let (attachment, _, completion) = self.taskAssociations[downloadTask.taskIdentifier] else {
             return
         }
 
-        if let data = NSData(contentsOfURL: location) {
-            self.cache.storeData(data, forKey: attachment.cacheKey)
+        if let data = try? Data(contentsOf: location) {
+            self.cache.store(data, forKey: attachment.cacheKey)
 
-            dispatch_async(dispatch_get_main_queue(), {
-                completion(data: data, error: nil)
+            DispatchQueue.main.async(execute: {
+                completion(data, nil)
             })
 
             self.networkManager.activeRequestCount -= 1
-            self.taskAssociations.removeValueForKey(downloadTask.taskIdentifier)
+            self.taskAssociations.removeValue(forKey: downloadTask.taskIdentifier)
         }
     }
 
-    func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
 
         if let (attachment, progressHandler, _) = self.taskAssociations[downloadTask.taskIdentifier] {
-            dispatch_async(dispatch_get_main_queue(), {
-                progressHandler?(attachment: attachment, bytesDownloaded: totalBytesWritten, totalBytesExpected: totalBytesExpectedToWrite)
+            DispatchQueue.main.async(execute: {
+                progressHandler?(attachment, totalBytesWritten, totalBytesExpectedToWrite)
             })
         }
     }

@@ -24,7 +24,7 @@ class OZLTextFormField: OZLFormField {
 class OZLTextFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
 
     var textField = JVFloatLabeledTextField()
-    private var valueBeforeEditing: String?
+    fileprivate var valueBeforeEditing: String?
 
     required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -38,10 +38,10 @@ class OZLTextFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
 
     func setup() {
         self.textField.delegate = self
-        self.textField.returnKeyType = .Done
+        self.textField.returnKeyType = .done
     }
 
-    override func applyFormField(field: OZLFormField) {
+    override func applyFormField(_ field: OZLFormField) {
         super.applyFormField(field)
         
         guard let field = field as? OZLTextFormField else {
@@ -69,25 +69,25 @@ class OZLTextFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
         self.textField.layoutSubviews()
     }
 
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
 
         return false
     }
 
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         self.valueBeforeEditing = textField.text
         self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: textField)
 
         return true
     }
 
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         if textField.text != self.valueBeforeEditing {
             let oldValue = self.valueBeforeEditing != "" ? self.valueBeforeEditing : nil
             let newValue = textField.text != "" ? textField.text : nil
 
-            self.delegate?.formFieldCell(self, valueChangedFrom: oldValue, toValue: newValue, atKeyPath: self.keyPath, userInfo: self.userInfo)
+            self.delegate?.formFieldCell(self, valueChangedFrom: oldValue as AnyObject?, toValue: newValue as AnyObject?, atKeyPath: self.keyPath, userInfo: self.userInfo)
         }
 
         return true

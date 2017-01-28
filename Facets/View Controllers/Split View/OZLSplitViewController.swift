@@ -24,15 +24,15 @@ import UIKit
         self.init(nibName: nil, bundle: nil)
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.viewControllers = [ self.masterNavigationController, self.detailNavigationController ]
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if self.traitCollection.userInterfaceIdiom == .Pad && self.presentedViewController == nil {
+        if self.traitCollection.userInterfaceIdiom == .pad && self.presentedViewController == nil {
             self.detailNavigationController.viewControllers = [ OZLSplitViewPlaceholderPane() ]
         }
     }
@@ -46,19 +46,19 @@ import UIKit
         self.delegate = self
     }
     
-    override func showViewController(vc: UIViewController, sender: AnyObject?) {
-        if self.traitCollection.horizontalSizeClass == .Compact || vc.view.tag == OZLSplitViewController.PrimaryPaneMember {
+    override func show(_ vc: UIViewController, sender: Any?) {
+        if self.traitCollection.horizontalSizeClass == .compact || vc.view.tag == OZLSplitViewController.PrimaryPaneMember {
             self.masterNavigationController.pushViewController(vc, animated: true)
         } else {
             self.detailNavigationController.viewControllers = [ vc ]
         }
     }
     
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         
         if secondaryViewController == self.detailNavigationController {
             if self.detailNavigationController.viewControllers.count > 0 {
-                if self.detailNavigationController.viewControllers.first!.isKindOfClass(OZLSplitViewPlaceholderPane.self) {
+                if self.detailNavigationController.viewControllers.first!.isKind(of: OZLSplitViewPlaceholderPane.self) {
                     return true
                 }
             }
@@ -67,10 +67,10 @@ import UIKit
         return false
     }
     
-    func splitViewController(splitViewController: UISplitViewController, separateSecondaryViewControllerFromPrimaryViewController primaryViewController: UIViewController) -> UIViewController? {
+    func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
         
         
-        if let last = self.masterNavigationController.viewControllers.last where last.isKindOfClass(UINavigationController.self) {
+        if let last = self.masterNavigationController.viewControllers.last, last.isKind(of: UINavigationController.self) {
             if last != self.detailNavigationController {
                 assertionFailure("The last vc in the master nav is definitely not what we're expecting");
             }
@@ -80,18 +80,18 @@ import UIKit
             // they should be split
             var splitIndex = -1
             var secondaryPaneVCs = [UIViewController]()
-            for ele in self.masterNavigationController.viewControllers.enumerate() {
-                if ele.element.view.tag != OZLSplitViewController.PrimaryPaneMember && splitIndex < 0 {
-                    splitIndex = ele.index
+            for (index, ele) in self.masterNavigationController.viewControllers.enumerated() {
+                if ele.view.tag != OZLSplitViewController.PrimaryPaneMember && splitIndex < 0 {
+                    splitIndex = index
                 }
                 
                 if splitIndex > 0 {
-                    secondaryPaneVCs.append(ele.element)
+                    secondaryPaneVCs.append(ele)
                 }
             }
             
             if splitIndex > 0 {
-                self.masterNavigationController.viewControllers.removeRange(splitIndex..<self.masterNavigationController.viewControllers.count)
+                self.masterNavigationController.viewControllers.removeSubrange(splitIndex..<self.masterNavigationController.viewControllers.count)
             }
             
             if secondaryPaneVCs.count == 0 {

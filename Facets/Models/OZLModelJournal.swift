@@ -14,7 +14,7 @@ class OZLModelJournal: NSObject {
     var author: OZLModelUser? = nil
     var notes: String? = nil
     var journalId: Int? = nil
-    var creationDate: NSDate? = nil
+    var creationDate: Date? = nil
     var details: Array<OZLModelJournalDetail> = []
     
     override init() {
@@ -32,7 +32,7 @@ class OZLModelJournal: NSObject {
         self.journalId = attributes["id"] as? Int
         
         if let dateString = attributes["created_on"] as? String {
-            self.creationDate = NSDate(ISO8601String: dateString)
+            self.creationDate = NSDate(iso8601String: dateString) as? Date
         }
         
         if let details = attributes["details"] as? Array<Dictionary<String, AnyObject>> {
@@ -47,7 +47,7 @@ class OZLModelJournal: NSObject {
     
     override var description: String {
         get {
-            return "<OZLModelJournal: \(unsafeAddressOf(self))> By \(self.author?.name) on \(self.creationDate) (\(self.details.count) details)"
+            return "<OZLModelJournal: \(Unmanaged.passUnretained(self).toOpaque())> By \(self.author?.name) on \(self.creationDate) (\(self.details.count) details)"
         }
     }
 }

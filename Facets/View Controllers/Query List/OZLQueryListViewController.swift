@@ -20,7 +20,7 @@ class OZLQueryListViewController: OZLTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         self.view.addSubview(self.loadingView)
         self.isFirstAppearance = true
@@ -28,12 +28,12 @@ class OZLQueryListViewController: OZLTableViewController {
         self.title = "Queries"
 
         self.tableViewController.refreshControl = UIRefreshControl()
-        self.tableViewController.refreshControl?.addTarget(self, action: #selector(refreshData), forControlEvents: .ValueChanged)
+        self.tableViewController.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: OZLQueryReuseIdentifier)
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: OZLQueryReuseIdentifier)
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         let needsRefresh = self.displayedProjectId == NSNotFound || !(self.displayedProjectId == OZLSingleton.sharedInstance().currentProjectID)
@@ -54,20 +54,20 @@ class OZLQueryListViewController: OZLTableViewController {
     }
 
     // MARK: - UITableViewDataSource/Delegate
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.queries.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(OZLQueryReuseIdentifier, forIndexPath: indexPath)
-        cell.accessoryType = .DisclosureIndicator
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: OZLQueryReuseIdentifier, for: indexPath)
+        cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = self.queries[indexPath.row].name
-        cell.textLabel?.font = UIFont.systemFontOfSize(15.0)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 15.0)
 
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let query = self.queries[indexPath.row]
 
         let vm = OZLIssueListViewModel()
@@ -75,7 +75,7 @@ class OZLQueryListViewController: OZLTableViewController {
         vm.projectId = query.projectId
         vm.queryId = query.queryId
 
-        let vc = OZLIssueListViewController(style: .Plain)
+        let vc = OZLIssueListViewController(style: .plain)
         vc.viewModel = vm
         vc.view.tag = OZLSplitViewController.PrimaryPaneMember
 
@@ -84,28 +84,32 @@ class OZLQueryListViewController: OZLTableViewController {
 
     func refreshData() {
         if self.queries.count == 0 {
-            self.loadingView.hidden = false
+            self.loadingView.isHidden = false
             self.loadingView.startLoading()
-        } else if !(self.tableViewController.refreshControl?.refreshing ?? false) {
+        } else if !(self.tableViewController.refreshControl?.isRefreshing ?? false) {
             self.tableViewController.refreshControl?.beginRefreshing()
         }
 
         weak var weakSelf = self
         let projectId = OZLSingleton.sharedInstance().currentProjectID
 
-        OZLNetwork.sharedInstance().getQueryListForProject(projectId, params: nil) { (result, error) in
+        OZLNetwork.sharedInstance().getQueryList(forProject: projectId, params: nil) { (result, error) in
+            guard let weakSelf = weakSelf else {
+                return
+            }
+            
             if error != nil {
-                weakSelf?.loadingView.endLoadingWithErrorMessage("There was a problem loading the query list. Please check your connection and try again.")
+                weakSelf.loadingView.endLoadingWithErrorMessage("There was a problem loading the query list. Please check your connection and try again.")
             } else {
                 let count = result?.count ?? 0
-                weakSelf?.loadingView.endLoadingWithErrorMessage(count > 0 ? nil : "Nothing to see here.")
-                weakSelf?.displayedProjectId = projectId
-                weakSelf?.queries = result as? [OZLModelQuery] ?? []
+                weakSelf.loadingView.endLoadingWithErrorMessage(count > 0 ? nil : "Nothing to see here.")
+                weakSelf.displayedProjectId = projectId
+                weakSelf.queries = result as? [OZLModelQuery] ?? []
             }
 
-            weakSelf?.loadingView.hidden = ((error == nil) && weakSelf?.queries.count > 0)
-            weakSelf?.tableView.reloadData()
-            weakSelf?.tableViewController.refreshControl?.endRefreshing()
+            weakSelf.loadingView.isHidden = ((error == nil) && weakSelf.queries.count > 0)
+            weakSelf.tableView.reloadData()
+            weakSelf.tableViewController.refreshControl?.endRefreshing()
         }
     }
 }

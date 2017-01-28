@@ -9,28 +9,28 @@
 import Foundation
 
 protocol OZLIssueViewModelDelegate: AnyObject {
-    func viewModel(viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?)
-    func viewModelDetailDisplayModeDidChange(viewModel: OZLIssueViewModel)
-    func viewModelIssueContentDidChange(viewModel: OZLIssueViewModel)
+    func viewModel(_ viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?)
+    func viewModelDetailDisplayModeDidChange(_ viewModel: OZLIssueViewModel)
+    func viewModelIssueContentDidChange(_ viewModel: OZLIssueViewModel)
 }
 
 enum OZLIssueCompleteness: Int {
-    case None
-    case Some
-    case All
+    case none
+    case some
+    case all
 }
 
 @objc class OZLIssueViewModel: NSObject, OZLQuickAssignDelegate {
 
-    private static let PinnedIdentifiersDefaultsKeypath = "facets.issue.pinned-detail-identifiers"
+    fileprivate static let PinnedIdentifiersDefaultsKeypath = "facets.issue.pinned-detail-identifiers"
 
     static let SectionDetail = "OZLIssueSectionDetail"
     static let SectionDescription = "OZLIssueSectionDescription"
     static let SectionAttachments = "OZLIssueSectionAttachments"
     static let SectionRecentActivity = "OZLIssueSectionRecentActivity"
 
-    private static let defaultPinnedDetailIdentifiers: Set<String> = ["status_id", "category_id", "priority_id", "fixed_version_id"]
-    private var pinnedDetailIdentifiers = OZLIssueViewModel.defaultPinnedDetailIdentifiers
+    fileprivate static let defaultPinnedDetailIdentifiers: Set<String> = ["status_id", "category_id", "priority_id", "fixed_version_id"]
+    fileprivate var pinnedDetailIdentifiers = OZLIssueViewModel.defaultPinnedDetailIdentifiers
 
     var showAllDetails = false {
         didSet(oldValue) {
@@ -42,8 +42,8 @@ enum OZLIssueCompleteness: Int {
     }
 
     // (identifier, displayName, displayValue)
-    private var details: [(String, String, String)] = []
-    private var visibleDetails: [(String, String, String)] = []
+    fileprivate var details: [(String, String, String)] = []
+    fileprivate var visibleDetails: [(String, String, String)] = []
 
     weak var delegate: OZLIssueViewModelDelegate?
     var successfullyFetchedIssue = false
@@ -63,7 +63,7 @@ enum OZLIssueCompleteness: Int {
         super.init()
 
         let keyPath = self.targetedPinnedIdentifiersDefaultsKeypath()
-        if let storedIdentifiers = NSUserDefaults.standardUserDefaults().arrayForKey(keyPath) as? [String] {
+        if let storedIdentifiers = UserDefaults.standard.array(forKey: keyPath) as? [String] {
             self.pinnedDetailIdentifiers = Set(storedIdentifiers)
         }
 
@@ -97,15 +97,15 @@ enum OZLIssueCompleteness: Int {
 
     func completeness() -> OZLIssueCompleteness {
         if self.successfullyFetchedIssue {
-            return .All
+            return .all
         } else if self.issueModel.subject != nil {
-            return .Some
+            return .some
         } else {
-            return .None
+            return .none
         }
     }
 
-    func displayNameForSectionName(sectionName: String) -> String? {
+    func displayNameForSectionName(_ sectionName: String) -> String? {
         if sectionName == OZLIssueViewModel.SectionDescription {
             return "DESCRIPTION"
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
@@ -117,8 +117,8 @@ enum OZLIssueCompleteness: Int {
         return nil
     }
 
-    func sectionNumberForSectionName(sectionName: String) -> Int? {
-        return self.currentSectionNames.indexOf(sectionName)
+    func sectionNumberForSectionName(_ sectionName: String) -> Int? {
+        return self.currentSectionNames.index(of: sectionName)
     }
 
     func loadIssueData() {
@@ -132,7 +132,7 @@ enum OZLIssueCompleteness: Int {
                     weakSelf.issueModel = issue
                 }
 
-                weakSelf.delegate?.viewModel(weakSelf, didFinishLoadingIssueWithError: error)
+                weakSelf.delegate?.viewModel(weakSelf, didFinishLoadingIssueWithError: error as NSError?)
             }
         }
     }
@@ -154,7 +154,7 @@ enum OZLIssueCompleteness: Int {
         }
 
         if let startDate = self.issueModel.startDate {
-            details.append(("start_date", OZLModelIssue.displayNameForAttributeName("start_date"), String(startDate)))
+            details.append(("start_date", OZLModelIssue.displayNameForAttributeName("start_date"), String(describing: startDate)))
         }
 
         if let category = self.issueModel.category {
@@ -180,7 +180,7 @@ enum OZLIssueCompleteness: Int {
                 (
                     String(field.fieldId),
                     field.name ?? "",
-                    OZLModelCustomField.displayValueForCustomFieldType(cachedField?.type ?? field.type, attributeId: field.fieldId, attributeValue: field.value ?? "")
+                    OZLModelCustomField.displayValue(for: cachedField?.type ?? field.type, attributeId: field.fieldId, attributeValue: field.value ?? "")
                 )
             )
         }
@@ -191,7 +191,7 @@ enum OZLIssueCompleteness: Int {
     func refreshVisibleDetails() {
         var visibleDetails: [(String, String, String)] = []
 
-        for (index, (identifier, _, _)) in self.details.enumerate() {
+        for (index, (identifier, _, _)) in self.details.enumerated() {
             if self.pinnedDetailIdentifiers.contains(identifier) || self.showAllDetails {
                 visibleDetails.append(self.details[index])
             }
@@ -204,13 +204,13 @@ enum OZLIssueCompleteness: Int {
         return self.visibleDetails.count
     }
 
-    func detailAtIndex(index: Int) -> (String, String, Bool) {
+    func detailAtIndex(_ index: Int) -> (String, String, Bool) {
         let (identifier, name, value) = self.visibleDetails[index]
 
         return (name, value, self.pinnedDetailIdentifiers.contains(identifier))
     }
 
-    func togglePinningForDetailAtIndex(index: Int) {
+    func togglePinningForDetailAtIndex(_ index: Int) {
         let (identifier, _, _) = self.details[index]
 
         if self.pinnedDetailIdentifiers.contains(identifier) {
@@ -219,7 +219,7 @@ enum OZLIssueCompleteness: Int {
             self.pinnedDetailIdentifiers.insert(identifier)
         }
 
-        NSUserDefaults.standardUserDefaults().setObject(Array(self.pinnedDetailIdentifiers), forKey: self.targetedPinnedIdentifiersDefaultsKeypath())
+        UserDefaults.standard.set(Array(self.pinnedDetailIdentifiers), forKey: self.targetedPinnedIdentifiersDefaultsKeypath())
     }
 
     // MARK: - Recent activity
@@ -227,7 +227,7 @@ enum OZLIssueCompleteness: Int {
         return min(self.issueModel.journals?.count ?? 0, 3)
     }
 
-    func recentActivityAtIndex(index: Int) -> OZLModelJournal {
+    func recentActivityAtIndex(_ index: Int) -> OZLModelJournal {
         if let journals = self.issueModel.journals {
             return journals[journals.count - index - 1]
         }
@@ -236,16 +236,16 @@ enum OZLIssueCompleteness: Int {
     }
 
     // MARK: - Quick assign delegate
-    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?) {
+    func quickAssignController(_ quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?) {
         self.issueModel = issue
 
         let journal = OZLModelJournal()
-        journal.creationDate = NSDate()
+        journal.creationDate = Date()
 
         let detail = OZLModelJournalDetail()
-        detail.type = .Attribute
-        detail.oldValue = String(from?.userId)
-        detail.newValue = String(to?.userId)
+        detail.type = .attribute
+        detail.oldValue = String(describing: from?.userId)
+        detail.newValue = String(describing: to?.userId)
         detail.name = "assigned_to_id"
 
         journal.details = [ detail ]

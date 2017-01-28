@@ -654,6 +654,7 @@
 				TargetAttributes = {
 					D5DB80551792F2BF0081662A = {
 						DevelopmentTeam = 5K3CGZPRYC;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -722,7 +723,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		BDD032F8871803A3E6C91C65 /* [CP] Embed Pods Frameworks */ = {
@@ -903,12 +904,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
 				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "d998376d-8fe7-42be-878c-a9e880c1fbd5";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -995,13 +997,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
 				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "8dccb32b-97de-4411-a2f4-ad210727eb6c";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1024,12 +1027,13 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Supporting/Facets-Prefix.pch";
 				INFOPLIST_FILE = "Supporting/Facets-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
 				PROVISIONING_PROFILE = "d998376d-8fe7-42be-878c-a9e880c1fbd5";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

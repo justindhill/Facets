@@ -10,8 +10,8 @@ import UIKit
 
 class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewControllerDelegate, UITabBarControllerDelegate {
     
-    let projectIssuesVC = OZLIssueListViewController(style: .Plain)
-    let queryListVC = OZLQueryListViewController(style: .Plain)
+    let projectIssuesVC = OZLIssueListViewController(style: .plain)
+    let queryListVC = OZLQueryListViewController(style: .plain)
     let settingsVC = OZLAccountViewController(nibName: "OZLAccountViewController", bundle: nil)
     
     let projectSplitView = OZLMainTabControllerViewController.customizedSplitViewController()
@@ -20,11 +20,11 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
 
         self.delegate = self
-        self.tabBar.translucent = false
-        self.tabBar.barTintColor = UIColor.whiteColor()
+        self.tabBar.isTranslucent = false
+        self.tabBar.barTintColor = UIColor.white
         
         self.projectIssuesVC.viewModel = OZLIssueListViewModel()
         self.projectIssuesVC.viewModel.shouldShowProjectSelector = true
@@ -40,16 +40,16 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
         self.queryListSplitView.tabBarItem = UITabBarItem(title:"Queries", image: UIImage(named: "icon-search"), tag:0)
         
         let settingsNav = UINavigationController(rootViewController: self.settingsVC)
-        settingsNav.navigationBar.translucent = false
-        settingsNav.navigationBar.barTintColor = UIColor.whiteColor()
+        settingsNav.navigationBar.isTranslucent = false
+        settingsNav.navigationBar.barTintColor = UIColor.white
         settingsNav.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "icon-cog"), tag: 0)
 
         let watchingVC = UIViewController()
         watchingVC.title = "Watching"
 
         let watchingNav = UINavigationController(rootViewController: watchingVC)
-        watchingNav.navigationBar.translucent = false
-        watchingNav.navigationBar.barTintColor = UIColor.whiteColor()
+        watchingNav.navigationBar.isTranslucent = false
+        watchingNav.navigationBar.barTintColor = UIColor.white
         watchingNav.tabBarItem = UITabBarItem(title: "Watching", image: UIImage(named: "icon-eye"), tag: 0)
         
         self.viewControllers = [ self.projectSplitView, self.queryListSplitView, watchingNav, settingsNav ]
@@ -65,21 +65,21 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
 
     class func customizedSplitViewController() -> OZLSplitViewController {
         let svc = OZLSplitViewController()
-        svc.preferredDisplayMode = .AllVisible
+        svc.preferredDisplayMode = .allVisible
         svc.extendedLayoutIncludesOpaqueBars = true
         svc.masterNavigationController.extendedLayoutIncludesOpaqueBars = true
         svc.detailNavigationController.extendedLayoutIncludesOpaqueBars = true
         
-        svc.masterNavigationController.navigationBar.translucent = false
-        svc.masterNavigationController.navigationBar.barTintColor = UIColor.whiteColor()
-        svc.detailNavigationController.navigationBar.translucent = false
-        svc.detailNavigationController.navigationBar.barTintColor = UIColor.whiteColor()
+        svc.masterNavigationController.navigationBar.isTranslucent = false
+        svc.masterNavigationController.navigationBar.barTintColor = UIColor.white
+        svc.detailNavigationController.navigationBar.isTranslucent = false
+        svc.detailNavigationController.navigationBar.barTintColor = UIColor.white
         
         return svc;
     }
     
     // MARK: OZLAccountViewControllerDelegate
-    func accountViewControllerDidSuccessfullyAuthenticate(account: OZLAccountViewController!, shouldTransitionToIssues shouldTransition: Bool) {
+    func accountViewControllerDidSuccessfullyAuthenticate(_ account: OZLAccountViewController!, shouldTransitionToIssues shouldTransition: Bool) {
         if shouldTransition {
             CATransaction.begin()
             
@@ -88,7 +88,7 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
             transition.type = kCATransitionPush;
             transition.subtype = kCATransitionFromLeft;
             transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-            self.view.layer.addAnimation(transition, forKey: nil)
+            self.view.layer.add(transition, forKey: nil)
             
             self.selectedIndex = 0
             
@@ -97,9 +97,9 @@ class OZLMainTabControllerViewController: UITabBarController, OZLAccountViewCont
     }
 
     // MARK: UITabBarControllerDelegate
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        if let viewController = viewController as? OZLSplitViewController where viewController == self.selectedViewController {
-            viewController.masterNavigationController.popToRootViewControllerAnimated(true)
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if let viewController = viewController as? OZLSplitViewController, viewController == self.selectedViewController {
+            viewController.masterNavigationController.popToRootViewController(animated: true)
         }
 
         return true

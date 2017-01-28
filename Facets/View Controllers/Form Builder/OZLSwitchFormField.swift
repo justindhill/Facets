@@ -37,10 +37,10 @@ class OZLSwitchFormFieldCell: OZLFormFieldCell {
     }
 
     func setup() {
-        self.switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), forControlEvents: .ValueChanged)
+        self.switchControl.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
     }
 
-    override func applyFormField(field: OZLFormField) {
+    override func applyFormField(_ field: OZLFormField) {
         super.applyFormField(field)
 
         guard let field = field as? OZLSwitchFormField else {
@@ -49,7 +49,7 @@ class OZLSwitchFormFieldCell: OZLFormFieldCell {
         }
 
         self.titleLabel.text = field.placeholder
-        self.switchControl.on = field.currentValue
+        self.switchControl.isOn = field.currentValue
         self.currentValue = field.currentValue
     }
 
@@ -64,22 +64,22 @@ class OZLSwitchFormFieldCell: OZLFormFieldCell {
         }
 
         self.switchControl.sizeToFit()
-        self.switchControl.frame = CGRectMake(self.contentView.frame.size.width - self.layoutMargins.right - self.switchControl.frame.size.width,
-                                              (self.contentView.frame.size.height - self.switchControl.frame.size.height) / 2.0,
-                                              self.switchControl.frame.size.width,
-                                              self.switchControl.frame.size.height)
+        self.switchControl.frame = CGRect(x: self.contentView.frame.size.width - self.layoutMargins.right - self.switchControl.frame.size.width,
+                                          y: (self.contentView.frame.size.height - self.switchControl.frame.size.height) / 2.0,
+                                          width: self.switchControl.frame.size.width,
+                                          height: self.switchControl.frame.size.height)
 
         self.titleLabel.sizeToFit()
-        self.titleLabel.frame = CGRectMake(self.layoutMargins.left,
-                                           (self.contentView.frame.size.height - self.titleLabel.frame.size.height) / 2.0,
-                                           self.titleLabel.frame.size.width,
-                                           self.titleLabel.frame.size.height)
+        self.titleLabel.frame = CGRect(x: self.layoutMargins.left,
+                                       y: (self.contentView.frame.size.height - self.titleLabel.frame.size.height) / 2.0,
+                                       width: self.titleLabel.frame.size.width,
+                                       height: self.titleLabel.frame.size.height)
     }
 
-    func switchValueChanged(sender: UISwitch) {
-        if sender.on != self.currentValue {
-            self.delegate?.formFieldCell(self, valueChangedFrom: self.currentValue, toValue: sender.on, atKeyPath: self.keyPath, userInfo: self.userInfo)
-            self.currentValue = sender.on
+    func switchValueChanged(_ sender: UISwitch) {
+        if sender.isOn != self.currentValue {
+            self.delegate?.formFieldCell(self, valueChangedFrom: self.currentValue as AnyObject?, toValue: sender.isOn as AnyObject?, atKeyPath: self.keyPath, userInfo: self.userInfo)
+            self.currentValue = sender.isOn
         }
     }
 }

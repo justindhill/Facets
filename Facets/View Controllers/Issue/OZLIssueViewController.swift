@@ -12,10 +12,10 @@ import AVKit
 
 class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate, UIViewControllerTransitioningDelegate {
 
-    private let DetailReuseIdentifier = "DetailReuseIdentifier"
-    private let AttachmentReuseIdentifier = "AttachmentReuseIdentifier"
-    private let DescriptionReuseIdentifier = "DescriptionReuseIdentifier"
-    private let RecentActivityReuseIdentifier = "RecentActivityReuseIdentifier"
+    fileprivate let DetailReuseIdentifier = "DetailReuseIdentifier"
+    fileprivate let AttachmentReuseIdentifier = "AttachmentReuseIdentifier"
+    fileprivate let DescriptionReuseIdentifier = "DescriptionReuseIdentifier"
+    fileprivate let RecentActivityReuseIdentifier = "RecentActivityReuseIdentifier"
 
     let ShowAllDetailsString = "Show all"
     let HideUnpinnedDetailsString = "Hide unpinned details"
@@ -30,7 +30,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     //MARK: - Life cycle
     init(viewModel: OZLIssueViewModel) {
         self.viewModel = viewModel
-        super.init(style: .Grouped)
+        super.init(style: .grouped)
 
         self.viewModel.delegate = self
         self.applyViewModel(self.viewModel)
@@ -44,34 +44,34 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.backgroundColor = UIColor.whiteColor()
+        self.tableView.backgroundColor = UIColor.white
 
         self.header.contentPadding = OZLContentPadding;
-        self.header.assignButton.addTarget(self, action: #selector(quickAssignAction), forControlEvents: .TouchUpInside)
+        self.header.assignButton.addTarget(self, action: #selector(quickAssignAction), for: .touchUpInside)
 
-        self.tableView.registerClass(OZLIssueDetailCell.self, forCellReuseIdentifier: DetailReuseIdentifier)
-        self.tableView.registerClass(OZLIssueAttachmentCell.self, forCellReuseIdentifier: AttachmentReuseIdentifier)
-        self.tableView.registerClass(OZLIssueDescriptionCell.self, forCellReuseIdentifier: DescriptionReuseIdentifier)
-        self.tableView.registerClass(OZLJournalCell.self, forCellReuseIdentifier: RecentActivityReuseIdentifier)
+        self.tableView.register(OZLIssueDetailCell.self, forCellReuseIdentifier: DetailReuseIdentifier)
+        self.tableView.register(OZLIssueAttachmentCell.self, forCellReuseIdentifier: AttachmentReuseIdentifier)
+        self.tableView.register(OZLIssueDescriptionCell.self, forCellReuseIdentifier: DescriptionReuseIdentifier)
+        self.tableView.register(OZLJournalCell.self, forCellReuseIdentifier: RecentActivityReuseIdentifier)
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(editButtonAction(_:)))
-        self.tableView.separatorStyle = .None
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editButtonAction(_:)))
+        self.tableView.separatorStyle = .none
 
         self.tableViewController.refreshControl = UIRefreshControl()
-        self.tableViewController.refreshControl?.addTarget(self, action: #selector(pullToRefreshTriggered(_:)), forControlEvents: .ValueChanged)
+        self.tableViewController.refreshControl?.addTarget(self, action: #selector(pullToRefreshTriggered(_:)), for: .valueChanged)
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.refreshHeaderSizeForWidth(self.view.frame.size.width)
     }
 
-    func refreshHeaderSizeForWidth(width: CGFloat) {
-        self.header.frame.size = self.header.sizeThatFits(CGSizeMake(width, UIViewNoIntrinsicMetric))
+    func refreshHeaderSizeForWidth(_ width: CGFloat) {
+        self.header.frame.size = self.header.sizeThatFits(CGSize(width: width, height: UIViewNoIntrinsicMetric))
         self.tableView.tableHeaderView = self.header;
     }
 
-    func applyViewModel(viewModel: OZLIssueViewModel) {
+    func applyViewModel(_ viewModel: OZLIssueViewModel) {
         if let trackerName = viewModel.issueModel.tracker?.name {
             self.title = "\(trackerName) #\(viewModel.issueModel.index)"
         }
@@ -80,56 +80,56 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.tableView.reloadData()
     }
 
-    func quickAssignAction(sender: UIControl) {
+    func quickAssignAction(_ sender: UIControl) {
         let vc = OZLQuickAssignViewController(issueModel: self.viewModel.issueModel)
 
-        if self.traitCollection.userInterfaceIdiom == .Pad {
-            vc.modalPresentationStyle = .Popover
+        if self.traitCollection.userInterfaceIdiom == .pad {
+            vc.modalPresentationStyle = .popover
             vc.popoverPresentationController?.sourceView = sender.superview
             vc.popoverPresentationController?.sourceRect = sender.frame
-            vc.preferredContentSize = CGSizeMake(320, 370)
+            vc.preferredContentSize = CGSize(width: 320, height: 370)
         } else {
-            vc.modalPresentationStyle = .Custom
+            vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
         }
 
         vc.delegate = self.viewModel
 
-        self.presentViewController(vc, animated: true, completion: nil)
+        self.present(vc, animated: true, completion: nil)
     }
 
     // MARK: - Previewing
     @available(iOS 9.0, *)
-    override func previewActionItems() -> [UIPreviewActionItem] {
+    override var previewActionItems : [UIPreviewActionItem] {
         var items = [UIPreviewActionItem]()
 
-        items.append(UIPreviewAction(title: "Quick Assign", style: .Default, handler: { (action, previewViewController) in
+        items.append(UIPreviewAction(title: "Quick Assign", style: .default, handler: { (action, previewViewController) in
             if let issueCopy = self.viewModel.issueModel.copy() as? OZLModelIssue {
                 let vc = OZLQuickAssignViewController(issueModel: issueCopy)
                 vc.transitioningDelegate = self
-                vc.modalPresentationStyle = .Custom
+                vc.modalPresentationStyle = .custom
                 vc.delegate = self.previewQuickAssignDelegate
 
-                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(vc, animated: true, completion: nil)
+                UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
             }
         }))
 
-        items.append(UIPreviewAction(title: "Edit", style: .Default, handler: { (action, previewViewController) in
+        items.append(UIPreviewAction(title: "Edit", style: .default, handler: { (action, previewViewController) in
             let vc = OZLIssueComposerViewController(issue: self.viewModel.issueModel)
             let nav = UINavigationController(rootViewController: vc)
 
-            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(nav, animated: true, completion: nil)
+            UIApplication.shared.keyWindow?.rootViewController?.present(nav, animated: true, completion: nil)
         }))
 
         return items
     }
 
     // MARK: - UITableViewDelegate/DataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return self.viewModel.currentSectionNames.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionName = self.viewModel.currentSectionNames[section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
@@ -145,13 +145,13 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return 0
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
 
         let sectionName = self.viewModel.currentSectionNames[indexPath.section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
-            cell = tableView.dequeueReusableCellWithIdentifier(DetailReuseIdentifier, forIndexPath: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: DetailReuseIdentifier, for: indexPath)
 
             if let cell = cell as? OZLIssueDetailCell {
                 let (name, value, isPinned) = self.viewModel.detailAtIndex(indexPath.row)
@@ -159,41 +159,41 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
                 cell.accessoryImageView.image = (isPinned && self.viewModel.showAllDetails) ? UIImage(named: "icon-checkmark") : nil
 
                 cell.pinned = isPinned
-                cell.unpinnedBackgroundColor = UIColor.OZLVeryLightGrayColor()
-                cell.pinnedBackgroundColor = UIColor.whiteColor()
+                cell.unpinnedBackgroundColor = UIColor.ozlVeryLightGray()
+                cell.pinnedBackgroundColor = UIColor.white
 
                 if indexPath.row == 0 {
-                    cell.cellPosition = .Top
+                    cell.cellPosition = .top
                 } else if indexPath.row == self.viewModel.numberOfDetails() - 1 {
-                    cell.cellPosition = .Bottom
+                    cell.cellPosition = .bottom
                 } else {
-                    cell.cellPosition = .Middle
+                    cell.cellPosition = .middle
                 }
             }
 
         } else if sectionName == OZLIssueViewModel.SectionAttachments {
-            cell = tableView.dequeueReusableCellWithIdentifier(AttachmentReuseIdentifier, forIndexPath: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: AttachmentReuseIdentifier, for: indexPath)
 
-            if let cell = cell as? OZLIssueAttachmentCell, attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
+            if let cell = cell as? OZLIssueAttachmentCell, let attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
                 cell.applyAttachmentModel(attachment)
 
                 if OZLSingleton.sharedInstance().attachmentManager.isAttachmentCached(attachment) {
                     cell.accessoryView = nil
-                    cell.accessoryType = .DisclosureIndicator
+                    cell.accessoryType = .disclosureIndicator
                 } else {
                     cell.accessoryView = cell.downloadButton
                 }
 
-                cell.downloadButton.addTarget(self, action: #selector(downloadAttachmentAction(_:)), forControlEvents: .TouchUpInside)
+                cell.downloadButton.addTarget(self, action: #selector(downloadAttachmentAction(_:)), for: .touchUpInside)
             }
         } else if sectionName == OZLIssueViewModel.SectionDescription {
-            cell = tableView.dequeueReusableCellWithIdentifier(DescriptionReuseIdentifier, forIndexPath: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: DescriptionReuseIdentifier, for: indexPath)
 
             if let cell = cell as? OZLIssueDescriptionCell {
                 cell.descriptionPreviewString = self.viewModel.issueModel.issueDescription
             }
         } else if sectionName == OZLIssueViewModel.SectionRecentActivity {
-            cell = tableView.dequeueReusableCellWithIdentifier(RecentActivityReuseIdentifier, forIndexPath: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: RecentActivityReuseIdentifier, for: indexPath)
 
             if let cell = cell as? OZLJournalCell {
                 cell.journal = self.viewModel.recentActivityAtIndex(indexPath.row)
@@ -206,7 +206,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
             } else if cell.superview == nil {
                 cell.frame.size.width = self.tableView.frame.size.width
 
-                if self.traitCollection.userInterfaceIdiom == .Pad {
+                if self.traitCollection.userInterfaceIdiom == .pad {
                     cell.layoutMargins = UIEdgeInsetsMake(10, 20, 10, 20)
                 } else {
                     cell.layoutMargins = UIEdgeInsetsMake(11, 16, 11, 16)
@@ -217,15 +217,15 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return cell ?? UITableViewCell()
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
 
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return 44.0
     }
 
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
         let header = OZLIssueSectionHeaderView()
         header.contentPadding = self.contentPadding
@@ -234,23 +234,23 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         header.titleLabel.text = self.viewModel.displayNameForSectionName(sectionName)
 
         if sectionName == OZLIssueViewModel.SectionRecentActivity {
-            header.disclosureButton.setTitle("Show all \u{203a}", forState: .Normal)
-            header.disclosureButton.addTarget(self, action: #selector(showAllActivityAction), forControlEvents: .TouchUpInside)
+            header.disclosureButton.setTitle("Show all \u{203a}", for: UIControlState())
+            header.disclosureButton.addTarget(self, action: #selector(showAllActivityAction), for: .touchUpInside)
         } else if sectionName == OZLIssueViewModel.SectionDescription {
-            header.disclosureButton.setTitle("Show full description \u{203a}", forState: .Normal)
-            header.disclosureButton.addTarget(self, action: #selector(showFullDescriptionAction), forControlEvents: .TouchUpInside)
+            header.disclosureButton.setTitle("Show full description \u{203a}", for: UIControlState())
+            header.disclosureButton.addTarget(self, action: #selector(showFullDescriptionAction), for: .touchUpInside)
         }
 
         return header
     }
 
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let sectionName = self.viewModel.currentSectionNames[section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
             let footerView = OZLIssueDetailsSectionFooter()
-            footerView.leftButton.setTitle(self.viewModel.showAllDetails ? HideUnpinnedDetailsString : ShowAllDetailsString, forState: .Normal)
-            footerView.leftButton.addTarget(self, action: #selector(togglePinnedDetailsAction(_:)), forControlEvents: .TouchUpInside)
+            footerView.leftButton.setTitle(self.viewModel.showAllDetails ? HideUnpinnedDetailsString : ShowAllDetailsString, for: UIControlState())
+            footerView.leftButton.addTarget(self, action: #selector(togglePinnedDetailsAction(_:)), for: .touchUpInside)
 
             return footerView
         }
@@ -258,31 +258,31 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return nil
     }
 
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return CGFloat.min
+            return CGFloat.leastNormalMagnitude
         }
 
         return 30.0
     }
 
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let sectionName = self.viewModel.currentSectionNames[section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
             return 30.0
         }
 
-        return CGFloat.min
+        return CGFloat.leastNormalMagnitude
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionName = self.viewModel.currentSectionNames[section]
 
         return self.viewModel.displayNameForSectionName(sectionName)
     }
 
-    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: IndexPath) -> Bool {
         let sectionName = self.viewModel.currentSectionNames[indexPath.section]
 
         if sectionName == OZLIssueViewModel.SectionDetail && self.viewModel.showAllDetails {
@@ -298,12 +298,12 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return false
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let sectionName = self.viewModel.currentSectionNames[indexPath.section]
 
         if sectionName == OZLIssueViewModel.SectionDetail && self.viewModel.showAllDetails {
             self.viewModel.togglePinningForDetailAtIndex(indexPath.row)
-            tableView.reloadRowsAtIndexPaths([ indexPath ], withRowAnimation: .None)
+            tableView.reloadRows(at: [ indexPath ], with: .none)
         }
 
         if sectionName == OZLIssueViewModel.SectionAttachments {
@@ -312,7 +312,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
             }
         }
 
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
     // MARK: - Button actions
@@ -331,39 +331,39 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    func togglePinnedDetailsAction(button: UIButton) {
-        button.setTitle(!self.viewModel.showAllDetails ? HideUnpinnedDetailsString : ShowAllDetailsString, forState: .Normal)
+    func togglePinnedDetailsAction(_ button: UIButton) {
+        button.setTitle(!self.viewModel.showAllDetails ? HideUnpinnedDetailsString : ShowAllDetailsString, for: UIControlState())
         button.superview?.setNeedsLayout()
         button.superview?.layoutIfNeeded()
 
         self.viewModel.showAllDetails = !self.viewModel.showAllDetails
     }
 
-    func editButtonAction(button: UIButton) {
+    func editButtonAction(_ button: UIButton) {
         let composer = OZLIssueComposerViewController(issue: self.viewModel.issueModel)
 
         let nav = UINavigationController(rootViewController: composer)
-        nav.navigationBar.translucent = false
-        nav.navigationBar.barTintColor = UIColor.whiteColor()
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.barTintColor = UIColor.white
 
-        self.presentViewController(nav, animated: true, completion: nil)
+        self.present(nav, animated: true, completion: nil)
     }
 
-    func downloadAttachmentAction(button: UIButton) {
-        let convertedFrame = self.tableView.convertRect(button.frame, fromView: button.superview)
+    func downloadAttachmentAction(_ button: UIButton) {
+        let convertedFrame = self.tableView.convert(button.frame, from: button.superview)
 
-        if let indexPath = self.tableView.indexPathForRowAtPoint(convertedFrame.origin) {
+        if let indexPath = self.tableView.indexPathForRow(at: convertedFrame.origin) {
             if let attachment = self.viewModel.issueModel.attachments?[indexPath.row] {
-                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? OZLIssueAttachmentCell
+                let cell = self.tableView.cellForRow(at: indexPath) as? OZLIssueAttachmentCell
                 cell?.accessoryView = cell?.progressView
 
-                self.attachmentManager.downloadAttachment(attachment,
+                self.attachmentManager?.downloadAttachment(attachment,
                     progress: { (attachment, totalBytesDownloaded, totalBytesExpected) in
                         let ratio = Double(totalBytesDownloaded) / Double(attachment.size)
                         cell?.progressView.progress = ratio
                         print("Progress for \(attachment): \(ratio))")
                     }, completion: { (data, error) in
-                        cell?.accessoryType = .DisclosureIndicator
+                        cell?.accessoryType = .disclosureIndicator
                         cell?.accessoryView = nil
                         print("Finished downloading \(attachment)")
                 })
@@ -373,18 +373,18 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         }
     }
 
-    func cachedAttachmentTapAction(attachment: OZLModelAttachment) {
-        if attachment.fileClassification == .Video {
-            if let url = self.attachmentManager.fetchURLForLocalAttachment(attachment) {
-                var cachesDir = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .AllDomainsMask, true).first!
-                cachesDir = cachesDir.stringByAppendingString("/tmp.mp4")
+    func cachedAttachmentTapAction(_ attachment: OZLModelAttachment) {
+        if attachment.fileClassification == .video {
+            if let url = self.attachmentManager?.fetchURLForLocalAttachment(attachment) {
+                var cachesDir = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .allDomainsMask, true).first!
+                cachesDir = cachesDir + "/tmp.mp4"
 
-                let tmpUrl = NSURL.fileURLWithPath(cachesDir)
+                let tmpUrl = URL(fileURLWithPath: cachesDir)
 
                 do {
                     do {
-                        if try NSFileManager.defaultManager().attributesOfItemAtPath(cachesDir)[NSFileType] as? String == NSFileTypeSymbolicLink {
-                            try NSFileManager.defaultManager().removeItemAtURL(tmpUrl)
+                        if try FileManager.default.attributesOfItem(atPath: cachesDir)[FileAttributeKey.type] as? FileAttributeType == FileAttributeType.typeSymbolicLink {
+                            try FileManager.default.removeItem(at: tmpUrl)
                         }
                     } catch let error as NSError {
                         if error.domain != NSCocoaErrorDomain || error.code != 260 {
@@ -392,52 +392,52 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
                         }
                     }
 
-                    try NSFileManager.defaultManager().createSymbolicLinkAtURL(tmpUrl, withDestinationURL: url)
+                    try FileManager.default.createSymbolicLink(at: tmpUrl, withDestinationURL: url)
                 } catch {
                     return
                 }
 
-                let player = AVPlayer(URL: tmpUrl)
+                let player = AVPlayer(url: tmpUrl)
 
                 let vc = AVPlayerViewController()
                 vc.player = player
 
-                self.presentViewController(vc, animated: true, completion: { 
+                self.present(vc, animated: true, completion: { 
                     vc.player?.play()
                 })
             }
         }
     }
 
-    func pullToRefreshTriggered(sender: UIRefreshControl) {
+    func pullToRefreshTriggered(_ sender: UIRefreshControl) {
         self.viewModel.loadIssueData()
     }
 
     // MARK: - View model delegate
-    func viewModel(viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?) {
-        if (self.tableViewController.refreshControl?.refreshing ?? false) {
+    func viewModel(_ viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?) {
+        if (self.tableViewController.refreshControl?.isRefreshing ?? false) {
             self.tableViewController.refreshControl?.endRefreshing()
         }
 
         self.applyViewModel(viewModel)
     }
 
-    func viewModelIssueContentDidChange(viewModel: OZLIssueViewModel) {
+    func viewModelIssueContentDidChange(_ viewModel: OZLIssueViewModel) {
         self.applyViewModel(viewModel)
     }
 
-    func viewModelDetailDisplayModeDidChange(viewModel: OZLIssueViewModel) {
+    func viewModelDetailDisplayModeDidChange(_ viewModel: OZLIssueViewModel) {
         self.tableView.beginUpdates()
 
         if let detailsSectionIndex = self.viewModel.sectionNumberForSectionName(OZLIssueViewModel.SectionDetail) {
-            self.tableView.reloadSections(NSIndexSet(index: detailsSectionIndex), withRowAnimation: .Fade)
+            self.tableView.reloadSections(IndexSet(integer: detailsSectionIndex), with: .fade)
         }
 
         self.tableView.endUpdates()
     }
 
     // MARK: - Transitioning delegate
-    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-        return OZLSheetPresentationController(presentedViewController: presented, presentingViewController: presenting)
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return OZLSheetPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }

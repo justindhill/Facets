@@ -14,27 +14,27 @@ protocol OZLListSelectorItem {
 }
 
 protocol OZLListSelectorDelegate: AnyObject {
-    func selector(selector: OZLListSelectorViewController, didSelectItem item: OZLListSelectorItem)
+    func selector(_ selector: OZLListSelectorViewController, didSelectItem item: OZLListSelectorItem)
 }
 
 class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTransitioningDelegate {
 
-    private let layoutMargin: CGFloat = 20.0
+    fileprivate let layoutMargin: CGFloat = 20.0
 
     weak var delegate: OZLListSelectorDelegate?
-    private(set) var items: [OZLListSelectorItem] = []
-    private(set) var selectedItem: OZLListSelectorItem?
-    private var transitionAnimator: OZLDropdownTransitionAnimator?
+    fileprivate(set) var items: [OZLListSelectorItem] = []
+    fileprivate(set) var selectedItem: OZLListSelectorItem?
+    fileprivate var transitionAnimator: OZLDropdownTransitionAnimator?
 
-    private let ReuseIdentifier = "ReuseIdentifier"
+    fileprivate let ReuseIdentifier = "ReuseIdentifier"
 
     // MARK: Life cycle
     init(items: [OZLListSelectorItem], selectedItem: OZLListSelectorItem? = nil) {
         self.items = items
         self.selectedItem = selectedItem
-        super.init(style: .Plain)
+        super.init(style: .plain)
 
-        self.modalPresentationStyle = .Custom
+        self.modalPresentationStyle = .custom
         self.transitioningDelegate = self
     }
     
@@ -44,79 +44,79 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ReuseIdentifier)
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: ReuseIdentifier)
         self.tableView.rowHeight = 50.0
-        self.tableView.scrollEnabled = false
-        self.tableView.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
-        self.view.backgroundColor = UIColor.clearColor()
-        self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.isScrollEnabled = false
+        self.tableView.backgroundView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+        self.view.backgroundColor = UIColor.clear
+        self.tableView.backgroundColor = UIColor.clear
 
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: self.layoutMargin, bottom: 0, right: self.layoutMargin)
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         self.tableView.reloadData()
-        self.preferredContentSize = CGSizeMake(self.view.frame.size.width, self.tableView.contentSize.height)
+        self.preferredContentSize = CGSize(width: self.view.frame.size.width, height: self.tableView.contentSize.height)
     }
 
     // MARK: UITableViewDelegate/DataSource
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = self.items[indexPath.row]
 
-        let cell = tableView.dequeueReusableCellWithIdentifier(ReuseIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier, for: indexPath)
         cell.textLabel?.text = item.title
-        cell.textLabel?.textColor = UIColor.darkGrayColor()
-        cell.backgroundColor = UIColor.clearColor()
+        cell.textLabel?.textColor = UIColor.darkGray
+        cell.backgroundColor = UIColor.clear
         cell.layoutMargins = UIEdgeInsets(top: 0, left: self.layoutMargin, bottom: 0, right: self.layoutMargin)
 
         let selectedBgView = UIView()
-        selectedBgView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.05)
+        selectedBgView.backgroundColor = UIColor.gray.withAlphaComponent(0.05)
         cell.selectedBackgroundView = selectedBgView
 
         if item.comparator == self.selectedItem?.comparator {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
 
         return cell
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.items.count
     }
 
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.min
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
 
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat.min
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         self.delegate?.selector(self, didSelectItem: self.items[indexPath.row])
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 
     // MARK: Transitioning
-    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         if let nav = source.navigationController {
             return OZLDropdownPresentationController(presentedViewController: presented,
-                                                     presentingViewController: presenting,
+                                                     presentingViewController: self,
                                                      navigationController: nav)
         }
 
         return nil
     }
 
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if let nav = source.navigationController {
             self.transitionAnimator = OZLDropdownTransitionAnimator(navigationController:nav)
             return self.transitionAnimator
@@ -125,7 +125,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         return nil
     }
 
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.transitionAnimator?.presenting = false
 
         return self.transitionAnimator

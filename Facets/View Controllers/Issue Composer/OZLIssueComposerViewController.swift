@@ -13,23 +13,23 @@ private let CustomFieldUserInfoKey = "custom-field"
 
 class OZLIssueComposerViewController: OZLFormViewController {
 
-    private let ProjectKeypath = "issue.project"
-    private let TrackerKeypath = "issue.tracker"
-    private let StatusKeypath = "issue.status"
-    private let SubjectKeypath = "issue.subject"
-    private let DescriptionKeypath = "issue.description"
-    private let StartDateKeypath = "issue.start-date"
-    private let DueDateKeypath = "issue.due-date"
-    private let CommentKeypath = "issue.update-comment"
-    private let TargetVersionKeypath = "issue.target-version"
-    private let CategoryKeypath = "issue.category"
-    private let AssigneeKeypath = "issue.assignee"
-    private let TimeEstimationKeypath = "issue.estimated-time"
-    private let PercentCompleteKeypath = "issue.percent-complete"
+    fileprivate let ProjectKeypath = "issue.project"
+    fileprivate let TrackerKeypath = "issue.tracker"
+    fileprivate let StatusKeypath = "issue.status"
+    fileprivate let SubjectKeypath = "issue.subject"
+    fileprivate let DescriptionKeypath = "issue.description"
+    fileprivate let StartDateKeypath = "issue.start-date"
+    fileprivate let DueDateKeypath = "issue.due-date"
+    fileprivate let CommentKeypath = "issue.update-comment"
+    fileprivate let TargetVersionKeypath = "issue.target-version"
+    fileprivate let CategoryKeypath = "issue.category"
+    fileprivate let AssigneeKeypath = "issue.assignee"
+    fileprivate let TimeEstimationKeypath = "issue.estimated-time"
+    fileprivate let PercentCompleteKeypath = "issue.percent-complete"
 
-    private enum EditMode {
-        case New
-        case Existing
+    fileprivate enum EditMode {
+        case new
+        case existing
     }
 
     var currentProject: OZLModelProject
@@ -39,7 +39,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
     var issueStatuses = OZLModelIssueStatus.allObjects()
     var users = OZLModelUser.allObjects()
     var customFields: [OZLModelCustomField]?
-    private var editMode: EditMode
+    fileprivate var editMode: EditMode
 
     @NSCopying var issue: OZLModelIssue
 
@@ -54,21 +54,21 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
         self.refreshCustomFields()
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit", style: .Plain, target: self, action: #selector(submitAction))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: #selector(submitAction))
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if self.presentingViewController != nil {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(dismissAction))
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAction))
         }
     }
 
     func refreshCustomFields() {
         weak var weakSelf = self
 
-        func completion(fields: [AnyObject]?, error: NSError?) {
+        func completion(_ fields: [Any]?, error: Error?) {
             if let fields = fields as? [OZLModelCustomField] {
                 weakSelf?.customFields = fields
                 weakSelf?.reloadData()
@@ -76,9 +76,9 @@ class OZLIssueComposerViewController: OZLFormViewController {
         }
 
         if self.issue.index > 0 {
-            OZLNetwork.sharedInstance().getCustomFieldsForIssue(self.issue.index, completion: completion)
+            OZLNetwork.sharedInstance().getCustomFields(forIssue: self.issue.index, completion: completion)
         } else {
-            OZLNetwork.sharedInstance().getCustomFieldsForProject(self.currentProject.projectId, completion: completion)
+            OZLNetwork.sharedInstance().getCustomFields(forProject: self.currentProject.projectId, completion: completion)
         }
     }
 
@@ -88,14 +88,14 @@ class OZLIssueComposerViewController: OZLFormViewController {
         }
 
         self.currentProject = project
-        self.editMode = .New
+        self.editMode = .new
         self.issue = OZLModelIssue()
         self.issue.modelDiffingEnabled = true
 
-        super.init(style: .Grouped)
+        super.init(style: .grouped)
 
         self.issue.projectId = project.projectId
-        self.issue.tracker = project.trackers.firstObject() as? OZLModelTracker
+        self.issue.tracker = project.trackers.firstObject()
         self.issue.status = self.issueStatuses.firstObject() as? OZLModelIssueStatus
     }
 
@@ -108,9 +108,9 @@ class OZLIssueComposerViewController: OZLFormViewController {
         self.issue.modelDiffingEnabled = true
 
         self.currentProject = project
-        self.editMode = .Existing
+        self.editMode = .existing
 
-        super.init(style: .Grouped)
+        super.init(style: .grouped)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -121,7 +121,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
         var sections = [OZLFormSection]()
 
-        if self.editMode == .Existing {
+        if self.editMode == .existing {
             sections.append(OZLFormSection(
                 title: "Update comment",
                 fields: [
@@ -182,27 +182,27 @@ class OZLIssueComposerViewController: OZLFormViewController {
             OZLTextFormField(
                 keyPath: TimeEstimationKeypath,
                 placeholder: "Estimated time",
-                currentValue: (self.changes[TimeEstimationKeypath] as? String) ?? String(self.issue.estimatedHours)),
+                currentValue: (self.changes[TimeEstimationKeypath] as? String) ?? String(describing: self.issue.estimatedHours)),
 
             OZLTextFormField(
                 keyPath: PercentCompleteKeypath,
                 placeholder: "Percent complete",
-                currentValue: (self.changes[PercentCompleteKeypath] as? String ?? String(self.issue.doneRatio))),
+                currentValue: (self.changes[PercentCompleteKeypath] as? String ?? String(describing: self.issue.doneRatio))),
 
             OZLDateFormField(
                 keyPath: StartDateKeypath,
                 placeholder: "Start date",
-                currentValue: self.changes[StartDateKeypath] as? NSDate ?? self.issue.startDate),
+                currentValue: self.changes[StartDateKeypath] as? Date ?? self.issue.startDate),
 
             OZLDateFormField(
                 keyPath: DueDateKeypath,
                 placeholder: "Due date",
-                currentValue: self.changes[DueDateKeypath] as? NSDate ?? self.issue.dueDate)
+                currentValue: self.changes[DueDateKeypath] as? Date ?? self.issue.dueDate)
         ])
 
         sections.append(schedulingSection)
 
-        if let customFields = self.customFields where customFields.count > 0 {
+        if let customFields = self.customFields, customFields.count > 0 {
             var fields = [OZLFormField]()
 
             for field in customFields {
@@ -212,16 +212,16 @@ class OZLIssueComposerViewController: OZLFormViewController {
             sections.append(OZLFormSection(title: "Custom Fields", fields: fields))
             self.tableView.tableFooterView = nil
         } else {
-            let loadingView = OZLLoadingView(frame: CGRectMake(0, 0, 320, 44))
+            let loadingView = OZLLoadingView(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
             loadingView.startLoading()
-            loadingView.backgroundColor = UIColor.clearColor()
+            loadingView.backgroundColor = UIColor.clear
             self.tableView.tableFooterView = loadingView
         }
 
         return sections
     }
 
-    override func formFieldCell(formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String, userInfo: [String : AnyObject]) {
+    override func formFieldCell(_ formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String, userInfo: [String : AnyObject]) {
         super.formFieldCell(formCell, valueChangedFrom:fromValue , toValue: toValue, atKeyPath: keyPath, userInfo: userInfo)
         let customField = userInfo[CustomFieldUserInfoKey] as? OZLModelCustomField
 
@@ -241,10 +241,10 @@ class OZLIssueComposerViewController: OZLFormViewController {
                     self.issue.doneRatio = toValue
                 }
             } else if let customField = customField {
-                if let toValue = Float(toValue) where customField.type == .Float {
-                    self.issue.setValueOnDiff(toValue, forCustomFieldId: customField.fieldId)
-                } else if let toValue = Int(toValue) where customField.type == .Integer {
-                    self.issue.setValueOnDiff(toValue, forCustomFieldId: customField.fieldId)
+                if let toValue = Float(toValue), customField.type == .float {
+                    self.issue.setValueOnDiff(toValue as AnyObject, forCustomFieldId: customField.fieldId)
+                } else if let toValue = Int(toValue), customField.type == .integer {
+                    self.issue.setValueOnDiff(toValue as AnyObject, forCustomFieldId: customField.fieldId)
                 } else {
                     assertionFailure("An unexpected custom field passed a raw string to valueChangedFrom:to:atKeyPath:userInfo:")
                 }
@@ -271,13 +271,13 @@ class OZLIssueComposerViewController: OZLFormViewController {
             if keyPath == TargetVersionKeypath {
                 self.issue.targetVersion = toValue
             } else if let customField = customField {
-                self.issue.setValueOnDiff(String(toValue.versionId), forCustomFieldId: customField.fieldId)
+                self.issue.setValueOnDiff(String(toValue.versionId) as AnyObject, forCustomFieldId: customField.fieldId)
             }
         } else if let toValue = toValue as? OZLModelUser {
             if keyPath == AssigneeKeypath {
                 self.issue.assignedTo = toValue
             }
-        } else if let toValue = toValue as? NSDate {
+        } else if let toValue = toValue as? Date {
             if keyPath == DueDateKeypath {
                 self.issue.dueDate = toValue
             } else if keyPath == StartDateKeypath {
@@ -286,9 +286,9 @@ class OZLIssueComposerViewController: OZLFormViewController {
                 // WARNING: Handle date formatting
 //                self.issue.setValueOnDiff(<#T##value: String##String#>, forCustomFieldId: <#T##Int#>)
             }
-        } else if let toValue = toValue as? OZLModelStringContainer, value = toValue.value {
+        } else if let toValue = toValue as? OZLModelStringContainer, let value = toValue.value {
             if let customField = customField {
-                self.issue.setValueOnDiff(value, forCustomFieldId: customField.fieldId)
+                self.issue.setValueOnDiff(value as AnyObject, forCustomFieldId: customField.fieldId)
             }
         }
         
@@ -298,40 +298,43 @@ class OZLIssueComposerViewController: OZLFormViewController {
     func submitAction() {
         self.tableView.endEditing(true)
 
-        print(self.issue.changeDictionary)
+        print(self.issue.changeDictionary as Any)
 
-        let hud = JGProgressHUD(style: .Dark)
-        hud.showInView(self.view)
+        guard let hud = JGProgressHUD(style: .dark) else {
+            return
+        }
+
+        hud.show(in: self.view)
 
         weak var weakSelf = self
 
-        func completion(success: Bool, error: NSError?) {
+        func completion(_ success: Bool, error: NSError?) {
             if let weakSelf = weakSelf {
                 if success == false {
                     hud.indicatorView = JGProgressHUDImageIndicatorView(imageInLibraryBundleNamed: "jg_hud_error", enableTinting: true)
-                    hud.dismissAfterDelay(1.5)
+                    hud.dismiss(afterDelay: 1.5)
                 } else {
                     hud.indicatorView = JGProgressHUDImageIndicatorView(imageInLibraryBundleNamed: "jg_hud_success", enableTinting: true)
 
                     weak var innerWeakSelf = weakSelf
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(1 * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: {
                         if let innerWeakSelf = innerWeakSelf {
-                            innerWeakSelf.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                            innerWeakSelf.presentingViewController?.dismiss(animated: true, completion: nil)
                         }
                     })
                 }
             }
         }
 
-        if self.editMode == .New {
-            OZLNetwork.sharedInstance().createIssue(self.issue, withParams: [:], completion: completion)
-        } else if self.editMode == .Existing {
-            OZLNetwork.sharedInstance().updateIssue(self.issue, withParams: nil, completion: completion)
+        if self.editMode == .new {
+            OZLNetwork.sharedInstance().createIssue(self.issue, withParams: [:], completion: completion as! (Bool, Error?) -> Void)
+        } else if self.editMode == .existing {
+            OZLNetwork.sharedInstance().update(self.issue, withParams: nil, completion: completion as! (Bool, Error?) -> Void)
         }
     }
 
     func dismissAction() {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -340,28 +343,28 @@ private extension JGProgressHUDImageIndicatorView {
         var image: UIImage = image
 
         if enableTinting {
-            image = image.imageWithRenderingMode(.AlwaysTemplate)
+            image = image.withRenderingMode(.alwaysTemplate)
         }
 
         self.init(image: image)
     }
 
     convenience init(imageInLibraryBundleNamed name: String, enableTinting: Bool) {
-        let bundle = NSBundle(path: NSBundle(forClass: JGProgressHUD.self).pathForResource("JGProgressHUD Resources", ofType: "bundle")!)
-        let image = UIImage(named: name, inBundle: bundle, compatibleWithTraitCollection: nil)
+        let bundle = Bundle(path: Bundle(for: JGProgressHUD.self).path(forResource: "JGProgressHUD Resources", ofType: "bundle")!)
+        let image = UIImage(named: name, in: bundle, compatibleWith: nil)
         self.init(image: image, enableTinting: enableTinting)
     }
 }
 
 private extension OZLModelCustomField {
-    func createFormFieldForIssue(issue: OZLModelIssue) -> OZLFormField {
+    func createFormFieldForIssue(_ issue: OZLModelIssue) -> OZLFormField {
         let fieldName = self.name ?? ""
         let keyPath = "cf_\(self.fieldId)"
 
         var formField: OZLFormField!
 
         switch self.type {
-        case .Boolean:
+        case .boolean:
             formField = OZLEnumerationFormField(
                 keyPath: keyPath,
                 placeholder: fieldName,
@@ -372,23 +375,23 @@ private extension OZLModelCustomField {
                     OZLModelStringContainer(string: "No", value: "0")
                 ]
             )
-        case .Date:
+        case .date:
             formField = OZLDateFormField(keyPath: keyPath, placeholder: fieldName)
-        case .Float:
+        case .float:
             formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
-        case .Integer:
+        case .integer:
             formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
-        case .Link:
+        case .link:
             formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName)
-        case .List:
+        case .list:
             formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value, possibleRealmValues: self.options!)
-        case .LongText:
+        case .longText:
             formField = OZLTextViewFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
-        case .Text:
+        case .text:
             formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
-        case .User:
+        case .user:
             formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
-        case .Version:
+        case .version:
             formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value, possibleRealmValues: self.options!)
         default:
 //            assertionFailure()

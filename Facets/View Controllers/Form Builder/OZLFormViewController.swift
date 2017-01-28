@@ -19,7 +19,7 @@ class OZLFormViewController: OZLTableViewController, OZLFormFieldDelegate {
         super.viewDidLoad()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if self.tableView.numberOfSections == 0 {
@@ -39,21 +39,21 @@ class OZLFormViewController: OZLTableViewController, OZLFormFieldDelegate {
     }
 
     // MARK: UITableViewDelegate/DataSource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return self.sections.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.sections[section].fields.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let field = self.sections[indexPath.section].fields[indexPath.row]
 
         if let cellClass = field.cellClass as? OZLFormFieldCell.Type {
             cellClass.registerOnTableViewIfNeeded(tableView)
 
-            let cell = cellClass.init(style: .Default, reuseIdentifier: String(cellClass.self))
+            let cell = cellClass.init(style: .default, reuseIdentifier: String(describing: cellClass.self))
             cell.applyFormField(field)
             cell.contentPadding = self.contentPadding
             cell.delegate = self
@@ -61,26 +61,26 @@ class OZLFormViewController: OZLTableViewController, OZLFormFieldDelegate {
             return cell
         }
 
-        return UITableViewCell(style: .Default, reuseIdentifier: nil)
+        return UITableViewCell(style: .default, reuseIdentifier: nil)
     }
 
-    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: IndexPath) -> Bool {
         return false
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         let field = self.sections[indexPath.section].fields[indexPath.row]
 
         return field.fieldHeight
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.sections[section].title
     }
 
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if self.sections[section].fields.count == 0 {
-            return CGFloat.min
+            return CGFloat.leastNormalMagnitude
         } else if section == 0 {
             return 58.0
         } else {
@@ -88,11 +88,11 @@ class OZLFormViewController: OZLTableViewController, OZLFormFieldDelegate {
         }
     }
 
-    func formFieldCell(formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String, userInfo: [String : AnyObject]) {
+    func formFieldCell(_ formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath keyPath: String, userInfo: [String : AnyObject]) {
         self.changes[keyPath] = toValue
     }
 
-    func formFieldCellWillBeginEditing(formCell: OZLFormFieldCell, firstResponder: UIResponder?) {
+    func formFieldCellWillBeginEditing(_ formCell: OZLFormFieldCell, firstResponder: UIResponder?) {
         if firstResponder == nil {
             self.currentEditingResponder?.resignFirstResponder()
         }

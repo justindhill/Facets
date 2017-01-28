@@ -9,14 +9,14 @@
 import UIKit
 
 @objc protocol OZLQuickAssignDelegate {
-    func quickAssignController(quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?)
+    func quickAssignController(_ quickAssign: OZLQuickAssignViewController, didChangeAssigneeInIssue issue: OZLModelIssue, from: OZLModelUser?, to: OZLModelUser?)
 }
 
 @objc class OZLQuickAssignViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     let CellReuseIdentifier = "reuseIdentifier"
-    var canonicalMemberships: RLMResults?
-    var filteredMemberships: RLMResults?
+    var canonicalMemberships: RLMResults<RLMObject>?
+    var filteredMemberships: RLMResults<RLMObject>?
     var issueModel: OZLModelIssue?
     weak var delegate: OZLQuickAssignDelegate?
     
@@ -33,70 +33,70 @@ import UIKit
         fatalError("init(coder:) has not been implemented")
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     override func loadView() {
-        self.view = OZLQuickAssignView(frame: CGRectMake(0, 0, 320, 568))
+        self.view = OZLQuickAssignView(frame: CGRect(x: 0, y: 0, width: 320, height: 568))
     }
     
     override func viewDidLoad() {
         if let view = self.view as? OZLQuickAssignView {
             if self.popoverPresentationController?.sourceView == nil {
-                self.preferredContentSize = CGSizeMake(320, 350)
+                self.preferredContentSize = CGSize(width: 320, height: 350)
             }
             
-            view.cancelButton.addTarget(self, action: #selector(OZLQuickAssignViewController.dismiss), forControlEvents: .TouchUpInside)
-            view.backgroundColor = UIColor.whiteColor()
+            view.cancelButton.addTarget(self, action: #selector(dismissQuickAssignView), for: .touchUpInside)
+            view.backgroundColor = UIColor.white
             
             view.tableView.dataSource = self
             view.tableView.delegate = self
-            view.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:CellReuseIdentifier)
+            view.tableView.register(UITableViewCell.self, forCellReuseIdentifier:CellReuseIdentifier)
             
             view.filterField.delegate = self
             
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: UIKeyboardWillShowNotification, object: nil)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(OZLQuickAssignViewController.keyboardWillShowOrHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     
-            guard let issueModel = self.issueModel, projectId = issueModel.projectId else {
+            guard let issueModel = self.issueModel, let projectId = issueModel.projectId else {
                 assertionFailure("Issue model wasn't set on OZLQuickAssignViewController before its view was loaded.");
                 return
             }
             
-            self.canonicalMemberships = OZLModelMembership.objectsWithPredicate(NSPredicate(format: "%K = %ld", "projectId", projectId))
+            self.canonicalMemberships = OZLModelMembership.objects(with: NSPredicate(format: "%K = %ld", "projectId", projectId))
             self.filteredMemberships = self.canonicalMemberships
         }
     }
     
-    func dismiss() {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    @objc func dismissQuickAssignView() {
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
-    func keyboardWillShowOrHide(notification: NSNotification) {
+    func keyboardWillShowOrHide(_ notification: Notification) {
         if let view = self.view as? OZLQuickAssignView {
             if let keyboardFrameValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-                let keyboardFrame = keyboardFrameValue.CGRectValue()
+                let keyboardFrame = keyboardFrameValue.cgRectValue
             
-                if notification.name == UIKeyboardWillShowNotification && view.filterField.isFirstResponder() {
+                if notification.name == NSNotification.Name.UIKeyboardWillShow && view.filterField.isFirstResponder {
                     let tableBottomOffset = view.frame.size.height - view.tableView.bottom
                     view.tableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardFrame.size.height - tableBottomOffset, 0)
 
                     if self.popoverPresentationController?.sourceView == nil {
-                        self.preferredContentSize = CGSizeMake(320, 450)
+                        self.preferredContentSize = CGSize(width: 320, height: 450)
                     }
                 } else {
-                    view.tableView.contentInset = UIEdgeInsetsZero
+                    view.tableView.contentInset = UIEdgeInsets.zero
 
                     if self.popoverPresentationController?.sourceView == nil {
-                        self.preferredContentSize = CGSizeMake(320, 350)
+                        self.preferredContentSize = CGSize(width: 320, height: 350)
                     }
                 }
             }
         }
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let memberships = self.filteredMemberships {
             return Int(memberships.count)
         }
@@ -104,8 +104,8 @@ import UIKit
         return 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(CellReuseIdentifier, forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellReuseIdentifier, for: indexPath)
         if let membership = self.filteredMemberships?[UInt(indexPath.row)] as? OZLModelMembership {
             cell.textLabel?.text = membership.user.name
         }
@@ -113,29 +113,29 @@ import UIKit
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let view = self.view as? OZLQuickAssignView, let issueModel = self.issueModel {
-            if let newAssignee = self.filteredMemberships?.objectAtIndex(UInt(indexPath.row)) as? OZLModelMembership {
+            if let newAssignee = self.filteredMemberships?.object(at: UInt(indexPath.row)) as? OZLModelMembership {
                 let oldAssignee = issueModel.assignedTo
                 issueModel.assignedTo = newAssignee.user
                 view.showLoadingOverlay()
                 
                 weak var weakSelf = self
                 
-                OZLNetwork.sharedInstance().updateIssue(issueModel, withParams: nil, completion: { (success, error) -> Void in
+                OZLNetwork.sharedInstance().update(issueModel, withParams: nil, completion: { (success, error) -> Void in
                     view.hideLoadingOverlay()
                     
-                    if let weakSelf = weakSelf where error == nil {
-                        weakSelf.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                    if let weakSelf = weakSelf, error == nil {
+                        weakSelf.presentingViewController?.dismiss(animated: true, completion: nil)
                         weakSelf.delegate?.quickAssignController(weakSelf, didChangeAssigneeInIssue: issueModel, from: oldAssignee, to: newAssignee.user)
                         
                     } else {
-                        let alert = UIAlertController(title: "Error", message: "Couldn't set assignee.", preferredStyle: .Alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-                            weakSelf?.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+                        let alert = UIAlertController(title: "Error", message: "Couldn't set assignee.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                            weakSelf?.presentingViewController?.dismiss(animated: true, completion: nil)
                         }))
                         
-                        weakSelf?.presentViewController(alert, animated: true, completion: nil)
+                        weakSelf?.present(alert, animated: true, completion: nil)
                     }
                 })
             }
@@ -143,20 +143,20 @@ import UIKit
         }
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if string == "\n" {
             textField.resignFirstResponder()
         } else if let view = self.view as? OZLQuickAssignView,
-            let resultString = (textField.text as NSString?)?.stringByReplacingCharactersInRange(range, withString: string) {
+            let resultString = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) {
                 
-            self.filteredMemberships = self.canonicalMemberships?.objectsWithPredicate(NSPredicate(format: "%K CONTAINS[c] %@", "user.name", resultString))
+            self.filteredMemberships = self.canonicalMemberships?.objects(with: NSPredicate(format: "%K CONTAINS[c] %@", "user.name", resultString))
             view.tableView.reloadData()
         }
         
         return true
     }
     
-    func textFieldShouldClear(textField: UITextField) -> Bool {
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
         if let view = self.view as? OZLQuickAssignView {
             self.filteredMemberships = self.canonicalMemberships
             view.tableView.reloadData()

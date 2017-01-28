@@ -7,9 +7,9 @@ def all_pods
 	pod 'CircleProgressView'
 	pod 'TTTAttributedLabel'
 	pod 'RaptureXML@Frankly'
-	pod 'ISO8601'
+	pod 'ISO8601', :git => "https://github.com/soffes/ISO8601", :branch => "swift3"
 	pod 'GTMNSStringHTMLAdditions'
-	pod 'Realm'
+	pod 'RealmSwift'
 	pod 'JVFloatLabeledTextField'
 	pod 'SORelativeDateTransformer'
 	pod 'JGProgressHUD'
@@ -18,7 +18,7 @@ def all_pods
 	pod 'DFCache'
 	pod 'Helpshift'
 
-	pod 'Reveal-iOS-SDK', :configuration => ['Debug']
+	pod 'Reveal-SDK', :configuration => ['Debug']
 end
 
 target 'Facets' do

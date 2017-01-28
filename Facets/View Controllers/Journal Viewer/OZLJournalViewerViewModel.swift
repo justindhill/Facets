@@ -6,9 +6,9 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
-@objc class OZLJournalViewerViewModel: NSObject {
+class OZLJournalViewerViewModel: NSObject {
     
-    private let issue: OZLModelIssue
+    fileprivate let issue: OZLModelIssue
     
     init(issue: OZLModelIssue) {
         self.issue = issue
@@ -18,7 +18,7 @@
         return self.issue.journals?.count ?? 0
     }
 
-    func journalAtIndex(index: Int) -> OZLModelJournal? {
+    func journalAtIndex(_ index: Int) -> OZLModelJournal? {
         return self.issue.journals?[self.numberOfJournals() - index - 1]
     }
 }

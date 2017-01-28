@@ -10,13 +10,13 @@ import UIKit
 
 class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelDelegate, UIViewControllerPreviewingDelegate, OZLSortAndFilterViewControllerDelegate, OZLNavigationChildChangeListener, OZLListSelectorDelegate {
     
-    private let IssueListComposeButtonHeight: CGFloat = 56.0
-    private let ZeroHeightFooterTag = -1
+    fileprivate let IssueListComposeButtonHeight: CGFloat = 56.0
+    fileprivate let ZeroHeightFooterTag = -1
     
-    private let IssueCellReuseIdentifier = "IssueCellReuseIdentifier"
+    fileprivate let IssueCellReuseIdentifier = "IssueCellReuseIdentifier"
     
-    private var isFirstAppearance = true
-    private var composeButton: UIButton?
+    fileprivate var isFirstAppearance = true
+    fileprivate var composeButton: UIButton?
     
     var viewModel: OZLIssueListViewModel! {
         willSet(newValue) {
@@ -28,9 +28,9 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.tintAdjustmentMode = .Normal
+        self.view.tintAdjustmentMode = .normal
 
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         self.definesPresentationContext = true
 
@@ -40,14 +40,14 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         self.tableView.delegate = self
         self.tableView.dataSource = self
 
-        self.tableView.registerNib(UINib(nibName: "OZLIssueTableViewCell", bundle: NSBundle.mainBundle()),
+        self.tableView.register(UINib(nibName: "OZLIssueTableViewCell", bundle: Bundle.main),
                                    forCellReuseIdentifier: IssueCellReuseIdentifier)
 
         self.tableViewController.refreshControl = UIRefreshControl()
-        self.tableViewController.refreshControl?.addTarget(self, action: #selector(reloadProjectData), forControlEvents: .ValueChanged)
+        self.tableViewController.refreshControl?.addTarget(self, action: #selector(reloadProjectData), for: .valueChanged)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.viewModel?.projectId = OZLSingleton.sharedInstance().currentProjectID
@@ -55,7 +55,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         if self.viewModel.shouldShowProjectSelector && self.isFirstAppearance {
             let titleButton = OZLDownChevronTitleView()
             titleButton.title = self.viewModel.title
-            titleButton.addTarget(self, action: #selector(showProjectSelector), forControlEvents: .TouchUpInside)
+            titleButton.addTarget(self, action: #selector(showProjectSelector), for: .touchUpInside)
             titleButton.shrinkwrapContent()
             self.navigationItem.titleView = titleButton
         } else if !self.viewModel.shouldShowProjectSelector {
@@ -63,7 +63,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         }
         
         if self.isFirstAppearance {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-filter"), style: .Done, target: self, action: #selector(OZLIssueListViewController.filterAction(_:)))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon-filter"), style: .done, target: self, action: #selector(OZLIssueListViewController.filterAction(_:)))
             
             self.showFooterActivityIndicator()
             self.reloadProjectData()
@@ -77,19 +77,19 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             self.composeButton = nil
         }
         
-        if let selectedIndexPaths = self.tableView.indexPathsForSelectedRows where self.presentedViewController == nil {
+        if let selectedIndexPaths = self.tableView.indexPathsForSelectedRows, self.presentedViewController == nil {
             for indexPath in selectedIndexPaths {
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: false)
+                self.tableView.deselectRow(at: indexPath, animated: false)
             }
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if #available(iOS 9.0, *) {
-            if self.traitCollection.forceTouchCapability == .Available {
-                self.registerForPreviewingWithDelegate(self, sourceView: self.view)
+            if self.traitCollection.forceTouchCapability == .available {
+                self.registerForPreviewing(with: self, sourceView: self.view)
             }
         }
 
@@ -98,39 +98,39 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
 
     // MARK: - Behavior
     func addComposeButton() {
-        let composeButton = UIButton(type: .System)
+        let composeButton = UIButton(type: .system)
         self.composeButton = composeButton
 
-        composeButton.setImage(UIImage.ozl_imageNamed("icon-plus", maskedWithColor: UIColor.whiteColor()), forState:.Normal)
-        composeButton.titleLabel?.font = UIFont.systemFontOfSize(28)
-        composeButton.contentHorizontalAlignment = .Center
-        composeButton.contentVerticalAlignment = .Center
+        composeButton.setImage(UIImage.ozl_imageNamed("icon-plus", maskedWith: UIColor.white), for:UIControlState())
+        composeButton.titleLabel?.font = UIFont.systemFont(ofSize: 28)
+        composeButton.contentHorizontalAlignment = .center
+        composeButton.contentVerticalAlignment = .center
         
-        composeButton.layer.shadowColor = UIColor.blackColor().CGColor
+        composeButton.layer.shadowColor = UIColor.black.cgColor
         composeButton.layer.shadowOpacity = 0.2
-        composeButton.layer.shadowOffset = CGSizeMake(0.0, 2.0)
+        composeButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         
-        composeButton.frame = CGRectMake(0, 0, self.IssueListComposeButtonHeight, self.IssueListComposeButtonHeight)
+        composeButton.frame = CGRect(x: 0, y: 0, width: self.IssueListComposeButtonHeight, height: self.IssueListComposeButtonHeight)
         composeButton.layer.cornerRadius = (IssueListComposeButtonHeight / 2.0)
-        composeButton.addTarget(self, action: #selector(OZLIssueListViewController.composeButtonAction(_:)), forControlEvents:.TouchUpInside)
+        composeButton.addTarget(self, action: #selector(OZLIssueListViewController.composeButtonAction(_:)), for:.touchUpInside)
 
         composeButton.setBackgroundImage(
-            UIColor.blackColor().circularImageWithDiameter(self.IssueListComposeButtonHeight).imageWithRenderingMode(.AlwaysTemplate),
-            forState: .Normal
+            UIColor.black.circularImageWithDiameter(self.IssueListComposeButtonHeight).withRenderingMode(.alwaysTemplate),
+            for: UIControlState()
         )
 
         self.view.addSubview(composeButton)
 
-        composeButton.snp_makeConstraints { (make) in
+        composeButton.snp.makeConstraints { (make) in
             make.bottom.equalTo(self.view).offset(-OZLContentPadding)
-            make.trailing.equalTo(self.view.snp_trailing).offset(-OZLContentPadding)
+            make.trailing.equalTo(self.view.snp.trailing).offset(-OZLContentPadding)
             make.width.equalTo(IssueListComposeButtonHeight)
             make.height.equalTo(IssueListComposeButtonHeight)
         }
     }
 
     // MARK: - Button actions
-    func filterAction(sender: UIButton?) {
+    func filterAction(_ sender: UIButton?) {
         let sortAndFilter = OZLSortAndFilterViewController()
         sortAndFilter.delegate = self
         sortAndFilter.options = self.viewModel.sortAndFilterOptions
@@ -138,56 +138,58 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         let nav = UINavigationController(rootViewController: sortAndFilter)
 
         if let rightBarButtonItem = self.navigationItem.rightBarButtonItem {
-            if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-                let popover = UIPopoverController(contentViewController: nav)
-                popover.presentPopoverFromBarButtonItem(rightBarButtonItem, permittedArrowDirections: .Any, animated: true)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                nav.modalPresentationStyle = .popover
+                nav.popoverPresentationController?.barButtonItem = rightBarButtonItem
+                
             } else {
-                nav.modalPresentationStyle = .FormSheet
-                self.presentViewController(nav, animated: true, completion: nil)
+                nav.modalPresentationStyle = .formSheet
             }
+            
+            self.present(nav, animated: true, completion: nil)
         }
     }
     
-    func composeButtonAction(sender: UIButton?) {
+    func composeButtonAction(_ sender: UIButton?) {
         let composer = OZLIssueComposerViewController(currentProjectID: OZLSingleton.sharedInstance().currentProjectID)
-        composer.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(OZLIssueListViewController.dismissComposerAction(_:)))
+        composer.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(OZLIssueListViewController.dismissComposerAction(_:)))
         
         let nav = UINavigationController(rootViewController: composer)
-        nav.modalPresentationStyle = .FormSheet
+        nav.modalPresentationStyle = .formSheet
         
-        self.presentViewController(nav, animated: true, completion: nil)
+        self.present(nav, animated: true, completion: nil)
     }
     
-    func dismissComposerAction(sender: UIButton?) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func dismissComposerAction(_ sender: UIButton?) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - OZLSortAndFilterViewControllerDelegate
-    func sortAndFilter(sortAndFilter: OZLSortAndFilterViewController, shouldDismissWithNewOptions newOptions: OZLSortAndFilterOptions?) {
-        if let newOptions = newOptions where self.viewModel.sortAndFilterOptions != newOptions {
+    func sortAndFilter(_ sortAndFilter: OZLSortAndFilterViewController, shouldDismissWithNewOptions newOptions: OZLSortAndFilterOptions?) {
+        if let newOptions = newOptions, self.viewModel.sortAndFilterOptions != newOptions {
             self.viewModel!.sortAndFilterOptions = newOptions
             self.tableView.reloadData()
             self.showFooterActivityIndicator()
             self.reloadProjectData()
         }
         
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - OZLNavigationChildChangeListener
-    func navigationChild(navigationChild: UIViewController!, didModifyIssue issue: OZLModelIssue!) {
+    func navigationChild(_ navigationChild: UIViewController!, didModifyIssue issue: OZLModelIssue!) {
         self.viewModel.processUpdatedIssue(issue)
     }
     
     // MARK: - OZLIssueListViewModelDelegate
-    func viewModelIssueListContentDidChange(viewModel: OZLIssueListViewModel) {
+    func viewModelIssueListContentDidChange(_ viewModel: OZLIssueListViewModel) {
         self.tableView.reloadData()
     }
     
     // MARK: - Previewing
-    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        let translatedPoint = CGPointMake(location.x, self.tableView.contentOffset.y + location.y)
-        let indexPath = self.tableView.indexPathForRowAtPoint(translatedPoint)
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        let translatedPoint = CGPoint(x: location.x, y: self.tableView.contentOffset.y + location.y)
+        let indexPath = self.tableView.indexPathForRow(at: translatedPoint)
         
         if let indexPath = indexPath {
             let issue = self.viewModel.issues[indexPath.row]
@@ -202,21 +204,21 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         return nil
     }
     
-    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
-        self.showViewController(viewControllerToCommit, sender: self)
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        self.show(viewControllerToCommit, sender: self)
     }
     
     // MARK: - UITableViewDataSource/Delegate
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel.issues.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(IssueCellReuseIdentifier, forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: IssueCellReuseIdentifier, for: indexPath)
 
         if let cell = cell as? OZLIssueTableViewCell {
             let issue = self.viewModel.issues[indexPath.row]
@@ -228,7 +230,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
             } else if cell.superview == nil {
                 cell.frame.size.width = self.tableView.frame.size.width
 
-                if self.traitCollection.userInterfaceIdiom == .Pad {
+                if self.traitCollection.userInterfaceIdiom == .pad {
                     cell.layoutMargins = UIEdgeInsetsMake(10, 20, 10, 20)
                 } else {
                     cell.layoutMargins = UIEdgeInsetsMake(11, 16, 11, 16)
@@ -239,17 +241,17 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let issueModel = self.viewModel.issues[indexPath.row]
         let viewModel = OZLIssueViewModel(issueModel: issueModel)
 
         let issueVC = OZLIssueViewController(viewModel: viewModel)
 
-        self.splitViewController?.showViewController(issueVC, sender: self)
+        self.splitViewController?.show(issueVC, sender: self)
     }
     
     // MARK - UIScrollViewDelegate
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let distanceFromBottom = scrollView.contentSize.height -
                                  scrollView.contentOffset.y -
                                  scrollView.frame.size.height;
@@ -276,7 +278,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     }
 
     // MARK: - List selector delegate
-    func selector(selector: OZLListSelectorViewController, didSelectItem item: OZLListSelectorItem) {
+    func selector(_ selector: OZLListSelectorViewController, didSelectItem item: OZLListSelectorItem) {
         if let project = item as? OZLModelProject {
             self.showFooterActivityIndicator()
             OZLSingleton.sharedInstance().currentProjectID = project.projectId
@@ -312,7 +314,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         let vc = OZLListSelectorViewController(items: projects.map({$0 as OZLListSelectorItem}), selectedItem: currentProject)
         vc.delegate = self
 
-        self.presentViewController(vc, animated: true, completion: nil)
+        self.present(vc, animated: true, completion: nil)
     }
 
     func reloadProjectData() {
@@ -320,16 +322,16 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         
         self.viewModel.loadIssuesCompletion({ (error) -> Void in
 
-            if let refreshControl = weakSelf?.tableViewController.refreshControl where refreshControl.refreshing {
+            if let refreshControl = weakSelf?.tableViewController.refreshControl, refreshControl.isRefreshing {
                 refreshControl.endRefreshing()
             }
 
             if let weakSelf = weakSelf {
                 if let error = error {
-                    let alert = UIAlertController(title: "Couldn't load issue list", message: error.localizedDescription, preferredStyle: .Alert)
+                    let alert = UIAlertController(title: "Couldn't load issue list", message: error.localizedDescription, preferredStyle: .alert)
                     
-                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                    weakSelf.presentViewController(alert, animated: true, completion: nil)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    weakSelf.present(alert, animated: true, completion: nil)
                     
                 } else {
                     weakSelf.tableView.reloadData()
@@ -349,13 +351,13 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     
         let height = (OZLContentPadding * 2) + IssueListComposeButtonHeight
     
-        let loadingView = OZLLoadingView(frame: CGRectMake(0, 0, self.view.frame.size.width, height))
+        let loadingView = OZLLoadingView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: height))
         self.tableView.tableFooterView = loadingView;
         loadingView.startLoading()
     }
     
     func hideFooterActivityIndicator() {
-        self.tableView.tableFooterView = UIView(frame: CGRectMake(0, 0, 0, CGFloat.min))
+        self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: CGFloat.leastNormalMagnitude))
         self.tableView.tableFooterView!.tag = ZeroHeightFooterTag
     }
 }

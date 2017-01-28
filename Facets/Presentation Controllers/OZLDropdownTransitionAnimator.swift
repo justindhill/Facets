@@ -17,32 +17,32 @@ class OZLDropdownTransitionAnimator: NSObject, UIViewControllerAnimatedTransitio
         super.init()
     }
 
-    private var presentedOriginY: CGFloat {
+    fileprivate var presentedOriginY: CGFloat {
         let navBar = self.navigationController.navigationBar
         return navBar.frame.origin.y + navBar.frame.size.height + (1 / navigationController.traitCollection.displayScale)
     }
 
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.3
     }
 
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        guard let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) else {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) else {
             assertionFailure("No toViewController!")
             return
         }
 
-        guard let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) else {
+        guard let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) else {
             assertionFailure("No fromViewController!")
             return
         }
 
         toViewController.view.clipsToBounds = true
-        let expandedFrame = transitionContext.finalFrameForViewController(toViewController)
+        let expandedFrame = transitionContext.finalFrame(for: toViewController)
         if self.presenting {
-            transitionContext.containerView()?.addSubview(toViewController.view)
+            transitionContext.containerView.addSubview(toViewController.view)
             toViewController.view.frame = expandedFrame
-            toViewController.view.bounds.origin = CGPointMake(0, expandedFrame.size.height)
+            toViewController.view.bounds.origin = CGPoint(x: 0, y: expandedFrame.size.height)
         }
 
         CATransaction.begin()
@@ -51,17 +51,17 @@ class OZLDropdownTransitionAnimator: NSObject, UIViewControllerAnimatedTransitio
         }
 
         let positionAnim = CABasicAnimation(keyPath: "bounds.origin")
-        positionAnim.fromValue = NSValue(CGPoint: self.presenting ? CGPointMake(0, 2 * expandedFrame.size.height) : CGPointMake(0, fromViewController.view.frame.size.height))
-        positionAnim.toValue = NSValue(CGPoint: self.presenting ? CGPointMake(0, expandedFrame.size.height) : CGPointMake(0, 2 * fromViewController.view.frame.size.height))
-        positionAnim.duration = self.transitionDuration(transitionContext)
+        positionAnim.fromValue = NSValue(cgPoint: self.presenting ? CGPoint(x: 0, y: 2 * expandedFrame.size.height) : CGPoint(x: 0, y: fromViewController.view.frame.size.height))
+        positionAnim.toValue = NSValue(cgPoint: self.presenting ? CGPoint(x: 0, y: expandedFrame.size.height) : CGPoint(x: 0, y: 2 * fromViewController.view.frame.size.height))
+        positionAnim.duration = self.transitionDuration(using: transitionContext)
         positionAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         positionAnim.fillMode = kCAFillModeForwards
-        positionAnim.removedOnCompletion = false
+        positionAnim.isRemovedOnCompletion = false
 
         if self.presenting {
-            toViewController.view.layer.addAnimation(positionAnim, forKey: nil)
+            toViewController.view.layer.add(positionAnim, forKey: nil)
         } else {
-            fromViewController.view.layer.addAnimation(positionAnim, forKey: nil)
+            fromViewController.view.layer.add(positionAnim, forKey: nil)
         }
 
         CATransaction.commit()

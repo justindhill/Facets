@@ -18,7 +18,7 @@ class OZLTableViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.tableViewController = UITableViewController(style: .Grouped)
+        self.tableViewController = UITableViewController(style: .grouped)
         super.init(coder: aDecoder)
     }
 
@@ -37,7 +37,7 @@ class OZLTableViewController: UIViewController, UITableViewDelegate, UITableView
 
         self.addChildViewController(self.tableViewController)
         self.view.addSubview(self.tableViewController.tableView)
-        self.tableViewController.didMoveToParentViewController(self)
+        self.tableViewController.didMove(toParentViewController: self)
     }
 
     override func viewWillLayoutSubviews() {
@@ -47,11 +47,11 @@ class OZLTableViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     // MARK: - UITableViewDelegate/DataSource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell(style: .Default, reuseIdentifier: "DefaultReuseId")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell(style: .default, reuseIdentifier: "DefaultReuseId")
     }
 }

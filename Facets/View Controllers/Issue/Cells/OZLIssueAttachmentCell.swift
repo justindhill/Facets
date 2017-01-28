@@ -18,8 +18,8 @@ class OZLIssueAttachmentCell: UITableViewCell {
     let userNameLabel = UILabel()
     let timeIconImageView = UIImageView()
     let timeLabel = UILabel()
-    let downloadButton = UIButton(type: .System)
-    let progressView = CircleProgressView(frame: CGRectMake(0, 0, 23, 23))
+    let downloadButton = UIButton(type: .system)
+    let progressView = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 23, height: 23))
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,30 +27,30 @@ class OZLIssueAttachmentCell: UITableViewCell {
         self.preservesSuperviewLayoutMargins = true
         self.contentView.preservesSuperviewLayoutMargins = true
 
-        self.userIconImageView.contentMode = .Center
+        self.userIconImageView.contentMode = .center
         self.userIconImageView.image = UIImage(named: "icon-user")
-        self.attachmentTypeImageView.contentMode = .Center
+        self.attachmentTypeImageView.contentMode = .center
         self.attachmentTypeImageView.image = UIImage(named: "icon-filetype-unknown")
-        self.timeIconImageView.contentMode = .Center
+        self.timeIconImageView.contentMode = .center
         self.timeIconImageView.image = UIImage(named: "icon-clock")
 
         self.progressView.trackWidth = 1.0
-        self.progressView.centerFillColor = UIColor.whiteColor()
-        self.progressView.backgroundColor = UIColor.clearColor()
-        self.progressView.trackBackgroundColor = UIColor.lightGrayColor()
+        self.progressView.centerFillColor = UIColor.white
+        self.progressView.backgroundColor = UIColor.clear
+        self.progressView.trackBackgroundColor = UIColor.lightGray
 
-        self.downloadButton.setImage(UIImage(named: "icon-download"), forState: .Normal)
-        self.downloadButton.imageView?.contentMode = .Center
+        self.downloadButton.setImage(UIImage(named: "icon-download"), for: UIControlState())
+        self.downloadButton.imageView?.contentMode = .center
         self.downloadButton.sizeToFit()
         self.accessoryView = self.downloadButton
 
-        self.userIconImageView.tintColor = UIColor.grayColor()
-        self.attachmentTypeImageView.tintColor = UIColor.darkGrayColor()
-        self.timeIconImageView.tintColor = UIColor.grayColor()
+        self.userIconImageView.tintColor = UIColor.gray
+        self.attachmentTypeImageView.tintColor = UIColor.darkGray
+        self.timeIconImageView.tintColor = UIColor.gray
 
-        self.attachmentTitleLabel.textColor = UIColor.darkGrayColor()
-        self.userNameLabel.textColor = UIColor.grayColor()
-        self.timeLabel.textColor = UIColor.grayColor()
+        self.attachmentTitleLabel.textColor = UIColor.darkGray
+        self.userNameLabel.textColor = UIColor.gray
+        self.timeLabel.textColor = UIColor.gray
 
         self.attachmentTitleLabel.text = "NotificationCounterNotUpdated.mp4"
         self.userNameLabel.text = "Timur Rahmanov"
@@ -63,7 +63,7 @@ class OZLIssueAttachmentCell: UITableViewCell {
         self.contentView.addSubview(self.timeIconImageView)
         self.contentView.addSubview(self.timeLabel)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(preferredContentSizeCategoryDidChange), name: UIContentSizeCategoryDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(preferredContentSizeCategoryDidChange), name: NSNotification.Name.UIContentSizeCategoryDidChange, object: nil)
         self.preferredContentSizeCategoryDidChange()
 
         self.installConstraints()
@@ -78,45 +78,45 @@ class OZLIssueAttachmentCell: UITableViewCell {
         let verticalElementSpacing = 3.0
         let intraItemHorizontalSpacing = 3.0
 
-        self.attachmentTypeImageView.snp_makeConstraints { (make) in
+        self.attachmentTypeImageView.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView)
             make.bottom.equalTo(self.contentView)
-            make.leading.equalTo(self.contentView.snp_leadingMargin)
+            make.leading.equalTo(self.contentView.snp.leadingMargin)
             make.width.equalTo(28.0)
         }
 
-        self.attachmentTitleLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(self.contentView.snp_top).offset(5)
-            make.leading.equalTo(self.attachmentTypeImageView.snp_trailing).offset(horizontalElementSpacing)
-            make.trailing.lessThanOrEqualTo(self.contentView.snp_trailingMargin)
+        self.attachmentTitleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(self.contentView.snp.top).offset(5)
+            make.leading.equalTo(self.attachmentTypeImageView.snp.trailing).offset(horizontalElementSpacing)
+            make.trailing.lessThanOrEqualTo(self.contentView.snp.trailingMargin)
         }
 
-        self.userIconImageView.snp_makeConstraints { (make) in
-            make.leading.equalTo(self.attachmentTypeImageView.snp_trailing).offset(horizontalElementSpacing)
+        self.userIconImageView.snp.makeConstraints { (make) in
+            make.leading.equalTo(self.attachmentTypeImageView.snp.trailing).offset(horizontalElementSpacing)
             make.width.equalTo(10.0)
             make.height.equalTo(10.0)
             make.centerY.equalTo(self.userNameLabel)
         }
 
         // Defines the bottom edge for automatic cell height computation
-        self.userNameLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, forAxis: .Horizontal)
-        self.userNameLabel.snp_makeConstraints { (make) in
-            make.leading.equalTo(self.userIconImageView.snp_trailing).offset(intraItemHorizontalSpacing)
-            make.top.equalTo(self.attachmentTitleLabel.snp_bottom).offset(verticalElementSpacing)
-            make.bottom.lessThanOrEqualTo(self.contentView.snp_bottom).offset(-5)
+        self.userNameLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        self.userNameLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(self.userIconImageView.snp.trailing).offset(intraItemHorizontalSpacing)
+            make.top.equalTo(self.attachmentTitleLabel.snp.bottom).offset(verticalElementSpacing)
+            make.bottom.lessThanOrEqualTo(self.contentView.snp.bottom).offset(-5)
         }
 
-        self.timeIconImageView.snp_makeConstraints { (make) in
-            make.leading.equalTo(self.userNameLabel.snp_trailing).offset(horizontalElementSpacing)
+        self.timeIconImageView.snp.makeConstraints { (make) in
+            make.leading.equalTo(self.userNameLabel.snp.trailing).offset(horizontalElementSpacing)
             make.width.equalTo(10.0)
             make.height.equalTo(10.0)
             make.centerY.equalTo(self.timeLabel)
         }
 
-        self.timeLabel.snp_makeConstraints { (make) in
-            make.leading.equalTo(self.timeIconImageView.snp_trailing).offset(intraItemHorizontalSpacing)
-            make.trailing.lessThanOrEqualTo(self.contentView.snp_trailingMargin).offset(-horizontalElementSpacing)
-            make.top.equalTo(self.attachmentTitleLabel.snp_bottom).offset(verticalElementSpacing)
+        self.timeLabel.snp.makeConstraints { (make) in
+            make.leading.equalTo(self.timeIconImageView.snp.trailing).offset(intraItemHorizontalSpacing)
+            make.trailing.lessThanOrEqualTo(self.contentView.snp.trailingMargin).offset(-horizontalElementSpacing)
+            make.top.equalTo(self.attachmentTitleLabel.snp.bottom).offset(verticalElementSpacing)
         }
     }
 
@@ -131,13 +131,13 @@ class OZLIssueAttachmentCell: UITableViewCell {
     }
 
     func preferredContentSizeCategoryDidChange() {
-        self.attachmentTitleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
-        self.userNameLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
-        self.timeLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
+        self.attachmentTitleLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
+        self.userNameLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.footnote)
+        self.timeLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.footnote)
         self.setNeedsLayout()
     }
 
-    func applyAttachmentModel(attachment: OZLModelAttachment) {
+    func applyAttachmentModel(_ attachment: OZLModelAttachment) {
         self.attachmentTitleLabel.text = attachment.name
         self.userNameLabel.text = attachment.attacher.name
 

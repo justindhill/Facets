@@ -10,7 +10,7 @@ import UIKit
 
 class OZLFieldSelectorViewController: UITableViewController {
     
-    private let defaultFields = [
+    fileprivate let defaultFields = [
         ("Project", "project"),
         ("Tracker", "tracker"),
         ("Status", "status"),
@@ -27,7 +27,7 @@ class OZLFieldSelectorViewController: UITableViewController {
     
     let DefaultFieldSection = 0
     let CustomFieldSection = 1
-    var selectionChangeHandler: ((field: OZLSortAndFilterField) -> Void)?
+    var selectionChangeHandler: ((_ field: OZLSortAndFilterField) -> Void)?
     
     let TextReuseIdentifier = "TextReuseIdentifier"
     
@@ -37,15 +37,15 @@ class OZLFieldSelectorViewController: UITableViewController {
         super.viewDidLoad()
 
         self.title = "Select a Field"
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:self.TextReuseIdentifier)
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier:self.TextReuseIdentifier)
     }
 
     // MARK: - Table view data source
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == DefaultFieldSection {
             return self.defaultFields.count
         } else if section == CustomFieldSection {
@@ -55,25 +55,25 @@ class OZLFieldSelectorViewController: UITableViewController {
         return 0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(self.TextReuseIdentifier, forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.TextReuseIdentifier, for: indexPath)
         
         if indexPath.section == DefaultFieldSection {
             let (displayName, _) = self.defaultFields[indexPath.row]
             cell.textLabel?.text = displayName
         } else if indexPath.section == CustomFieldSection {
-            let field = self.customFields[UInt(indexPath.row)]
-            cell.textLabel?.text = field.name
+            let field = self.customFields[UInt(indexPath.row)] as? OZLModelCustomField
+            cell.textLabel?.text = field?.name
         }
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == DefaultFieldSection {
             let (displayName, serverName) = self.defaultFields[indexPath.row]
-            self.selectionChangeHandler?(field: OZLSortAndFilterField(displayName: displayName, serverName: serverName))
+            self.selectionChangeHandler?(OZLSortAndFilterField(displayName: displayName, serverName: serverName))
             
         } else if indexPath.section == CustomFieldSection {
             guard let field = self.customFields[UInt(indexPath.row)] as? OZLModelCustomField else {
@@ -82,10 +82,10 @@ class OZLFieldSelectorViewController: UITableViewController {
             
             if let fieldName = field.name {
                 let serverName = "cf_" + String(field.fieldId)
-                self.selectionChangeHandler?(field: OZLSortAndFilterField(displayName: fieldName, serverName: serverName))
+                self.selectionChangeHandler?(OZLSortAndFilterField(displayName: fieldName, serverName: serverName))
             }
         }
         
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
 }
