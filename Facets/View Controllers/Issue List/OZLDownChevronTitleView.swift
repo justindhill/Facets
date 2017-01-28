@@ -16,7 +16,7 @@ class OZLDownChevronTitleView: UIControl {
 
     var title: String? {
         set(value) {
-            self.titleLabel.text = value?.uppercased()
+            self.titleLabel.text = value
             self.setNeedsLayout()
         }
         get {

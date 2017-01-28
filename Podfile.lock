@@ -2,7 +2,7 @@ PODS:
   - 1PasswordExtension (1.8.4)
   - CircleProgressView (1.0.13)
   - DFCache (4.0.1)
-  - DRPLoadingSpinner (1.0.1)
+  - DRPLoadingSpinner (1.0.2)
   - GTMNSStringHTMLAdditions (0.2.1)
   - Helpshift (5.9.1)
   - HockeySDK (4.1.3):
@@ -54,7 +54,7 @@ SPEC CHECKSUMS:
   1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
   CircleProgressView: 65283c9f23483889421c6e3c89f5e1a9b0e0ff19
   DFCache: db3bc28ceaa6f8838b1183607cb37924e488f070
-  DRPLoadingSpinner: df4aefbd5d9572cef9e32a9d270c65b13936ff47
+  DRPLoadingSpinner: 2605661b840d61a365a35e36d13a9b648cf96c21
   GTMNSStringHTMLAdditions: 4bfc402b1b17165360728083156cae0a74ecb308
   Helpshift: 7697d455edc1539f3cd5975fb3eafd4d2269b89b
   HockeySDK: 7dd8d7f5a4d71b7a5eebb320c8515cb22e99221b
