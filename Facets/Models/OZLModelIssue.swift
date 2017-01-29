@@ -309,7 +309,7 @@ import Foundation
                 case "tracker_id": return OZLModelTracker(forPrimaryKey: id)?.name
                 case "fixed_version_id": return OZLModelVersion(forPrimaryKey: id)?.name
                 case "status_id": return OZLModelIssueStatus(forPrimaryKey: id)?.name
-                case "assigned_to_id": return OZLModelUser(forPrimaryKey: id)?.name
+                case "assigned_to_id": return OZLModelUser(forPrimaryKey: String(id))?.name
                 case "category_id": return OZLModelIssueCategory(forPrimaryKey: id)?.name
                 case "priority_id": return OZLModelIssuePriority(forPrimaryKey: id)?.name
 
