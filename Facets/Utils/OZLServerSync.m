@@ -110,6 +110,12 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         weakSelf.activeCount -= 1;
         [weakSelf checkForCompletion];
     }];
+
+    self.activeCount += 1;
+    [[OZLNetwork sharedInstance] getCurrentUserWithCompletion:^(OZLModelUser * _Nonnull user, NSError * _Nonnull error) {
+        weakSelf.activeCount -= 1;
+        [weakSelf checkForCompletion];
+    }];
 }
 
 - (void)fetchCustomFieldsForProject:(NSInteger)project {

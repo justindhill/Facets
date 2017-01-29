@@ -8,6 +8,7 @@
 
 import UIKit
 import SORelativeDateTransformer
+import SDWebImage
 
 class OZLIssueTableViewCell: UITableViewCell {
 
@@ -65,7 +66,11 @@ class OZLIssueTableViewCell: UITableViewCell {
         self.dueDateLabel.isHidden = (issue.dueDate == nil)
 
         if let assignee = issue.assignedTo {
-            self.assigneeNameLabel.text = assignee.name.uppercased()
+            self.assigneeNameLabel.text = assignee.name?.uppercased()
+            issue.assignedTo?.updatedUserModel(completion: { (user) in
+                let width = Int(self.assigneeAvatarImageView.frame.size.width * UIScreen.main.scale)
+                self.assigneeAvatarImageView.sd_setImage(with: user?.sizedGravatarURL(width), placeholderImage: UIImage(named: "user-icon"))
+            })
         }
 
         if let dueDate = issue.dueDate {

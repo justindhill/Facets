@@ -1,5 +1,5 @@
 //
-//  OZLRedmineHTMLParser.h
+//  OZLIssueFieldsHTMLParser.h
 //  Facets
 //
 //  Created by Justin Hill on 12/1/15.
@@ -8,7 +8,7 @@
 
 #import "OZLModelCustomField.h"
 
-@interface OZLRedmineHTMLParser : NSObject
+@interface OZLIssueFieldsHTMLParser : NSObject
 
 /**
  *  @brief Parses the custom fields and possible values for them from HTML retrieved from /projects/<pid>/issue/new.

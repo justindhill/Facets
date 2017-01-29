@@ -11,6 +11,7 @@ def all_pods
 	pod 'RealmSwift'
 	pod 'JVFloatLabeledTextField'
 	pod 'SORelativeDateTransformer'
+    pod 'SDWebImage'
 	pod 'JGProgressHUD'
 	pod '1PasswordExtension'
 	pod 'SnapKit'

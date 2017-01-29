@@ -25,7 +25,8 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
     OZLNetworkErrorCouldntParseTokens,
     OZLNetworkErrorUnacceptableStatusCode,
     OZLNetworkErrorInvalidResponse,
-    OZLNetworkErrorInvalidRequestBody
+    OZLNetworkErrorInvalidRequestBody,
+    OZLNetworkErrorInvalidParameter
 };
 
 @interface OZLNetwork : NSObject
@@ -63,6 +64,10 @@ typedef NS_ENUM(NSInteger, OZLNetworkError) {
 - (void)createIssue:(OZLModelIssue *)issueData withParams:(nullable NSDictionary *)params completion:(void (^)(BOOL success, NSError * _Nullable error))completion;
 - (void)updateIssue:(OZLModelIssue *)issueData withParams:(nullable NSDictionary *)params completion:(void (^)(BOOL success, NSError * _Nullable error))completion;
 - (void)deleteIssue:(NSInteger)issueid withParams:(nullable NSDictionary *)params completion:(void (^)(BOOL success, NSError * _Nullable error))completion;
+
+// user
+- (void)getCurrentUserWithCompletion:(void (^)(OZLModelUser *user, NSError *error))completion;
+- (void)getUserWithId:(NSString *)userId completion:(void (^)(OZLModelUser *user, NSError *error))completion;
 
 // priority
 - (void)getPriorityListWithParams:(nullable NSDictionary *)params completion:(void (^)(NSArray * _Nullable result, NSError * _Nullable error))completion;

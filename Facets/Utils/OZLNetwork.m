@@ -9,7 +9,7 @@
 #import "OZLNetwork.h"
 #import "OZLSingleton.h"
 #import "OZLURLProtocol.h"
-#import "OZLRedmineHTMLParser.h"
+#import "OZLIssueFieldsHTMLParser.h"
 
 #import "NSString+OZLURLEncoding.h"
 #import "Facets-Swift.h"
@@ -48,7 +48,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     if (self = [super init]) {
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         config.HTTPCookieAcceptPolicy = NSHTTPCookieAcceptPolicyNever;
-        
+
         self.taskCallbackQueue = [[NSOperationQueue alloc] init];
         self.urlSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:self.taskCallbackQueue];
         self.requestCountSyncToken = [[NSObject alloc] init];
@@ -143,7 +143,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:components.URL];
     request.HTTPShouldHandleCookies = NO;
-    
+
     NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
@@ -271,7 +271,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSString *htmlString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
         
         NSError *parseError;
-        NSArray<OZLModelCustomField *> *fields = [OZLRedmineHTMLParser parseCustomFieldsHTMLString:htmlString error:&parseError];
+        NSArray<OZLModelCustomField *> *fields = [OZLIssueFieldsHTMLParser parseCustomFieldsHTMLString:htmlString error:&parseError];
         
         NSAssert(!parseError, @"There was an error parsing the custom fields from the HTML");
         
@@ -654,6 +654,37 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
             BOOL success = (response.statusCode == 201 && !error);
             
             completion(success, nil);
+        }
+    }];
+}
+
+#pragma mark - 
+#pragma mark User API
+- (void)getCurrentUserWithCompletion:(void (^)(OZLModelUser *user, NSError *error))completion {
+    [self getUserWithId:@"current" completion:completion];
+}
+
+- (void)getUserWithId:(NSString *)userId completion:(void (^)(OZLModelUser *user, NSError *error))completion {
+    if (!([userId isEqualToString:@"current"] || [userId integerValue])) {
+        completion(nil, [NSError errorWithDomain:OZLNetworkErrorDomain code:OZLNetworkErrorInvalidParameter userInfo:@{NSLocalizedDescriptionKey: @"Couldn't fetch the user due to an invalid user ID."}]);
+        return;
+    }
+    
+    NSString *path = [NSString stringWithFormat:@"/users/%@", userId];
+
+    [self GET:path params:nil completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
+        if (error) {
+            if (completion) {
+                completion(nil, error);
+                return;
+            }
+        }
+
+        NSString *htmlString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+        OZLModelUser *user = [OZLModelUser userWithUserPageHTML:htmlString];
+
+        if (completion) {
+            completion(user, nil);
         }
     }];
 }

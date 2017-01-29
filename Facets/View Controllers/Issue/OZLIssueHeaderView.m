@@ -9,6 +9,8 @@
 #import "OZLIssueHeaderView.h"
 #import "Facets-Swift.h"
 
+@import SDWebImage;
+
 const CGFloat profileSideLen = 32.;
 const CGFloat assigneeTextSize = 14.;
 
@@ -96,7 +98,12 @@ const CGFloat assigneeTextSize = 14.;
         self.assigneeDisplayNameLabel.font = [UIFont systemFontOfSize:assigneeTextSize];
         self.assigneeDisplayNameLabel.text = issue.assignedTo.name;
         self.assigneeDisplayNameLabel.textColor = [UIColor blackColor];
-        
+
+        [issue.assignedTo updatedUserModelWithCompletion:^(OZLModelUser *user) {
+            NSInteger width = (NSInteger)(self.assigneeProfileImageView.frame.size.width * [UIScreen mainScreen].scale);
+            [self.assigneeProfileImageView sd_setImageWithURL:[user sizedGravatarURL:width] placeholderImage:nil];
+        }];
+
     } else {
         self.assigneeDisplayNameLabel.font = [UIFont italicSystemFontOfSize:assigneeTextSize];
         self.assigneeDisplayNameLabel.text = @"Tap to assign";

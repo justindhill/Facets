@@ -23,10 +23,8 @@
 }
 
 - (void)applyAttributeDictionary:(NSDictionary *)attributes {
-    self.userId = [[attributes objectForKey:@"id"] integerValue];
+    self.userId = [[attributes objectForKey:@"id"] stringValue];
     self.login = [attributes objectForKey:@"login"];
-    self.firstname = [attributes objectForKey:@"firstname"];
-    self.lastname = [attributes objectForKey:@"lastname"];
     self.mail = [attributes objectForKey:@"mail"];
     
     NSString *creationDateString = [attributes objectForKey:@"created_on"];
@@ -41,15 +39,29 @@
         self.lastLoginDate = [NSDate dateWithISO8601String:lastLoginString];
     }
 
-    NSString *name = [attributes objectForKey:@"name"];
-    
-    if (name) {
-        self.name = name;
+    NSString *firstName = [attributes objectForKey:@"firstname"];
+    NSString *lastName = [attributes objectForKey:@"lastname"];
+
+    if (firstName && lastName) {
+        self.name = [@[ firstName, lastName ] componentsJoinedByString:@" "];
+    } else if ([attributes.allKeys containsObject:@"name"]) {
+        self.name = attributes[@"name"];
     }
 }
 
 - (NSString *)stringValue {
     return self.name;
+}
+
+- (NSURL *)sizedGravatarURL:(NSInteger)sideLen {
+    NSURLComponents *components = [NSURLComponents componentsWithString:self.gravatarURL];
+    components.queryItems = @[
+        [NSURLQueryItem queryItemWithName:@"rating" value:@"PG"],
+        [NSURLQueryItem queryItemWithName:@"size" value:[@(sideLen) stringValue]],
+        [NSURLQueryItem queryItemWithName:@"default" value:@""]
+    ];
+
+    return [components URL];
 }
 
 @end

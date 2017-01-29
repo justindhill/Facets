@@ -1,5 +1,5 @@
 //
-//  OZLRedmineHTMLParser.m
+//  OZLIssueFieldsHTMLParser.m
 //  Facets
 //
 //  Created by Justin Hill on 12/1/15.
@@ -9,11 +9,11 @@
 @import RaptureXML_Frankly;
 @import GTMNSStringHTMLAdditions;
 
-#import "OZLRedmineHTMLParser.h"
+#import "OZLIssueFieldsHTMLParser.h"
 #import "OZLModelCustomField.h"
 #import "OZLModelStringContainer.h"
 
-@implementation OZLRedmineHTMLParser
+@implementation OZLIssueFieldsHTMLParser
 
 + (NSNumberFormatter *)formatter {
     static NSNumberFormatter *formatter;
