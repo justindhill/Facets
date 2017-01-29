@@ -198,6 +198,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
                                                                 NSHTTPCookieExpires: [NSDate distantFuture]}];
     
     NSAssert(cookie, @"Couldn't create cookie");
+
+    for (NSHTTPCookie *cookie in [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] copy]) {
+        if ([cookie.name isEqualToString:cookieName]) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+        }
+    }
     
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
 }
