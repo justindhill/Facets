@@ -59,7 +59,6 @@ class OZLSortAndFilterViewController: UITableViewController {
     
     fileprivate let SortFieldSection = 0;
     fileprivate let SortOrderSection = 1
-    fileprivate let FiltersSection = 2
     
     fileprivate let TextReuseIdentifier = "TextReuseIdentifier"
     
@@ -82,7 +81,7 @@ class OZLSortAndFilterViewController: UITableViewController {
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Sort and Filter"
+        self.title = "Sort"
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(OZLSortAndFilterViewController.cancelAction))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(OZLSortAndFilterViewController.saveAction))
@@ -107,8 +106,6 @@ class OZLSortAndFilterViewController: UITableViewController {
             return 1
         } else if section == SortOrderSection {
             return 2
-        } else if section == FiltersSection {
-            return 1
         }
         
         return 0
@@ -135,10 +132,6 @@ class OZLSortAndFilterViewController: UITableViewController {
                 cell?.accessoryType = self.options.sortOrder == .descending ? .checkmark : .none
             }
             
-        } else if indexPath.section == FiltersSection {
-            cell?.accessoryType = .none
-            cell?.textLabel?.textColor = self.view.tintColor
-            cell?.textLabel?.text = "Add a filter"
         }
         
         return cell!
@@ -149,8 +142,6 @@ class OZLSortAndFilterViewController: UITableViewController {
             return "Sort Order"
         } else if section == SortFieldSection {
             return "Sort Field"
-        } else if section == FiltersSection {
-            return "Filters"
         }
         
         return nil

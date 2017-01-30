@@ -105,6 +105,16 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     override var previewActionItems : [UIPreviewActionItem] {
         var items = [UIPreviewActionItem]()
 
+        items.append(UIPreviewAction(title: "Share", style: .default, handler: { (action, previewViewController) in
+            let components = NSURLComponents(url: OZLNetwork.sharedInstance().baseURL, resolvingAgainstBaseURL: true)
+            components?.path = "/issues/\(self.viewModel.issueModel.index)"
+
+            if let url = components?.url {
+                let activityViewController = UIActivityViewController(activityItems:[url] , applicationActivities: nil)
+                UIApplication.shared.keyWindow?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+            }
+        }))
+
         items.append(UIPreviewAction(title: "Quick Assign", style: .default, handler: { (action, previewViewController) in
             if let issueCopy = self.viewModel.issueModel.copy() as? OZLModelIssue {
                 let vc = OZLQuickAssignViewController(issueModel: issueCopy)
