@@ -223,4 +223,10 @@ class OZLIssueTableViewCell: UITableViewCell {
 
         return image!
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.assigneeAvatarImageView.sd_cancelCurrentImageLoad()
+        self.assigneeAvatarImageView.image = nil
+    }
 }

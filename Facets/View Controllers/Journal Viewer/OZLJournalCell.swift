@@ -124,7 +124,12 @@ class OZLJournalCell: UITableViewCell {
     
     fileprivate func applyJournalModel(_ journal: OZLModelJournal) {
         self.usernameLabel.text = journal.author?.name
-        
+
+        journal.author?.updatedUserModel(completion: { (user) in
+            let width = Int(self.profileImageView.frame.size.width * UIScreen.main.scale)
+            self.profileImageView.sd_setImage(with: user?.sizedGravatarURL(width), placeholderImage: UIImage(named: "user-icon"))
+        })
+
         if let date = journal.creationDate {
             self.dateLabel.text = OZLJournalCell.dateFormatter.string(from: date as Date)
         } else {
@@ -220,5 +225,11 @@ class OZLJournalCell: UITableViewCell {
         }
 
         return CGSize(width: targetSize.width, height: bottom)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.profileImageView.sd_cancelCurrentImageLoad()
+        self.profileImageView.image = nil
     }
 }
