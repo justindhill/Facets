@@ -282,7 +282,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
                 self.issue.dueDate = toValue
             } else if keyPath == StartDateKeypath {
                 self.issue.startDate = toValue
-            } else if let customField = customField {
+//            } else if let customField = customField {
                 // WARNING: Handle date formatting
 //                self.issue.setValueOnDiff(<#T##value: String##String#>, forCustomFieldId: <#T##Int#>)
             }

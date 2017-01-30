@@ -11,7 +11,6 @@
 #import "OZLURLProtocol.h"
 #import "OZLIssueFieldsHTMLParser.h"
 
-#import "NSString+OZLURLEncoding.h"
 #import "Facets-Swift.h"
 
 NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
@@ -101,10 +100,12 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         [request setValue:authCookie forHTTPHeaderField:@"Cookie"];
-        
-        NSString *encodedBackURL = [url.absoluteString URLEncodedString];
-        NSString *encodedToken = [authToken URLEncodedString];
-        NSString *formValueString = [NSString stringWithFormat:@"username=%@&password=%@&authenticity_token=%@&back_url=%@", [username URLEncodedString], [password URLEncodedString], encodedToken, encodedBackURL];
+
+        NSString *encodedBackURL = [url.absoluteString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSString *encodedToken = [authToken stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSString *encodedUsername = [username stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSString *encodedPassword = [password stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSString *formValueString = [NSString stringWithFormat:@"username=%@&password=%@&authenticity_token=%@&back_url=%@", encodedUsername, encodedPassword, encodedToken, encodedBackURL];
         request.HTTPBody = [formValueString dataUsingEncoding:NSUTF8StringEncoding];
         
 //        NSLog(@"request: %@", request);

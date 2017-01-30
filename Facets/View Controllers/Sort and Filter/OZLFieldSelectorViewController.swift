@@ -85,7 +85,7 @@ class OZLFieldSelectorViewController: UITableViewController {
                 self.selectionChangeHandler?(OZLSortAndFilterField(displayName: fieldName, serverName: serverName))
             }
         }
-        
-        self.navigationController?.popViewController(animated: true)
+
+        let _ = self.navigationController?.popViewController(animated: true)
     }
 }

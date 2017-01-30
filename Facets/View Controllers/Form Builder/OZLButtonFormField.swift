@@ -54,7 +54,7 @@ class OZLButtonFormFieldCell: OZLFormFieldCell {
     }
 
     func buttonActionInternal(_ sender: UIButton?) {
-        if let target = self.buttonTarget, let action = self.buttonAction {
+        if let target = self.buttonTarget as? NSObject, let action = self.buttonAction {
             target.perform(action, with: self.keyPath)
         }
     }

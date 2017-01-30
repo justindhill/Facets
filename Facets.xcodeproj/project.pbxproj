@@ -61,7 +61,6 @@
 		D035A4BF1C0A98D80057AA48 /* OZLModelCustomField.m in Sources */ = {isa = PBXBuildFile; fileRef = D035A4BE1C0A98D80057AA48 /* OZLModelCustomField.m */; };
 		D035CEF51C9A210D00805183 /* OZLEnumerationFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D035CEF41C9A210D00805183 /* OZLEnumerationFormField.swift */; };
 		D03D6C421BD017AB00A47E24 /* OZLModelQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */; };
-		D056780C1C965733002F6BCF /* NSString+OZLURLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */; };
 		D056780E1C965F04002F6BCF /* OZLQueryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D056780D1C965F04002F6BCF /* OZLQueryListViewController.swift */; };
 		D05AF77F1C2BBC84007911EA /* OZLQuickAssignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */; };
 		D05AF7811C2BC87A007911EA /* OZLSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */; };
@@ -190,8 +189,6 @@
 		D035CEF41C9A210D00805183 /* OZLEnumerationFormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLEnumerationFormField.swift; sourceTree = "<group>"; };
 		D03D6C401BD017AB00A47E24 /* OZLModelQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelQuery.h; sourceTree = "<group>"; };
 		D03D6C411BD017AB00A47E24 /* OZLModelQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelQuery.m; sourceTree = "<group>"; };
-		D056780A1C965733002F6BCF /* NSString+OZLURLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+OZLURLEncoding.h"; sourceTree = "<group>"; };
-		D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+OZLURLEncoding.m"; sourceTree = "<group>"; };
 		D056780D1C965F04002F6BCF /* OZLQueryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQueryListViewController.swift; sourceTree = "<group>"; };
 		D05AF77E1C2BBC84007911EA /* OZLQuickAssignViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLQuickAssignViewController.swift; sourceTree = "<group>"; };
 		D05AF7801C2BC87A007911EA /* OZLSheetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLSheetPresentationController.swift; sourceTree = "<group>"; };
@@ -333,8 +330,6 @@
 				D0BCD0EB1C14C70F00B0DC6D /* UIImage+OZLExtensions.m */,
 				D014C2B01C95D37E00D381A9 /* NSDate+OZLExtensions.swift */,
 				D00EA1F41CD53597002210E0 /* UIColor+OZLExtensions.swift */,
-				D056780A1C965733002F6BCF /* NSString+OZLURLEncoding.h */,
-				D056780B1C965733002F6BCF /* NSString+OZLURLEncoding.m */,
 				D0AF78DB1CF217C400F1A46C /* DFCache+CacheChecking.swift */,
 				D00690A21DC5097F004E46D7 /* DRPRefreshControl+FacetsBranding.swift */,
 				D0C2A7B71E3E9FDC00DBF7DC /* OZLModelUser+Fetching.swift */,
@@ -792,7 +787,6 @@
 				D0292D691BF2DBB600F717F2 /* OZLIssueFullDescriptionViewController.m in Sources */,
 				D014C2BA1C962DB500D381A9 /* OZLTextFormField.swift in Sources */,
 				D0292D701BF3141900F717F2 /* OZLLoadingView.m in Sources */,
-				D056780C1C965733002F6BCF /* NSString+OZLURLEncoding.m in Sources */,
 				D01F9C111BED9B15005B2ED0 /* OZLIssueDescriptionCell.m in Sources */,
 				D09503531E3D42A600739B0B /* OZLUserHTMLParser.swift in Sources */,
 				D007AF901CDD9E6F00CE48C4 /* OZLIssueViewModel.swift in Sources */,
