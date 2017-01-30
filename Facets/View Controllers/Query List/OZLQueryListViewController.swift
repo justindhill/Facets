@@ -62,7 +62,6 @@ class OZLQueryListViewController: OZLTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: OZLQueryReuseIdentifier, for: indexPath)
         cell.accessoryType = .disclosureIndicator
         cell.textLabel?.text = self.queries[indexPath.row].name
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 15.0)
 
         return cell
     }

@@ -23,7 +23,9 @@ extension OZLModelUser {
 
         OZLNetwork.sharedInstance().getUserWithId(userId) { (user, error) in
             do {
+
                 RLMRealm.default().beginWriteTransaction()
+                user.userId = userId
                 user.lastFetchedDate = Date()
                 OZLModelUser.createOrUpdateInDefaultRealm(withValue: user)
                 try RLMRealm.default().commitWriteTransaction()

@@ -33,15 +33,7 @@ extension OZLModelUser {
             self.gravatarURL = gravatarImage.attribute("src")
         }
 
-        if let loggedAs = ele.children(withRootXPath: "//div[@id='loggedas']/a").first as? RXMLElement {
-            if let userIdString = loggedAs.attribute("href").components(separatedBy: "/").last, Int(userIdString) != nil {
-                self.userId = userIdString
-            }
-
-            self.login = loggedAs.text
-        }
-        
-        let infoListItems = ele.children(withRootXPath: "//div[@id='content']/div[@class='splitcontentleft']/ul/li")
-       //"//div[@id='attributes']/div[@class='splitcontent'][2]/div/p"
+        // will need these when we do profile pages
+//        let infoListItems = ele.children(withRootXPath: "//div[@id='content']/div[@class='splitcontentleft']/ul/li")
     }
 }
