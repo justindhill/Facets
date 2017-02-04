@@ -43,6 +43,7 @@
     self.loadingSpinner.lineWidth = 2.;
 
     self.errorMessageLabel = [[UILabel alloc] init];
+    self.errorMessageLabel.textAlignment = NSTextAlignmentCenter;
     self.errorMessageLabel.textColor = [UIColor lightGrayColor];
     self.errorMessageLabel.font = [UIFont systemFontOfSize:16.0];
     self.errorMessageLabel.numberOfLines = 0;

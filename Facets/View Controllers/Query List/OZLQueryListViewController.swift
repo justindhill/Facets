@@ -15,14 +15,12 @@ class OZLQueryListViewController: OZLTableViewController {
     var isFirstAppearance = true
     var queries: [OZLModelQuery] = []
     var displayedProjectId = NSNotFound
-    var loadingView = OZLLoadingView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
-        self.view.addSubview(self.loadingView)
         self.isFirstAppearance = true
 
         self.title = "Queries"
@@ -45,12 +43,6 @@ class OZLQueryListViewController: OZLTableViewController {
         }
 
         self.isFirstAppearance = false
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-        self.loadingView.frame = self.view.bounds
     }
 
     // MARK: - UITableViewDataSource/Delegate
@@ -83,8 +75,7 @@ class OZLQueryListViewController: OZLTableViewController {
 
     func refreshData() {
         if self.queries.count == 0 {
-            self.loadingView.isHidden = false
-            self.loadingView.startLoading()
+            self.startLoading()
         } else if !(self.tableViewController.refreshControl?.isRefreshing ?? false) {
             self.tableViewController.refreshControl?.beginRefreshing()
         }
@@ -98,10 +89,10 @@ class OZLQueryListViewController: OZLTableViewController {
             }
             
             if error != nil {
-                weakSelf.loadingView.endLoadingWithErrorMessage("There was a problem loading the query list. Please check your connection and try again.")
+                weakSelf.endLoading(errorMessage: "There was a problem loading the query list. Please check your connection and try again.")
             } else {
                 let count = result?.count ?? 0
-                weakSelf.loadingView.endLoadingWithErrorMessage(count > 0 ? nil : "Nothing to see here.")
+                weakSelf.endLoading(errorMessage: count > 0 ? nil : "Nothing to see here.")
                 weakSelf.displayedProjectId = projectId
                 weakSelf.queries = result as? [OZLModelQuery] ?? []
             }

@@ -11,6 +11,8 @@ import UIKit
 class OZLTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var tableViewController: UITableViewController!
+    lazy var loadingView = OZLLoadingView()
+
 
     init(style: UITableViewStyle) {
         self.tableViewController = UITableViewController(style: style)
@@ -44,6 +46,7 @@ class OZLTableViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewWillLayoutSubviews()
 
         self.tableView.frame = self.view.bounds
+        self.loadingView.frame = self.view.bounds
     }
 
     // MARK: - UITableViewDelegate/DataSource
@@ -53,5 +56,16 @@ class OZLTableViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell(style: .default, reuseIdentifier: "DefaultReuseId")
+    }
+    
+    func startLoading() {
+        self.view.addSubview(self.loadingView)
+        self.loadingView.isHidden = false
+        self.loadingView.startLoading()
+    }
+    
+    func endLoading(errorMessage: String?) {
+        self.loadingView.endLoadingWithErrorMessage(errorMessage)
+        self.loadingView.isHidden = (errorMessage == nil)
     }
 }

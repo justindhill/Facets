@@ -318,6 +318,10 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     func reloadProjectData() {
         weak var weakSelf = self
         
+        if self.viewModel.issues.count == 0 {
+            self.startLoading()
+        }
+        
         self.viewModel.loadIssuesCompletion({ (error) -> Void in
 
             if let refreshControl = weakSelf?.refreshControl {
@@ -326,12 +330,10 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
 
             if let weakSelf = weakSelf {
                 if let error = error {
-                    let alert = UIAlertController(title: "Couldn't load issue list", message: error.localizedDescription, preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    weakSelf.present(alert, animated: true, completion: nil)
+                    self.endLoading(errorMessage: "There was a problem loading the issue list.\n\n\(error.localizedDescription)")
                     
                 } else {
+                    self.endLoading(errorMessage: weakSelf.viewModel.issues.count > 0 ? nil : "Nothing to see here.")
                     weakSelf.tableView.reloadData()
                     
                     if !self.viewModel.moreIssuesAvailable {
