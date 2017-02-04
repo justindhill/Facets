@@ -76,10 +76,12 @@ class OZLTextFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
     }
 
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        self.valueBeforeEditing = textField.text
-        self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: textField)
-
-        return true
+        if self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: self) ?? true {
+            self.valueBeforeEditing = textField.text
+            return true
+        }
+        
+        return false
     }
 
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {

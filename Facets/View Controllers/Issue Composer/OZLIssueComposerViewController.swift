@@ -246,7 +246,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
                 } else if let toValue = Int(toValue), customField.type == .integer {
                     self.issue.setValueOnDiff(toValue as AnyObject, forCustomFieldId: customField.fieldId)
                 } else {
-                    assertionFailure("An unexpected custom field passed a raw string to valueChangedFrom:to:atKeyPath:userInfo:")
+                    self.issue.setValueOnDiff(toValue as AnyObject, forCustomFieldId: customField.fieldId)
                 }
             }
 
@@ -282,9 +282,8 @@ class OZLIssueComposerViewController: OZLFormViewController {
                 self.issue.dueDate = toValue
             } else if keyPath == StartDateKeypath {
                 self.issue.startDate = toValue
-//            } else if let customField = customField {
-                // WARNING: Handle date formatting
-//                self.issue.setValueOnDiff(<#T##value: String##String#>, forCustomFieldId: <#T##Int#>)
+            } else if let customField = customField {
+                self.issue.setDateOnDiff(toValue, forCustomFieldId: customField.fieldId)
             }
         } else if let toValue = toValue as? OZLModelStringContainer, let value = toValue.value {
             if let customField = customField {
@@ -362,13 +361,14 @@ private extension OZLModelCustomField {
         let keyPath = "cf_\(self.fieldId)"
 
         var formField: OZLFormField!
+        let stringValue = self.value as? String ?? ""
 
         switch self.type {
         case .boolean:
             formField = OZLEnumerationFormField(
                 keyPath: keyPath,
                 placeholder: fieldName,
-                currentValue: self.value == "0" ? "No" : self.value == "1" ? "Yes" : nil,
+                currentValue: stringValue == "0" ? "No" : stringValue == "1" ? "Yes" : nil,
                 possibleValues: [
                     OZLModelStringContainer(string: "", value: ""),
                     OZLModelStringContainer(string: "Yes", value: "1"),
@@ -376,23 +376,23 @@ private extension OZLModelCustomField {
                 ]
             )
         case .date:
-            formField = OZLDateFormField(keyPath: keyPath, placeholder: fieldName)
+            formField = OZLDateFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value as? Date)
         case .float:
-            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
+            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: stringValue)
         case .integer:
-            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
+            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: stringValue)
         case .link:
             formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName)
         case .list:
-            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value, possibleRealmValues: self.options!)
+            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: stringValue, possibleRealmValues: self.options!)
         case .longText:
-            formField = OZLTextViewFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
+            formField = OZLTextViewFormField(keyPath: keyPath, placeholder: fieldName, currentValue: stringValue)
         case .text:
-            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
+            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: stringValue)
         case .user:
-            formField = OZLTextFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value)
+            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: stringValue, possibleRealmValues: self.options!)
         case .version:
-            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: self.value, possibleRealmValues: self.options!)
+            formField = OZLEnumerationFormField(keyPath: keyPath, placeholder: fieldName, currentValue: stringValue, possibleRealmValues: self.options!)
         default:
 //            assertionFailure()
             formField = OZLFormField(keyPath: "", placeholder: "")

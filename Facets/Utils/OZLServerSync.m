@@ -28,6 +28,8 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
 
 - (void)startSyncCompletion:(void(^)(NSError *error))completion {
     
+    NSLog(@"Starting server sync");
+    
     __weak OZLServerSync *weakSelf = self;
     [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidBeginNotification object:nil];
     
@@ -46,9 +48,6 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
         RLMResults *allObjects = [OZLModelProject allObjects];
         
         [[RLMRealm defaultRealm] transactionWithBlock:^{
-            
-            [[RLMRealm defaultRealm] deleteObjects:allObjects];
-            
             for (OZLModelProject *project in result) {
                 [OZLModelProject createOrUpdateInDefaultRealmWithValue:project];
             }
@@ -196,7 +195,8 @@ NSString * const OZLServerSyncDidEndNotification = @"OZLServerSyncDidEndNotifica
 - (void)checkForCompletion {
     if (self.activeCount == 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:OZLServerSyncDidEndNotification object:nil];
-        
+        NSLog(@"Server sync complete");
+
         __weak OZLServerSync *weakSelf = self;
         
         if (self.completionBlock) {

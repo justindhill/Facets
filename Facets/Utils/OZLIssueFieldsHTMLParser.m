@@ -43,19 +43,47 @@
         
         NSArray<OZLModelStringContainer *> *options;
 
-        __block NSString *value;
+        __block id value;
 #warning Custom field support is incomplete! Need to parse the rest of the types.
         if (fieldType == OZLModelCustomFieldTypeInvalid) {
             continue;
-        } else if (fieldType == OZLModelCustomFieldTypeList || fieldType == OZLModelCustomFieldTypeVersion) {
+        } else if (fieldType == OZLModelCustomFieldTypeList || fieldType == OZLModelCustomFieldTypeVersion || fieldType == OZLModelCustomFieldTypeUser) {
             options = [self optionsFromListFieldParagraph:p currentValue:&value];
         } else if (fieldType == OZLModelCustomFieldTypeBoolean) {
-            [p iterate:@"span.label" usingBlock:^(RXMLElement *e) {
-                RXMLElement *input = [e child:@"input"];
-                if ([[input attribute:@"checked"] isEqualToString:@"checked"]) {
-                    value = [input attribute:@"value"];
-                }
-            }];
+            // it seems like this changed between Redmine versions...
+            if ([p child:@"span"]) {
+                [p iterate:@"span.label" usingBlock:^(RXMLElement *e) {
+                    RXMLElement *input = [e child:@"input"];
+                    if ([[input attribute:@"checked"] isEqualToString:@"checked"]) {
+                        value = [input attribute:@"value"];
+                    }
+                }];
+            } else if ([p child:@"select"]) {
+                [p iterate:@"select.option" usingBlock:^(RXMLElement *e) {
+                    if ([[e attribute:@"selected"] isEqualToString:@"selected"]) {
+                        value = [e attribute:@"value"];
+                        NSLog(@"");
+                    }
+                }];
+            }
+        } else if (fieldType == OZLModelCustomFieldTypeDate) {
+            NSString *dateValue = [[p child:@"input"] attribute:@"value"];
+            
+            if (dateValue.length > 0) {
+                static NSDateFormatter *inFormatter;
+                static dispatch_once_t onceToken;
+                dispatch_once(&onceToken, ^{
+                    inFormatter = [[NSDateFormatter alloc] init];
+                    inFormatter.dateFormat = @"yyyy-M-d";
+                });
+                
+                value = [inFormatter dateFromString:dateValue];
+            }
+        } else if (fieldType == OZLModelCustomFieldTypeFloat || fieldType == OZLModelCustomFieldTypeInteger ||
+                   fieldType == OZLModelCustomFieldTypeText || fieldType == OZLModelCustomFieldTypeLink) {
+            value = [[p child:@"input"] attribute:@"value"];
+        } else if (fieldType == OZLModelCustomFieldTypeLongText) {
+            value = [[[p child:@"textarea"] text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         }
 
         OZLModelCustomField *field = [[OZLModelCustomField alloc] init];

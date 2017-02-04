@@ -92,11 +92,12 @@ class OZLFormViewController: OZLTableViewController, OZLFormFieldDelegate {
         self.changes[keyPath] = toValue
     }
 
-    func formFieldCellWillBeginEditing(_ formCell: OZLFormFieldCell, firstResponder: UIResponder?) {
+    func formFieldCellWillBeginEditing(_ formCell: OZLFormFieldCell, firstResponder: UIResponder?) -> Bool {
         if firstResponder == nil {
             self.currentEditingResponder?.resignFirstResponder()
         }
 
         self.currentEditingResponder = firstResponder
+        return true
     }
 }

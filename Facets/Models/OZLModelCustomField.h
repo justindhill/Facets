@@ -32,7 +32,7 @@ RLM_ARRAY_TYPE(OZLModelStringContainer)
 @property NSInteger fieldId;
 @property OZLModelCustomFieldType type;
 @property (nullable, strong) NSString *name;
-@property (nullable) NSString *value;
+@property (nullable) id value;
 @property (nullable, strong) RLMArray<OZLModelStringContainer *><OZLModelStringContainer> *options;
 
 + (nonnull NSString *)displayValueForCustomFieldType:(OZLModelCustomFieldType)type attributeId:(NSInteger)attributeId attributeValue:(nonnull NSString *)attributeValue;

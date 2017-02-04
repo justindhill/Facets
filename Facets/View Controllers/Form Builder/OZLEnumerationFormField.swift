@@ -150,8 +150,9 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
 
             sheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
 
-            self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: nil)
-            closestVC.present(sheet, animated: true, completion: nil)
+            if self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: self) ?? true {
+                closestVC.present(sheet, animated: true, completion: nil)
+            }
         }
 
         return false

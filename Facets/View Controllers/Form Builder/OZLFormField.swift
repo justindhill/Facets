@@ -6,9 +6,9 @@
 //  Copyright © 2016 Justin Hill. All rights reserved.
 //
 
-protocol OZLFormFieldDelegate {
+protocol OZLFormFieldDelegate: AnyObject {
     func formFieldCell(_ formCell: OZLFormFieldCell, valueChangedFrom fromValue: AnyObject?, toValue: AnyObject?, atKeyPath: String, userInfo: [String: AnyObject])
-    func formFieldCellWillBeginEditing(_ formCell: OZLFormFieldCell, firstResponder: UIResponder?)
+    func formFieldCellWillBeginEditing(_ formCell: OZLFormFieldCell, firstResponder: UIResponder?) -> Bool
 }
 
 class OZLFormField: NSObject {

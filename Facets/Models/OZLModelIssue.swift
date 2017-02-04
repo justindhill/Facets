@@ -297,9 +297,17 @@ import Foundation
 
             if var customFields = changeDictionary["custom_fields"] as? [Int: AnyObject], fieldId > 0 {
                 customFields[fieldId] = value
+                changeDictionary["custom_fields"] = customFields as AnyObject
             }
+            
+            self.changeDictionary = changeDictionary
         }
-
+    }
+    
+    func setDateOnDiff(_ date: Date, forCustomFieldId fieldId: Int) {
+        if let dateString = OZLModelIssue.dateFormatter.string(from: date) as AnyObject? {
+            self.setValueOnDiff(dateString, forCustomFieldId: fieldId)
+        }
     }
 
     class func displayValueForAttributeName(_ name: String?, attributeId id: Int) -> String? {

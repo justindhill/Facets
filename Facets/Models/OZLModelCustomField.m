@@ -10,7 +10,7 @@
 #import "Facets-Swift.h"
 
 @interface OZLModelCustomField () {
-    NSString *_value;
+    id _value;
 }
 
 @end
@@ -81,15 +81,7 @@
         }
         
     } else if (type == OZLModelCustomFieldTypeUser) {
-        NSNumber *userId = [numberFormatter numberFromString:attributeValue];
-        
-        if (!userId) {
-            NSAssert(NO, @"Wasn't able to parse the user id from the value string");
-            
-            return attributeValue;
-        }
-        
-        OZLModelUser *user = [OZLModelUser objectForPrimaryKey:userId];
+        OZLModelUser *user = [OZLModelUser objectForPrimaryKey:attributeValue];
         
         if (user.name) {
             return user.name;

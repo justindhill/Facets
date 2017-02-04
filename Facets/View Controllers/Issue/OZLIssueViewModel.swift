@@ -184,7 +184,7 @@ enum OZLIssueCompleteness: Int {
                 (
                     String(field.fieldId),
                     field.name ?? "",
-                    OZLModelCustomField.displayValue(for: cachedField?.type ?? field.type, attributeId: field.fieldId, attributeValue: field.value ?? "")
+                    OZLModelCustomField.displayValue(for: cachedField?.type ?? field.type, attributeId: field.fieldId, attributeValue: field.value as? String ?? "")
                 )
             )
         }

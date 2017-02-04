@@ -64,10 +64,12 @@ class OZLTextViewFormFieldCell: OZLFormFieldCell, UITextViewDelegate {
     }
 
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        self.valueBeforeEditing = textView.text
-        self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: textView)
-
-        return true
+        if self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: self) ?? true {
+            self.valueBeforeEditing = textView.text
+            return true
+        }
+        
+        return false
     }
 
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {

@@ -208,7 +208,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     }
     
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-    NSLog(@"Just set the cookie!");
 }
 
 #pragma mark-
@@ -251,7 +250,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
 }
 
 - (void)getCustomFieldsForIssue:(NSInteger)issue completion:(void (^)(NSArray * _Nullable, NSError * _Nullable))completion {
-    NSString *path = [NSString stringWithFormat:@"/issues/%ld", (long)issue];
+    NSString *path = [NSString stringWithFormat:@"/issues/%ld/edit", (long)issue];
     [self getCustomFieldsForPath:path completion:completion];
 }
 
@@ -675,7 +674,6 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
     
     NSString *path = [NSString stringWithFormat:@"/users/%@", userId];
 
-    NSLog(@"About to fire the user request!");
     [self GET:path params:nil completion:^(NSData *responseData, NSHTTPURLResponse *response, NSError *error) {
         if (error) {
             if (completion) {
