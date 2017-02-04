@@ -14,6 +14,6 @@
  *  @brief Parses the custom fields and possible values for them from HTML retrieved from /projects/<pid>/issue/new.
  *         This is necessary because Redmine doesn't allow read-only access to its custom fields via the API.
  */
-+ (NSArray<OZLModelCustomField *> *)parseCustomFieldsHTMLString:(NSString *)html error:(NSError **)error;
++ (NSArray<OZLModelCustomField *> *)parseIssueFieldsHTMLString:(NSString *)html error:(NSError **)error;
 
 @end

@@ -68,7 +68,7 @@ class OZLEnumerationFormField: OZLFormField {
 class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
 
     var textField: JVFloatLabeledTextField = JVFloatLabeledTextField()
-    var possibleValues: [AnyObject]!
+    var possibleValues: [AnyObject]?
 
     required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -125,7 +125,7 @@ class OZLEnumerationFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
         if let closestVC = closestVC as? UIViewController{
             let sheet = UIAlertController(title: self.textField.placeholder, message: nil, preferredStyle: .actionSheet)
 
-            for val in self.possibleValues {
+            for val in self.possibleValues ?? [] {
                 if val is String {
                     let val = val as! String
                     sheet.addAction(UIAlertAction(title: val, style: .default, handler: { (action) in

@@ -181,13 +181,13 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
             OZLTextFormField(
                 keyPath: TimeEstimationKeypath,
-                placeholder: "Estimated time",
-                currentValue: (self.changes[TimeEstimationKeypath] as? String) ?? String(describing: self.issue.estimatedHours)),
+                placeholder: "Estimated time (hours)",
+                currentValue: (self.changes[TimeEstimationKeypath] as? String) ?? (self.issue.estimatedHours == nil ? "" : String(describing: self.issue.estimatedHours!))),
 
             OZLTextFormField(
                 keyPath: PercentCompleteKeypath,
                 placeholder: "Percent complete",
-                currentValue: (self.changes[PercentCompleteKeypath] as? String ?? String(describing: self.issue.doneRatio))),
+                currentValue: (self.changes[PercentCompleteKeypath] as? String ?? (self.issue.doneRatio == nil ? "" : String(describing: self.issue.doneRatio!)))),
 
             OZLDateFormField(
                 keyPath: StartDateKeypath,
@@ -308,7 +308,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
         weak var weakSelf = self
 
-        func completion(_ success: Bool, error: NSError?) {
+        func completion(_ success: Bool, error: Error?) {
             if let weakSelf = weakSelf {
                 if success == false {
                     hud.indicatorView = JGProgressHUDImageIndicatorView(imageInLibraryBundleNamed: "jg_hud_error", enableTinting: true)
@@ -327,9 +327,9 @@ class OZLIssueComposerViewController: OZLFormViewController {
         }
 
         if self.editMode == .new {
-            OZLNetwork.sharedInstance().createIssue(self.issue, withParams: [:], completion: completion as! (Bool, Error?) -> Void)
+            OZLNetwork.sharedInstance().createIssue(self.issue, withParams: [:], completion: completion)
         } else if self.editMode == .existing {
-            OZLNetwork.sharedInstance().update(self.issue, withParams: nil, completion: completion as! (Bool, Error?) -> Void)
+            OZLNetwork.sharedInstance().update(self.issue, withParams: nil, completion: completion)
         }
     }
 

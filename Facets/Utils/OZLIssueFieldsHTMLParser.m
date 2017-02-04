@@ -25,7 +25,7 @@
     return formatter;
 }
 
-+ (NSArray<OZLModelCustomField *> *)parseCustomFieldsHTMLString:(NSString *)html error:(NSError **)error {
++ (NSArray<OZLModelCustomField *> *)parseIssueFieldsHTMLString:(NSString *)html error:(NSError **)error {
     NSMutableArray *fields = [NSMutableArray array];
     
     NSString *plainString = [html gtm_stringByUnescapingFromHTML];

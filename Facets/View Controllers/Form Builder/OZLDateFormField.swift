@@ -55,6 +55,19 @@ class OZLDateFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
         self.textField.delegate = self
         self.setup()
     }
+    
+    override var inputAccessoryView: UIView? {
+        get {
+            let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44.0))
+            
+            toolbar.items = [
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(resignFirstResponder))
+            ]
+            
+            return toolbar
+        }
+    }
 
     func setup() {
         OZLDateFormFieldCell.dateFormatter.dateFormat = "M/d/yyyy"

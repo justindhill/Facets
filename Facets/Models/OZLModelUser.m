@@ -54,7 +54,12 @@
 }
 
 - (NSURL *)sizedGravatarURL:(NSInteger)sideLen {
+    if (!self.gravatarURL) {
+        return nil;
+    }
+    
     NSURLComponents *components = [NSURLComponents componentsWithString:self.gravatarURL];
+    components.scheme = @"https";
     components.queryItems = @[
         [NSURLQueryItem queryItemWithName:@"rating" value:@"PG"],
         [NSURLQueryItem queryItemWithName:@"size" value:[@(sideLen) stringValue]],

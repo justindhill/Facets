@@ -274,7 +274,7 @@ NSString * const OZLNetworkErrorDomain = @"OZLNetworkErrorDomain";
         NSString *htmlString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
         
         NSError *parseError;
-        NSArray<OZLModelCustomField *> *fields = [OZLIssueFieldsHTMLParser parseCustomFieldsHTMLString:htmlString error:&parseError];
+        NSArray<OZLModelCustomField *> *fields = [OZLIssueFieldsHTMLParser parseIssueFieldsHTMLString:htmlString error:&parseError];
         
         NSAssert(!parseError, @"There was an error parsing the custom fields from the HTML");
         

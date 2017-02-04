@@ -156,6 +156,10 @@ enum OZLIssueCompleteness: Int {
         if let startDate = self.issueModel.startDate {
             details.append(("start_date", OZLModelIssue.displayNameForAttributeName("start_date"), String(describing: startDate)))
         }
+        
+        if let dueDate = self.issueModel.dueDate {
+            details.append(("due_date", OZLModelIssue.displayNameForAttributeName("due_date"), String(describing: dueDate)))
+        }
 
         if let category = self.issueModel.category {
             details.append(("category_id", OZLModelIssue.displayNameForAttributeName("category_id"), category.name))
