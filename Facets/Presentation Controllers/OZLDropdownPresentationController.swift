@@ -18,6 +18,15 @@ class OZLDropdownPresentationController: UIPresentationController, UIGestureReco
 
         return navBar.frame.origin.y + navBar.frame.size.height + (1 / self.traitCollection.displayScale)
     }
+    
+    fileprivate var presentedOriginX: CGFloat {
+        let navBar = self.navigationController.navigationBar
+        guard let converted = navBar.superview?.convert(navBar.frame, to: nil) else {
+            return 0
+        }
+        
+        return converted.origin.x
+    }
 
     init(presentedViewController: UIViewController, presentingViewController: UIViewController?, navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -30,7 +39,7 @@ class OZLDropdownPresentationController: UIPresentationController, UIGestureReco
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) in
-            self.presentedViewController.view.frame = CGRect(x: 0, y: self.presentedOriginY, width: self.navigationController.view.frame.size.width, height: self.presentedViewController.preferredContentSize.height)
+            self.presentedViewController.view.frame = CGRect(x: self.presentedOriginX, y: self.presentedOriginY, width: self.navigationController.view.frame.size.width, height: self.presentedViewController.preferredContentSize.height)
 
             let toPath = self.computeDimmingLayerPath(CGSize(width: self.navigationController.view.frame.size.width, height: self.presentedOriginY + self.presentedViewController.preferredContentSize.height))
 
@@ -147,7 +156,7 @@ class OZLDropdownPresentationController: UIPresentationController, UIGestureReco
         let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: sideLen, height: sideLen))
         path.usesEvenOddFillRule = true
 
-        path.append(UIBezierPath(rect: CGRect(x: 0, y: 0, width: cutoutSize.width, height: cutoutSize.height)))
+        path.append(UIBezierPath(rect: CGRect(x: self.presentedOriginX, y: 0, width: cutoutSize.width, height: cutoutSize.height)))
 
         return path.cgPath
     }
@@ -157,7 +166,7 @@ class OZLDropdownPresentationController: UIPresentationController, UIGestureReco
     }
 
     override var frameOfPresentedViewInContainerView : CGRect {
-        return CGRect(x: 0, y: self.presentedOriginY, width: self.navigationController.view.frame.size.width, height: self.presentedViewController.preferredContentSize.height)
+        return CGRect(x: self.presentedOriginX, y: self.presentedOriginY, width: self.navigationController.view.frame.size.width, height: self.presentedViewController.preferredContentSize.height)
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {

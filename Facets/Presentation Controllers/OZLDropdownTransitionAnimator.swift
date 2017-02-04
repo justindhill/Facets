@@ -21,6 +21,15 @@ class OZLDropdownTransitionAnimator: NSObject, UIViewControllerAnimatedTransitio
         let navBar = self.navigationController.navigationBar
         return navBar.frame.origin.y + navBar.frame.size.height + (1 / navigationController.traitCollection.displayScale)
     }
+    
+    fileprivate var presentedOriginX: CGFloat {
+        let navBar = self.navigationController.navigationBar
+        guard let converted = navBar.superview?.convert(navBar.frame, to: nil) else {
+            return 0
+        }
+        
+        return converted.origin.x
+    }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.3
@@ -42,7 +51,7 @@ class OZLDropdownTransitionAnimator: NSObject, UIViewControllerAnimatedTransitio
         if self.presenting {
             transitionContext.containerView.addSubview(toViewController.view)
             toViewController.view.frame = expandedFrame
-            toViewController.view.bounds.origin = CGPoint(x: 0, y: expandedFrame.size.height)
+            toViewController.view.bounds.origin = CGPoint(x: self.presentedOriginX, y: expandedFrame.size.height)
         }
 
         CATransaction.begin()
@@ -51,8 +60,8 @@ class OZLDropdownTransitionAnimator: NSObject, UIViewControllerAnimatedTransitio
         }
 
         let positionAnim = CABasicAnimation(keyPath: "bounds.origin")
-        positionAnim.fromValue = NSValue(cgPoint: self.presenting ? CGPoint(x: 0, y: 2 * expandedFrame.size.height) : CGPoint(x: 0, y: fromViewController.view.frame.size.height))
-        positionAnim.toValue = NSValue(cgPoint: self.presenting ? CGPoint(x: 0, y: expandedFrame.size.height) : CGPoint(x: 0, y: 2 * fromViewController.view.frame.size.height))
+        positionAnim.fromValue = NSValue(cgPoint: self.presenting ? CGPoint(x: self.presentedOriginX, y: 2 * expandedFrame.size.height) : CGPoint(x: self.presentedOriginX, y: fromViewController.view.frame.size.height))
+        positionAnim.toValue = NSValue(cgPoint: self.presenting ? CGPoint(x: self.presentedOriginX, y: expandedFrame.size.height) : CGPoint(x: self.presentedOriginX, y: 2 * fromViewController.view.frame.size.height))
         positionAnim.duration = self.transitionDuration(using: transitionContext)
         positionAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         positionAnim.fillMode = kCAFillModeForwards
