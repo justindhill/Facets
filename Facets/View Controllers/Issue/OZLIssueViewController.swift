@@ -37,7 +37,6 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
         self.viewModel.delegate = self
         self.applyViewModel(self.viewModel)
-        viewModel.loadIssueData()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,6 +65,14 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.refreshHeaderSizeForWidth(self.view.frame.size.width)
+        
+        if self.viewModel.completeness() != .all {
+            let loadingView = OZLLoadingView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 64))
+            self.tableView.tableFooterView = loadingView
+            loadingView.startLoading()
+            
+            self.viewModel.loadIssueData()
+        }
     }
 
     func refreshHeaderSizeForWidth(_ width: CGFloat) {
@@ -427,6 +434,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
     // MARK: - View model delegate
     func viewModel(_ viewModel: OZLIssueViewModel, didFinishLoadingIssueWithError error: NSError?) {
+        self.tableView.tableFooterView = nil
         self.refreshControl.endRefreshing()
         self.applyViewModel(viewModel)
     }
