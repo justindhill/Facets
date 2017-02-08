@@ -218,6 +218,8 @@
 		D0C9F0521C30742400976B06 /* OZLSplitViewPlaceholderPane.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OZLSplitViewPlaceholderPane.xib; sourceTree = "<group>"; };
 		D0CD7C881BF791FA0043C94B /* OZLModelAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OZLModelAttachment.h; sourceTree = "<group>"; };
 		D0CD7C891BF791FA0043C94B /* OZLModelAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OZLModelAttachment.m; sourceTree = "<group>"; };
+		D0D3C8431E4BACA2000E1547 /* Development.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Development.entitlements; sourceTree = "<group>"; };
+		D0D3C8441E4BACA2000E1547 /* Distribution.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Distribution.entitlements; sourceTree = "<group>"; };
 		D0DD77831C94A8EF008DC65D /* OZLIssueTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueTableViewCell.swift; sourceTree = "<group>"; };
 		D0DD77851C94A90A008DC65D /* OZLIssueTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OZLIssueTableViewCell.xib; sourceTree = "<group>"; };
 		D0E401101CFA816600F1CC97 /* OZLIssueDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OZLIssueDetailCell.swift; sourceTree = "<group>"; };
@@ -395,6 +397,8 @@
 		D0987AB71C0772BA00D55DEB /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				D0D3C8431E4BACA2000E1547 /* Development.entitlements */,
+				D0D3C8441E4BACA2000E1547 /* Distribution.entitlements */,
 				D0E489071BCDCF9100C082B7 /* Launch Screen.storyboard */,
 				D5DB80611792F2BF0081662A /* Facets-Info.plist */,
 				D5DB80651792F2BF0081662A /* main.m */,
@@ -659,6 +663,11 @@
 					D5DB80551792F2BF0081662A = {
 						DevelopmentTeam = AJ5Q7E6DM4;
 						LastSwiftMigration = 0820;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -884,7 +893,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 71;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -912,9 +921,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				COCOAPODS_PARALLEL_CODE_SIGN = true;
+				CODE_SIGN_ENTITLEMENTS = Supporting/Distribution.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 71;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = AJ5Q7E6DM4;
 				ENABLE_BITCODE = NO;
@@ -955,7 +965,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 71;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1001,7 +1011,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 71;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1030,9 +1040,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				COCOAPODS_PARALLEL_CODE_SIGN = true;
+				CODE_SIGN_ENTITLEMENTS = Supporting/Development.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 71;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = AJ5Q7E6DM4;
 				ENABLE_BITCODE = NO;
@@ -1062,9 +1073,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				COCOAPODS_PARALLEL_CODE_SIGN = true;
+				CODE_SIGN_ENTITLEMENTS = Supporting/Distribution.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 71;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = AJ5Q7E6DM4;
 				ENABLE_BITCODE = NO;
@@ -1076,8 +1088,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.franklychat.Facets;
 				PRODUCT_NAME = Facets;
-				PROVISIONING_PROFILE = "01544b3e-f705-4eb3-999b-eebdb85b9136";
-				PROVISIONING_PROFILE_SPECIFIER = "Facets AdHoc";
+				PROVISIONING_PROFILE = "cc824907-ee9f-4a88-a59d-7f438bdccda9";
+				PROVISIONING_PROFILE_SPECIFIER = "Facets App Store";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/Supporting/Facets-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
