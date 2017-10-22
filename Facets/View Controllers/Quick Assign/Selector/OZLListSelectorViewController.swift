@@ -99,6 +99,10 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
     @objc func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.leastNormalMagnitude
     }
+    
+    @objc func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44.0
+    }
 
     @objc func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         self.delegate?.selector(self, didSelectItem: self.items[indexPath.row])
