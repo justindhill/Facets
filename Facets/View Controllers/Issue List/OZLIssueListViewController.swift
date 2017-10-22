@@ -210,15 +210,15 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     }
     
     // MARK: - UITableViewDataSource/Delegate
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    @objc override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel.issues.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    @objc override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: IssueCellReuseIdentifier, for: indexPath)
 
         if let cell = cell as? OZLIssueTableViewCell {
@@ -242,7 +242,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+    @objc func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let issueModel = self.viewModel.issues[indexPath.row]
         let viewModel = OZLIssueViewModel(issueModel: issueModel)
 
@@ -252,7 +252,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     }
     
     // MARK - UIScrollViewDelegate
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    @objc func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let distanceFromBottom = scrollView.contentSize.height -
                                  scrollView.contentOffset.y -
                                  scrollView.frame.size.height;

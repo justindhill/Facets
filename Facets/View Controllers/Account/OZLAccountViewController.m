@@ -96,7 +96,7 @@
 }
 
 - (void)supportButtonAction:(UIButton *)sender {
-    [HelpshiftSupport showConversation:self withOptions:nil];
+    [HelpshiftSupport showConversation:self withConfig:nil];
 }
 
 - (void)startSync {

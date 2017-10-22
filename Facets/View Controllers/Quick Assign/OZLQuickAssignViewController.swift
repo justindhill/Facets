@@ -15,8 +15,8 @@ import UIKit
 @objc class OZLQuickAssignViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     let CellReuseIdentifier = "reuseIdentifier"
-    var canonicalMemberships: RLMResults<RLMObject>?
-    var filteredMemberships: RLMResults<RLMObject>?
+    var canonicalMemberships: RLMResults<AnyObject>?
+    var filteredMemberships: RLMResults<AnyObject>?
     var issueModel: OZLModelIssue?
     weak var delegate: OZLQuickAssignDelegate?
     

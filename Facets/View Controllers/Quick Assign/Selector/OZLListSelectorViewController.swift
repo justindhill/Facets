@@ -62,7 +62,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
     }
 
     // MARK: UITableViewDelegate/DataSource
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    @objc override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = self.items[indexPath.row]
 
         let cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier, for: indexPath)
@@ -84,29 +84,29 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         return cell
     }
 
-    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
+    @objc func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    @objc override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.items.count
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat.leastNormalMagnitude
     }
 
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.leastNormalMagnitude
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+    @objc func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         self.delegate?.selector(self, didSelectItem: self.items[indexPath.row])
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 
     // MARK: Transitioning
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    @objc func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         if let nav = source.navigationController {
             return OZLDropdownPresentationController(presentedViewController: presented,
                                                      presentingViewController: presenting,
@@ -116,7 +116,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         return nil
     }
 
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    @objc func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if let nav = source.navigationController {
             self.transitionAnimator = OZLDropdownTransitionAnimator(navigationController:nav)
             return self.transitionAnimator
@@ -125,7 +125,7 @@ class OZLListSelectorViewController: OZLTableViewController, UIViewControllerTra
         return nil
     }
 
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    @objc func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.transitionAnimator?.presenting = false
 
         return self.transitionAnimator

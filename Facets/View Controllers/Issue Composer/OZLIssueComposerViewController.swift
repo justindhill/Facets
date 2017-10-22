@@ -299,10 +299,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
 
         print(self.issue.changeDictionary as Any)
 
-        guard let hud = JGProgressHUD(style: .dark) else {
-            return
-        }
-
+        let hud = JGProgressHUD(style: .dark)
         hud.show(in: self.view)
 
         weak var weakSelf = self

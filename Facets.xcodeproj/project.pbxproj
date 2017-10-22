@@ -28,7 +28,7 @@
 		D00690A31DC5097F004E46D7 /* DRPRefreshControl+FacetsBranding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00690A21DC5097F004E46D7 /* DRPRefreshControl+FacetsBranding.swift */; };
 		D00793961CC87F100050FF48 /* OZLDateFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00793951CC87F100050FF48 /* OZLDateFormField.swift */; };
 		D00793981CC8A8310050FF48 /* SORelativeDateTransformer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D00793971CC8A8310050FF48 /* SORelativeDateTransformer.bundle */; };
-		D00793A01CC9AA290050FF48 /* (null) in Resources */ = {isa = PBXBuildFile; };
+		D00793A01CC9AA290050FF48 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		D007AF901CDD9E6F00CE48C4 /* OZLIssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D007AF8F1CDD9E6F00CE48C4 /* OZLIssueViewModel.swift */; };
 		D00EA1F51CD53597002210E0 /* UIColor+OZLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00EA1F41CD53597002210E0 /* UIColor+OZLExtensions.swift */; };
 		D00EA1F71CD56869002210E0 /* OZLModelIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00EA1F61CD56869002210E0 /* OZLModelIssue.swift */; };
@@ -716,11 +716,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Facets/Pods-Facets-resources.sh",
-				"${PODS_ROOT}/Helpshift/helpshift-sdk-ios-v5.9.2/HsUIResourceBundle.bundle",
-				"${PODS_ROOT}/Helpshift/helpshift-sdk-ios-v5.9.2/HsLocalization.bundle",
-				"${PODS_ROOT}/Helpshift/helpshift-sdk-ios-v5.9.2/HSThemes/HelpshiftConfig.plist",
-				"${PODS_ROOT}/Helpshift/helpshift-sdk-ios-v5.9.2/HSThemes/HelpshiftConfigDark.plist",
-				$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle,
+				"${PODS_ROOT}/Helpshift/helpshift-sdk-ios-v6.3.0/HsUIResourceBundle.bundle",
+				"${PODS_ROOT}/Helpshift/helpshift-sdk-ios-v6.3.0/HsLocalization.bundle",
+				"${PODS_ROOT}/Helpshift/helpshift-sdk-ios-v6.3.0/HSThemes/HelpshiftConfig.plist",
+				"${PODS_ROOT}/Helpshift/helpshift-sdk-ios-v6.3.0/HSThemes/HelpshiftConfigDark.plist",
+				"${PODS_ROOT}/Helpshift/helpshift-sdk-ios-v6.3.0/HSThemes/HelpshiftConfigHighContrast.plist",
+				"$PODS_CONFIGURATION_BUILD_DIR/HockeySDK/HockeySDKResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -767,7 +768,7 @@
 				"${BUILT_PRODUCTS_DIR}/RaptureXML@Frankly/RaptureXML_Frankly.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${PODS_ROOT}/Reveal-SDK/RevealServer-6/iOS/RevealServer.framework",
+				"${PODS_ROOT}/Reveal-SDK/RevealServer-11/iOS/RevealServer.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SORelativeDateTransformer/SORelativeDateTransformer.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",

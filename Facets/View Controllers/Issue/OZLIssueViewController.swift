@@ -109,7 +109,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
 
     // MARK: - Previewing
     @available(iOS 9.0, *)
-    override var previewActionItems : [UIPreviewActionItem] {
+    @objc override var previewActionItems : [UIPreviewActionItem] {
         var items = [UIPreviewActionItem]()
 
         items.append(UIPreviewAction(title: "Share", style: .default, handler: { (action, previewViewController) in
@@ -144,11 +144,11 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     }
 
     // MARK: - UITableViewDelegate/DataSource
-    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
+    @objc func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return self.viewModel.currentSectionNames.count
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    @objc override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionName = self.viewModel.currentSectionNames[section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
@@ -164,7 +164,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return 0
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    @objc override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
 
         let sectionName = self.viewModel.currentSectionNames[indexPath.section]
@@ -236,15 +236,15 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return cell ?? UITableViewCell()
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
 
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return 44.0
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    @objc func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
         let header = OZLIssueSectionHeaderView()
         header.contentPadding = self.contentPadding
@@ -263,7 +263,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return header
     }
 
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    @objc func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let sectionName = self.viewModel.currentSectionNames[section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
@@ -277,7 +277,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return nil
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return CGFloat.leastNormalMagnitude
         }
@@ -285,7 +285,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return 30.0
     }
 
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let sectionName = self.viewModel.currentSectionNames[section]
 
         if sectionName == OZLIssueViewModel.SectionDetail {
@@ -295,13 +295,13 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return CGFloat.leastNormalMagnitude
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    @objc func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionName = self.viewModel.currentSectionNames[section]
 
         return self.viewModel.displayNameForSectionName(sectionName)
     }
 
-    func tableView(_ tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: IndexPath) -> Bool {
+    @objc func tableView(_ tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: IndexPath) -> Bool {
         let sectionName = self.viewModel.currentSectionNames[indexPath.section]
 
         if sectionName == OZLIssueViewModel.SectionDetail && self.viewModel.showAllDetails {
@@ -317,7 +317,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         return false
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+    @objc func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
         let sectionName = self.viewModel.currentSectionNames[indexPath.section]
 
         if sectionName == OZLIssueViewModel.SectionDetail && self.viewModel.showAllDetails {
@@ -455,7 +455,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     }
 
     // MARK: - Transitioning delegate
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    @objc func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return OZLSheetPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }
