@@ -30,17 +30,17 @@ import DFCache
         return Foundation.URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
     }
 
-    init(networkManager: OZLNetwork) {
+    @objc init(networkManager: OZLNetwork) {
         self.networkManager = networkManager
         super.init()
     }
 
 
-    func isAttachmentCached(_ attachment: OZLModelAttachment) -> Bool {
+    @objc func isAttachmentCached(_ attachment: OZLModelAttachment) -> Bool {
         return self.cache.isValueCachedForKey(attachment.cacheKey)
     }
 
-    func downloadAttachment(
+    @objc func downloadAttachment(
         _ attachment: OZLModelAttachment,
         progress: ((_ attachment: OZLModelAttachment, _ totalBytesDownloaded: Int64, _ totalBytesExpected: Int64) -> Void)?,
         completion: @escaping (_ data: Data?, _ error: NSError?) -> Void) {
@@ -78,30 +78,24 @@ import DFCache
         downloadTask.resume()
     }
 
-    func fetchURLForLocalAttachment(_ attachment: OZLModelAttachment) -> URL? {
+    @objc func fetchURLForLocalAttachment(_ attachment: OZLModelAttachment) -> URL? {
         return self.cache.diskCache?.url(forKey: attachment.cacheKey)
     }
 
-    func fetchLocalAttachment(_ attachment: OZLModelAttachment) -> Data? {
+    @objc func fetchLocalAttachment(_ attachment: OZLModelAttachment) -> Data? {
         return self.cache.cachedData(forKey: attachment.cacheKey)
     }
 
-    func fetchLocalAttachment(_ attachment: OZLModelAttachment, completion: @escaping (_ data: Data?) -> Void) {
+    @objc func fetchLocalAttachment(_ attachment: OZLModelAttachment, completion: @escaping (_ data: Data?) -> Void) {
         self.cache.cachedData(forKey: attachment.cacheKey) { (data) in
-            dispatchMain(completion(data))
-//            DispatchQueue.main.async {
-//                completion(data: dataaaa)
-//            }
-//            DispatchQueue.main.async(execute: {
-//            })
+            DispatchQueue.main.async {
+                completion(data)
+            }
         }
-//        self.cache.cachedData(forKey: "asdf", completion: { (data) in
-
-//        })
     }
 
     // NSURLSessionDelegate
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    @objc func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let (_, _, completion) = self.taskAssociations[task.taskIdentifier] else {
             return
         }
@@ -134,7 +128,7 @@ import DFCache
         }
     }
 
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+    @objc func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         guard let (attachment, _, completion) = self.taskAssociations[downloadTask.taskIdentifier] else {
             return
         }
@@ -151,7 +145,7 @@ import DFCache
         }
     }
 
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+    @objc func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
 
         if let (attachment, progressHandler, _) = self.taskAssociations[downloadTask.taskIdentifier] {
             DispatchQueue.main.async(execute: {

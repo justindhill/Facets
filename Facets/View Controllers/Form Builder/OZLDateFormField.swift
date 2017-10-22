@@ -111,13 +111,13 @@ class OZLDateFormFieldCell: OZLFormFieldCell, UITextFieldDelegate {
         self.textField.layoutSubviews()
     }
 
-    func tapAction() {
+    @objc func tapAction() {
         if self.delegate?.formFieldCellWillBeginEditing(self, firstResponder: self) ?? true {
             self.becomeFirstResponder()
         }
     }
 
-    func dateChanged() {
+    @objc func dateChanged() {
         self.textField.text = OZLDateFormFieldCell.dateFormatter.string(from: self.datePicker.date)
         self.delegate?.formFieldCell(self, valueChangedFrom: nil, toValue: self.datePicker.date as AnyObject?, atKeyPath: self.keyPath, userInfo: self.userInfo)
     }

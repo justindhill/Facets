@@ -14,7 +14,7 @@ extension OZLModelUser {
         case XMLParsingError
     }
     
-    class func user(withUserPageHTML html: String) -> OZLModelUser? {
+    @objc class func user(withUserPageHTML html: String) -> OZLModelUser? {
         let user = OZLModelUser()
 
         do {

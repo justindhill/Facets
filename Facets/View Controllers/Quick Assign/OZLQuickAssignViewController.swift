@@ -73,7 +73,7 @@ import UIKit
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
-    func keyboardWillShowOrHide(_ notification: Notification) {
+    @objc func keyboardWillShowOrHide(_ notification: Notification) {
         if let view = self.view as? OZLQuickAssignView {
             if let keyboardFrameValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
                 let keyboardFrame = keyboardFrameValue.cgRectValue

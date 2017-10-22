@@ -53,7 +53,7 @@ class OZLButtonFormFieldCell: OZLFormFieldCell {
         self.buttonControl.addTarget(self, action: #selector(buttonActionInternal(_:)), for: .touchUpInside)
     }
 
-    func buttonActionInternal(_ sender: UIButton?) {
+    @objc func buttonActionInternal(_ sender: UIButton?) {
         if let target = self.buttonTarget as? NSObject, let action = self.buttonAction {
             target.perform(action, with: self.keyPath)
         }

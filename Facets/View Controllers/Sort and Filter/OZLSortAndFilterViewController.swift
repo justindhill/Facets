@@ -14,8 +14,8 @@ import UIKit
 }
 
 @objc class OZLSortAndFilterOptions: NSObject, NSCopying {
-    var sortOrder: OZLSortOrder = .descending
-    var sortField: OZLSortAndFilterField = OZLSortAndFilterField(displayName: "Last Updated", serverName: "updated_on")
+    @objc var sortOrder: OZLSortOrder = .descending
+    @objc var sortField: OZLSortAndFilterField = OZLSortAndFilterField(displayName: "Last Updated", serverName: "updated_on")
     
     func requestParameters() -> Dictionary<String, String> {
         var params: Dictionary<String, String> = Dictionary<String, String>()
@@ -88,11 +88,11 @@ class OZLSortAndFilterViewController: UITableViewController {
     }
     
     // MARK: Button actions
-    func cancelAction() {
+    @objc func cancelAction() {
         self.delegate?.sortAndFilter(self, shouldDismissWithNewOptions: nil)
     }
     
-    func saveAction() {
+    @objc func saveAction() {
         self.delegate?.sortAndFilter(self, shouldDismissWithNewOptions: self.options)
     }
 

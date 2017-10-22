@@ -89,7 +89,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.tableView.reloadData()
     }
 
-    func quickAssignAction(_ sender: UIControl) {
+    @objc func quickAssignAction(_ sender: UIControl) {
         let vc = OZLQuickAssignViewController(issueModel: self.viewModel.issueModel)
 
         if self.traitCollection.userInterfaceIdiom == .pad {
@@ -335,14 +335,14 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
     }
 
     // MARK: - Button actions
-    func showAllActivityAction() {
+    @objc func showAllActivityAction() {
         let vm = OZLJournalViewerViewModel(issue: self.viewModel.issueModel)
         let vc = OZLJournalViewerViewController(viewModel: vm)
 
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    func showFullDescriptionAction() {
+    @objc func showFullDescriptionAction() {
         let vc = OZLIssueFullDescriptionViewController()
         vc.descriptionLabel.text = self.viewModel.issueModel.issueDescription
         vc.contentPadding = self.contentPadding
@@ -350,7 +350,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    func togglePinnedDetailsAction(_ button: UIButton) {
+    @objc func togglePinnedDetailsAction(_ button: UIButton) {
         button.setTitle(!self.viewModel.showAllDetails ? HideUnpinnedDetailsString : ShowAllDetailsString, for: UIControlState())
         button.superview?.setNeedsLayout()
         button.superview?.layoutIfNeeded()
@@ -358,7 +358,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.viewModel.showAllDetails = !self.viewModel.showAllDetails
     }
 
-    func editButtonAction(_ button: UIButton) {
+    @objc func editButtonAction(_ button: UIButton) {
         let composer = OZLIssueComposerViewController(issue: self.viewModel.issueModel)
 
         let nav = UINavigationController(rootViewController: composer)
@@ -369,7 +369,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         self.present(nav, animated: true, completion: nil)
     }
 
-    func downloadAttachmentAction(_ button: UIButton) {
+    @objc func downloadAttachmentAction(_ button: UIButton) {
         let convertedFrame = self.tableView.convert(button.frame, from: button.superview)
 
         if let indexPath = self.tableView.indexPathForRow(at: convertedFrame.origin) {
@@ -429,7 +429,7 @@ class OZLIssueViewController: OZLTableViewController, OZLIssueViewModelDelegate,
         }
     }
 
-    func pullToRefreshTriggered(_ sender: DRPRefreshControl) {
+    @objc func pullToRefreshTriggered(_ sender: DRPRefreshControl) {
         self.viewModel.loadIssueData()
     }
 

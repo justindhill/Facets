@@ -7,7 +7,7 @@
 //
 
 extension OZLModelUser {
-    func updatedUserModel(completion: @escaping (_ user: OZLModelUser?) -> Void) {
+    @objc func updatedUserModel(completion: @escaping (_ user: OZLModelUser?) -> Void) {
         guard let userId = self.userId else {
             completion(nil)
             return

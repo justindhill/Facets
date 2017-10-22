@@ -131,7 +131,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     }
 
     // MARK: - Button actions
-    func filterAction(_ sender: UIButton?) {
+    @objc func filterAction(_ sender: UIButton?) {
         let sortAndFilter = OZLSortAndFilterViewController()
         sortAndFilter.delegate = self
         sortAndFilter.options = self.viewModel.sortAndFilterOptions
@@ -151,7 +151,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         }
     }
     
-    func composeButtonAction(_ sender: UIButton?) {
+    @objc func composeButtonAction(_ sender: UIButton?) {
         let composer = OZLIssueComposerViewController(currentProjectID: OZLSingleton.sharedInstance().currentProjectID)
         composer.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(OZLIssueListViewController.dismissComposerAction(_:)))
         
@@ -161,7 +161,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         self.present(nav, animated: true, completion: nil)
     }
     
-    func dismissComposerAction(_ sender: UIButton?) {
+    @objc func dismissComposerAction(_ sender: UIButton?) {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -295,7 +295,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
     }
 
     // MARK: - Behavior
-    func showProjectSelector() {
+    @objc func showProjectSelector() {
         var projects: Array<OZLModelProject> = []
         var currentProject: OZLModelProject?
 
@@ -315,7 +315,7 @@ class OZLIssueListViewController: OZLTableViewController, OZLIssueListViewModelD
         self.present(vc, animated: true, completion: nil)
     }
 
-    func reloadProjectData() {
+    @objc func reloadProjectData() {
         weak var weakSelf = self
         
         if self.viewModel.issues.count == 0 {

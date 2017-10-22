@@ -161,7 +161,7 @@ class OZLDropdownPresentationController: UIPresentationController, UIGestureReco
         return path.cgPath
     }
 
-    func backgroundTapAction() {
+    @objc func backgroundTapAction() {
         self.presentingViewController.dismiss(animated: true, completion: nil)
     }
 

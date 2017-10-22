@@ -151,9 +151,9 @@ class OZLJournalCell: UITableViewCell {
         detailPara.lineBreakMode = .byWordWrapping
         
         let detailAttributes = [
-            NSForegroundColorAttributeName: UIColor.darkGray,
-            NSFontAttributeName: OZLJournalCell.detailFont,
-            NSParagraphStyleAttributeName: detailPara
+            NSAttributedStringKey.foregroundColor: UIColor.darkGray,
+            NSAttributedStringKey.font: OZLJournalCell.detailFont,
+            NSAttributedStringKey.paragraphStyle: detailPara
         ]
         
         for (index, detail) in details.enumerated() {
@@ -201,9 +201,9 @@ class OZLJournalCell: UITableViewCell {
             commentPara.lineBreakMode = .byWordWrapping
             
             let noteAttributes = [
-                NSForegroundColorAttributeName: UIColor.darkGray,
-                NSFontAttributeName: OZLJournalCell.commentFont,
-                NSParagraphStyleAttributeName: commentPara
+                NSAttributedStringKey.foregroundColor: UIColor.darkGray,
+                NSAttributedStringKey.font: OZLJournalCell.commentFont,
+                NSAttributedStringKey.paragraphStyle: commentPara
             ]
             
             str.append(NSAttributedString(string: note, attributes: noteAttributes))

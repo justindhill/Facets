@@ -27,7 +27,7 @@ class OZLDownChevronTitleView: UIControl {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.titleLabel.font = UIFont.systemFont(ofSize: 15.0, weight: UIFontWeightSemibold)
+        self.titleLabel.font = UIFont.systemFont(ofSize: 15.0, weight: UIFont.Weight.semibold)
         self.autoresizingMask = []
 
         self.addSubview(self.titleLabel)

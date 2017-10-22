@@ -76,7 +76,7 @@ class OZLSwitchFormFieldCell: OZLFormFieldCell {
                                        height: self.titleLabel.frame.size.height)
     }
 
-    func switchValueChanged(_ sender: UISwitch) {
+    @objc func switchValueChanged(_ sender: UISwitch) {
         if sender.isOn != self.currentValue {
             self.delegate?.formFieldCell(self, valueChangedFrom: self.currentValue as AnyObject?, toValue: sender.isOn as AnyObject?, atKeyPath: self.keyPath, userInfo: self.userInfo)
             self.currentValue = sender.isOn

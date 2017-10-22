@@ -102,7 +102,7 @@
     return fields;
 }
 
-+ (NSArray<OZLModelStringContainer *> *)optionsFromListFieldParagraph:(RXMLElement *)p currentValue:(NSString **)currentValue{
++ (NSArray<OZLModelStringContainer *> *)optionsFromListFieldParagraph:(RXMLElement *)p currentValue:(NSString * __autoreleasing *)currentValue{
     NSMutableArray *options = [NSMutableArray array];
     [p iterate:@"select.option" usingBlock:^(RXMLElement *optionEle) {
         NSString *optionText = [optionEle.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];

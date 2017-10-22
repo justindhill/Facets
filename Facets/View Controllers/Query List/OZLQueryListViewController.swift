@@ -73,7 +73,7 @@ class OZLQueryListViewController: OZLTableViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    func refreshData() {
+    @objc func refreshData() {
         if self.queries.count == 0 {
             self.startLoading()
         } else if !(self.tableViewController.refreshControl?.isRefreshing ?? false) {

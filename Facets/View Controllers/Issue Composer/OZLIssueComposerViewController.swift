@@ -294,7 +294,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
         print("from: \(String(describing: fromValue)), to: \(String(describing: toValue)), keyPath: \(keyPath)")
     }
 
-    func submitAction() {
+    @objc func submitAction() {
         self.tableView.endEditing(true)
 
         print(self.issue.changeDictionary as Any)
@@ -332,7 +332,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
         }
     }
 
-    func dismissAction() {
+    @objc func dismissAction() {
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }

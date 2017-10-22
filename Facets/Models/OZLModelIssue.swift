@@ -14,16 +14,16 @@ import Foundation
         }()
     static let dateFormatter = DateFormatter()
 
-    var modelDiffingEnabled: Bool = false {
+    @objc var modelDiffingEnabled: Bool = false {
         didSet(oldValue) {
             if oldValue != modelDiffingEnabled {
                 self.changeDictionary = modelDiffingEnabled ? [:] : nil
             }
         }
     }
-    fileprivate(set) var changeDictionary: [String: AnyObject]? = nil
+    @objc fileprivate(set) var changeDictionary: [String: AnyObject]? = nil
 
-    var tracker: OZLModelTracker? {
+    @objc var tracker: OZLModelTracker? {
         didSet {
             if let tracker = tracker, self.modelDiffingEnabled {
                 self.changeDictionary?["tracker_id"] = tracker.trackerId as AnyObject?
@@ -31,7 +31,7 @@ import Foundation
         }
     }
 
-    var author: OZLModelUser? {
+    @objc var author: OZLModelUser? {
         didSet {
             if let author = author, self.modelDiffingEnabled {
                 self.changeDictionary?["author_id"] = author.userId as AnyObject?
@@ -39,7 +39,7 @@ import Foundation
         }
     }
 
-    var assignedTo: OZLModelUser? {
+    @objc var assignedTo: OZLModelUser? {
         didSet {
             if let assignedTo = assignedTo, self.modelDiffingEnabled {
                 self.changeDictionary?["assigned_to_id"] = assignedTo.userId as AnyObject?
@@ -47,7 +47,7 @@ import Foundation
         }
     }
 
-    var priority: OZLModelIssuePriority? {
+    @objc var priority: OZLModelIssuePriority? {
         didSet {
             if let priority = priority, self.modelDiffingEnabled {
                 self.changeDictionary?["priority_id"] = priority.priorityId as AnyObject?
@@ -55,7 +55,7 @@ import Foundation
         }
     }
 
-    var status: OZLModelIssueStatus? {
+    @objc var status: OZLModelIssueStatus? {
         didSet {
             if let status = status, self.modelDiffingEnabled {
                 self.changeDictionary?["status_id"] = status.statusId as AnyObject?
@@ -63,7 +63,7 @@ import Foundation
         }
     }
 
-    var category: OZLModelIssueCategory? {
+    @objc var category: OZLModelIssueCategory? {
         didSet {
             if let category = category, self.modelDiffingEnabled {
                 self.changeDictionary?["category_id"] = category.categoryId as AnyObject?
@@ -71,7 +71,7 @@ import Foundation
         }
     }
 
-    var targetVersion: OZLModelVersion? {
+    @objc var targetVersion: OZLModelVersion? {
         didSet {
             if let targetVersion = targetVersion, self.modelDiffingEnabled {
                 self.changeDictionary?["fixed_version_id"] = targetVersion.versionId as AnyObject?
@@ -79,10 +79,10 @@ import Foundation
         }
     }
 
-    var attachments: [OZLModelAttachment]?
-    var journals: [OZLModelJournal]?
-    var customFields: [OZLModelCustomField]?
-    var index: Int = 0
+    @objc var attachments: [OZLModelAttachment]?
+    @objc var journals: [OZLModelJournal]?
+    @objc var customFields: [OZLModelCustomField]?
+    @objc var index: Int = 0
 
     var projectId: Int? {
         didSet {
@@ -100,7 +100,7 @@ import Foundation
         }
     }
 
-    var subject: String? {
+    @objc var subject: String? {
         didSet {
             if let subject = subject, self.modelDiffingEnabled {
                 self.changeDictionary?["subject"] = subject as AnyObject?
@@ -108,7 +108,7 @@ import Foundation
         }
     }
 
-    var issueDescription: String? {
+    @objc var issueDescription: String? {
         didSet {
             if let issueDescription = issueDescription, self.modelDiffingEnabled {
                 self.changeDictionary?["description"] = issueDescription as AnyObject?
@@ -116,7 +116,7 @@ import Foundation
         }
     }
 
-    var startDate: Date? {
+    @objc var startDate: Date? {
         didSet {
             if let startDate = startDate, self.modelDiffingEnabled {
                 self.changeDictionary?["start_date"] = OZLModelIssue.dateFormatter.string(from: startDate) as AnyObject?
@@ -124,7 +124,7 @@ import Foundation
         }
     }
 
-    var dueDate: Date? {
+    @objc var dueDate: Date? {
         didSet {
             if let dueDate = dueDate, self.modelDiffingEnabled {
                 self.changeDictionary?["due_date"] = OZLModelIssue.dateFormatter.string(from: dueDate) as AnyObject?
@@ -132,7 +132,7 @@ import Foundation
         }
     }
 
-    var createdOn: Date? {
+    @objc var createdOn: Date? {
         didSet {
             if let createdOn = createdOn, self.modelDiffingEnabled {
                 self.changeDictionary?["created_on"] = OZLModelIssue.dateFormatter.string(from: createdOn) as AnyObject?
@@ -140,7 +140,7 @@ import Foundation
         }
     }
 
-    var updatedOn: Date? {
+    @objc var updatedOn: Date? {
         didSet {
             if let updatedOn = updatedOn, self.modelDiffingEnabled {
                 self.changeDictionary?["updated_on"] = OZLModelIssue.dateFormatter.string(from: updatedOn) as AnyObject?
@@ -174,12 +174,12 @@ import Foundation
 
     static var classInitToken = Int()
 
-    override init() {
+    @objc override init() {
         super.init()
         setup()
     }
 
-    init(dictionary d: [String: AnyObject]) {
+    @objc init(dictionary d: [String: AnyObject]) {
         if let id = d["id"] as? Int {
             self.index = id
         }
@@ -279,13 +279,13 @@ import Foundation
         _ = OZLModelIssue.__once
     }
 
-    func setUpdateComment(_ comment: String) {
+    @objc func setUpdateComment(_ comment: String) {
         if self.modelDiffingEnabled {
             self.changeDictionary?["notes"] = comment as AnyObject?
         }
     }
 
-    func setValueOnDiff(_ value: Any, forCustomFieldId fieldId: Int) {
+    @objc func setValueOnDiff(_ value: Any, forCustomFieldId fieldId: Int) {
         guard value is String || value is Int || value is Float else {
             fatalError()
         }
@@ -304,12 +304,12 @@ import Foundation
         }
     }
     
-    func setDateOnDiff(_ date: Date, forCustomFieldId fieldId: Int) {
+    @objc func setDateOnDiff(_ date: Date, forCustomFieldId fieldId: Int) {
         let dateString = OZLModelIssue.dateFormatter.string(from: date)
         self.setValueOnDiff(dateString, forCustomFieldId: fieldId)
     }
 
-    class func displayValueForAttributeName(_ name: String?, attributeId id: Int) -> String? {
+    @objc class func displayValueForAttributeName(_ name: String?, attributeId id: Int) -> String? {
         if let name = name {
             switch name {
                 case "project_id": return OZLModelProject(forPrimaryKey: id)?.name
@@ -328,7 +328,7 @@ import Foundation
         return nil
     }
 
-    class func displayNameForAttributeName(_ name: String?) -> String {
+    @objc class func displayNameForAttributeName(_ name: String?) -> String {
         if let name = name {
             switch name {
                 case "author": return "Author"
@@ -356,7 +356,7 @@ import Foundation
         return ""
     }
 
-    func copy(with zone: NSZone?) -> Any {
+    @objc func copy(with zone: NSZone?) -> Any {
         let copy = OZLModelIssue()
         copy.index = self.index
         copy.projectId = self.projectId

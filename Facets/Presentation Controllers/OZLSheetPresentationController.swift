@@ -61,7 +61,7 @@ import UIKit
         return CGRect.zero
     }
     
-    func backgroundTapAction() {
+    @objc func backgroundTapAction() {
         self.presentingViewController.dismiss(animated: true, completion: nil)
     }
 }

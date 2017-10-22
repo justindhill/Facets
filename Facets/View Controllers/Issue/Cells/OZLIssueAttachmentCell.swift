@@ -99,7 +99,7 @@ class OZLIssueAttachmentCell: UITableViewCell {
         }
 
         // Defines the bottom edge for automatic cell height computation
-        self.userNameLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        self.userNameLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         self.userNameLabel.snp.makeConstraints { (make) in
             make.leading.equalTo(self.userIconImageView.snp.trailing).offset(intraItemHorizontalSpacing)
             make.top.equalTo(self.attachmentTitleLabel.snp.bottom).offset(verticalElementSpacing)
@@ -130,7 +130,7 @@ class OZLIssueAttachmentCell: UITableViewCell {
         self.accessoryView = self.downloadButton
     }
 
-    func preferredContentSizeCategoryDidChange() {
+    @objc func preferredContentSizeCategoryDidChange() {
         self.attachmentTitleLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)
         self.userNameLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.footnote)
         self.timeLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.footnote)
