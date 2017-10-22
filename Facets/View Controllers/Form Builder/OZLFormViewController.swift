@@ -39,15 +39,15 @@ class OZLFormViewController: OZLTableViewController, OZLFormFieldDelegate {
     }
 
     // MARK: UITableViewDelegate/DataSource
-    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
+    @objc func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return self.sections.count
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    @objc override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.sections[section].fields.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    @objc override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let field = self.sections[indexPath.section].fields[indexPath.row]
 
         if let cellClass = field.cellClass as? OZLFormFieldCell.Type {
@@ -64,21 +64,21 @@ class OZLFormViewController: OZLTableViewController, OZLFormFieldDelegate {
         return UITableViewCell(style: .default, reuseIdentifier: nil)
     }
 
-    func tableView(_ tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: IndexPath) -> Bool {
+    @objc func tableView(_ tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: IndexPath) -> Bool {
         return false
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         let field = self.sections[indexPath.section].fields[indexPath.row]
 
         return field.fieldHeight
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    @objc func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.sections[section].title
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    @objc func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if self.sections[section].fields.count == 0 {
             return CGFloat.leastNormalMagnitude
         } else if section == 0 {
