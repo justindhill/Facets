@@ -291,7 +291,7 @@ class OZLIssueComposerViewController: OZLFormViewController {
             }
         }
         
-        print("from: \(fromValue), to: \(toValue), keyPath: \(keyPath)")
+        print("from: \(String(describing: fromValue)), to: \(String(describing: toValue)), keyPath: \(keyPath)")
     }
 
     func submitAction() {

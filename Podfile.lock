@@ -2,7 +2,9 @@ PODS:
   - 1PasswordExtension (1.8.4)
   - CircleProgressView (1.1.1)
   - DFCache (4.0.1)
-  - DRPLoadingSpinner (1.0.2)
+  - DRPLoadingSpinner (1.3.1):
+    - DRPLoadingSpinner/core (= 1.3.1)
+  - DRPLoadingSpinner/core (1.3.1)
   - GTMNSStringHTMLAdditions (0.2.1)
   - Helpshift (5.9.2)
   - HockeySDK (4.1.3):
@@ -10,13 +12,13 @@ PODS:
   - HockeySDK/DefaultLib (4.1.3)
   - ISO8601 (0.5.0)
   - JGProgressHUD (1.4)
-  - JVFloatLabeledTextField (1.1.1)
+  - JVFloatLabeledTextField (1.2.1)
   - RaptureXML@Frankly (1.0.4)
-  - Realm (2.4.2):
-    - Realm/Headers (= 2.4.2)
-  - Realm/Headers (2.4.2)
-  - RealmSwift (2.4.2):
-    - Realm (= 2.4.2)
+  - Realm (2.10.2):
+    - Realm/Headers (= 2.10.2)
+  - Realm/Headers (2.10.2)
+  - RealmSwift (2.10.2):
+    - Realm (= 2.10.2)
   - Reveal-SDK (6)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
@@ -58,16 +60,16 @@ SPEC CHECKSUMS:
   1PasswordExtension: e775a29310c65851e5a6cec1afc349ab4e334e47
   CircleProgressView: 3a02912b8cb05ca68f31d8a08e242f7b0f067665
   DFCache: db3bc28ceaa6f8838b1183607cb37924e488f070
-  DRPLoadingSpinner: 2605661b840d61a365a35e36d13a9b648cf96c21
+  DRPLoadingSpinner: 725e530bf4ebe2cc351b1fbc94d24fe8ac3300fd
   GTMNSStringHTMLAdditions: 4bfc402b1b17165360728083156cae0a74ecb308
   Helpshift: 7db3cd21f5df995a6f87b707f7eb501f22e8cc3e
   HockeySDK: 7dd8d7f5a4d71b7a5eebb320c8515cb22e99221b
   ISO8601: ddefd7454c859b1279b6da7a54e63743c5df9079
   JGProgressHUD: 1617b0940cf80bb53e8f7d6f0fd69252ea45d6d4
-  JVFloatLabeledTextField: 0e5524b097f102036214dd8279edc8ecf08b5e18
+  JVFloatLabeledTextField: cfc44e3c4d493b2ed92ede8035e8e89c2912ba64
   RaptureXML@Frankly: 585df7d229c6a6a3f5a202d7664c2dd0aba9ef38
-  Realm: d27b758e12d62a3371879a065d4c40aa212c5a54
-  RealmSwift: 9556c0fe0f0cfecacfb755ae9e68ff379fc6bead
+  Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
+  RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
   Reveal-SDK: 67460e58f93711c7b18631d12c2b5de7740e48b5
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
@@ -76,4 +78,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6d1abf926fc3b2fbffff05ea004d0454a315c613
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.3.1

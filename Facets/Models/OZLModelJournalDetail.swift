@@ -115,7 +115,7 @@ import UIKit
     
     override var description: String {
         get {
-            return "<OZLModelJournalDetail: \(Unmanaged.passUnretained(self).toOpaque()) type: \(self.type), name: \(self.name), oldValue: \(self.oldValue), newValue: \(self.newValue))"
+            return "<OZLModelJournalDetail: \(Unmanaged.passUnretained(self).toOpaque()) type: \(self.type), name: \(String(describing: self.name)), oldValue: \(String(describing: self.oldValue)), newValue: \(String(describing: self.newValue)))"
         }
     }
 }

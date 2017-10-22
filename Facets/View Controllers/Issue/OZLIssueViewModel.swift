@@ -73,7 +73,7 @@ enum OZLIssueCompleteness: Int {
     }
 
     func targetedPinnedIdentifiersDefaultsKeypath() -> String {
-        return "\(OZLIssueViewModel.PinnedIdentifiersDefaultsKeypath).\(self.issueModel.projectId)"
+        return "\(OZLIssueViewModel.PinnedIdentifiersDefaultsKeypath).\(String(describing: self.issueModel.projectId))"
     }
 
     // MARK: - Behavior

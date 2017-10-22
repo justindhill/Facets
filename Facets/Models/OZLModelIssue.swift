@@ -285,7 +285,7 @@ import Foundation
         }
     }
 
-    func setValueOnDiff(_ value: AnyObject, forCustomFieldId fieldId: Int) {
+    func setValueOnDiff(_ value: Any, forCustomFieldId fieldId: Int) {
         guard value is String || value is Int || value is Float else {
             fatalError()
         }
@@ -295,7 +295,7 @@ import Foundation
                 changeDictionary["custom_fields"] = [Int: AnyObject]() as AnyObject?
             }
 
-            if var customFields = changeDictionary["custom_fields"] as? [Int: AnyObject], fieldId > 0 {
+            if var customFields = changeDictionary["custom_fields"] as? [Int: Any], fieldId > 0 {
                 customFields[fieldId] = value
                 changeDictionary["custom_fields"] = customFields as AnyObject
             }
@@ -305,9 +305,8 @@ import Foundation
     }
     
     func setDateOnDiff(_ date: Date, forCustomFieldId fieldId: Int) {
-        if let dateString = OZLModelIssue.dateFormatter.string(from: date) as AnyObject? {
-            self.setValueOnDiff(dateString, forCustomFieldId: fieldId)
-        }
+        let dateString = OZLModelIssue.dateFormatter.string(from: date)
+        self.setValueOnDiff(dateString, forCustomFieldId: fieldId)
     }
 
     class func displayValueForAttributeName(_ name: String?, attributeId id: Int) -> String? {

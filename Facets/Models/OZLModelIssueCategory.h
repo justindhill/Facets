@@ -6,7 +6,11 @@
 
 @protocol OZLEnumerationFormFieldValue;
 
+// Compiler quirk - OZLEnumerationFormFieldValue is declared in Swift.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
 @interface OZLModelIssueCategory : RLMObject <OZLEnumerationFormFieldValue>
+#pragma clang diagnostic pop
 
 @property (nonatomic) NSInteger categoryId;
 @property (nonatomic, strong) NSString *name;

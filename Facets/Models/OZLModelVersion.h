@@ -23,7 +23,12 @@ typedef NS_ENUM(NSInteger, OZLModelVersionStatus) {
 };
 
 @protocol OZLEnumerationFormFieldValue;
+
+// Compiler quirk - OZLEnumerationFormFieldValue is declared in Swift.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
 @interface OZLModelVersion : RLMObject <OZLEnumerationFormFieldValue>
+#pragma clang diagnostic pop
 
 - (instancetype)initWithAttributeDictionary:(NSDictionary *)attributes;
 

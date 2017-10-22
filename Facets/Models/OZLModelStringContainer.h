@@ -9,7 +9,11 @@
 @import Realm;
 @protocol OZLEnumerationFormFieldValue;
 
+// Compiler quirk - OZLEnumerationFormFieldValue is declared in Swift.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
 @interface OZLModelStringContainer : RLMObject <OZLEnumerationFormFieldValue>
+#pragma clang diagnostic pop
 
 + (nonnull instancetype)containerWithString:(nonnull NSString *)string value:(nonnull NSString *)value;
 @property (nullable, strong) NSString *stringValue;

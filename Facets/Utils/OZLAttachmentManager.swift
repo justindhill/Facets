@@ -123,7 +123,7 @@ import DFCache
             let error = NSError(
                 domain: OZLAttachmentManager.ErrorDomain,
                 code: OZLAttachmentManagerError.unacceptableStatusCode.rawValue,
-                userInfo: [ NSLocalizedDescriptionKey: "Expected a status code between 200 and 300. Response: \(task.response)"]
+                userInfo: [ NSLocalizedDescriptionKey: "Expected a status code between 200 and 300. Response: \(String(describing: task.response))"]
             )
 
             DispatchQueue.main.async(execute: {
